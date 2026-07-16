@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Project } from "@/data/projects";
-import MediaPlaceholder from "../MediaPlaceholder";
+import { Project, assetFolder } from "@/data/projects";
+import ProjectMedia from "../ProjectMedia";
 
 type ProjectsWindowProps = {
   projects: Project[];
@@ -125,7 +125,13 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
                     }}
                   >
                     <div className="relative h-[120px]" style={{ background: "rgba(var(--os-sfrgb),.03)" }}>
-                      <MediaPlaceholder label={p.title} compact />
+                      <ProjectMedia
+                        media={p.coverMedia}
+                        label={p.cover}
+                        compact
+                        sizes="(min-width:640px) 33vw, 50vw"
+                        uploadPath={`/projects/${assetFolder(p)}/cover`}
+                      />
                     </div>
                     <div className="px-3.5 pt-3 pb-3.5">
                       <div className="flex items-baseline justify-between gap-2">
@@ -158,7 +164,12 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
                   className="h-[200px] overflow-hidden rounded-xl"
                   style={{ background: "rgba(var(--os-sfrgb),.03)" }}
                 >
-                  <MediaPlaceholder label={selected.cover} />
+                  <ProjectMedia
+                    media={selected.coverMedia}
+                    label={selected.cover}
+                    sizes="(min-width:1024px) 900px, 100vw"
+                    uploadPath={`/projects/${assetFolder(selected)}/cover`}
+                  />
                 </div>
                 <div className="mt-4.5 flex items-baseline justify-between gap-3">
                   <span className="text-[26px] font-bold tracking-[-0.01em]" style={{ color: "var(--os-tx)" }}>

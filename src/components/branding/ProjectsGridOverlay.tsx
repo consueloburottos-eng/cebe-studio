@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Project } from "@/data/projects";
-import MediaPlaceholder from "../MediaPlaceholder";
+import { Project, assetFolder } from "@/data/projects";
+import ProjectMedia from "../ProjectMedia";
 
 type ProjectsGridOverlayProps = {
   projects: Project[];
@@ -23,7 +23,12 @@ export default function ProjectsGridOverlay({ projects, onClose }: ProjectsGridO
             className="group relative block aspect-[4/3] overflow-hidden rounded-2xl"
             style={{ background: "var(--cb-glass-pill)" }}
           >
-            <MediaPlaceholder label={project.title} />
+            <ProjectMedia
+              media={project.coverMedia}
+              label={project.cover}
+              sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+              uploadPath={`/projects/${assetFolder(project)}/cover`}
+            />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4">
               <span className="font-display text-lg font-extrabold lowercase text-white">
                 {project.title}

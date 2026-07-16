@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Project } from "@/data/projects";
-import MediaPlaceholder from "../MediaPlaceholder";
+import { Project, assetFolder } from "@/data/projects";
+import ProjectMedia from "../ProjectMedia";
 
 export default function ResultsGrid({ results }: { results: Project[] }) {
   return (
@@ -21,7 +21,12 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
             className="aspect-[16/10] overflow-hidden rounded-lg"
             style={{ background: "var(--mk-surface)" }}
           >
-            <MediaPlaceholder label={p.title} />
+            <ProjectMedia
+              media={p.coverMedia}
+              label={p.cover}
+              sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+              uploadPath={`/projects/${assetFolder(p)}/cover`}
+            />
           </div>
           <div className="mt-3.5 font-serif text-[19px] italic" style={{ color: "var(--mk-tx)" }}>
             {p.title}

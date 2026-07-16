@@ -1,8 +1,11 @@
-export type GallerySize = "normal" | "ancha" | "alta" | "grande";
+export type MediaAsset = {
+  type: "image" | "video";
+  src: string;
+};
 
 export type GalleryItem = {
-  size: GallerySize;
   label: string;
+  media?: MediaAsset;
 };
 
 export type Project = {
@@ -18,11 +21,31 @@ export type Project = {
   services?: string;
   skills: string[];
   cover: string;
+  coverMedia?: MediaAsset;
   brief: string;
   strategy: string[];
   headline: string;
   gallery: GalleryItem[];
+  pending?: boolean;
 };
+
+function img(slug: string, file: string): MediaAsset {
+  return { type: "image", src: `/projects/${slug}/${file}` };
+}
+
+function video(slug: string, file: string): MediaAsset {
+  return { type: "video", src: `/projects/${slug}/${file}` };
+}
+
+// A project's public/projects/<folder> name doesn't always match its URL
+// slug (e.g. "bodas-de-sangre" ships assets under "violencia-normalizada").
+// Derive the real folder from any media the project already has, falling
+// back to the slug only for projects with no assets yet.
+export function assetFolder(project: Project): string {
+  const sample = project.coverMedia?.src ?? project.gallery.find((g) => g.media)?.media?.src;
+  const match = sample?.match(/^\/projects\/([^/]+)\//);
+  return match ? match[1] : project.slug;
+}
 
 export const projects: Project[] = [
   {
@@ -48,6 +71,7 @@ export const projects: Project[] = [
       "Colaboración multi-stakeholder",
     ],
     cover: "Talent Capital — plataforma de candidatos",
+    coverMedia: video("talent-capital", "hero.mp4"),
     brief:
       "Talent Capital nació de un mandato de una coalición regional: empleadores, agencias de gobierno y organizaciones sin fines de lucro de DC, Maryland y Virginia necesitaban una sola puerta de entrada al mercado laboral de la región. El panorama existente estaba fragmentado — decenas de bolsas de trabajo, portales de formación y programas de coaching que el usuario tenía que descubrir por su cuenta, sin ningún hilo conductor entre ellos. El encargo, en alianza con BuildWithin, era diseñar una plataforma capaz de unificar ese ecosistema y sumarle un agente de IA que hablara con la gente como lo haría un consejero de carrera, no como un buscador con filtros.",
     strategy: [
@@ -56,12 +80,12 @@ export const projects: Project[] = [
     ],
     headline: "un consejero, no un buscador",
     gallery: [
-      { size: "grande", label: "Plataforma — vista general" },
-      { size: "normal", label: "Agente Celeste — conversación" },
-      { size: "normal", label: "Panel de candidato" },
-      { size: "ancha", label: "Sistema de componentes" },
-      { size: "normal", label: "Programas y coaching" },
-      { size: "ancha", label: "Responsive — mobile" },
+      { label: "Plataforma — vista general" },
+      { label: "Agente Celeste — conversación" },
+      { label: "Panel de candidato" },
+      { label: "Sistema de componentes" },
+      { label: "Programas y coaching" },
+      { label: "Responsive — mobile" },
     ],
   },
   {
@@ -94,12 +118,12 @@ export const projects: Project[] = [
     ],
     headline: "el hilo de la novia",
     gallery: [
-      { size: "grande", label: "Acto III — El Quiebro" },
-      { size: "alta", label: "Acto I — la pasión contenida" },
-      { size: "normal", label: "Detalle — hilo rojo" },
-      { size: "ancha", label: "Acto II — el deseo aparece" },
-      { size: "normal", label: "Detalle — flores tejidas" },
-      { size: "normal", label: "Composición final" },
+      { label: "Acto III — El Quiebro" },
+      { label: "Acto I — la pasión contenida" },
+      { label: "Detalle — hilo rojo" },
+      { label: "Acto II — el deseo aparece" },
+      { label: "Detalle — flores tejidas" },
+      { label: "Composición final" },
     ],
   },
   {
@@ -109,7 +133,7 @@ export const projects: Project[] = [
     tag: "dirección editorial",
     subtitle: "Bitácora basada en Bodas de Sangre, Federico García Lorca",
     client: "Proyecto académico",
-    role: "Dirección editorial",
+    role: "Dirección Editorial & Gráfico",
     year: "—",
     result: "Bitácora editorial impresa",
     services: "Dirección editorial",
@@ -123,6 +147,7 @@ export const projects: Project[] = [
       "Investigación conceptual",
     ],
     cover: "Violencia normalizada — bitácora",
+    coverMedia: img("violencia-normalizada", "01.jpg"),
     brief:
       "Violencia normalizada es una bitácora impresa, desarrollada como proyecto académico, que usa Bodas de Sangre de Federico García Lorca como estructura narrativa para hablar de algo que rara vez se nombra: la violencia que ejercemos sobre otros sin reconocerla como tal, y la que recibimos sin cuestionarla. La obra de Lorca — honor, linaje, matrimonio arreglado, el peso del \"qué dirán\", los celos leídos como amor — funciona como espejo de dinámicas que siguen operando hoy, normalizadas bajo la costumbre, la tradición o el silencio. El objetivo de la bitácora no es analizar la obra desde la literatura, sino usarla como herramienta para que quien lee se reconozca en dos roles a la vez: alguien que en algún momento ha generado una violencia normalizada hacia otro, y alguien que la ha recibido sin identificarla como tal.",
     strategy: [
@@ -130,15 +155,377 @@ export const projects: Project[] = [
     ],
     headline: "reconocerse en dos roles",
     gallery: [
-      { size: "grande", label: "Portada — bitácora" },
-      { size: "normal", label: "Spread — capítulo I" },
-      { size: "normal", label: "Spread — capítulo II" },
-      { size: "ancha", label: "Tipografía editorial" },
-      { size: "normal", label: "Sistema de anotación" },
-      { size: "ancha", label: "Spread final" },
+      { label: "Portada — bitácora", media: img("violencia-normalizada", "02.jpg") },
+      { label: "Spread — capítulo I", media: img("violencia-normalizada", "03.jpg") },
+      { label: "Spread — capítulo II", media: img("violencia-normalizada", "04.jpg") },
+      { label: "Tipografía editorial", media: img("violencia-normalizada", "05.jpg") },
+      { label: "Sistema de anotación", media: img("violencia-normalizada", "06.jpg") },
+      { label: "Detalle de página", media: img("violencia-normalizada", "07.jpg") },
+      { label: "Spread final", media: img("violencia-normalizada", "08.jpg") },
+    ],
+  },
+  {
+    slug: "bodas-de-sangre-teatral",
+    title: "bodas de sangre — escenografía",
+    category: "Escenografía",
+    tag: "set & diseño teatral",
+    subtitle: "Puesta en escena para Federico García Lorca",
+    client: "Teatro UC",
+    role: "Diseño Escenográfico",
+    year: "—",
+    result: "Atmósfera coherente con el tono de la obra",
+    services: "Escenografía",
+    skills: ["Materiales físicos", "Illustrator"],
+    cover: "Bodas de Sangre — diseño teatral",
+    coverMedia: img("obra-teatral-bodas-de-sangre", "01.jpg"),
+    brief:
+      "Diseño escenográfico para una producción teatral de \"Bodas de Sangre\" de Federico García Lorca, trabajando color, textura y espacio para construir la atmósfera de la obra.",
+    strategy: [
+      "El diseño se pensó en función del texto y la dirección: cada elemento en escena refuerza la tensión dramática de la historia.",
+      "Una puesta en escena con una identidad visual y espacial coherente con el tono de la obra.",
+    ],
+    headline: "el espacio como tensión",
+    gallery: [
+      { label: "Escenografía — vista general", media: img("obra-teatral-bodas-de-sangre", "02.jpg") },
+      { label: "Detalle de set", media: img("obra-teatral-bodas-de-sangre", "03.jpg") },
+      { label: "Puesta en escena", media: img("obra-teatral-bodas-de-sangre", "04.jpg") },
+    ],
+  },
+  {
+    slug: "bodas-de-sangre-afiche",
+    title: "bodas de sangre — afiche",
+    category: "Diseño de Afiche",
+    tag: "diseño de afiche",
+    subtitle: "La primera pieza visual de la producción",
+    client: "Teatro UC",
+    role: "Diseño Gráfico",
+    year: "—",
+    result: "Set de piezas gráficas coherentes",
+    services: "Poster design",
+    skills: ["Illustrator", "Photoshop"],
+    cover: "Afiche — Bodas de Sangre",
+    coverMedia: img("afiche-bodas-de-sangre", "01.jpg"),
+    brief:
+      "El afiche de \"Bodas de Sangre\" fue la primera pieza visual que el público veía de la producción, y debía anticipar su tono dramático.",
+    strategy: [
+      "Trabajé composición, color y tipografía para capturar la tensión emocional de la obra en una sola imagen.",
+      "Un afiche y set de piezas gráficas de difusión coherentes con la identidad visual completa de la producción.",
+    ],
+    headline: "tensión en una sola imagen",
+    gallery: [
+      { label: "Afiche — versión final", media: img("afiche-bodas-de-sangre", "02.jpg") },
+      { label: "Piezas de difusión", media: img("afiche-bodas-de-sangre", "03.jpg") },
+      { label: "Variante de color", media: img("afiche-bodas-de-sangre", "04.jpg") },
+      { label: "Aplicación en vía pública", media: img("afiche-bodas-de-sangre", "05.jpg") },
+      { label: "Detalle tipográfico", media: img("afiche-bodas-de-sangre", "06.jpg") },
+    ],
+  },
+  {
+    slug: "amphora",
+    title: "amphora",
+    category: "E-commerce",
+    tag: "ux/ui · web design",
+    subtitle: "Una tienda online tan cuidada como el producto",
+    client: "Amphora",
+    role: "UX/UI Design",
+    year: "—",
+    result: "E-commerce con personalidad de marca",
+    services: "Web design",
+    skills: ["Figma", "Webflow"],
+    cover: "Amphora — e-commerce",
+    coverMedia: video("amphora", "hero.mp4"),
+    brief:
+      "Amphora necesitaba una tienda online que se sintiera tan cuidada como su producto. El proyecto cubrió la maquetación de página, presentación de producto y navegación.",
+    strategy: [
+      "A partir del lenguaje visual de la marca, diseñé un set de componentes para listados, fichas de producto y checkout, priorizando la escaneabilidad y un camino de compra fluido.",
+      "Una experiencia de e-commerce limpia y con personalidad de marca, con patrones de UI reutilizables para futuras páginas y campañas.",
+    ],
+    headline: "una tienda con personalidad",
+    gallery: [
+      { label: "Amphora — portada", media: img("amphora", "01.jpg") },
+      { label: "Amphora — producto", media: img("amphora", "02.jpg") },
+      { label: "Amphora — interacción", media: img("amphora", "03.gif") },
+    ],
+  },
+  {
+    slug: "altafid",
+    title: "altafid platform",
+    category: "Product Design",
+    tag: "product · fintech",
+    subtitle: "Plataforma SaaS de gestión de inversiones",
+    client: "Altafid",
+    role: "UX/UI Lead",
+    year: "—",
+    result: "Producto cohesivo en +10 módulos",
+    services: "Design system · UX research · UI",
+    skills: ["Figma", "Design tokens", "Investigación de usuarios"],
+    cover: "Altafid Platform",
+    coverMedia: img("altafid", "01.jpg"),
+    brief:
+      "Altafid es una plataforma SaaS que ayuda a las personas a gestionar y hacer crecer sus inversiones. Como líder UX/UI, superviso la interfaz y el sistema de diseño en toda la superficie del producto — desde el perfilamiento de riesgo hasta portafolios, trading, compliance, billing y CRM.",
+    strategy: [
+      "El trabajo parte de la investigación: entrevistas y pruebas de usabilidad con inversionistas y asesores reales informan la arquitectura de información, mientras un sistema de diseño compartido mantiene consistencia visual y de comportamiento a medida que el producto crece.",
+      "Una experiencia de producto cohesiva a través de más de diez módulos, construida sobre un sistema de diseño reutilizable que permite lanzar funcionalidades nuevas sin romper la consistencia.",
+    ],
+    headline: "un mismo lenguaje visual",
+    gallery: [
+      { label: "Altafid — dashboard", media: img("altafid", "02.jpg") },
+      { label: "Altafid — portafolios", media: img("altafid", "03.jpg") },
+      { label: "Altafid — trading", media: img("altafid", "04.jpg") },
+      { label: "Altafid — compliance", media: img("altafid", "05.jpg") },
+      { label: "Altafid — billing", media: img("altafid", "06.jpg") },
+      { label: "Altafid — CRM", media: img("altafid", "07.jpg") },
+    ],
+  },
+  {
+    slug: "altafid-design-system",
+    title: "altafid — design system",
+    category: "Design System",
+    tag: "design system",
+    subtitle: "Tipografía, color e iconografía documentados",
+    client: "Altafid",
+    role: "Design Systems Lead",
+    year: "—",
+    result: "Base de componentes reutilizable",
+    services: "Design tokens · Componentes",
+    skills: ["Figma", "Design tokens"],
+    cover: "Altafid — Design System",
+    coverMedia: img("design-system", "01.jpg"),
+    brief:
+      "El sistema de diseño de Altafid documenta tipografía, color, iconografía y componentes reutilizables, permitiendo que equipos de producto y desarrollo trabajen con un mismo lenguaje visual.",
+    strategy: [
+      "Auditamos las pantallas existentes para identificar inconsistencias, luego consolidamos estilos y componentes en una librería única con reglas claras de uso.",
+      "Una base de componentes documentada que acelera el diseño y desarrollo de nuevas pantallas manteniendo coherencia visual.",
+    ],
+    headline: "una base que escala",
+    gallery: [
+      { label: "Tokens y fundaciones", media: img("design-system", "02.jpg") },
+      { label: "Librería de componentes", media: img("design-system", "03.jpg") },
+      { label: "Documentación de uso", media: img("design-system", "04.jpg") },
+    ],
+  },
+  {
+    slug: "bululu",
+    title: "bululu",
+    category: "Identidad",
+    tag: "identidad · diseño de objeto",
+    subtitle: "Un teatrino de títeres itinerante",
+    client: "BULULU",
+    role: "Dirección de Arte & Diseño de Producto",
+    year: "—",
+    result: "Identidad coherente entre logo, personajes y objeto",
+    services: "Identidad · Personajes · Estructura",
+    skills: ["Illustrator", "Photoshop", "Fotografía de producto"],
+    cover: "BULULU",
+    coverMedia: img("bululu", "01.jpg"),
+    brief:
+      "BULULU es un teatrino de títeres itinerante: un carro con ruedas construido a mano que se abre como escenario. El proyecto abarcó la identidad de marca (logo con motivo de rueda de carreta), el diseño de los personajes-títere y el diseño físico del carro y su textil.",
+    strategy: [
+      "Diseñé primero el sistema de marca y los personajes, y luego traduje esa identidad al objeto físico: estructura, tela, color y tipografía aplicados directamente sobre el carro-teatrino, documentado con fotografía de producto.",
+      "Un teatrino itinerante con identidad propia y coherente entre logo, personajes y objeto físico, listo para presentarse frente a público.",
+    ],
+    headline: "un teatrino con identidad propia",
+    gallery: [
+      { label: "BULULU — carro completo", media: img("bululu", "02.jpg") },
+      { label: "BULULU — personajes", media: img("bululu", "03.jpg") },
+      { label: "BULULU — logo", media: img("bululu", "04.jpg") },
+      { label: "BULULU — textil", media: img("bululu", "05.jpg") },
+      { label: "BULULU — detalle", media: img("bululu", "06.jpg") },
+      { label: "BULULU — en uso", media: img("bululu", "07.jpg") },
+    ],
+  },
+  {
+    slug: "como-y-voto",
+    title: "como & voto",
+    category: "Identidad",
+    tag: "identidad · packaging",
+    subtitle: "Malvaviscos bañados en chocolate",
+    client: "Como & Voto",
+    role: "Brand & Packaging Design",
+    year: "—",
+    result: "Identidad coherente entre logo y empaque",
+    services: "Brand identity · Packaging",
+    skills: ["Illustrator", "Photoshop", "Fotografía de producto"],
+    cover: "Como & Voto",
+    coverMedia: img("como-y-voto", "01.jpg"),
+    brief:
+      "Como & Voto es una marca de malvaviscos bañados en chocolate. El proyecto incluyó el logo — un sello ilustrado con guiño tipo circular/vintage — y el packaging del producto.",
+    strategy: [
+      "Diseñé un logo con estética de sello clásico e ilustración a mano, y lo trasladé al envase físico del producto, documentando el resultado con fotografía de producto.",
+      "Una identidad de marca con personalidad propia, aplicada de forma coherente entre el logo y el empaque final.",
+    ],
+    headline: "un sello con carácter",
+    gallery: [
+      { label: "Como & Voto — packaging", media: img("como-y-voto", "02.jpg") },
+      { label: "Como & Voto — logo", media: img("como-y-voto", "03.jpg") },
+      { label: "Como & Voto — producto", media: img("como-y-voto", "04.jpg") },
+      { label: "Como & Voto — detalle", media: img("como-y-voto", "05.jpg") },
+      { label: "Como & Voto — set", media: img("como-y-voto", "06.jpg") },
+    ],
+  },
+  {
+    slug: "hbt",
+    title: "hbt",
+    category: "Web Design",
+    tag: "ux/ui · web design",
+    subtitle: "Artículos de cocina y hogar online",
+    client: "HBT",
+    role: "UX/UI Design",
+    year: "—",
+    result: "Interfaz lista para escalar el catálogo",
+    services: "Web design",
+    skills: ["Figma"],
+    cover: "HBT",
+    coverMedia: img("hbt", "01.jpg"),
+    brief:
+      "HBT vende artículos de cocina y hogar online. El proyecto abarcó la experiencia de tienda y presentación de producto para una categoría con muchas variantes y configuraciones.",
+    strategy: [
+      "Diseñé la navegación y las fichas de producto priorizando claridad visual, para que decisiones de compra complejas se sintieran simples.",
+      "Una interfaz de tienda pulida, lista para escalar el catálogo sin perder claridad.",
+    ],
+    headline: "decisiones complejas, simples",
+    gallery: [],
+  },
+  {
+    slug: "londra",
+    title: "londra",
+    category: "Web Design",
+    tag: "ux/ui · web design",
+    subtitle: "Tienda de decoración para el hogar",
+    client: "Londra",
+    role: "UX/UI Design",
+    year: "—",
+    result: "Portada fácil de actualizar con contenido nuevo",
+    services: "Web design",
+    skills: ["Figma"],
+    cover: "Londra",
+    coverMedia: img("londra", "01.jpg"),
+    brief:
+      "Londra es una tienda de decoración para el hogar. El proyecto se centró en la navegación de colecciones, categorías y una portada que destaca novedades y promociones.",
+    strategy: [
+      "Diseñé un sistema de grilla flexible para merchandising, de modo que nuevas colecciones y promociones puedan destacarse sin rediseñar el layout cada temporada.",
+      "Una portada de tienda y sistema de categorías pulido, fácil de actualizar con contenido nuevo.",
+    ],
+    headline: "una grilla que respira",
+    gallery: [
+      { label: "Londra — portada", media: img("londra", "02.jpg") },
+    ],
+  },
+  {
+    slug: "nicopoly",
+    title: "nicopoly",
+    category: "E-commerce",
+    tag: "ux/ui · web design",
+    subtitle: "E-commerce de moda",
+    client: "Nicopoly",
+    role: "UX/UI Design",
+    year: "—",
+    result: "Sistema visual consistente de punta a punta",
+    services: "Web design",
+    skills: ["Figma"],
+    cover: "Nicopoly",
+    coverMedia: img("nicopoly", "01.jpg"),
+    brief:
+      "Nicopoly es una experiencia de e-commerce de moda diseñada para que navegar y comprar se sienta simple — desde la navegación por categoría hasta el detalle de producto y el carro.",
+    strategy: [
+      "Mapeé primero el flujo de compra completo y luego diseñé la interfaz alrededor de él: filtrado claro, tarjetas de producto consistentes y un checkout simplificado.",
+      "Una interfaz de tienda simplificada con un sistema visual consistente entre listado, detalle y checkout.",
+    ],
+    headline: "comprar, simplificado",
+    gallery: [
+      { label: "Nicopoly — categoría", media: img("nicopoly", "02.jpg") },
+      { label: "Nicopoly — producto", media: img("nicopoly", "03.jpg") },
+    ],
+  },
+  {
+    slug: "rocket-mkt",
+    title: "rocket mkt",
+    category: "Brand + Web",
+    tag: "ux/ui · web design · brand",
+    subtitle: "Un colectivo de marketing tan enérgico como su sitio",
+    client: "Rocket MKT",
+    role: "UX/UI & Brand Design",
+    year: "—",
+    result: "Identidad lista para extenderse a otros puntos de contacto",
+    services: "Web design · Brand",
+    skills: ["Figma", "Illustrator"],
+    cover: "Rocket MKT",
+    coverMedia: img("rocket-mkt", "01.jpg"),
+    brief:
+      "Rocket MKT es un colectivo de marketing que quería un sitio tan enérgico como su marca. El proyecto combinó identidad visual con una UI web colorida y audaz.",
+    strategy: [
+      "Usé contraste fuerte de color y tipografía para darle a la marca una personalidad distintiva y segura, manteniendo el layout simple para soportar motion e interacción.",
+      "Un diseño de sitio distintivo y coherente con la marca, con un sistema de identidad visual listo para extenderse a otros puntos de contacto.",
+    ],
+    headline: "personalidad distintiva y segura",
+    gallery: [
+      { label: "Rocket MKT — home", media: img("rocket-mkt", "02.jpg") },
+      { label: "Rocket MKT — interacción", media: img("rocket-mkt", "03.gif") },
+      { label: "Rocket MKT — motion", media: img("rocket-mkt", "04.gif") },
+      { label: "Rocket MKT — detalle", media: img("rocket-mkt", "05.gif") },
+    ],
+  },
+  {
+    slug: "soya-adicto",
+    title: "soyadicto",
+    category: "Identidad",
+    tag: "identidad · food brand",
+    subtitle: "Hamburguesas a base de soya",
+    client: "SoyAdicto",
+    role: "Brand & Graphic Design",
+    year: "—",
+    result: "Identidad con carácter propio",
+    services: "Brand identity · Ilustración · Fotografía de producto",
+    skills: ["Illustrator", "Photoshop", "Fotografía de producto"],
+    cover: "SoyAdicto",
+    coverMedia: img("soya-adicto", "01.jpg"),
+    brief:
+      "SoyAdicto es una marca de hamburguesas a base de soya, con un juego de palabras entre \"soy\" (soja) y \"adicto\". La identidad se apoya en una ilustración de vaca a mano, aplicada en textil y empaque, junto con fotografía del producto.",
+    strategy: [
+      "Desarrollé la ilustración central de la marca y la tipografía manuscrita del logo, y las apliqué de forma consistente en piezas físicas y fotografía de producto.",
+      "Una identidad de marca con carácter propio, coherente entre ilustración, tipografía y presentación del producto.",
+    ],
+    headline: "identidad con carácter",
+    gallery: [
+      { label: "SoyAdicto — ilustración", media: img("soya-adicto", "02.jpg") },
+      { label: "SoyAdicto — producto", media: img("soya-adicto", "03.jpg") },
+      { label: "SoyAdicto — aplicación", media: img("soya-adicto", "04.jpg") },
     ],
   },
 ];
+
+const PENDING_STUBS: { slug: string; title: string }[] = [
+  { slug: "brava", title: "brava" },
+  { slug: "cnc", title: "cnc" },
+  { slug: "dior", title: "dior" },
+  { slug: "llay-llay", title: "llay llay" },
+  { slug: "longboard", title: "longboard" },
+  { slug: "maquillaje-teatral", title: "maquillaje teatral" },
+  { slug: "marley-coffee", title: "marley coffee" },
+  { slug: "pants", title: "pants" },
+];
+
+for (const stub of PENDING_STUBS) {
+  projects.push({
+    slug: stub.slug,
+    title: stub.title,
+    category: "Próximamente",
+    tag: "proyecto por documentar",
+    subtitle: "Case study en preparación",
+    client: stub.title,
+    role: "—",
+    year: "—",
+    result: "Próximamente",
+    skills: [],
+    cover: `${stub.title} — próximamente`,
+    brief:
+      "El contenido de este proyecto está en preparación — pronto vas a poder ver el caso completo acá.",
+    strategy: [],
+    headline: "próximamente",
+    gallery: [],
+    pending: true,
+  });
+}
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);

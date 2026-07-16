@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Project } from "@/data/projects";
-import MediaPlaceholder from "../MediaPlaceholder";
+import { Project, assetFolder } from "@/data/projects";
+import ProjectMedia from "../ProjectMedia";
 
 type MarketplaceProductDetailProps = {
   project: Project;
@@ -32,7 +32,12 @@ export default function MarketplaceProductDetail({ project, suggestions }: Marke
           className="relative aspect-[16/9] overflow-hidden rounded-md sm:aspect-[21/9]"
           style={{ background: "var(--mk-surface)" }}
         >
-          <MediaPlaceholder label={project.cover} />
+          <ProjectMedia
+            media={project.coverMedia}
+            label={project.cover}
+            sizes="(min-width:1100px) 1100px, 100vw"
+            uploadPath={`/projects/${assetFolder(project)}/cover`}
+          />
         </div>
 
         <div className="mt-9 max-w-[70ch]">
@@ -76,7 +81,12 @@ export default function MarketplaceProductDetail({ project, suggestions }: Marke
                     className="aspect-[16/10] overflow-hidden rounded-lg"
                     style={{ background: "var(--mk-surface)" }}
                   >
-                    <MediaPlaceholder label={s.title} />
+                    <ProjectMedia
+                    media={s.coverMedia}
+                    label={s.cover}
+                    sizes="(min-width:640px) 50vw, 100vw"
+                    uploadPath={`/projects/${assetFolder(s)}/cover`}
+                  />
                   </div>
                   <div className="mt-3 font-serif text-[17px] italic" style={{ color: "var(--mk-tx)" }}>
                     {s.title}

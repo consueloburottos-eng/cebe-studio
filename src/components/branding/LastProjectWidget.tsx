@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Project } from "@/data/projects";
-import MediaPlaceholder from "../MediaPlaceholder";
+import { Project, assetFolder } from "@/data/projects";
+import ProjectMedia from "../ProjectMedia";
 
 export default function LastProjectWidget({ project }: { project: Project }) {
   return (
@@ -15,7 +15,12 @@ export default function LastProjectWidget({ project }: { project: Project }) {
         className="block h-20 w-28 overflow-hidden sm:h-[112px] sm:w-[154px]"
         style={{ background: "var(--cb-pill)" }}
       >
-        <MediaPlaceholder label="último proyecto" compact />
+        <ProjectMedia
+          media={project.coverMedia}
+          label={project.cover}
+          compact
+          uploadPath={`/projects/${assetFolder(project)}/cover`}
+        />
       </Link>
     </div>
   );

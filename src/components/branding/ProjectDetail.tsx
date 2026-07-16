@@ -2,15 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Project } from "@/data/projects";
-import MediaPlaceholder from "../MediaPlaceholder";
+import { Project, assetFolder } from "@/data/projects";
+import ProjectMedia from "../ProjectMedia";
 
-const SIZE_CLASS: Record<Project["gallery"][number]["size"], string> = {
-  normal: "col-span-1 row-span-1",
-  ancha: "col-span-2 row-span-1",
-  alta: "col-span-1 row-span-2",
-  grande: "col-span-2 row-span-2",
-};
+// span sequence lifted from the original prototype's projSel.intro grid (indices 0-12)
+const INTRO_SPAN_PATTERN = [2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1];
 
 type ProjectDetailProps = {
   project: Project;
@@ -18,7 +14,16 @@ type ProjectDetailProps = {
 };
 
 export default function ProjectDetail({ project, others }: ProjectDetailProps) {
-  const [readMore, setReadMore] = useState(false);
+  const [activeTab, setActiveTab] = useState<"brief" | "strategy">("brief");
+  const folder = assetFolder(project);
+
+  // always render the full 13-slot intro grid; projects with fewer real images
+  // fall back to placeholders for the remaining slots (edit project.gallery in
+  // src/data/projects.ts to add real media to any of these 13 slots directly)
+  const introItems = Array.from(
+    { length: INTRO_SPAN_PATTERN.length },
+    (_, i) => project.gallery[i] ?? { label: "Imagen próximamente" }
+  );
 
   return (
     <div
@@ -41,39 +46,82 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
           >
             Book me
           </Link>
-          <Link
-            href="/"
-            title="volver"
-            className="flex h-10 w-10 items-center justify-center rounded-full border text-[15px]"
-            style={{ borderColor: "var(--cb-hair)" }}
-          >
-            ✕
-          </Link>
         </div>
       </div>
 
+      <Link
+        href="/"
+        title="volver"
+        className="fixed bottom-[26px] right-[26px] z-[110] flex h-[54px] w-[54px] items-center justify-center rounded-full border-none text-xl backdrop-blur-xl"
+        style={{ background: "var(--cb-glass-pill)", color: "var(--cb-text)" }}
+      >
+        ✕
+      </Link>
+
       <div className="mx-auto max-w-[1200px] px-7 py-10 pb-[90px]">
         <div
-          className="relative mb-20 aspect-[1482/798] overflow-hidden rounded-[18px]"
+          className="relative mb-10 aspect-[1482/798] overflow-hidden rounded-[18px]"
           style={{ background: "var(--cb-pill)" }}
         >
-          <MediaPlaceholder label={project.cover} />
+          <ProjectMedia
+            media={project.coverMedia}
+            label={project.cover}
+            sizes="(min-width:1200px) 1200px, 100vw"
+            uploadPath={`/projects/${folder}/cover`}
+          />
+        </div>
+
+        <div className="mb-14" style={{ containerType: "inline-size" }}>
+          <div
+            className="grid gap-[10px]"
+            style={{
+              gridTemplateColumns: "repeat(9, 1fr)",
+              // row height follows the fluid column width, keeping the
+              // original 120:168 (1:1.4) tile proportions at any viewport
+              gridAutoRows: "calc((100cqw - 80px) / 9 * 1.4)",
+              gridAutoFlow: "row dense",
+            }}
+          >
+            {introItems.map((g, i) => {
+              const span = INTRO_SPAN_PATTERN[i];
+              return (
+                <div
+                  key={i}
+                  className="overflow-hidden rounded-[10px]"
+                  style={{ background: "var(--cb-pill)", gridColumn: `span ${span}` }}
+                >
+                  <ProjectMedia
+                    media={g.media}
+                    label={g.label}
+                    sizes={span === 2 ? "(min-width:1200px) 246px, 24vw" : "(min-width:1200px) 118px, 11vw"}
+                    uploadPath={`/projects/${folder}/intro-${String(i + 1).padStart(2, "0")}`}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[200px_1fr]">
           <div className="flex flex-col gap-3 font-sans">
-            <a
-              href="#project-copy"
-              className="text-xs tracking-[0.06em] underline underline-offset-4"
+            <button
+              type="button"
+              onClick={() => setActiveTab("brief")}
+              className="text-left text-xs tracking-[0.06em] underline underline-offset-4"
+              style={{ opacity: activeTab === "brief" ? 1 : 0.45 }}
             >
               brief
-            </a>
-            <a
-              href="#project-copy"
-              className="text-xs tracking-[0.06em] underline underline-offset-4"
-            >
-              strategy
-            </a>
+            </button>
+            {project.strategy.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setActiveTab("strategy")}
+                className="text-left text-xs tracking-[0.06em] underline underline-offset-4"
+                style={{ opacity: activeTab === "strategy" ? 1 : 0.45 }}
+              >
+                strategy
+              </button>
+            )}
           </div>
           <div>
             <div className="font-sans text-[11px] uppercase tracking-[0.2em] text-[var(--cb-muted)]">
@@ -106,19 +154,10 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
               </div>
             )}
 
-            <div id="project-copy" className="mt-3.5 max-w-[60ch] text-[15.5px] leading-[1.75]">
-              <span>{project.brief}</span>
-              {readMore && (
-                <span> {project.strategy.join(" ")}</span>
-              )}
-              <button
-                type="button"
-                onClick={() => setReadMore((r) => !r)}
-                className="mt-2.5 block cursor-pointer border-none bg-transparent p-0 text-[15px] underline underline-offset-4"
-                style={{ color: "inherit" }}
-              >
-                {readMore ? "leer menos" : "seguir leyendo"}
-              </button>
+            <div id="project-copy" className="mt-3.5 flex max-w-[60ch] flex-col gap-4 text-[15.5px] leading-[1.75]">
+              {activeTab === "brief"
+                ? <p>{project.brief}</p>
+                : project.strategy.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
             </div>
 
             <div className="mt-7 grid grid-cols-2 gap-3.5 border-t border-b py-4 sm:grid-cols-4"
@@ -136,19 +175,12 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
           className="relative mt-12 h-[56vh] overflow-hidden rounded-[18px]"
           style={{ background: "var(--cb-pill)" }}
         >
-          <MediaPlaceholder label="imagen destacada" />
-        </div>
-
-        <div className="mt-4 grid auto-rows-[210px] grid-cols-2 gap-4 sm:grid-cols-6">
-          {project.gallery.map((g, i) => (
-            <div
-              key={i}
-              className={`overflow-hidden rounded-2xl ${SIZE_CLASS[g.size]}`}
-              style={{ background: "var(--cb-pill)" }}
-            >
-              <MediaPlaceholder label={g.label} />
-            </div>
-          ))}
+          <ProjectMedia
+            media={project.gallery[0]?.media}
+            label={project.gallery[0]?.label ?? "imagen destacada"}
+            sizes="(min-width:1200px) 1200px, 100vw"
+            uploadPath={`/projects/${folder}/feature`}
+          />
         </div>
 
         <div className="my-[72px] text-center font-display font-extrabold uppercase leading-none tracking-[-0.01em]"
@@ -173,7 +205,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
                 Más proyectos
               </div>
               <div className="mt-4 flex gap-4 overflow-x-auto pb-3">
-                {others.map((other) => (
+                {others.slice(0, 6).map((other) => (
                   <Link
                     key={other.slug}
                     href={`/projects/${other.slug}`}
@@ -183,7 +215,13 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
                       className="h-[150px] w-[260px] overflow-hidden rounded-xl"
                       style={{ background: "var(--cb-pill)" }}
                     >
-                      <MediaPlaceholder label={other.title} compact />
+                      <ProjectMedia
+                        media={other.coverMedia}
+                        label={other.cover}
+                        compact
+                        sizes="260px"
+                        uploadPath={`/projects/${assetFolder(other)}/cover`}
+                      />
                     </div>
                     <div className="mt-2.5 text-[15px] font-bold lowercase">
                       {other.title}
