@@ -14,8 +14,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const project = getProject(slug);
+  if (!project) return { title: "Proyecto" };
   return {
-    title: project ? `${project.title} — CEBE:STUDIO Marketplace` : "Proyecto — CEBE:STUDIO",
+    title: `${project.title} · Marketplace`,
+    description: project.subtitle,
+    openGraph: { title: `${project.title} · Marketplace`, description: project.subtitle },
   };
 }
 

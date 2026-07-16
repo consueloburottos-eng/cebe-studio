@@ -26,7 +26,7 @@ export default function MenuBar() {
   return (
     <div
       className="absolute top-0 left-0 right-0 z-[60] flex h-[34px] items-center justify-between gap-3.5 px-4 backdrop-blur-xl"
-      style={{ background: "rgba(11,11,16,.72)", borderBottom: "1px solid var(--os-hr)" }}
+      style={{ background: "rgba(var(--os-bgrgb),.72)", borderBottom: "1px solid var(--os-hr)" }}
     >
       <div className="flex items-center gap-4 text-[13px]" style={{ color: "var(--os-tx)" }}>
         <span className="flex items-center gap-2 font-semibold">

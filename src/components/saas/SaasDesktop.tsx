@@ -12,6 +12,7 @@ import ProjectsWindow from "./ProjectsWindow";
 import NotesWindow, { NoteId } from "./NotesWindow";
 
 export default function SaasDesktop() {
+  const [dark, setDark] = useState(true);
   const [win, setWin] = useState<SaasWindow>(null);
   const [note, setNote] = useState<NoteId>("about");
   const [bookOpen, setBookOpen] = useState(false);
@@ -22,8 +23,18 @@ export default function SaasDesktop() {
   }
 
   return (
-    <div className="flex h-dvh w-full flex-col overflow-clip" style={{ background: "var(--os-bg)" }}>
-      <ModeSwitcher mode="saas" variant="dark" />
+    <div
+      data-os-theme={dark ? "dark" : "light"}
+      className="flex h-dvh w-full flex-col overflow-clip"
+      style={{ background: "var(--os-bg)" }}
+    >
+      <ModeSwitcher
+        mode="saas"
+        variant={dark ? "dark" : "light"}
+        dark={dark}
+        onSetLight={() => setDark(false)}
+        onSetDark={() => setDark(true)}
+      />
 
       <div className="relative flex-1 overflow-clip font-sans" style={{ color: "var(--os-tx)" }}>
         <div
@@ -37,7 +48,7 @@ export default function SaasDesktop() {
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
           <span
             className="font-display font-extrabold tracking-[-0.04em] whitespace-nowrap"
-            style={{ fontSize: "clamp(80px,15vw,240px)", color: "rgba(245,245,247,.028)" }}
+            style={{ fontSize: "clamp(80px,15vw,240px)", color: "rgba(var(--os-txrgb),.028)" }}
           >
             CEBE:STUDIO
           </span>

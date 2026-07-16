@@ -39,7 +39,7 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
       >
         <div
           className="flex flex-none items-center gap-3.5 px-4 py-3"
-          style={{ background: "rgba(20,20,24,.92)", borderBottom: "1px solid var(--os-hr)" }}
+          style={{ background: "rgba(var(--os-barrgb),.92)", borderBottom: "1px solid var(--os-hr)" }}
         >
           <div className="flex gap-2">
             <button
@@ -52,7 +52,7 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
             <span className="h-3 w-3 rounded-full" style={{ background: "#F4BF4F" }} />
             <span className="h-3 w-3 rounded-full" style={{ background: "#61C554" }} />
           </div>
-          <span className="text-[13px] font-semibold" style={{ color: "rgba(245,245,247,.85)" }}>
+          <span className="text-[13px] font-semibold" style={{ color: "rgba(var(--os-txrgb),.85)" }}>
             Proyectos — CEBE:STUDIO
           </span>
           <div className="relative ml-auto hidden sm:block">
@@ -60,16 +60,16 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Buscar proyecto…"
-              className="w-[210px] rounded-lg py-1.5 pr-3 pl-[30px] font-sans text-[12.5px] outline-none"
+              className="w-[210px] rounded-lg py-1.5 pr-3 pl-[30px] font-sans text-[12.5px] outline-none focus:ring-2 focus:ring-[var(--os-accent)]"
               style={{
-                background: "rgba(255,255,255,.06)",
+                background: "rgba(var(--os-sfrgb),.06)",
                 border: "1px solid var(--os-hr)",
                 color: "var(--os-tx)",
               }}
             />
             <span
               className="absolute top-1/2 left-2.5 -translate-y-1/2 text-xs"
-              style={{ color: "rgba(245,245,247,.4)" }}
+              style={{ color: "rgba(var(--os-txrgb),.4)" }}
             >
               ⌕
             </span>
@@ -79,11 +79,11 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
         <div className="flex min-h-0 flex-1">
           <div
             className="w-[160px] flex-none overflow-y-auto px-2.5 py-3.5 sm:w-[212px]"
-            style={{ borderRight: "1px solid var(--os-hr)", background: "rgba(255,255,255,.02)" }}
+            style={{ borderRight: "1px solid var(--os-hr)", background: "rgba(var(--os-sfrgb),.02)" }}
           >
             <div
               className="px-2 pb-2.5 text-[10.5px] font-semibold tracking-[0.14em] uppercase"
-              style={{ color: "rgba(245,245,247,.4)" }}
+              style={{ color: "rgba(var(--os-txrgb),.4)" }}
             >
               Proyectos
             </div>
@@ -96,7 +96,7 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
                 style={{
                   background: selectedSlug === p.slug ? "rgba(110,124,255,.16)" : "transparent",
                   color:
-                    selectedSlug === p.slug ? "var(--os-tx)" : "rgba(245,245,247,.6)",
+                    selectedSlug === p.slug ? "var(--os-tx)" : "rgba(var(--os-txrgb),.6)",
                   fontWeight: selectedSlug === p.slug ? 600 : 400,
                 }}
               >
@@ -119,22 +119,22 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
                     onClick={() => setSelectedSlug(p.slug)}
                     className="overflow-hidden rounded-xl border-none p-0 text-left font-sans"
                     style={{
-                      background: "rgba(255,255,255,.04)",
+                      background: "rgba(var(--os-sfrgb),.04)",
                       border: "1px solid var(--os-hr)",
                       color: "var(--os-tx)",
                     }}
                   >
-                    <div className="relative h-[120px]" style={{ background: "rgba(255,255,255,.03)" }}>
-                      <MediaPlaceholder label={p.title} compact tone="dark" />
+                    <div className="relative h-[120px]" style={{ background: "rgba(var(--os-sfrgb),.03)" }}>
+                      <MediaPlaceholder label={p.title} compact />
                     </div>
                     <div className="px-3.5 pt-3 pb-3.5">
                       <div className="flex items-baseline justify-between gap-2">
                         <span className="text-sm font-bold">{p.title}</span>
-                        <span className="font-mono text-[11px]" style={{ color: "rgba(245,245,247,.45)" }}>
+                        <span className="font-mono text-[11px]" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
                           {p.year}
                         </span>
                       </div>
-                      <div className="mt-1 text-[11.5px]" style={{ color: "rgba(245,245,247,.5)" }}>
+                      <div className="mt-1 text-[11.5px]" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
                         {p.category}
                       </div>
                       <div className="mt-2 text-[11.5px] font-semibold" style={{ color: "var(--os-accent)" }}>
@@ -150,21 +150,21 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
                   type="button"
                   onClick={() => setSelectedSlug(null)}
                   className="border-none bg-transparent p-0 pb-3.5 font-sans text-[12.5px]"
-                  style={{ color: "rgba(245,245,247,.6)" }}
+                  style={{ color: "rgba(var(--os-txrgb),.6)" }}
                 >
                   ‹ Todos los proyectos
                 </button>
                 <div
                   className="h-[200px] overflow-hidden rounded-xl"
-                  style={{ background: "rgba(255,255,255,.03)" }}
+                  style={{ background: "rgba(var(--os-sfrgb),.03)" }}
                 >
-                  <MediaPlaceholder label={selected.cover} tone="dark" />
+                  <MediaPlaceholder label={selected.cover} />
                 </div>
                 <div className="mt-4.5 flex items-baseline justify-between gap-3">
                   <span className="text-[26px] font-bold tracking-[-0.01em]" style={{ color: "var(--os-tx)" }}>
                     {selected.title}
                   </span>
-                  <span className="font-mono text-xs" style={{ color: "rgba(245,245,247,.45)" }}>
+                  <span className="font-mono text-xs" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
                     {selected.category}
                   </span>
                 </div>
@@ -179,7 +179,7 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
                 </div>
                 <p
                   className="mt-4 max-w-[70ch] text-[13.5px] leading-[1.7]"
-                  style={{ color: "rgba(245,245,247,.72)" }}
+                  style={{ color: "rgba(var(--os-txrgb),.72)" }}
                 >
                   {selected.brief}
                 </p>
@@ -197,7 +197,7 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
 
         <div
           className="flex-none px-4 py-2 font-mono text-[11px]"
-          style={{ color: "rgba(245,245,247,.4)", borderTop: "1px solid var(--os-hr)" }}
+          style={{ color: "rgba(var(--os-txrgb),.4)", borderTop: "1px solid var(--os-hr)" }}
         >
           Proyectos{selected ? ` / ${selected.title}` : ""}
         </div>
@@ -211,7 +211,7 @@ function Meta({ label, value, accent }: { label: string; value: string; accent?:
     <div>
       <div
         className="text-[10.5px] tracking-[0.12em] uppercase"
-        style={{ color: "rgba(245,245,247,.4)" }}
+        style={{ color: "rgba(var(--os-txrgb),.4)" }}
       >
         {label}
       </div>

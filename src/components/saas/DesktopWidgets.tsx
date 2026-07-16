@@ -96,9 +96,9 @@ export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void 
                 key={s}
                 className="rounded-full px-3 py-1.5 text-xs font-medium"
                 style={{
-                  background: "rgba(255,255,255,.06)",
+                  background: "rgba(var(--os-sfrgb),.06)",
                   border: "1px solid var(--os-hr)",
-                  color: "rgba(245,245,247,.85)",
+                  color: "rgba(var(--os-txrgb),.85)",
                 }}
               >
                 {s}
@@ -140,7 +140,7 @@ export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void 
           {date}
         </div>
         <div className="flex-1" />
-        <div className="text-[13px] leading-[1.4]" style={{ color: "rgba(245,245,247,.8)" }}>
+        <div className="text-[13px] leading-[1.4]" style={{ color: "rgba(var(--os-txrgb),.8)" }}>
           Agenda una llamada de 30 min →
         </div>
       </button>

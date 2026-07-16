@@ -24,11 +24,11 @@ export default function DesktopIcons({ onOpenCV, onOpenProjects }: DesktopIconsP
         >
           <span
             className="flex h-[58px] w-[58px] items-center justify-center rounded-2xl text-[25px] transition-colors"
-            style={{ background: "rgba(255,255,255,.07)", border: "1px solid var(--os-hr)" }}
+            style={{ background: "rgba(var(--os-sfrgb),.07)", border: "1px solid var(--os-hr)" }}
           >
             {ic.glyph}
           </span>
-          <span className="text-xs" style={{ color: "rgba(245,245,247,.75)" }}>
+          <span className="text-xs" style={{ color: "rgba(var(--os-txrgb),.75)" }}>
             {ic.label}
           </span>
         </button>

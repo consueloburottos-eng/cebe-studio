@@ -24,7 +24,7 @@ export default function ConciergeBar({
   return (
     <div className={className}>
       <div
-        className="flex items-center gap-3 rounded-full py-2 pr-2 pl-5 backdrop-blur-2xl"
+        className="flex items-center gap-3 rounded-full py-2 pr-2 pl-5 backdrop-blur-2xl focus-within:ring-2 focus-within:ring-[var(--mk-amber)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--mk-bg)]"
         style={{ background: "rgba(20,18,16,.7)", border: "1px solid rgba(255,255,255,.15)" }}
       >
         <span className="cursor-pointer text-lg" style={{ color: "rgba(242,237,230,.6)" }} aria-hidden="true">

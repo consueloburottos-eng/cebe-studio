@@ -6,6 +6,7 @@ import {
   Space_Grotesk,
   Space_Mono,
 } from "next/font/google";
+import { siteUrl, siteName, siteDescription } from "@/lib/site";
 import "./globals.css";
 
 const raleway = Raleway({
@@ -45,9 +46,29 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CEBE:STUDIO — Consuelo Burotto",
-  description:
-    "Product designer — sistemas de diseño, UX/UI y dirección de arte.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${siteName} — Consuelo Burotto`,
+    template: `%s — ${siteName}`,
+  },
+  description: siteDescription,
+  openGraph: {
+    title: `${siteName} — Consuelo Burotto`,
+    description: siteDescription,
+    url: siteUrl,
+    siteName,
+    locale: "es_ES",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteName} — Consuelo Burotto`,
+    description: siteDescription,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

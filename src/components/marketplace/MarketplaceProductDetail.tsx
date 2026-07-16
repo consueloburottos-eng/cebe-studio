@@ -30,9 +30,9 @@ export default function MarketplaceProductDetail({ project, suggestions }: Marke
       <div className="mx-auto max-w-[1100px] px-4 pb-24 sm:px-8">
         <div
           className="relative aspect-[16/9] overflow-hidden rounded-md sm:aspect-[21/9]"
-          style={{ background: "#1c1a17" }}
+          style={{ background: "var(--mk-surface)" }}
         >
-          <MediaPlaceholder label={project.cover} tone="dark" />
+          <MediaPlaceholder label={project.cover} />
         </div>
 
         <div className="mt-9 max-w-[70ch]">
@@ -45,7 +45,7 @@ export default function MarketplaceProductDetail({ project, suggestions }: Marke
           >
             {project.tag}
           </div>
-          <p className="mt-4 text-[16px] leading-[1.6]" style={{ color: "rgba(242,237,230,.82)" }}>
+          <p className="mt-4 text-[16px] leading-[1.6]" style={{ color: "rgba(var(--mk-txrgb),.82)" }}>
             {project.brief}
           </p>
         </div>
@@ -74,9 +74,9 @@ export default function MarketplaceProductDetail({ project, suggestions }: Marke
                 <Link key={s.slug} href={`/marketplace/${s.slug}`} className="block">
                   <div
                     className="aspect-[16/10] overflow-hidden rounded-lg"
-                    style={{ background: "#1c1a17" }}
+                    style={{ background: "var(--mk-surface)" }}
                   >
-                    <MediaPlaceholder label={s.title} tone="dark" />
+                    <MediaPlaceholder label={s.title} />
                   </div>
                   <div className="mt-3 font-serif text-[17px] italic" style={{ color: "var(--mk-tx)" }}>
                     {s.title}

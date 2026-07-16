@@ -24,8 +24,8 @@ export default function Dock({ active, onHome, onProjects, onAbout, onCV, onCont
     <div
       className="absolute bottom-4 left-1/2 z-40 flex -translate-x-1/2 items-end gap-3 rounded-[20px] px-3.5 py-2.5 backdrop-blur-2xl"
       style={{
-        background: "rgba(255,255,255,.06)",
-        border: "1px solid rgba(255,255,255,.12)",
+        background: "rgba(var(--os-sfrgb),.06)",
+        border: "1px solid rgba(var(--os-sfrgb),.12)",
         boxShadow: "0 20px 50px -20px rgba(0,0,0,.6)",
       }}
     >
@@ -39,7 +39,7 @@ export default function Dock({ active, onHome, onProjects, onAbout, onCV, onCont
             title={d.label}
             className="os-dockitem relative flex h-[46px] w-[46px] items-center justify-center rounded-[13px] border-none font-sans text-[21px]"
             style={{
-              background: isActive ? "#6E7CFF" : "rgba(255,255,255,.08)",
+              background: isActive ? "#6E7CFF" : "rgba(var(--os-sfrgb),.08)",
               color: isActive ? "#fff" : "var(--os-tx)",
             }}
           >

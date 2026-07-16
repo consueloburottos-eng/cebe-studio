@@ -19,9 +19,9 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
         >
           <div
             className="aspect-[16/10] overflow-hidden rounded-lg"
-            style={{ background: "#1c1a17" }}
+            style={{ background: "var(--mk-surface)" }}
           >
-            <MediaPlaceholder label={p.title} tone="dark" />
+            <MediaPlaceholder label={p.title} />
           </div>
           <div className="mt-3.5 font-serif text-[19px] italic" style={{ color: "var(--mk-tx)" }}>
             {p.title}

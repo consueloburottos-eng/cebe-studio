@@ -64,7 +64,7 @@ export default function ModeSwitcher({
           );
         })}
       </div>
-      {mode === "branding" && onSetLight && onSetDark && (
+      {onSetLight && onSetDark && (
         <div className="flex gap-0.5 rounded-full p-[3px]" style={{ background: segBg }}>
           <button
             type="button"
@@ -72,7 +72,7 @@ export default function ModeSwitcher({
             className={segBase}
             style={{
               background: !dark ? textColor : "transparent",
-              color: !dark ? "#fff" : mutedColor,
+              color: !dark ? (isDarkVariant ? "#141419" : "#fff") : mutedColor,
             }}
           >
             ☀ Light
@@ -83,7 +83,7 @@ export default function ModeSwitcher({
             className={segBase}
             style={{
               background: dark ? textColor : "transparent",
-              color: dark ? "#fff" : mutedColor,
+              color: dark ? (isDarkVariant ? "#141419" : "#fff") : mutedColor,
             }}
           >
             ☾ Dark

@@ -14,6 +14,12 @@
   --cb-glass-pill: rgba(255, 255, 255, 0.55);
   --cb-cta-bg: #111111;
   --cb-cta-text: #ffffff;
+
+  /* MediaPlaceholder — theme-aware, adapts by inheriting the vars it points at */
+  --ph-bg: var(--cb-pill);
+  --ph-hair: var(--cb-hair);
+  --ph-chip-bg: var(--cb-glass-pill);
+  --ph-chip-text: var(--cb-muted);
 }
 
 [data-cb-theme="dark"] {
@@ -28,8 +34,9 @@
   --cb-cta-text: #111111;
 }
 
-/* SaaS mode — simulated macOS desktop */
-:root {
+/* SaaS mode — simulated macOS desktop (dark default) */
+:root,
+[data-os-theme="dark"] {
   --os-bg: #0b0b10;
   --os-tx: #f5f5f7;
   --os-win: #141419;
@@ -37,15 +44,74 @@
   --os-hr: rgba(255, 255, 255, 0.1);
   --os-mut: rgba(245, 245, 247, 0.55);
   --os-accent: #6e7cff;
+  --os-txrgb: 245, 245, 247;
+  --os-sfrgb: 255, 255, 255;
+  --os-barrgb: 20, 20, 24;
+  --os-bgrgb: 11, 11, 16;
 }
 
-/* Marketplace mode — AI concierge, cinematic */
-:root {
+[data-os-theme="light"] {
+  --os-bg: #eceef3;
+  --os-tx: #14161c;
+  --os-win: #ffffff;
+  --os-sf: rgba(20, 22, 28, 0.05);
+  --os-hr: rgba(20, 22, 28, 0.1);
+  --os-mut: rgba(20, 22, 28, 0.55);
+  --os-accent: #6e7cff;
+  --os-txrgb: 42, 46, 58;
+  --os-sfrgb: 32, 36, 46;
+  --os-barrgb: 232, 235, 242;
+  --os-bgrgb: 224, 227, 236;
+}
+
+[data-os-theme="dark"] {
+  --ph-bg: var(--os-sf);
+  --ph-hair: var(--os-hr);
+  --ph-chip-bg: rgba(0, 0, 0, 0.35);
+  --ph-chip-text: var(--os-mut);
+}
+
+[data-os-theme="light"] {
+  --ph-bg: var(--os-sf);
+  --ph-hair: var(--os-hr);
+  --ph-chip-bg: rgba(255, 255, 255, 0.6);
+  --ph-chip-text: var(--os-mut);
+}
+
+/* Marketplace mode — AI concierge, cinematic (dark default) */
+:root,
+[data-mk-theme="dark"] {
   --mk-bg: #141210;
   --mk-tx: #f2ede6;
   --mk-mut: #cbbfae;
   --mk-amber: #c68a3d;
   --mk-hr: rgba(255, 255, 255, 0.14);
+  --mk-surface: #1c1a17;
+  --mk-txrgb: 242, 237, 230;
+}
+
+[data-mk-theme="light"] {
+  --mk-bg: #f4f1ea;
+  --mk-tx: #141210;
+  --mk-mut: #6b6456;
+  --mk-amber: #c68a3d;
+  --mk-hr: rgba(20, 18, 16, 0.14);
+  --mk-surface: #e8e2d6;
+  --mk-txrgb: 20, 18, 16;
+}
+
+[data-mk-theme="dark"] {
+  --ph-bg: var(--mk-surface);
+  --ph-hair: var(--mk-hr);
+  --ph-chip-bg: rgba(0, 0, 0, 0.35);
+  --ph-chip-text: var(--mk-mut);
+}
+
+[data-mk-theme="light"] {
+  --ph-bg: var(--mk-surface);
+  --ph-hair: var(--mk-hr);
+  --ph-chip-bg: rgba(255, 255, 255, 0.6);
+  --ph-chip-text: var(--mk-mut);
 }
 
 @theme inline {
