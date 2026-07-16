@@ -37,23 +37,31 @@ function video(slug: string, file: string): MediaAsset {
   return { type: "video", src: `/projects/${slug}/${file}` };
 }
 
-// generates `count` generic-labeled gallery items from intro-01..NN uploads;
-// `extOverrides` covers the rare slot that was re-uploaded in a different
-// format (e.g. { 4: "png" } when intro-04 exists as .png instead of .webp)
+function mediaFor(folder: string, file: string): MediaAsset {
+  return file.endsWith(".mp4") || file.endsWith(".mov") ? video(folder, file) : img(folder, file);
+}
+
+// generates generic-labeled gallery items for intro-<start>..<end> uploads;
+// `defaultExt` covers projects uploaded mostly as one format (e.g. mostly
+// .mp4), `extOverrides` covers individual slots re-uploaded in a different
+// format (e.g. { 4: "png" } when intro-04 exists as .png instead of the rest)
 function introGallery(
   folder: string,
   title: string,
-  count: number,
+  start: number,
+  end: number,
+  defaultExt: string = "webp",
   extOverrides: Record<number, string> = {}
 ): GalleryItem[] {
-  return Array.from({ length: count }, (_, i) => {
-    const n = i + 1;
-    const ext = extOverrides[n] ?? "webp";
-    return {
+  const items: GalleryItem[] = [];
+  for (let n = start; n <= end; n++) {
+    const ext = extOverrides[n] ?? defaultExt;
+    items.push({
       label: `${title} — imagen ${n}`,
-      media: img(folder, `intro-${String(n).padStart(2, "0")}.${ext}`),
-    };
-  });
+      media: mediaFor(folder, `intro-${String(n).padStart(2, "0")}.${ext}`),
+    });
+  }
+  return items;
 }
 
 // A project's public/projects/<folder> name doesn't always match its URL
@@ -98,14 +106,7 @@ export const projects: Project[] = [
       "En paralelo, diseñé el sitio web y la plataforma de candidatos completa — la arquitectura donde empleo, formación, coaching y eventos conviven con el mismo peso, no como una lista de vacantes con la capacitación como nota al pie. Cada organización socia necesitaba que su programa se sintiera nativo de la plataforma, no insertado a la fuerza, así que el sistema de componentes sostiene por igual una vacante, un programa de coaching ejecutivo o un taller de liderazgo, sin que ninguno se vea de segunda categoría frente al resto.",
     ],
     headline: "un consejero, no un buscador",
-    gallery: [
-      { label: "Plataforma — vista general" },
-      { label: "Agente Celeste — conversación" },
-      { label: "Panel de candidato" },
-      { label: "Sistema de componentes" },
-      { label: "Programas y coaching" },
-      { label: "Responsive — mobile" },
-    ],
+    gallery: introGallery("talent-capital", "Talent Capital", 1, 13, "mp4", { 1: "webp", 2: "webp" }),
   },
   {
     slug: "quartz",
@@ -137,7 +138,7 @@ export const projects: Project[] = [
       "En el tercer acto — el quiebro: liberación y destino —, aparece el Cambré Flamenco (el Quiebro): el cuerpo abandona la verticalidad y se deja llevar. El hilo sale del cuerpo, ocupa el espacio y genera tensión con el exterior. Las manos — narración emocional, no solo gesto — viajan desde el interior hacia el exterior, desde la contención hacia la liberación: el cuerpo dice lo que la palabra ya no puede contener. La serie completa traza el viaje de una mujer que pasa de estar contenida por la norma y la razón, a enfrentarse con su deseo y finalmente dejarse atravesar por él.",
     ],
     headline: "el hilo de la novia",
-    gallery: introGallery("quartz", "Quartz", 13, { 8: "png" }),
+    gallery: introGallery("quartz", "Quartz", 1, 13, "webp", { 8: "png" }),
   },
   {
     slug: "bodas-de-sangre",
@@ -258,6 +259,7 @@ export const projects: Project[] = [
       { label: "Amphora — portada", media: img("amphora", "01.jpg") },
       { label: "Amphora — producto", media: img("amphora", "02.jpg") },
       { label: "Amphora — interacción", media: img("amphora", "03.gif") },
+      ...introGallery("amphora", "Amphora", 4, 13, "webp", { 6: "mp4", 11: "gif" }),
     ],
   },
   {
@@ -345,6 +347,7 @@ export const projects: Project[] = [
       { label: "BULULU — textil", media: img("bululu", "05.jpg") },
       { label: "BULULU — detalle", media: img("bululu", "06.jpg") },
       { label: "BULULU — en uso", media: img("bululu", "07.jpg") },
+      ...introGallery("bululu", "Bululu", 7, 13),
     ],
   },
   {
@@ -374,6 +377,7 @@ export const projects: Project[] = [
       { label: "Como & Voto — producto", media: img("como-y-voto", "04.jpg") },
       { label: "Como & Voto — detalle", media: img("como-y-voto", "05.jpg") },
       { label: "Como & Voto — set", media: img("como-y-voto", "06.jpg") },
+      ...introGallery("como-y-voto", "Como & Voto", 6, 13),
     ],
   },
   {
@@ -503,6 +507,7 @@ export const projects: Project[] = [
       { label: "SoyAdicto — ilustración", media: img("soya-adicto", "02.jpg") },
       { label: "SoyAdicto — producto", media: img("soya-adicto", "03.jpg") },
       { label: "SoyAdicto — aplicación", media: img("soya-adicto", "04.jpg") },
+      ...introGallery("soya-adicto", "SoyAdicto", 4, 13),
     ],
   },
 ];
@@ -560,7 +565,7 @@ for (const stub of PENDING_STUBS) {
       "El contenido de este proyecto está en preparación — pronto vas a poder ver el caso completo acá.",
     strategy: [],
     headline: "próximamente",
-    gallery: introGallery(stub.slug, stub.displayTitle, stub.introCount, stub.introExtOverrides),
+    gallery: introGallery(stub.slug, stub.displayTitle, 1, stub.introCount, "webp", stub.introExtOverrides),
     pending: true,
   });
 }
