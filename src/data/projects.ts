@@ -37,6 +37,25 @@ function video(slug: string, file: string): MediaAsset {
   return { type: "video", src: `/projects/${slug}/${file}` };
 }
 
+// generates `count` generic-labeled gallery items from intro-01..NN uploads;
+// `extOverrides` covers the rare slot that was re-uploaded in a different
+// format (e.g. { 4: "png" } when intro-04 exists as .png instead of .webp)
+function introGallery(
+  folder: string,
+  title: string,
+  count: number,
+  extOverrides: Record<number, string> = {}
+): GalleryItem[] {
+  return Array.from({ length: count }, (_, i) => {
+    const n = i + 1;
+    const ext = extOverrides[n] ?? "webp";
+    return {
+      label: `${title} — imagen ${n}`,
+      media: img(folder, `intro-${String(n).padStart(2, "0")}.${ext}`),
+    };
+  });
+}
+
 // A project's public/projects/<folder> name doesn't always match its URL
 // slug (e.g. "bodas-de-sangre" ships assets under "violencia-normalizada").
 // Derive the real folder from any media the project already has, falling
@@ -108,6 +127,7 @@ export const projects: Project[] = [
       "Dirección de movimiento",
     ],
     cover: "Quartz — El hilo de la Novia",
+    coverMedia: img("quartz", "cover.webp"),
     brief:
       "Quartz es una reinterpretación visual de Bodas de Sangre de Federico García Lorca, construida como un afiche/serie fotográfica alrededor de un solo personaje: la Novia. En vez de narrar la obra, la serie traduce su transformación emocional al lenguaje corporal del flamenco, usando un hilo rojo como extensión física de aquello que la Novia intenta controlar y que, acto a acto, termina dominándola. El flamenco funciona aquí como símbolo — de la pasión, el deseo, la sangre y la fuerza interna — y el rojo del hilo como su materialización visual: nace contenido dentro del cuerpo y termina ocupando el espacio, igual que la pasión que la obra presenta como destino inevitable.",
     strategy: [
@@ -117,14 +137,7 @@ export const projects: Project[] = [
       "En el tercer acto — el quiebro: liberación y destino —, aparece el Cambré Flamenco (el Quiebro): el cuerpo abandona la verticalidad y se deja llevar. El hilo sale del cuerpo, ocupa el espacio y genera tensión con el exterior. Las manos — narración emocional, no solo gesto — viajan desde el interior hacia el exterior, desde la contención hacia la liberación: el cuerpo dice lo que la palabra ya no puede contener. La serie completa traza el viaje de una mujer que pasa de estar contenida por la norma y la razón, a enfrentarse con su deseo y finalmente dejarse atravesar por él.",
     ],
     headline: "el hilo de la novia",
-    gallery: [
-      { label: "Acto III — El Quiebro" },
-      { label: "Acto I — la pasión contenida" },
-      { label: "Detalle — hilo rojo" },
-      { label: "Acto II — el deseo aparece" },
-      { label: "Detalle — flores tejidas" },
-      { label: "Composición final" },
-    ],
+    gallery: introGallery("quartz", "Quartz", 13, { 8: "png" }),
   },
   {
     slug: "bodas-de-sangre",
@@ -494,17 +507,41 @@ export const projects: Project[] = [
   },
 ];
 
-const PENDING_STUBS: { slug: string; title: string }[] = [
-  { slug: "brava", title: "brava" },
-  { slug: "cnc", title: "cnc" },
-  { slug: "dior", title: "dior" },
-  { slug: "llay-llay", title: "llay llay" },
-  { slug: "longboard", title: "longboard" },
-  { slug: "maquillaje-teatral", title: "maquillaje teatral" },
-  { slug: "marley-coffee", title: "marley coffee" },
-  { slug: "pants", title: "pants" },
+const PENDING_STUBS: {
+  slug: string;
+  title: string;
+  displayTitle: string;
+  coverExt: string;
+  introCount: number;
+  introExtOverrides?: Record<number, string>;
+}[] = [
+  { slug: "brava", title: "brava", displayTitle: "Brava", coverExt: "webp", introCount: 13 },
+  { slug: "cnc", title: "cnc", displayTitle: "CNC", coverExt: "webp", introCount: 13 },
+  { slug: "dior", title: "dior", displayTitle: "Dior", coverExt: "gif", introCount: 0 },
+  { slug: "llay-llay", title: "llay llay", displayTitle: "Llay Llay", coverExt: "webp", introCount: 13 },
+  {
+    slug: "longboard",
+    title: "longboard",
+    displayTitle: "Longboard",
+    coverExt: "webp",
+    introCount: 13,
+    introExtOverrides: { 4: "png" },
+  },
+  {
+    slug: "maquillaje-teatral",
+    title: "maquillaje teatral",
+    displayTitle: "Maquillaje teatral",
+    coverExt: "webp",
+    introCount: 6,
+    introExtOverrides: { 1: "png" },
+  },
+  { slug: "marley-coffee", title: "marley coffee", displayTitle: "Marley Coffee", coverExt: "png", introCount: 0 },
+  { slug: "pants", title: "pants", displayTitle: "Pants", coverExt: "webp", introCount: 13 },
 ];
 
+// Real photos exist for these now (uploaded via the local dev tool), but no
+// one has written real client/brief/strategy copy yet — only the media gets
+// wired up here; the placeholder text stays until that copy is written.
 for (const stub of PENDING_STUBS) {
   projects.push({
     slug: stub.slug,
@@ -517,12 +554,13 @@ for (const stub of PENDING_STUBS) {
     year: "—",
     result: "Próximamente",
     skills: [],
-    cover: `${stub.title} — próximamente`,
+    cover: `${stub.displayTitle} — portada`,
+    coverMedia: img(stub.slug, `cover.${stub.coverExt}`),
     brief:
       "El contenido de este proyecto está en preparación — pronto vas a poder ver el caso completo acá.",
     strategy: [],
     headline: "próximamente",
-    gallery: [],
+    gallery: introGallery(stub.slug, stub.displayTitle, stub.introCount, stub.introExtOverrides),
     pending: true,
   });
 }
