@@ -2,25 +2,172 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #111111;
+
+  /* CEBE:STUDIO — branding mode theme tokens (light default) */
+  --cb-bg: #ffffff;
+  --cb-text: #111111;
+  --cb-muted: #8a8a8a;
+  --cb-pill: #f1f0ee;
+  --cb-hair: rgba(17, 17, 17, 0.12);
+  --cb-glass: rgba(255, 255, 255, 0.82);
+  --cb-glass-pill: rgba(255, 255, 255, 0.55);
+  --cb-cta-bg: #111111;
+  --cb-cta-text: #ffffff;
+}
+
+[data-cb-theme="dark"] {
+  --cb-bg: #111111;
+  --cb-text: #f5f5f0;
+  --cb-muted: #9a9a95;
+  --cb-pill: #1d1d1b;
+  --cb-hair: rgba(245, 245, 240, 0.14);
+  --cb-glass: rgba(17, 17, 17, 0.86);
+  --cb-glass-pill: rgba(30, 30, 28, 0.55);
+  --cb-cta-bg: #f5f5f0;
+  --cb-cta-text: #111111;
+}
+
+/* SaaS mode — simulated macOS desktop */
+:root {
+  --os-bg: #0b0b10;
+  --os-tx: #f5f5f7;
+  --os-win: #141419;
+  --os-sf: rgba(255, 255, 255, 0.06);
+  --os-hr: rgba(255, 255, 255, 0.1);
+  --os-mut: rgba(245, 245, 247, 0.55);
+  --os-accent: #6e7cff;
+}
+
+/* Marketplace mode — AI concierge, cinematic */
+:root {
+  --mk-bg: #141210;
+  --mk-tx: #f2ede6;
+  --mk-mut: #cbbfae;
+  --mk-amber: #c68a3d;
+  --mk-hr: rgba(255, 255, 255, 0.14);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-raleway);
+  --font-display: var(--font-montserrat);
+  --font-serif: var(--font-instrument-serif);
+  --font-mono: var(--font-space-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-raleway), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes cb-title-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.cb-title {
+  animation: cb-title-in 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.cb-pillbtn {
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.3s,
+    background 0.3s,
+    border-color 0.3s;
+}
+.cb-pillbtn:hover {
+  transform: translateY(-2px);
+}
+.cb-pillbtn:active {
+  transform: translateY(0);
+}
+
+.cb-card:hover .cb-card-hint {
+  opacity: 1;
+}
+
+@keyframes mk-blur-in {
+  from {
+    opacity: 0;
+    filter: blur(20px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+.mk-blur {
+  animation: mk-blur-in 0.75s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes mk-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.15);
+  }
+}
+.mk-glow {
+  animation: mk-glow-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes os-win-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.os-win {
+  animation: os-win-in 0.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.os-dockitem {
+  transition:
+    transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background 0.2s;
+}
+.os-dockitem:hover {
+  transform: translateY(-8px) scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cb-title,
+  .cb-cursor,
+  .mk-blur,
+  .mk-glow,
+  .os-win,
+  .os-dockitem,
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
