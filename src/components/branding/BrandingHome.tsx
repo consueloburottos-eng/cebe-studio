@@ -127,6 +127,7 @@ export default function BrandingHome() {
           audioOn={audioOn}
           onToggleAudio={() => setAudioOn((a) => !a)}
           onOpenBook={() => setBookOpen(true)}
+          onOpenAbout={() => setAboutOpen(true)}
         />
 
         <LastProjectWidget project={featuredProject} />

@@ -4,9 +4,10 @@ type TopRightProps = {
   audioOn: boolean;
   onToggleAudio: () => void;
   onOpenBook: () => void;
+  onOpenAbout: () => void;
 };
 
-export default function TopRight({ audioOn, onToggleAudio, onOpenBook }: TopRightProps) {
+export default function TopRight({ audioOn, onToggleAudio, onOpenBook, onOpenAbout }: TopRightProps) {
   return (
     <div className="absolute top-4 right-4 z-[130] flex items-center gap-1.5 sm:top-[26px] sm:right-[26px] sm:gap-2.5">
       <button
@@ -19,6 +20,15 @@ export default function TopRight({ audioOn, onToggleAudio, onOpenBook }: TopRigh
         style={{ background: "var(--cb-glass-pill)" }}
       >
         {audioOn ? "🔊" : "🔇"}
+      </button>
+      <button
+        type="button"
+        onClick={onOpenAbout}
+        title="Perfil"
+        className="flex h-8 w-8 items-center justify-center rounded-full border-none text-sm backdrop-blur-xl sm:h-[38px] sm:w-[38px]"
+        style={{ background: "var(--cb-glass-pill)" }}
+      >
+        🙂
       </button>
       <button
         type="button"
