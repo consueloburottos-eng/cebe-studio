@@ -537,7 +537,7 @@ const PENDING_STUBS: {
   },
   { slug: "cnc", title: "cnc", displayTitle: "CNC", coverExt: "webp", introCount: 13 },
   { slug: "dior", title: "dior", displayTitle: "Dior", coverExt: "gif", introCount: 0 },
-  { slug: "la-chanchada", title: "la chanchada", displayTitle: "La Chanchada", introCount: 0 },
+  { slug: "la-chanchada", title: "la chanchada", displayTitle: "La Chanchada", coverExt: "webp", introCount: 13 },
   { slug: "llay-llay", title: "llay llay", displayTitle: "Llay Llay", coverExt: "webp", introCount: 13 },
   {
     slug: "longboard",
