@@ -307,7 +307,7 @@ export const projects: Project[] = [
     services: "Design tokens · Componentes",
     skills: ["Figma", "Design tokens"],
     cover: "Altafid — Design System",
-    coverMedia: img("design-system", "01.jpg"),
+    coverMedia: video("design-system", "hero.mp4"),
     brief:
       "El sistema de diseño de Altafid documenta tipografía, color, iconografía y componentes reutilizables, permitiendo que equipos de producto y desarrollo trabajen con un mismo lenguaje visual.",
     strategy: [
@@ -315,11 +315,16 @@ export const projects: Project[] = [
       "Una base de componentes documentada que acelera el diseño y desarrollo de nuevas pantallas manteniendo coherencia visual.",
     ],
     headline: "una base que escala",
+    // mixed video/image set uploaded via the dev tool; mediaFor() picks the
+    // right element per file extension (.mp4 → video, .webp → image)
     gallery: [
-      { label: "Tokens y fundaciones", media: img("design-system", "02.jpg") },
-      { label: "Librería de componentes", media: img("design-system", "03.jpg") },
-      { label: "Documentación de uso", media: img("design-system", "04.jpg") },
-    ],
+      "01.mp4", "02.mp4", "03.mp4", "04.webp",
+      "intro-04.webp", "intro-05.webp", "intro-06.webp", "intro-07.webp",
+      "intro-08.mp4", "intro-09.webp", "intro-10.webp", "intro-11.mp4", "intro-12.webp",
+    ].map((file, i) => ({
+      label: `Altafid Design System — imagen ${i + 1}`,
+      media: mediaFor("design-system", file),
+    })),
   },
   {
     slug: "bululu",

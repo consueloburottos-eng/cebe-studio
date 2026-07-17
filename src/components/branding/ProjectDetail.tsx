@@ -17,22 +17,27 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
   const [activeTab, setActiveTab] = useState<"brief" | "strategy">("brief");
   const folder = assetFolder(project);
 
-  // always render the full 13-slot intro grid; projects with fewer real images
-  // fall back to placeholders for the remaining slots (edit project.gallery in
-  // src/data/projects.ts to add real media to any of these 13 slots directly)
+  // In production the grid is adaptive — only tiles that actually have media
+  // render, so a project with 6 photos shows a clean full row instead of
+  // trailing placeholders. In dev we still pad to the full 13-slot grid so the
+  // click-to-upload overlay has empty target slots to upload into.
+  const isDev = process.env.NODE_ENV === "development";
+  const slotCount = isDev
+    ? INTRO_SPAN_PATTERN.length
+    : Math.min(project.gallery.length, INTRO_SPAN_PATTERN.length);
   const introItems = Array.from(
-    { length: INTRO_SPAN_PATTERN.length },
+    { length: slotCount },
     (_, i) => project.gallery[i] ?? { label: "Imagen próximamente" }
   );
 
   return (
     <div
-      className="min-h-dvh"
-      style={{ background: "var(--cb-bg)", color: "var(--cb-text)" }}
+      className="min-h-dvh backdrop-blur-2xl"
+      style={{ background: "var(--cb-glass)", color: "var(--cb-text)" }}
       data-cb-theme="light"
     >
       <div
-        className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b px-7 py-[15px] backdrop-blur-xl"
+        className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b px-7 py-[15px] backdrop-blur-2xl"
         style={{ background: "var(--cb-glass-pill)", borderColor: "var(--cb-hair)" }}
       >
         <span className="font-sans text-[13px] font-extrabold uppercase tracking-[0.12em]">
@@ -52,8 +57,8 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
       <Link
         href="/"
         title="volver"
-        className="fixed bottom-[26px] right-[26px] z-[110] flex h-[54px] w-[54px] items-center justify-center rounded-full border-none text-xl backdrop-blur-xl"
-        style={{ background: "var(--cb-glass-pill)", color: "var(--cb-text)" }}
+        className="fixed bottom-[26px] right-[26px] z-[110] flex h-[54px] w-[54px] items-center justify-center rounded-full border text-xl backdrop-blur-2xl"
+        style={{ background: "var(--cb-glass-pill)", borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
       >
         ✕
       </Link>
