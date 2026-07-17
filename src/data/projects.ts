@@ -176,6 +176,7 @@ export const projects: Project[] = [
       { label: "Sistema de anotación", media: img("violencia-normalizada", "06.jpg") },
       { label: "Detalle de página", media: img("violencia-normalizada", "07.jpg") },
       { label: "Spread final", media: img("violencia-normalizada", "08.jpg") },
+      ...introGallery("violencia-normalizada", "Violencia normalizada", 8, 13),
     ],
   },
   {
@@ -203,6 +204,7 @@ export const projects: Project[] = [
       { label: "Escenografía — vista general", media: img("obra-teatral-bodas-de-sangre", "02.jpg") },
       { label: "Detalle de set", media: img("obra-teatral-bodas-de-sangre", "03.jpg") },
       { label: "Puesta en escena", media: img("obra-teatral-bodas-de-sangre", "04.jpg") },
+      ...introGallery("obra-teatral-bodas-de-sangre", "Bodas de Sangre — escenografía", 4, 13),
     ],
   },
   {
