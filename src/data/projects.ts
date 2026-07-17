@@ -232,6 +232,7 @@ export const projects: Project[] = [
       { label: "Polucio — imagen 4", media: img("polucio", "04.jpg") },
       { label: "Polucio — imagen 5", media: img("polucio", "05.jpg") },
       { label: "Polucio — imagen 6", media: img("polucio", "06.jpg") },
+      ...introGallery("polucio", "Polucio", 6, 13),
     ],
     pending: true,
   },
@@ -526,7 +527,7 @@ const PENDING_STUBS: {
   client?: string;
 }[] = [
   { slug: "brava", title: "brava", displayTitle: "Brava", coverExt: "webp", introCount: 13 },
-  { slug: "buildwithin", title: "buildwithin", displayTitle: "BuildWithin", introCount: 0, client: "BuildWithin" },
+  { slug: "buildwithin", title: "buildwithin", displayTitle: "BuildWithin", coverExt: "png", introCount: 0, client: "BuildWithin" },
   {
     slug: "buildwithin-design-system",
     title: "buildwithin — design system",
@@ -536,6 +537,7 @@ const PENDING_STUBS: {
   },
   { slug: "cnc", title: "cnc", displayTitle: "CNC", coverExt: "webp", introCount: 13 },
   { slug: "dior", title: "dior", displayTitle: "Dior", coverExt: "gif", introCount: 0 },
+  { slug: "la-chanchada", title: "la chanchada", displayTitle: "La Chanchada", introCount: 0 },
   { slug: "llay-llay", title: "llay llay", displayTitle: "Llay Llay", coverExt: "webp", introCount: 13 },
   {
     slug: "longboard",
