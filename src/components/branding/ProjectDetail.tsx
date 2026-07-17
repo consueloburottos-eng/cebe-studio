@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
+import AboutModal from "./AboutModal";
 
 // span sequence lifted from the original prototype's projSel.intro grid (indices 0-12)
 const INTRO_SPAN_PATTERN = [2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1];
@@ -15,6 +16,7 @@ type ProjectDetailProps = {
 
 export default function ProjectDetail({ project, others }: ProjectDetailProps) {
   const [activeTab, setActiveTab] = useState<"brief" | "strategy">("brief");
+  const [aboutOpen, setAboutOpen] = useState(false);
   const folder = assetFolder(project);
 
   // In production the grid is adaptive — only tiles that actually have media
@@ -32,7 +34,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
 
   return (
     <div
-      className="min-h-dvh backdrop-blur-2xl"
+      className="min-h-dvh"
       style={{ background: "var(--cb-glass)", color: "var(--cb-text)" }}
       data-cb-theme="light"
     >
@@ -44,6 +46,15 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
           CEBE:STUDIO
         </span>
         <div className="flex items-center gap-2.5">
+          <button
+            type="button"
+            onClick={() => setAboutOpen(true)}
+            title="Perfil"
+            className="flex h-10 w-10 items-center justify-center rounded-full border text-[15px]"
+            style={{ borderColor: "var(--cb-hair)" }}
+          >
+            🙂
+          </button>
           <Link
             href="/"
             className="rounded-full border-none px-5 py-2.5 font-sans text-xs font-extrabold uppercase tracking-[0.07em]"
@@ -54,14 +65,21 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
         </div>
       </div>
 
-      <Link
-        href="/"
-        title="volver"
-        className="fixed bottom-[26px] right-[26px] z-[110] flex h-[54px] w-[54px] items-center justify-center rounded-full border text-xl backdrop-blur-2xl"
-        style={{ background: "var(--cb-glass-pill)", borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
+      {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} />}
+
+      <div
+        className="fixed inset-x-0 bottom-0 z-[110] flex items-center justify-end border-t px-7 py-[15px] backdrop-blur-2xl"
+        style={{ background: "var(--cb-glass-pill)", borderColor: "var(--cb-hair)" }}
       >
-        ✕
-      </Link>
+        <Link
+          href="/"
+          title="volver"
+          className="flex h-10 w-10 items-center justify-center rounded-full border text-[15px]"
+          style={{ borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
+        >
+          ✕
+        </Link>
+      </div>
 
       <div className="mx-auto max-w-[1200px] px-7 py-10 pb-[90px]">
         <div

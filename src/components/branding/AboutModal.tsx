@@ -3,7 +3,7 @@
 export default function AboutModal({ onClose }: { onClose: () => void }) {
   return (
     <div
-      className="absolute inset-0 z-[120] flex items-center justify-center overflow-auto p-6"
+      className="fixed inset-0 z-[120] flex items-center justify-center overflow-auto p-6"
       style={{ background: "rgba(0,0,0,.55)" }}
       onClick={onClose}
     >
