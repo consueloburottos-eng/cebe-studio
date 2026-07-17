@@ -517,11 +517,23 @@ const PENDING_STUBS: {
   slug: string;
   title: string;
   displayTitle: string;
-  coverExt: string;
+  // omit when no photos have been uploaded yet — the tile falls back to a
+  // placeholder instead of pointing at a file that doesn't exist
+  coverExt?: string;
   introCount: number;
   introExtOverrides?: Record<number, string>;
+  // defaults to the title; set when the title isn't the client's name
+  client?: string;
 }[] = [
   { slug: "brava", title: "brava", displayTitle: "Brava", coverExt: "webp", introCount: 13 },
+  { slug: "buildwithin", title: "buildwithin", displayTitle: "BuildWithin", introCount: 0, client: "BuildWithin" },
+  {
+    slug: "buildwithin-design-system",
+    title: "buildwithin — design system",
+    displayTitle: "BuildWithin — Design System",
+    introCount: 0,
+    client: "BuildWithin",
+  },
   { slug: "cnc", title: "cnc", displayTitle: "CNC", coverExt: "webp", introCount: 13 },
   { slug: "dior", title: "dior", displayTitle: "Dior", coverExt: "gif", introCount: 0 },
   { slug: "llay-llay", title: "llay llay", displayTitle: "Llay Llay", coverExt: "webp", introCount: 13 },
@@ -545,9 +557,10 @@ const PENDING_STUBS: {
   { slug: "pants", title: "pants", displayTitle: "Pants", coverExt: "webp", introCount: 13 },
 ];
 
-// Real photos exist for these now (uploaded via the local dev tool), but no
-// one has written real client/brief/strategy copy yet — only the media gets
-// wired up here; the placeholder text stays until that copy is written.
+// Most of these have real photos already (uploaded via the local dev tool) but
+// no written client/brief/strategy copy yet — only the media gets wired up
+// here; the placeholder text stays until that copy is written. Stubs without a
+// coverExt have no photos at all yet and render as placeholders throughout.
 for (const stub of PENDING_STUBS) {
   projects.push({
     slug: stub.slug,
@@ -555,13 +568,13 @@ for (const stub of PENDING_STUBS) {
     category: "Próximamente",
     tag: "proyecto por documentar",
     subtitle: "Case study en preparación",
-    client: stub.title,
+    client: stub.client ?? stub.title,
     role: "—",
     year: "—",
     result: "Próximamente",
     skills: [],
     cover: `${stub.displayTitle} — portada`,
-    coverMedia: img(stub.slug, `cover.${stub.coverExt}`),
+    coverMedia: stub.coverExt ? img(stub.slug, `cover.${stub.coverExt}`) : undefined,
     brief:
       "El contenido de este proyecto está en preparación — pronto vas a poder ver el caso completo acá.",
     strategy: [],
