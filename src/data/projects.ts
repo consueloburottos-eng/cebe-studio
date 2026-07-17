@@ -320,7 +320,7 @@ export const projects: Project[] = [
     gallery: [
       "01.mp4", "02.webp", "03.webp", "04.webp",
       "intro-04.webp", "intro-05.webp", "intro-06.webp", "intro-07.webp",
-      "intro-08.mp4", "intro-09.webp", "intro-10.webp", "intro-11.mp4", "intro-12.webp",
+      "intro-08.mp4", "intro-09.webp", "intro-10.webp", "intro-11.webp", "intro-12.webp",
     ].map((file, i) => ({
       label: `Altafid Design System — imagen ${i + 1}`,
       media: mediaFor("design-system", file),
