@@ -307,7 +307,7 @@ export const projects: Project[] = [
     services: "Design tokens · Componentes",
     skills: ["Figma", "Design tokens"],
     cover: "Altafid — Design System",
-    coverMedia: video("design-system", "hero.mp4"),
+    coverMedia: img("design-system", "hero.webp"),
     brief:
       "El sistema de diseño de Altafid documenta tipografía, color, iconografía y componentes reutilizables, permitiendo que equipos de producto y desarrollo trabajen con un mismo lenguaje visual.",
     strategy: [
@@ -318,7 +318,7 @@ export const projects: Project[] = [
     // mixed video/image set uploaded via the dev tool; mediaFor() picks the
     // right element per file extension (.mp4 → video, .webp → image)
     gallery: [
-      "01.mp4", "02.mp4", "03.mp4", "04.webp",
+      "01.mp4", "02.webp", "03.webp", "04.webp",
       "intro-04.webp", "intro-05.webp", "intro-06.webp", "intro-07.webp",
       "intro-08.mp4", "intro-09.webp", "intro-10.webp", "intro-11.mp4", "intro-12.webp",
     ].map((file, i) => ({
