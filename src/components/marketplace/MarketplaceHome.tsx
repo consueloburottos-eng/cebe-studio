@@ -21,6 +21,23 @@ const EXAMPLES = [
 // gallery landing strip. Not tied to any single project — these represent
 // services (spanning many projects each), so each tile is its own upload
 // slot under /showcase/ rather than pulling from a project's media.
+type Media = { type: "image" | "video"; src: string };
+
+// each service keeps its grid-tile cover (`media`) plus 3 banner slots for
+// its dedicated page — slot "a" defaults to the same cover photo so the
+// banner is never empty; "b"/"c" are blank upload targets until real photos
+// are uploaded and wired in here via `extra`.
+function bannerSlots(id: string, cover: Media, extra: { b?: Media; c?: Media } = {}) {
+  return [
+    { id: `${id}-a`, media: cover as Media | undefined },
+    { id: `${id}-b`, media: extra.b },
+    { id: `${id}-c`, media: extra.c },
+  ];
+}
+
+const SERVICE_1_BANNER_B: Media = { type: "image", src: "/showcase/service-1-b.webp" };
+const SERVICE_1_BANNER_C: Media = { type: "image", src: "/showcase/service-1-c.webp" };
+
 const SHOWCASE = [
   {
     id: "service-1",
@@ -64,7 +81,14 @@ const SHOWCASE = [
     desc: "Estrategia de producto centrada en el usuario y el negocio.",
     media: { type: "image" as const, src: "/showcase/service-6.png" },
   },
-];
+].map((item) => ({
+  ...item,
+  bannerPhotos: bannerSlots(
+    item.id,
+    item.media,
+    item.id === "service-1" ? { b: SERVICE_1_BANNER_B, c: SERVICE_1_BANNER_C } : {}
+  ),
+}));
 
 type Mode = "home" | "loading" | "results" | "service";
 type ShowcaseItem = (typeof SHOWCASE)[number];
@@ -415,12 +439,18 @@ export default function MarketplaceHome() {
                 } as CSSProperties
               }
             >
-              <ProjectMedia
-                media={activeService.media}
-                label={activeService.label}
-                sizes="100vw"
-                uploadPath={`/showcase/${activeService.id}`}
-              />
+              <div className="absolute inset-0 flex">
+                {activeService.bannerPhotos.map((photo) => (
+                  <div key={photo.id} className="relative h-full flex-1 border-l first:border-l-0" style={{ borderColor: "rgba(255,255,255,.14)" }}>
+                    <ProjectMedia
+                      media={photo.media}
+                      label={activeService.label}
+                      sizes="34vw"
+                      uploadPath={`/showcase/${photo.id}`}
+                    />
+                  </div>
+                ))}
+              </div>
               <div
                 className="pointer-events-none absolute inset-0 z-[4]"
                 style={{ background: "linear-gradient(180deg, rgba(0,0,0,.34), rgba(0,0,0,0) 40%, rgba(0,0,0,.5))" }}

@@ -9,6 +9,7 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
   const [favorited, setFavorited] = useState<Set<string>>(new Set());
   const [inCart, setInCart] = useState<Set<string>>(new Set());
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
 
   function toggleFavorite(slug: string, e: MouseEvent) {
     e.preventDefault();
@@ -24,7 +25,12 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
     e.preventDefault();
     e.stopPropagation();
     setInCart((prev) => new Set(prev).add(slug));
+    setQuantities((prev) => ({ ...prev, [slug]: prev[slug] ?? 1 }));
     setActiveSlug(slug);
+  }
+
+  function changeQty(slug: string, delta: number) {
+    setQuantities((prev) => ({ ...prev, [slug]: Math.max(1, (prev[slug] ?? 1) + delta) }));
   }
 
   const active = activeSlug ? projects.find((p) => p.slug === activeSlug) ?? null : null;
@@ -100,7 +106,7 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
             className="w-full max-w-[640px] rounded-2xl border p-5 backdrop-blur-2xl"
             style={{ background: "rgba(20,18,16,.92)", borderColor: "rgba(255,255,255,.14)" }}
           >
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div
                   className="relative h-14 w-14 flex-none overflow-hidden rounded-md"
@@ -115,8 +121,41 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
                   />
                 </div>
                 <div>
-                  <div className="text-[14px] font-semibold text-white">{active.title}</div>
-                  <div className="text-[12px] text-white/60">Agregado al carro ✓</div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[14px] font-semibold text-white">{active.title}</span>
+                    <button
+                      type="button"
+                      onClick={(e) => toggleFavorite(active.slug, e)}
+                      title="Agregar a favoritos"
+                      className="text-[13px]"
+                      style={{ color: favorited.has(active.slug) ? "#B8623F" : "rgba(255,255,255,.6)" }}
+                    >
+                      {favorited.has(active.slug) ? "♥" : "♡"}
+                    </button>
+                  </div>
+                  <div className="text-[12px] text-white/60">Cotización a medida</div>
+                  <div className="mt-2 flex items-center gap-2.5">
+                    <div className="flex items-center gap-2 rounded-full border" style={{ borderColor: "rgba(255,255,255,.2)" }}>
+                      <button
+                        type="button"
+                        onClick={() => changeQty(active.slug, -1)}
+                        title="Restar cantidad"
+                        className="flex h-6 w-6 items-center justify-center border-none bg-transparent text-[13px] text-white"
+                      >
+                        −
+                      </button>
+                      <span className="w-4 text-center text-[12px] text-white">{quantities[active.slug] ?? 1}</span>
+                      <button
+                        type="button"
+                        onClick={() => changeQty(active.slug, 1)}
+                        title="Sumar cantidad"
+                        className="flex h-6 w-6 items-center justify-center border-none bg-transparent text-[13px] text-white"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <span className="text-[11px] text-white/50">Agregado al carro ✓</span>
+                  </div>
                 </div>
               </div>
               <button
