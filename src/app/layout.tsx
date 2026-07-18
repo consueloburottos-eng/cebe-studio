@@ -19,7 +19,7 @@ const raleway = Raleway({
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ["800", "900"],
+  weight: ["400", "800", "900"],
   display: "swap",
 });
 

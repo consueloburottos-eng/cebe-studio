@@ -19,7 +19,8 @@ export async function POST(req: NextRequest) {
   }
 
   let normalized = path.posix.normalize(targetPath);
-  if (!normalized.startsWith("/projects/") || normalized.includes("..")) {
+  const allowedPrefixes = ["/projects/", "/showcase/", "/marketplace/"];
+  if (!allowedPrefixes.some((prefix) => normalized.startsWith(prefix)) || normalized.includes("..")) {
     return NextResponse.json({ error: "ruta no permitida" }, { status: 400 });
   }
 

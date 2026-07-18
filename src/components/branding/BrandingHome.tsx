@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { projects, getProject, featuredProjectSlug } from "@/data/projects";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useSiteTheme } from "@/hooks/useSiteTheme";
 import ModeSwitcher from "@/components/ModeSwitcher";
 import NavPill from "./NavPill";
 import TopRight from "./TopRight";
@@ -17,7 +18,7 @@ import BrandingCursor from "./BrandingCursor";
 const featuredProject = getProject(featuredProjectSlug)!;
 
 export default function BrandingHome() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useSiteTheme();
   const [navOpen, setNavOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [bookOpen, setBookOpen] = useState(false);

@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { categories, searchProjects, projects, Project } from "@/data/projects";
+import { categories, searchProjects, Project } from "@/data/projects";
 import ModeSwitcher from "@/components/ModeSwitcher";
 import MarketplaceHeader from "./MarketplaceHeader";
 import ConciergeBar from "./ConciergeBar";
 import ResultsGrid from "./ResultsGrid";
 import FullscreenMenu from "./FullscreenMenu";
+import ProjectMedia from "@/components/ProjectMedia";
+import { useSiteTheme } from "@/hooks/useSiteTheme";
 
 const EXAMPLES = [
   "Muéstrame tu trabajo en product design",
@@ -15,16 +17,125 @@ const EXAMPLES = [
   "Enséñame diseño de experiencia agéntica",
 ];
 
+// asymmetric 6-photo showcase grid (tall-short-short-tall), styled after a
+// gallery landing strip. Not tied to any single project — these represent
+// services (spanning many projects each), so each tile is its own upload
+// slot under /showcase/ rather than pulling from a project's media.
+const SHOWCASE = [
+  {
+    id: "service-1",
+    label: "Servicio 01",
+    title: "SaaS Design",
+    desc: "Interfaces intuitivas que convierten usuarios en clientes.",
+    media: { type: "image" as const, src: "/showcase/service-1.webp" },
+  },
+  {
+    id: "service-2",
+    label: "Servicio 02",
+    title: "Ecommerce Websites",
+    desc: "Tiendas online diseñadas para vender más y mejor.",
+    media: { type: "image" as const, src: "/showcase/service-2.webp" },
+  },
+  {
+    id: "service-3",
+    label: "Servicio 03",
+    title: "UX Research",
+    desc: "Investigación de usuarios para tomar decisiones acertadas.",
+    media: { type: "image" as const, src: "/showcase/service-3.webp" },
+  },
+  {
+    id: "service-4",
+    label: "Servicio 04",
+    title: "Design Systems",
+    desc: "Sistemas de diseño escalables que alinean equipos y productos.",
+    media: { type: "image" as const, src: "/showcase/service-4.webp" },
+  },
+  {
+    id: "service-5",
+    label: "Servicio 05",
+    title: "Brand & Visual Identity",
+    desc: "Marcas memorables que comunican valor y generan confianza.",
+    media: { type: "image" as const, src: "/showcase/service-5.webp" },
+  },
+  {
+    id: "service-6",
+    label: "Servicio 06",
+    title: "Product Strategy",
+    desc: "Estrategia de producto centrada en el usuario y el negocio.",
+    media: { type: "image" as const, src: "/showcase/service-6.png" },
+  },
+];
+
 type Mode = "home" | "loading" | "results";
 
+const DEV_UPLOAD_ENABLED = process.env.NODE_ENV === "development";
+const HERO_UPLOAD_PATH = "/marketplace/hero";
+
+type HeroCacheEntry = { type: "video" | "image"; src: string; version: number };
+
 export default function MarketplaceHome() {
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useSiteTheme();
   const [mode, setMode] = useState<Mode>("home");
   const [query, setQuery] = useState("");
   const [submitted, setSubmitted] = useState("");
   const [results, setResults] = useState<Project[]>([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [exampleIdx, setExampleIdx] = useState(0);
+  const [favorited, setFavorited] = useState<Set<string>>(new Set());
+  const [inCart, setInCart] = useState<Set<string>>(new Set());
+  const [heroCache, setHeroCache] = useState<HeroCacheEntry | null>(null);
+  const heroInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!DEV_UPLOAD_ENABLED) return;
+    try {
+      const raw = window.localStorage.getItem(`cb-dev-upload:${HERO_UPLOAD_PATH}`);
+      if (raw) setHeroCache(JSON.parse(raw));
+    } catch {
+      // ignore — worst case the banner just won't remember across reloads
+    }
+  }, []);
+
+  async function handleHeroUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    const form = new FormData();
+    form.append("file", file);
+    form.append("path", HERO_UPLOAD_PATH);
+    const res = await fetch("/api/dev-upload", { method: "POST", body: form });
+    if (!res.ok) {
+      alert(`No se pudo subir el archivo: ${await res.text()}`);
+      return;
+    }
+    const { path: savedPath }: { path: string } = await res.json();
+    const entry: HeroCacheEntry = {
+      type: file.type.startsWith("video/") ? "video" : "image",
+      src: savedPath,
+      version: Date.now(),
+    };
+    window.localStorage.setItem(`cb-dev-upload:${HERO_UPLOAD_PATH}`, JSON.stringify(entry));
+    setHeroCache(entry);
+  }
+
+  const heroMedia: HeroCacheEntry = heroCache ?? { type: "image", src: "/marketplace/hero.webp", version: 0 };
+  const heroSrc = heroCache ? `${heroCache.src}?v=${heroCache.version}` : heroMedia.src;
+
+  function toggleFavorite(id: string) {
+    setFavorited((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  }
+
+  function toggleCart(id: string) {
+    setInCart((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  }
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -58,8 +169,6 @@ export default function MarketplaceHome() {
     submit(category);
   }
 
-  const featured = projects.filter((p) => !p.pending).slice(0, 6);
-
   return (
     <div
       data-mk-theme={dark ? "dark" : "light"}
@@ -74,7 +183,10 @@ export default function MarketplaceHome() {
         onSetDark={() => setDark(true)}
       />
 
-      <div className="relative flex-1 font-serif" style={{ color: "var(--mk-tx)" }}>
+      <div
+        className="relative flex-1 font-normal"
+        style={{ color: "var(--mk-tx)", fontFamily: "var(--font-montserrat)" }}
+      >
         {mode === "home" && (
           <>
           {/* The hero is always a dark, atmospheric photo per spec — pin its
@@ -96,30 +208,64 @@ export default function MarketplaceHome() {
           >
             <MarketplaceHeader onOpenMenu={() => setMenuOpen(true)} />
             <div className="absolute inset-0">
-              <video
-                className="h-full w-full object-cover"
-                src="/marketplace/hero.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                aria-label="hero — estudio y proceso de trabajo"
-              />
+              {heroMedia.type === "video" ? (
+                <video
+                  key={heroSrc}
+                  className="h-full w-full object-cover"
+                  src={heroSrc}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  aria-label="hero — estudio y proceso de trabajo"
+                />
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={heroSrc}
+                  alt="hero — estudio y proceso de trabajo"
+                  className="h-full w-full object-cover"
+                />
+              )}
               <div
                 className="absolute inset-0"
-                style={{ background: "linear-gradient(180deg, rgba(0,0,0,.4), rgba(0,0,0,.75))" }}
+                style={{ background: "linear-gradient(180deg, rgba(0,0,0,.3), rgba(0,0,0,0) 50%)" }}
               />
             </div>
+            {DEV_UPLOAD_ENABLED && (
+              <>
+                <input
+                  ref={heroInputRef}
+                  type="file"
+                  accept="image/*,video/*"
+                  className="hidden"
+                  onChange={handleHeroUpload}
+                />
+                <button
+                  type="button"
+                  onClick={() => heroInputRef.current?.click()}
+                  title="Subir banner (solo en desarrollo local)"
+                  className="absolute bottom-4 left-4 z-[7] rounded-full border-none bg-black/45 px-3.5 py-2 font-sans text-[11px] font-semibold text-white backdrop-blur-md"
+                >
+                  subir banner
+                </button>
+              </>
+            )}
             <div className="mk-blur pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center">
-              <span className="font-serif text-[clamp(40px,7vw,72px)]" style={{ color: "var(--mk-tx)" }}>
-                Welcome
+              <span
+                className="font-serif text-[clamp(34px,6vw,60px)] leading-[1.15]"
+                style={{ color: "var(--mk-tx)" }}
+              >
+                Design with <em className="italic">purpose</em>.
+                <br />
+                Create with <em className="italic">clarity</em>.
               </span>
               <span
-                className="max-w-[560px] text-[17px] leading-[1.5]"
+                className="max-w-[560px] text-[15px] leading-[1.5]"
                 style={{ color: "rgba(var(--mk-txrgb),.82)" }}
               >
-                Immerse yourself in the world of Consuelo Burotto and be inspired by a new,
-                harmonious digital experience
+                A design studio crafting digital products, brands and experiences that are
+                beautiful, functional and meaningful.
               </span>
             </div>
             <ConciergeBar
@@ -133,47 +279,91 @@ export default function MarketplaceHome() {
             />
           </div>
 
-          <div className="mx-auto max-w-[1100px] px-6 py-16 sm:px-8">
+          <div className="pt-14 pb-2 text-center sm:pt-16">
             <span
-              className="text-[12px] uppercase"
-              style={{ color: "var(--mk-mut)", letterSpacing: ".2em" }}
+              className="font-serif text-[clamp(26px,4vw,40px)]"
+              style={{ color: "var(--mk-tx)" }}
             >
-              Categorías
+              Design Services
             </span>
-            <div className="mt-5 flex flex-wrap gap-2.5">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() => pickCategory(category)}
-                  className="rounded-full border px-4 py-2 font-sans text-[12.5px]"
-                  style={{ borderColor: "var(--mk-hr)", color: "var(--mk-tx)" }}
+          </div>
+
+          <div className="relative h-[86vh] w-full px-3 py-3 sm:px-5 sm:py-5">
+            <div
+              className="grid h-full gap-2.5"
+              style={{ gridTemplateColumns: "1.15fr 1fr 1fr 1.15fr", gridTemplateRows: "1fr 1fr" }}
+            >
+              {SHOWCASE.map((item, i) => (
+                <div
+                  key={item.id}
+                  className="group relative overflow-hidden rounded-[6px]"
+                  style={{
+                    background: "var(--mk-hr)",
+                    gridColumn: i === 0 || i === 5 ? (i === 0 ? "1" : "4") : i <= 2 ? "2" : "3",
+                    gridRow: i === 0 || i === 5 ? "1 / span 2" : i % 2 === 1 ? "1" : "2",
+                  }}
                 >
-                  {category}
-                </button>
+                  <ProjectMedia
+                    media={item.media}
+                    label={item.label}
+                    sizes="(min-width:1100px) 30vw, 45vw"
+                    uploadPath={`/showcase/${item.id}`}
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 z-[15]"
+                    style={{ background: "linear-gradient(180deg, rgba(0,0,0,.42), rgba(0,0,0,0) 45%)" }}
+                  />
+                  <div className="absolute top-4 left-4 z-[16] max-w-[78%] font-sans">
+                    <div className="text-[17px] font-bold text-white sm:text-[19px]">{item.title}</div>
+                    <div className="mt-1.5 text-[12.5px] leading-[1.4] text-white/80">{item.desc}</div>
+                    <button
+                      type="button"
+                      onClick={() => submit(item.title)}
+                      className="mt-3 inline-flex items-center gap-1.5 rounded-full border-none bg-white/90 px-3.5 py-1.5 text-[11.5px] font-semibold text-[#141210] backdrop-blur-md"
+                    >
+                      Ver servicio <span aria-hidden="true">→</span>
+                    </button>
+                  </div>
+                  <div className="absolute right-2.5 bottom-2.5 z-20 flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => toggleFavorite(item.id)}
+                      title="Agregar a favoritos"
+                      aria-pressed={favorited.has(item.id)}
+                      className="flex h-8 w-8 items-center justify-center rounded-full border-none text-[14px] backdrop-blur-md"
+                      style={{
+                        background: favorited.has(item.id) ? "#B8623F" : "rgba(0,0,0,.4)",
+                        color: "#fff",
+                      }}
+                    >
+                      {favorited.has(item.id) ? "♥" : "♡"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => toggleCart(item.id)}
+                      title="Agregar al carro"
+                      aria-pressed={inCart.has(item.id)}
+                      className="flex h-8 w-8 items-center justify-center rounded-full border-none text-[16px] backdrop-blur-md"
+                      style={{
+                        background: inCart.has(item.id) ? "#B8623F" : "rgba(0,0,0,.4)",
+                        color: "#fff",
+                      }}
+                    >
+                      {inCart.has(item.id) ? "✓" : "+"}
+                    </button>
+                  </div>
+                </div>
               ))}
             </div>
-
-            <div className="mt-16 flex items-center justify-between">
-              <span
-                className="text-[12px] uppercase"
-                style={{ color: "var(--mk-mut)", letterSpacing: ".2em" }}
-              >
-                Destacados
-              </span>
-              <button
-                type="button"
-                onClick={() => submit("proyectos")}
-                className="border-none bg-transparent font-serif text-[13px] italic underline underline-offset-4"
-                style={{ color: "var(--mk-tx)" }}
-              >
-                Ver todo
-              </button>
-            </div>
-            <div className="mt-6">
-              <ResultsGrid results={featured} />
+            <div
+              className="pointer-events-none absolute bottom-9 left-1/2 flex -translate-x-1/2 items-center gap-2 font-sans text-[12px] uppercase"
+              style={{ color: "var(--mk-tx)", letterSpacing: ".18em" }}
+            >
+              <span>↓</span>
+              <span>Scroll to explore</span>
             </div>
           </div>
+
           </>
         )}
 

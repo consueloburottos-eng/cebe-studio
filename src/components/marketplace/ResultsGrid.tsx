@@ -28,7 +28,7 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
               uploadPath={`/projects/${assetFolder(p)}/cover`}
             />
           </div>
-          <div className="mt-3.5 font-serif text-[19px] italic" style={{ color: "var(--mk-tx)" }}>
+          <div className="mt-3.5 text-[17px]" style={{ color: "var(--mk-tx)" }}>
             {p.title}
           </div>
           <div

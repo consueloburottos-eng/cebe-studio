@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 type MarketplaceHeaderProps = {
   onOpenMenu: () => void;
 };
@@ -15,12 +17,9 @@ export default function MarketplaceHeader({ onOpenMenu }: MarketplaceHeaderProps
       >
         ☰ Menu
       </button>
-      <span
-        className="font-serif text-[15px]"
-        style={{ color: "var(--mk-tx)", letterSpacing: ".22em", fontVariant: "small-caps" }}
-      >
-        Cebe:Studio
-      </span>
+      <div className="relative h-[80px] w-[187px]">
+        <Image src="/marketplace/logo.png" alt="Cebe:Studio" fill sizes="187px" className="object-contain" />
+      </div>
       <div className="flex gap-4" style={{ color: "var(--mk-tx)" }} aria-hidden="true">
         <span title="Historial">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">

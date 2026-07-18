@@ -292,6 +292,7 @@ export const projects: Project[] = [
       { label: "Altafid — compliance", media: img("altafid", "05.jpg") },
       { label: "Altafid — billing", media: img("altafid", "06.jpg") },
       { label: "Altafid — CRM", media: img("altafid", "07.jpg") },
+      ...introGallery("altafid", "Altafid", 7, 13),
     ],
   },
   {
@@ -532,12 +533,12 @@ const PENDING_STUBS: {
   client?: string;
 }[] = [
   { slug: "brava", title: "brava", displayTitle: "Brava", coverExt: "webp", introCount: 13 },
-  { slug: "buildwithin", title: "buildwithin", displayTitle: "BuildWithin", coverExt: "png", introCount: 0, client: "BuildWithin" },
+  { slug: "buildwithin", title: "buildwithin", displayTitle: "BuildWithin", coverExt: "png", introCount: 13, client: "BuildWithin" },
   {
     slug: "buildwithin-design-system",
     title: "buildwithin — design system",
     displayTitle: "BuildWithin — Design System",
-    introCount: 0,
+    introCount: 10,
     client: "BuildWithin",
   },
   { slug: "cnc", title: "cnc", displayTitle: "CNC", coverExt: "webp", introCount: 13 },

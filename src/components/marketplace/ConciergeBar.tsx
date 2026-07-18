@@ -41,7 +41,7 @@ export default function ConciergeBar({
             if (e.key === "Enter") onSubmit();
           }}
           placeholder={placeholder}
-          className="flex-1 border-none bg-transparent py-2 font-serif text-[15px] outline-none"
+          className="flex-1 border-none bg-transparent py-2 text-[15px] outline-none"
           style={{ color: "var(--mk-tx)" }}
         />
         {onClear && (

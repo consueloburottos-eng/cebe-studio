@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { projects } from "@/data/projects";
+import { useSiteTheme } from "@/hooks/useSiteTheme";
 import ModeSwitcher from "@/components/ModeSwitcher";
 import BookModal from "@/components/branding/BookModal";
 import MenuBar from "./MenuBar";
@@ -12,7 +13,7 @@ import ProjectsWindow from "./ProjectsWindow";
 import NotesWindow, { NoteId } from "./NotesWindow";
 
 export default function SaasDesktop() {
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useSiteTheme();
   const [win, setWin] = useState<SaasWindow>(null);
   const [note, setNote] = useState<NoteId>("about");
   const [bookOpen, setBookOpen] = useState(false);
