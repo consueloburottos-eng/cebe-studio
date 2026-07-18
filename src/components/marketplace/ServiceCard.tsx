@@ -54,7 +54,7 @@ export default function ServiceCard({
 
   return (
     <div
-      className="absolute bottom-9 left-8 z-[25] w-[min(400px,88vw)] rounded-[28px] border p-5 backdrop-blur-2xl"
+      className="absolute bottom-9 left-1/2 z-[25] w-[min(400px,88vw)] -translate-x-1/2 rounded-[28px] border p-5 backdrop-blur-2xl"
       style={{
         background: "rgba(20,18,16,.5)",
         borderColor: "rgba(255,255,255,.16)",

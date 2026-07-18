@@ -5,9 +5,11 @@ import Image from "next/image";
 type MarketplaceHeaderProps = {
   onOpenMenu: () => void;
   onBack?: () => void;
+  onOpenCart?: () => void;
+  cartCount?: number;
 };
 
-export default function MarketplaceHeader({ onOpenMenu, onBack }: MarketplaceHeaderProps) {
+export default function MarketplaceHeader({ onOpenMenu, onBack, onOpenCart, cartCount = 0 }: MarketplaceHeaderProps) {
   return (
     <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 py-6 sm:px-8">
       <button
@@ -34,12 +36,27 @@ export default function MarketplaceHeader({ onOpenMenu, onBack }: MarketplaceHea
             <path d="M12 20.5s-7.5-4.6-10-9.3C.4 8 1.8 4.5 5.2 4c2-.3 3.7.7 4.8 2.3C11.1 4.7 12.8 3.7 14.8 4c3.4.5 4.8 4 3.2 7.2C15.5 15.9 12 20.5 12 20.5Z" />
           </svg>
         </span>
-        <span title="Propuestas">
+        <button
+          type="button"
+          onClick={onOpenCart}
+          title="Carrito"
+          aria-hidden={!onOpenCart}
+          className="relative border-none bg-transparent p-0"
+          style={{ color: "inherit" }}
+        >
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
             <path d="M6 8h12l-1 12H7L6 8Z" />
             <path d="M9 8V6a3 3 0 0 1 6 0v2" />
           </svg>
-        </span>
+          {cartCount > 0 && (
+            <span
+              className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-bold text-white"
+              style={{ background: "#B8623F" }}
+            >
+              {cartCount}
+            </span>
+          )}
+        </button>
       </div>
     </div>
   );

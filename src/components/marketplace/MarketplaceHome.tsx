@@ -10,6 +10,7 @@ import FullscreenMenu from "./FullscreenMenu";
 import ProjectMedia from "@/components/ProjectMedia";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
 import ServiceCard, { type ServiceCardConfig } from "./ServiceCard";
+import CartOverlay from "./CartOverlay";
 
 const EXAMPLES = [
   "Muéstrame tu trabajo en product design",
@@ -118,6 +119,7 @@ export default function MarketplaceHome() {
   const [heroCache, setHeroCache] = useState<HeroCacheEntry | null>(null);
   const [activeService, setActiveService] = useState<ShowcaseItem | null>(null);
   const [serviceCart, setServiceCart] = useState<Record<string, ServiceCardConfig>>({});
+  const [cartOpen, setCartOpen] = useState(false);
   const heroInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -252,7 +254,11 @@ export default function MarketplaceHome() {
               } as CSSProperties
             }
           >
-            <MarketplaceHeader onOpenMenu={() => setMenuOpen(true)} />
+            <MarketplaceHeader
+              onOpenMenu={() => setMenuOpen(true)}
+              onOpenCart={() => setCartOpen(true)}
+              cartCount={Object.keys(serviceCart).length}
+            />
             <div className="absolute inset-0">
               {heroMedia.type === "video" ? (
                 <video
@@ -463,16 +469,22 @@ export default function MarketplaceHome() {
                 className="pointer-events-none absolute inset-0 z-[4]"
                 style={{ background: "linear-gradient(180deg, rgba(0,0,0,.34), rgba(0,0,0,0) 40%, rgba(0,0,0,.55))" }}
               />
-              <MarketplaceHeader onOpenMenu={() => setMenuOpen(true)} onBack={clear} />
+              <MarketplaceHeader
+                onOpenMenu={() => setMenuOpen(true)}
+                onBack={clear}
+                onOpenCart={() => setCartOpen(true)}
+                cartCount={Object.keys(serviceCart).length}
+              />
 
               <ServiceCard
                 title={activeService.title}
                 priceFrom={activeService.priceFrom}
                 thumbnailSrc={activeService.media.src}
                 initial={serviceCart[activeService.id]}
-                onConfirm={(config) =>
-                  setServiceCart((prev) => ({ ...prev, [activeService.id]: config }))
-                }
+                onConfirm={(config) => {
+                  setServiceCart((prev) => ({ ...prev, [activeService.id]: config }));
+                  setCartOpen(true);
+                }}
               />
             </div>
 
@@ -519,6 +531,30 @@ export default function MarketplaceHome() {
 
         {menuOpen && (
           <FullscreenMenu categories={categories} onPick={pickCategory} onClose={() => setMenuOpen(false)} />
+        )}
+
+        {cartOpen && (
+          <CartOverlay
+            items={Object.entries(serviceCart).map(([id, config]) => {
+              const service = SHOWCASE.find((s) => s.id === id)!;
+              return {
+                id,
+                title: service.title,
+                priceFrom: service.priceFrom,
+                thumbnailSrc: service.media.src,
+                pages: config.pages,
+                flows: config.flows,
+              };
+            })}
+            onClose={() => setCartOpen(false)}
+            onRemove={(id) =>
+              setServiceCart((prev) => {
+                const next = { ...prev };
+                delete next[id];
+                return next;
+              })
+            }
+          />
         )}
       </div>
     </div>
