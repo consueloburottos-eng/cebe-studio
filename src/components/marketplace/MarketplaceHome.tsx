@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { categories, searchProjects, Project } from "@/data/projects";
+import { categories, searchProjects, projects, Project } from "@/data/projects";
 import ModeSwitcher from "@/components/ModeSwitcher";
 import MarketplaceHeader from "./MarketplaceHeader";
 import ConciergeBar from "./ConciergeBar";
 import ResultsGrid from "./ResultsGrid";
 import FullscreenMenu from "./FullscreenMenu";
-import MediaPlaceholder from "../MediaPlaceholder";
 
 const EXAMPLES = [
   "Muéstrame tu trabajo en product design",
@@ -59,10 +58,12 @@ export default function MarketplaceHome() {
     submit(category);
   }
 
+  const featured = projects.filter((p) => !p.pending).slice(0, 6);
+
   return (
     <div
       data-mk-theme={dark ? "dark" : "light"}
-      className="flex h-dvh w-full flex-col overflow-clip"
+      className="flex min-h-dvh w-full flex-col"
       style={{ background: "var(--mk-bg)" }}
     >
       <ModeSwitcher
@@ -73,12 +74,14 @@ export default function MarketplaceHome() {
         onSetDark={() => setDark(true)}
       />
 
-      <div className="relative flex-1 overflow-clip font-serif" style={{ color: "var(--mk-tx)" }}>
+      <div className="relative flex-1 font-serif" style={{ color: "var(--mk-tx)" }}>
         {mode === "home" && (
-          // The hero is always a dark, atmospheric photo per spec — pin its
-          // colors regardless of the light/dark toggle, which only governs
-          // the chrome around it (results/product views, concierge chrome).
+          <>
+          {/* The hero is always a dark, atmospheric photo per spec — pin its
+              colors regardless of the light/dark toggle, which only governs
+              the chrome around it (results/product views, concierge chrome). */}
           <div
+            className="relative h-dvh w-full"
             style={
               {
                 "--mk-tx": "#f2ede6",
@@ -93,7 +96,15 @@ export default function MarketplaceHome() {
           >
             <MarketplaceHeader onOpenMenu={() => setMenuOpen(true)} />
             <div className="absolute inset-0">
-              <MediaPlaceholder label="hero — estudio y proceso de trabajo" />
+              <video
+                className="h-full w-full object-cover"
+                src="/marketplace/hero.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                aria-label="hero — estudio y proceso de trabajo"
+              />
               <div
                 className="absolute inset-0"
                 style={{ background: "linear-gradient(180deg, rgba(0,0,0,.4), rgba(0,0,0,.75))" }}
@@ -121,10 +132,53 @@ export default function MarketplaceHome() {
               className="absolute bottom-11 left-1/2 z-[6] w-[min(640px,88vw)] -translate-x-1/2"
             />
           </div>
+
+          <div className="mx-auto max-w-[1100px] px-6 py-16 sm:px-8">
+            <span
+              className="text-[12px] uppercase"
+              style={{ color: "var(--mk-mut)", letterSpacing: ".2em" }}
+            >
+              Categorías
+            </span>
+            <div className="mt-5 flex flex-wrap gap-2.5">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => pickCategory(category)}
+                  className="rounded-full border px-4 py-2 font-sans text-[12.5px]"
+                  style={{ borderColor: "var(--mk-hr)", color: "var(--mk-tx)" }}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-16 flex items-center justify-between">
+              <span
+                className="text-[12px] uppercase"
+                style={{ color: "var(--mk-mut)", letterSpacing: ".2em" }}
+              >
+                Destacados
+              </span>
+              <button
+                type="button"
+                onClick={() => submit("proyectos")}
+                className="border-none bg-transparent font-serif text-[13px] italic underline underline-offset-4"
+                style={{ color: "var(--mk-tx)" }}
+              >
+                Ver todo
+              </button>
+            </div>
+            <div className="mt-6">
+              <ResultsGrid results={featured} />
+            </div>
+          </div>
+          </>
         )}
 
         {mode === "loading" && (
-          <div className="relative flex h-full flex-col items-center justify-center overflow-hidden" aria-live="polite">
+          <div className="relative flex h-dvh flex-col items-center justify-center overflow-hidden" aria-live="polite">
             <div
               className="mk-glow absolute h-[420px] w-[420px] rounded-full"
               style={{ background: "radial-gradient(circle,rgba(198,138,61,.5),transparent 70%)" }}
@@ -146,7 +200,7 @@ export default function MarketplaceHome() {
         )}
 
         {mode === "results" && (
-          <div className="relative h-full overflow-y-auto px-6 pt-7 pb-40 sm:px-8">
+          <div className="relative h-dvh overflow-y-auto px-6 pt-7 pb-40 sm:px-8">
             <div className="mb-11 flex items-center justify-between">
               <button
                 type="button"
