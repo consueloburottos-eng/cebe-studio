@@ -4,18 +4,19 @@ import Image from "next/image";
 
 type MarketplaceHeaderProps = {
   onOpenMenu: () => void;
+  onBack?: () => void;
 };
 
-export default function MarketplaceHeader({ onOpenMenu }: MarketplaceHeaderProps) {
+export default function MarketplaceHeader({ onOpenMenu, onBack }: MarketplaceHeaderProps) {
   return (
-    <div className="absolute top-0 left-0 right-0 z-[5] flex items-center justify-between px-6 py-6 sm:px-8">
+    <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 py-6 sm:px-8">
       <button
         type="button"
-        onClick={onOpenMenu}
+        onClick={onBack ?? onOpenMenu}
         className="flex items-center gap-2 border-none bg-transparent font-sans text-[13px] tracking-[0.04em]"
         style={{ color: "var(--mk-tx)" }}
       >
-        ☰ Menu
+        {onBack ? "‹ Back" : "☰ Menu"}
       </button>
       <div className="relative h-[80px] w-[187px]">
         <Image src="/marketplace/logo.png" alt="Cebe:Studio" fill sizes="187px" className="object-contain" />

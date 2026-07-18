@@ -66,7 +66,8 @@ const SHOWCASE = [
   },
 ];
 
-type Mode = "home" | "loading" | "results";
+type Mode = "home" | "loading" | "results" | "service";
+type ShowcaseItem = (typeof SHOWCASE)[number];
 
 const DEV_UPLOAD_ENABLED = process.env.NODE_ENV === "development";
 const HERO_UPLOAD_PATH = "/marketplace/hero";
@@ -84,6 +85,7 @@ export default function MarketplaceHome() {
   const [favorited, setFavorited] = useState<Set<string>>(new Set());
   const [inCart, setInCart] = useState<Set<string>>(new Set());
   const [heroCache, setHeroCache] = useState<HeroCacheEntry | null>(null);
+  const [activeService, setActiveService] = useState<ShowcaseItem | null>(null);
   const heroInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -161,12 +163,24 @@ export default function MarketplaceHome() {
     setMode("home");
     setQuery("");
     setSubmitted("");
+    setActiveService(null);
   }
 
   function pickCategory(category: string) {
     setMenuOpen(false);
     setQuery(category);
     submit(category);
+  }
+
+  function viewService(item: ShowcaseItem) {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setActiveService(item);
+    setSubmitted(item.title);
+    setMode("loading");
+    timerRef.current = setTimeout(() => {
+      setResults(searchProjects(item.title));
+      setMode("service");
+    }, 1100);
   }
 
   return (
@@ -318,7 +332,7 @@ export default function MarketplaceHome() {
                     <div className="mt-1.5 text-[12.5px] leading-[1.4] text-white/80">{item.desc}</div>
                     <button
                       type="button"
-                      onClick={() => submit(item.title)}
+                      onClick={() => viewService(item)}
                       className="mt-3 inline-flex items-center gap-1.5 rounded-full border-none bg-white/90 px-3.5 py-1.5 text-[11.5px] font-semibold text-[#141210] backdrop-blur-md"
                     >
                       Ver servicio <span aria-hidden="true">→</span>
@@ -386,6 +400,51 @@ export default function MarketplaceHome() {
               label="Consulta enviada"
               className="absolute bottom-11 left-1/2 z-[6] w-[min(640px,88vw)] -translate-x-1/2 opacity-70"
             />
+          </div>
+        )}
+
+        {mode === "service" && activeService && (
+          <div className="relative min-h-dvh w-full overflow-y-auto pb-40">
+            <div
+              className="relative h-[50vh] w-full sm:h-[56vh]"
+              style={
+                {
+                  "--mk-tx": "#f2ede6",
+                  "--mk-txrgb": "242, 237, 230",
+                  "--mk-mut": "#cbbfae",
+                } as CSSProperties
+              }
+            >
+              <ProjectMedia
+                media={activeService.media}
+                label={activeService.label}
+                sizes="100vw"
+                uploadPath={`/showcase/${activeService.id}`}
+              />
+              <div
+                className="pointer-events-none absolute inset-0 z-[4]"
+                style={{ background: "linear-gradient(180deg, rgba(0,0,0,.34), rgba(0,0,0,0) 40%, rgba(0,0,0,.5))" }}
+              />
+              <MarketplaceHeader onOpenMenu={() => setMenuOpen(true)} onBack={clear} />
+              <div className="absolute bottom-7 left-6 right-6 z-[5] sm:left-8 sm:right-8">
+                <span
+                  className="text-[12px] uppercase"
+                  style={{ color: "var(--mk-mut)", letterSpacing: ".2em" }}
+                >
+                  Servicio
+                </span>
+                <div
+                  className="mt-1.5 font-serif text-[clamp(28px,5vw,46px)]"
+                  style={{ color: "var(--mk-tx)" }}
+                >
+                  {activeService.title}
+                </div>
+              </div>
+            </div>
+
+            <div className="mx-auto max-w-[1100px] px-6 py-12 sm:px-8">
+              <ResultsGrid results={results} />
+            </div>
           </div>
         )}
 
