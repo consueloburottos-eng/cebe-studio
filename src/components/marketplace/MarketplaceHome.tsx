@@ -9,6 +9,7 @@ import ResultsGrid from "./ResultsGrid";
 import FullscreenMenu from "./FullscreenMenu";
 import ProjectMedia from "@/components/ProjectMedia";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
+import ServiceCard, { type ServiceCardConfig } from "./ServiceCard";
 
 const EXAMPLES = [
   "Muéstrame tu trabajo en product design",
@@ -44,6 +45,7 @@ const SHOWCASE = [
     label: "Servicio 01",
     title: "SaaS Design",
     desc: "Interfaces intuitivas que convierten usuarios en clientes.",
+    priceFrom: 4500,
     media: { type: "image" as const, src: "/showcase/service-1.webp" },
   },
   {
@@ -51,6 +53,7 @@ const SHOWCASE = [
     label: "Servicio 02",
     title: "Ecommerce Websites",
     desc: "Tiendas online diseñadas para vender más y mejor.",
+    priceFrom: 3200,
     media: { type: "image" as const, src: "/showcase/service-2.webp" },
   },
   {
@@ -58,6 +61,7 @@ const SHOWCASE = [
     label: "Servicio 03",
     title: "UX Research",
     desc: "Investigación de usuarios para tomar decisiones acertadas.",
+    priceFrom: 2200,
     media: { type: "image" as const, src: "/showcase/service-3.webp" },
   },
   {
@@ -65,6 +69,7 @@ const SHOWCASE = [
     label: "Servicio 04",
     title: "Design Systems",
     desc: "Sistemas de diseño escalables que alinean equipos y productos.",
+    priceFrom: 5000,
     media: { type: "image" as const, src: "/showcase/service-4.webp" },
   },
   {
@@ -72,6 +77,7 @@ const SHOWCASE = [
     label: "Servicio 05",
     title: "Brand & Visual Identity",
     desc: "Marcas memorables que comunican valor y generan confianza.",
+    priceFrom: 2500,
     media: { type: "image" as const, src: "/showcase/service-5.webp" },
   },
   {
@@ -79,6 +85,7 @@ const SHOWCASE = [
     label: "Servicio 06",
     title: "Product Strategy",
     desc: "Estrategia de producto centrada en el usuario y el negocio.",
+    priceFrom: 3000,
     media: { type: "image" as const, src: "/showcase/service-6.png" },
   },
 ].map((item) => ({
@@ -110,6 +117,7 @@ export default function MarketplaceHome() {
   const [inCart, setInCart] = useState<Set<string>>(new Set());
   const [heroCache, setHeroCache] = useState<HeroCacheEntry | null>(null);
   const [activeService, setActiveService] = useState<ShowcaseItem | null>(null);
+  const [serviceCart, setServiceCart] = useState<Record<string, ServiceCardConfig>>({});
   const heroInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -430,7 +438,7 @@ export default function MarketplaceHome() {
         {mode === "service" && activeService && (
           <div className="relative min-h-dvh w-full overflow-y-auto pb-40">
             <div
-              className="relative h-[50vh] w-full sm:h-[56vh]"
+              className="relative h-[700px] w-full"
               style={
                 {
                   "--mk-tx": "#f2ede6",
@@ -453,23 +461,19 @@ export default function MarketplaceHome() {
               </div>
               <div
                 className="pointer-events-none absolute inset-0 z-[4]"
-                style={{ background: "linear-gradient(180deg, rgba(0,0,0,.34), rgba(0,0,0,0) 40%, rgba(0,0,0,.5))" }}
+                style={{ background: "linear-gradient(180deg, rgba(0,0,0,.34), rgba(0,0,0,0) 40%, rgba(0,0,0,.55))" }}
               />
               <MarketplaceHeader onOpenMenu={() => setMenuOpen(true)} onBack={clear} />
-              <div className="absolute bottom-7 left-6 right-6 z-[5] sm:left-8 sm:right-8">
-                <span
-                  className="text-[12px] uppercase"
-                  style={{ color: "var(--mk-mut)", letterSpacing: ".2em" }}
-                >
-                  Servicio
-                </span>
-                <div
-                  className="mt-1.5 font-serif text-[clamp(28px,5vw,46px)]"
-                  style={{ color: "var(--mk-tx)" }}
-                >
-                  {activeService.title}
-                </div>
-              </div>
+
+              <ServiceCard
+                title={activeService.title}
+                priceFrom={activeService.priceFrom}
+                thumbnailSrc={activeService.media.src}
+                initial={serviceCart[activeService.id]}
+                onConfirm={(config) =>
+                  setServiceCart((prev) => ({ ...prev, [activeService.id]: config }))
+                }
+              />
             </div>
 
             <div className="mx-auto max-w-[1100px] px-6 py-12 sm:px-8">
