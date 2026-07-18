@@ -1,44 +1,178 @@
 "use client";
 
+import { useState, type MouseEvent } from "react";
 import Link from "next/link";
-import { Project, assetFolder } from "@/data/projects";
+import { Project, assetFolder, projects } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
 
 export default function ResultsGrid({ results }: { results: Project[] }) {
+  const [favorited, setFavorited] = useState<Set<string>>(new Set());
+  const [inCart, setInCart] = useState<Set<string>>(new Set());
+  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+
+  function toggleFavorite(slug: string, e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    setFavorited((prev) => {
+      const next = new Set(prev);
+      next.has(slug) ? next.delete(slug) : next.add(slug);
+      return next;
+    });
+  }
+
+  function addToCart(slug: string, e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    setInCart((prev) => new Set(prev).add(slug));
+    setActiveSlug(slug);
+  }
+
+  const active = activeSlug ? projects.find((p) => p.slug === activeSlug) ?? null : null;
+  const related = active
+    ? projects.filter((p) => p.category === active.category && p.slug !== active.slug && !p.pending).slice(0, 8)
+    : [];
+
   return (
-    <div
-      aria-live="polite"
-      className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-    >
-      {results.map((p, i) => (
-        <Link
-          key={p.slug}
-          href={`/marketplace/${p.slug}`}
-          className="mk-blur block text-left"
-          style={{ animationDelay: `${i * 90}ms` }}
-        >
-          <div
-            className="aspect-[16/10] overflow-hidden rounded-lg"
-            style={{ background: "var(--mk-surface)" }}
+    <>
+      <div aria-live="polite" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {results.map((p, i) => (
+          <Link
+            key={p.slug}
+            href={`/marketplace/${p.slug}`}
+            className="mk-blur block text-left"
+            style={{ animationDelay: `${i * 90}ms` }}
           >
-            <ProjectMedia
-              media={p.coverMedia}
-              label={p.cover}
-              sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-              uploadPath={`/projects/${assetFolder(p)}/cover`}
-            />
-          </div>
-          <div className="mt-3.5 text-[17px]" style={{ color: "var(--mk-tx)" }}>
-            {p.title}
-          </div>
+            <div
+              className="relative aspect-[16/10] overflow-hidden rounded-lg"
+              style={{ background: "var(--mk-surface)" }}
+            >
+              <ProjectMedia
+                media={p.coverMedia}
+                label={p.cover}
+                sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+                uploadPath={`/projects/${assetFolder(p)}/cover`}
+              />
+              <div className="absolute right-2.5 bottom-2.5 z-20 flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={(e) => toggleFavorite(p.slug, e)}
+                  title="Agregar a favoritos"
+                  aria-pressed={favorited.has(p.slug)}
+                  className="flex h-8 w-8 items-center justify-center rounded-full border-none text-[14px] backdrop-blur-md"
+                  style={{
+                    background: favorited.has(p.slug) ? "#B8623F" : "rgba(0,0,0,.4)",
+                    color: "#fff",
+                  }}
+                >
+                  {favorited.has(p.slug) ? "♥" : "♡"}
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => addToCart(p.slug, e)}
+                  title="Agregar al carro"
+                  aria-pressed={inCart.has(p.slug)}
+                  className="flex h-8 w-8 items-center justify-center rounded-full border-none text-[16px] backdrop-blur-md"
+                  style={{
+                    background: inCart.has(p.slug) ? "#B8623F" : "rgba(0,0,0,.4)",
+                    color: "#fff",
+                  }}
+                >
+                  {inCart.has(p.slug) ? "✓" : "+"}
+                </button>
+              </div>
+            </div>
+            <div className="mt-3.5 text-[17px]" style={{ color: "var(--mk-tx)" }}>
+              {p.title}
+            </div>
+            <div
+              className="mt-1 text-xs"
+              style={{ color: "var(--mk-mut)", letterSpacing: ".12em", textTransform: "uppercase" }}
+            >
+              {p.category}
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      {active && (
+        <div className="fixed inset-x-0 bottom-[104px] z-[140] flex justify-center px-6">
           <div
-            className="mt-1 text-xs"
-            style={{ color: "var(--mk-mut)", letterSpacing: ".12em", textTransform: "uppercase" }}
+            className="w-full max-w-[640px] rounded-2xl border p-5 backdrop-blur-2xl"
+            style={{ background: "rgba(20,18,16,.92)", borderColor: "rgba(255,255,255,.14)" }}
           >
-            {p.category}
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div
+                  className="relative h-14 w-14 flex-none overflow-hidden rounded-md"
+                  style={{ background: "var(--mk-surface)" }}
+                >
+                  <ProjectMedia
+                    media={active.coverMedia}
+                    label={active.cover}
+                    compact
+                    sizes="56px"
+                    uploadPath={`/projects/${assetFolder(active)}/cover`}
+                  />
+                </div>
+                <div>
+                  <div className="text-[14px] font-semibold text-white">{active.title}</div>
+                  <div className="text-[12px] text-white/60">Agregado al carro ✓</div>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveSlug(null)}
+                title="Cerrar"
+                className="flex h-9 w-9 flex-none items-center justify-center rounded-full border-none text-[13px] text-white"
+                style={{ background: "rgba(255,255,255,.1)" }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {related.length > 0 && (
+              <div className="mt-5">
+                <div
+                  className="mb-2.5 text-[11px] uppercase text-white/50"
+                  style={{ letterSpacing: ".18em" }}
+                >
+                  Más proyectos de {active.category}
+                </div>
+                <div className="flex gap-3 overflow-x-auto pb-1.5">
+                  {related.map((r) => (
+                    <Link
+                      key={r.slug}
+                      href={`/marketplace/${r.slug}`}
+                      className="group relative block h-20 w-32 flex-none overflow-hidden rounded-md"
+                      style={{ background: "var(--mk-surface)" }}
+                    >
+                      <ProjectMedia
+                        media={r.coverMedia}
+                        label={r.cover}
+                        compact
+                        sizes="128px"
+                        uploadPath={`/projects/${assetFolder(r)}/cover`}
+                      />
+                      <button
+                        type="button"
+                        onClick={(e) => toggleFavorite(r.slug, e)}
+                        title="Agregar a favoritos"
+                        className="absolute right-1 bottom-1 flex h-6 w-6 items-center justify-center rounded-full border-none text-[11px] backdrop-blur-md"
+                        style={{
+                          background: favorited.has(r.slug) ? "#B8623F" : "rgba(0,0,0,.45)",
+                          color: "#fff",
+                        }}
+                      >
+                        {favorited.has(r.slug) ? "♥" : "♡"}
+                      </button>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        </Link>
-      ))}
-    </div>
+        </div>
+      )}
+    </>
   );
 }
