@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 type TopRightProps = {
   audioOn: boolean;
   onToggleAudio: () => void;
@@ -25,10 +27,10 @@ export default function TopRight({ audioOn, onToggleAudio, onOpenBook, onOpenAbo
         type="button"
         onClick={onOpenAbout}
         title="Perfil"
-        className="flex h-8 w-8 items-center justify-center rounded-full border-none text-sm backdrop-blur-xl sm:h-[38px] sm:w-[38px]"
+        className="relative h-8 w-8 flex-none overflow-hidden rounded-full border-none backdrop-blur-xl sm:h-[38px] sm:w-[38px]"
         style={{ background: "var(--cb-glass-pill)" }}
       >
-        🙂
+        <Image src="/profile/avatar.webp" alt="Perfil" fill sizes="38px" className="object-cover" />
       </button>
       <button
         type="button"

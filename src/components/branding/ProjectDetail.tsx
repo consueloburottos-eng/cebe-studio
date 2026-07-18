@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
 import AboutModal from "./AboutModal";
@@ -50,10 +51,10 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
             type="button"
             onClick={() => setAboutOpen(true)}
             title="Perfil"
-            className="flex h-10 w-10 items-center justify-center rounded-full border text-[15px]"
+            className="relative h-10 w-10 flex-none overflow-hidden rounded-full border"
             style={{ borderColor: "var(--cb-hair)" }}
           >
-            🙂
+            <Image src="/profile/avatar.webp" alt="Perfil" fill sizes="40px" className="object-cover" />
           </button>
           <Link
             href="/"

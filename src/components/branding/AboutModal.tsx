@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 import { projects } from "@/data/projects";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
@@ -14,34 +15,52 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "book", label: "Book me" },
 ];
 
-// Found in the original prototype's CV window — flagged to the user for
-// confirmation since names like "Northwind" read like placeholder demo data
-// rather than a real employer.
+// From her real CV (2026-06-30-cv-consuelo-burotto.pdf), most recent first
 const EXPERIENCE = [
   {
-    role: "Lead Product Designer",
-    company: "Aria",
-    period: "2022–Hoy",
-    note: "Sistemas de diseño multimarca; unificó cuatro productos y redujo 60% las inconsistencias de UI.",
+    role: "UX/UI Lead Senior Designer",
+    company: "BuildWithin",
+    period: "2025–Hoy",
+    place: "Remote",
+    note: "Diseño UX/UI de una plataforma de desarrollo laboral que conecta aprendizaje, formación y empleo; personas, journey maps y experience blueprints de punta a punta para programas, postulantes y case managers.",
   },
   {
-    role: "Senior UX Designer",
-    company: "Northwind",
-    period: "2020–22",
-    note: "Analítica B2B; −38% en time-to-insight y 2× adopción interna.",
+    role: "UX/UI Lead Senior Designer",
+    company: "Altafid",
+    period: "Jun 2022–Hoy",
+    place: "Remote",
+    note: "Diseño end-to-end de una plataforma SaaS para asesores financieros e inversionistas. Sistema de diseño propio de la empresa y +20% en retención de clientes al integrar UX con marketing, ventas y customer success.",
   },
   {
-    role: "Product Designer",
-    company: "Pocket",
-    period: "2018–20",
-    note: "App fintech móvil; 2× usuarios activos y +35% en conversión de onboarding.",
+    role: "UX/UI Senior Designer",
+    company: "Tekpro",
+    period: "May 2019–Jun 2022",
+    place: "Chile",
+    note: "Sitios e-commerce centrados en el usuario sobre plataformas Magento, optimizados para conversión y rendimiento.",
+  },
+  {
+    role: "Graphic Designer",
+    company: "Alba Studio",
+    period: "Dic 2018–Abr 2019",
+    place: "Chile",
+    note: "Identidades de marca completas — logos, paletas de color y manuales de marca — para múltiples clientes.",
+  },
+  {
+    role: "UX/UI Designer",
+    company: "CETIUC",
+    period: "Jun 2018–Sep 2018",
+    place: "Chile",
+    note: "Rediseño completo del sitio institucional: arquitectura de información, wireframes y UI final.",
   },
 ];
 
-const CERTS = [
-  "Foundations of UX Design — Google (Coursera)",
-  "Generative AI: Introduction and Applications — IBM (Coursera)",
-];
+const EDUCATION = {
+  school: "Pontificia Universidad Católica de Chile",
+  degree: "Título profesional en Diseño — mención Diseño Estratégico",
+  period: "2012–2018",
+};
+
+const LANGUAGES = ["Español — Nativo", "Inglés — Avanzado (ETAPP, IGCSE, PET)"];
 
 // derived from every real project's skill tags, not hand-picked — reflects
 // what she's actually tagged her case studies with across the site
@@ -54,6 +73,23 @@ function topSkills(limit = 8): [string, number][] {
     .sort((a, b) => b[1] - a[1])
     .slice(0, limit);
 }
+
+// full toolkit from her CV's "Skills & Tools" section — broader than what
+// shows up in per-project tags above, so it's listed separately rather than
+// faked into the chart with an invented count
+const TOOLKIT = [
+  "Confluence",
+  "SharePoint",
+  "Power BI",
+  "HTML",
+  "Shopify",
+  "Magento",
+  "Agile / Scrum",
+  "Accesibilidad (WCAG)",
+  "User Personas",
+  "Journey Maps",
+  "A/B Testing",
+];
 
 const SectionLabel = ({ children }: { children: React.ReactNode }) => (
   <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[var(--cb-muted)]">
@@ -120,59 +156,77 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
 
         {tab === "perfil" && (
           <div className="mt-7">
-            <div className="flex items-center gap-5">
-              <div
-                className="h-[76px] w-[76px] flex-none rounded-full"
-                style={{ background: "var(--cb-pill)" }}
+            <div
+              className="relative aspect-video w-full overflow-hidden rounded-2xl"
+              style={{ background: "var(--cb-pill)" }}
+            >
+              <video
+                className="h-full w-full object-cover"
+                src="/profile/intro.mp4"
+                controls
+                playsInline
+                preload="metadata"
+                aria-label="Video introductorio de Consuelo Burotto"
               />
+            </div>
+
+            <div className="mt-7 flex items-center gap-5">
+              <div className="relative h-[76px] w-[76px] flex-none overflow-hidden rounded-full">
+                <Image
+                  src="/profile/avatar.webp"
+                  alt="Consuelo Burotto"
+                  fill
+                  sizes="76px"
+                  className="object-cover"
+                />
+              </div>
               <div>
                 <h2 className="m-0 font-display text-[30px] font-extrabold lowercase leading-none tracking-[-0.02em]">
                   consuelo
                 </h2>
                 <div className="mt-2 text-[13.5px] text-[var(--cb-muted)]">
-                  Product Designer · UX/UI
+                  UX/UI Lead Senior Designer
                 </div>
               </div>
             </div>
 
             <p className="mt-[22px] max-w-[52ch] text-[14.5px] leading-[1.65] text-[var(--cb-muted)]">
-              Diseño flujos B2B complejos y sistemas de diseño multimarca —
-              moviéndome entre research, sistemas y pulido pixel a pixel.
+              UX/UI Lead con 8 años de experiencia diseñando plataformas SaaS
+              complejas y sistemas de diseño escalables. He liderado el diseño
+              de punta a punta de plataformas de desarrollo laboral y fintech,
+              traduciendo research de usuarios en experiencias intuitivas —
+              con research, journey mapping y prototipado en Figma que se
+              entrega listo para desarrollo.
             </p>
 
             <div className="mt-[26px] grid grid-cols-2 gap-3">
               <div className="rounded-2xl border p-4" style={{ borderColor: "var(--cb-hair)" }}>
-                <div className="font-sans text-[30px] font-bold leading-none">10+</div>
+                <div className="font-sans text-[30px] font-bold leading-none">8+</div>
                 <div className="mt-1 text-[11.5px] uppercase tracking-[0.1em] text-[var(--cb-muted)]">
                   Años de experiencia
                 </div>
               </div>
               <div className="rounded-2xl border p-4" style={{ borderColor: "var(--cb-hair)" }}>
-                <div className="font-sans text-[30px] font-bold leading-none">30+</div>
+                <div className="font-sans text-[30px] font-bold leading-none">5</div>
                 <div className="mt-1 text-[11.5px] uppercase tracking-[0.1em] text-[var(--cb-muted)]">
-                  Proyectos entregados
+                  Empresas · roles UX/UI
                 </div>
               </div>
             </div>
 
             <div className="mt-[26px]">
-              <SectionLabel>Certificados</SectionLabel>
-              <div className="mt-2.5 flex flex-wrap gap-2">
-                {CERTS.map((cert) => (
-                  <span
-                    key={cert}
-                    className="rounded-full border px-3.5 py-2 text-[12.5px] text-[var(--cb-muted)]"
-                    style={{ borderColor: "var(--cb-hair)" }}
-                  >
-                    {cert}
-                  </span>
-                ))}
+              <SectionLabel>Educación</SectionLabel>
+              <div className="mt-2.5 rounded-2xl border p-4" style={{ borderColor: "var(--cb-hair)" }}>
+                <div className="text-[13.5px] font-bold">{EDUCATION.school}</div>
+                <div className="mt-1 text-[13px] text-[var(--cb-muted)]">{EDUCATION.degree}</div>
+                <div className="mt-1 font-mono text-[11.5px] text-[var(--cb-muted)]">{EDUCATION.period}</div>
               </div>
             </div>
 
             <div className="mt-7">
               <a
-                href="#"
+                href="/profile/cv.pdf"
+                download
                 className="inline-flex items-center gap-2 rounded-full px-[22px] py-[13px] font-sans text-[13.5px] font-bold no-underline"
                 style={{ background: "var(--cb-cta-bg)", color: "var(--cb-cta-text)" }}
               >
@@ -197,7 +251,7 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
                       {job.role} — {job.company}
                     </span>
                     <span className="font-mono text-[12px] text-[var(--cb-muted)]">
-                      {job.period}
+                      {job.period} · {job.place}
                     </span>
                   </div>
                   <p className="mt-1.5 text-[13.5px] leading-[1.6] text-[var(--cb-muted)]">
@@ -206,12 +260,27 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
                 </div>
               ))}
             </div>
+
+            <div className="mt-[26px]">
+              <SectionLabel>Idiomas</SectionLabel>
+              <div className="mt-2.5 flex flex-wrap gap-2">
+                {LANGUAGES.map((lang) => (
+                  <span
+                    key={lang}
+                    className="rounded-full border px-3.5 py-2 text-[12.5px] text-[var(--cb-muted)]"
+                    style={{ borderColor: "var(--cb-hair)" }}
+                  >
+                    {lang}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
         {tab === "skills" && (
           <div className="mt-7">
-            <SectionLabel>Skills</SectionLabel>
+            <SectionLabel>Skills — por proyecto</SectionLabel>
             <div className="mt-4 flex flex-col gap-3">
               {skills.map(([name, count]) => (
                 <div key={name}>
@@ -238,15 +307,15 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
             </div>
 
             <div className="mt-[26px]">
-              <SectionLabel>Certificados</SectionLabel>
+              <SectionLabel>Toolkit completo</SectionLabel>
               <div className="mt-2.5 flex flex-wrap gap-2">
-                {CERTS.map((cert) => (
+                {TOOLKIT.map((tool) => (
                   <span
-                    key={cert}
+                    key={tool}
                     className="rounded-full border px-3.5 py-2 text-[12.5px] text-[var(--cb-muted)]"
                     style={{ borderColor: "var(--cb-hair)" }}
                   >
-                    {cert}
+                    {tool}
                   </span>
                 ))}
               </div>
