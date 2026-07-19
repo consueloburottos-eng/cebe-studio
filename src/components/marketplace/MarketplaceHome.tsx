@@ -25,16 +25,18 @@ const EXAMPLES = [
 // slot under /showcase/ rather than pulling from a project's media.
 type Media = { type: "image" | "video"; src: string };
 
-// each service keeps its grid-tile cover (`media`) plus 3 banner slots for
-// its dedicated page — slot "a" defaults to the same cover photo so the
-// banner is never empty; "b"/"c" are blank upload targets until real photos
-// are uploaded and wired in here via `extra`.
-function bannerSlots(id: string, cover: Media, extra: { b?: Media; c?: Media } = {}) {
-  return [
-    { id: `${id}-a`, media: cover as Media | undefined },
-    { id: `${id}-b`, media: extra.b },
-    { id: `${id}-c`, media: extra.c },
-  ];
+// each service keeps its grid-tile cover (`media`) plus a horizontally
+// scrollable strip of banner slots for its dedicated page — slot "a"
+// defaults to the same cover photo so the banner is never empty; the rest
+// are blank upload targets until real photos are uploaded and wired in
+// here via `extra`.
+const BANNER_SLOT_LETTERS = ["a", "b", "c", "d", "e"];
+
+function bannerSlots(id: string, cover: Media, extra: Record<string, Media> = {}) {
+  return BANNER_SLOT_LETTERS.map((letter) => ({
+    id: `${id}-${letter}`,
+    media: letter === "a" ? cover : extra[letter],
+  }));
 }
 
 const SERVICE_1_BANNER_B: Media = { type: "image", src: "/showcase/service-1-b.webp" };
@@ -453,18 +455,26 @@ export default function MarketplaceHome() {
                 } as CSSProperties
               }
             >
-              <div className="absolute inset-0 flex">
+              <div className="absolute inset-0 flex snap-x snap-mandatory overflow-x-auto scroll-smooth">
                 {activeService.bannerPhotos.map((photo) => (
-                  <div key={photo.id} className="relative h-full flex-1 border-l first:border-l-0" style={{ borderColor: "rgba(255,255,255,.14)" }}>
+                  <div
+                    key={photo.id}
+                    className="relative h-full flex-none snap-start border-l first:border-l-0"
+                    style={{ width: "min(60vw, 460px)", borderColor: "rgba(255,255,255,.14)" }}
+                  >
                     <ProjectMedia
                       media={photo.media}
                       label={activeService.label}
-                      sizes="34vw"
+                      sizes="460px"
                       uploadPath={`/showcase/${photo.id}`}
                     />
                   </div>
                 ))}
               </div>
+              <div
+                className="pointer-events-none absolute right-0 top-0 bottom-0 z-[3] w-16"
+                style={{ background: "linear-gradient(270deg, rgba(0,0,0,.35), rgba(0,0,0,0))" }}
+              />
               <div
                 className="pointer-events-none absolute inset-0 z-[4]"
                 style={{ background: "linear-gradient(180deg, rgba(0,0,0,.34), rgba(0,0,0,0) 40%, rgba(0,0,0,.55))" }}
