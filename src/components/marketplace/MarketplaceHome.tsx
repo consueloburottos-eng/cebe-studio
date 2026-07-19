@@ -128,6 +128,13 @@ export default function MarketplaceHome() {
   const [cartOpen, setCartOpen] = useState(false);
   const heroInputRef = useRef<HTMLInputElement>(null);
 
+  // each mode is its own full "page" (hero, service banner, results grid) —
+  // switching between them should always start scrolled to the top rather
+  // than keeping whatever scroll position the previous mode left behind.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [mode]);
+
   useEffect(() => {
     if (!DEV_UPLOAD_ENABLED) return;
     try {
