@@ -519,13 +519,14 @@ export default function MarketplaceHome() {
                   <div
                     key={photo.id}
                     className="relative h-full flex-none snap-start border-l first:border-l-0"
-                    style={{ width: "min(60vw, 460px)", borderColor: "rgba(255,255,255,.14)" }}
+                    style={{ borderColor: "rgba(255,255,255,.14)" }}
                   >
                     <ProjectMedia
                       media={photo.media}
                       label={activeService.label}
-                      sizes="460px"
+                      sizes="700px"
                       uploadPath={`/showcase/${photo.id}`}
+                      fit="natural"
                     />
                   </div>
                 ))}

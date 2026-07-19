@@ -38,6 +38,10 @@ type ProjectMediaProps = {
   // "/projects/my-slug/cover" (no extension — the upload route appends the
   // real one). Lets placeholder tiles accept an upload too.
   uploadPath?: string;
+  // "cover" (default) fills the parent box, cropping the photo. "natural"
+  // instead fixes the height and lets width follow the photo's own aspect
+  // ratio, for strips where each photo's real proportions should show.
+  fit?: "cover" | "natural";
 };
 
 export default function ProjectMedia({
@@ -47,6 +51,7 @@ export default function ProjectMedia({
   compact = false,
   sizes = "100vw",
   uploadPath,
+  fit = "cover",
 }: ProjectMediaProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const identityPath = media?.src ?? uploadPath;
@@ -114,7 +119,7 @@ export default function ProjectMedia({
 
   if (!effectiveMedia) {
     return (
-      <div className={`relative h-full w-full ${className}`}>
+      <div className={`relative h-full ${fit === "natural" ? "w-[340px] flex-none" : "w-full"} ${className}`}>
         <MediaPlaceholder label={label} compact={compact} />
         {uploadOverlay}
       </div>
@@ -125,9 +130,9 @@ export default function ProjectMedia({
 
   if (effectiveMedia.type === "video") {
     return (
-      <div className={`relative h-full w-full ${className}`}>
+      <div className={`relative h-full ${fit === "natural" ? "w-auto flex-none" : "w-full"} ${className}`}>
         <video
-          className="h-full w-full object-cover"
+          className={`h-full ${fit === "natural" ? "w-auto" : "w-full"} object-cover`}
           src={src}
           autoPlay
           muted
@@ -135,6 +140,16 @@ export default function ProjectMedia({
           playsInline
           aria-label={label}
         />
+        {uploadOverlay}
+      </div>
+    );
+  }
+
+  if (fit === "natural") {
+    return (
+      <div className={`relative h-full w-auto flex-none ${className}`}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img key={cached?.version ?? 0} src={src} alt={label} className="h-full w-auto object-contain" />
         {uploadOverlay}
       </div>
     );
