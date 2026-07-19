@@ -49,7 +49,7 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
             style={{ animationDelay: `${i * 90}ms` }}
           >
             <div
-              className="relative min-h-0 flex-1 overflow-hidden rounded-lg"
+              className="relative min-h-0 flex-1 overflow-hidden"
               style={{ background: "var(--mk-surface)" }}
             >
               <ProjectMedia

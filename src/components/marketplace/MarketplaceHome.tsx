@@ -502,8 +502,18 @@ export default function MarketplaceHome() {
               />
             </div>
 
-            <div className="mx-auto max-w-[1100px] px-6 py-12 sm:px-8">
-              <ResultsGrid results={results} />
+            <div className="relative w-full py-12">
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${activeService.media.src})` }}
+              />
+              <div
+                className="absolute inset-0 backdrop-blur-2xl"
+                style={{ background: "rgba(20,18,16,.6)" }}
+              />
+              <div className="relative z-[1]">
+                <ResultsGrid results={results} />
+              </div>
             </div>
           </div>
         )}
