@@ -40,16 +40,16 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
 
   return (
     <>
-      <div aria-live="polite" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div aria-live="polite" className="flex gap-1 overflow-x-auto pb-2">
         {results.map((p, i) => (
           <Link
             key={p.slug}
             href={`/marketplace/${p.slug}`}
-            className="mk-blur block text-left"
+            className="mk-blur flex h-[400px] w-[500px] flex-none flex-col text-left"
             style={{ animationDelay: `${i * 90}ms` }}
           >
             <div
-              className="relative aspect-[16/10] overflow-hidden rounded-lg"
+              className="relative min-h-0 flex-1 overflow-hidden rounded-lg"
               style={{ background: "var(--mk-surface)" }}
             >
               <ProjectMedia

@@ -41,6 +41,8 @@ function bannerSlots(id: string, cover: Media, extra: Record<string, Media> = {}
 
 const SERVICE_1_BANNER_B: Media = { type: "image", src: "/showcase/service-1-b.webp" };
 const SERVICE_1_BANNER_C: Media = { type: "image", src: "/showcase/service-1-c.webp" };
+const SERVICE_1_BANNER_D: Media = { type: "image", src: "/showcase/service-1-d.png" };
+const SERVICE_1_BANNER_E: Media = { type: "image", src: "/showcase/service-1-e.png" };
 
 const SHOWCASE = [
   {
@@ -96,7 +98,9 @@ const SHOWCASE = [
   bannerPhotos: bannerSlots(
     item.id,
     item.media,
-    item.id === "service-1" ? { b: SERVICE_1_BANNER_B, c: SERVICE_1_BANNER_C } : {}
+    item.id === "service-1"
+      ? { b: SERVICE_1_BANNER_B, c: SERVICE_1_BANNER_C, d: SERVICE_1_BANNER_D, e: SERVICE_1_BANNER_E }
+      : {}
   ),
 }));
 
