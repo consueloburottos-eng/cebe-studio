@@ -50,6 +50,14 @@ const SHOWCASE = [
     label: "Servicio 01",
     title: "SaaS Design",
     desc: "Interfaces intuitivas que convierten usuarios en clientes.",
+    longDesc:
+      "Diseñamos interfaces de producto para plataformas SaaS que buscan claridad, velocidad y adopción. Desde el primer login hasta los flujos más complejos del dashboard, cada pantalla está pensada para reducir la curva de aprendizaje y aumentar la retención.",
+    details: [
+      "Diseño de producto end-to-end en Figma",
+      "Sistema de componentes reutilizable",
+      "Prototipos interactivos para validación",
+      "Handoff documentado para desarrollo",
+    ],
     priceFrom: 4500,
     media: { type: "image" as const, src: "/showcase/service-1.webp" },
   },
@@ -58,6 +66,14 @@ const SHOWCASE = [
     label: "Servicio 02",
     title: "Ecommerce Websites",
     desc: "Tiendas online diseñadas para vender más y mejor.",
+    longDesc:
+      "Tiendas online que combinan estética de marca con una experiencia de compra fluida. Trabajamos cada paso del embudo — desde la vitrina hasta el checkout — para que la navegación se sienta natural y la conversión mejore de forma medible.",
+    details: [
+      "Diseño de catálogo y ficha de producto",
+      "Flujo de carrito y checkout optimizado",
+      "Adaptación mobile-first",
+      "Integración con plataformas de e-commerce",
+    ],
     priceFrom: 3200,
     media: { type: "image" as const, src: "/showcase/service-2.webp" },
   },
@@ -66,6 +82,14 @@ const SHOWCASE = [
     label: "Servicio 03",
     title: "UX Research",
     desc: "Investigación de usuarios para tomar decisiones acertadas.",
+    longDesc:
+      "Investigación centrada en las personas que van a usar el producto. Entrevistas, tests de usabilidad y análisis de comportamiento que transforman suposiciones en decisiones de diseño respaldadas por evidencia real.",
+    details: [
+      "Entrevistas y encuestas a usuarios",
+      "Tests de usabilidad moderados",
+      "Mapas de journey y personas",
+      "Informe de hallazgos y recomendaciones",
+    ],
     priceFrom: 2200,
     media: { type: "image" as const, src: "/showcase/service-3.webp" },
   },
@@ -74,6 +98,14 @@ const SHOWCASE = [
     label: "Servicio 04",
     title: "Design Systems",
     desc: "Sistemas de diseño escalables que alinean equipos y productos.",
+    longDesc:
+      "Sistemas de diseño escalables que alinean a equipos de producto, diseño y desarrollo bajo un mismo lenguaje visual. Tokens, componentes y documentación pensados para crecer sin perder consistencia.",
+    details: [
+      "Librería de componentes en Figma",
+      "Tokens de color, tipografía y espaciado",
+      "Documentación de uso y accesibilidad",
+      "Sincronización con el código (Code Connect)",
+    ],
     priceFrom: 5000,
     media: { type: "image" as const, src: "/showcase/service-4.webp" },
   },
@@ -82,6 +114,14 @@ const SHOWCASE = [
     label: "Servicio 05",
     title: "Brand & Visual Identity",
     desc: "Marcas memorables que comunican valor y generan confianza.",
+    longDesc:
+      "Identidades visuales memorables que comunican el valor real de una marca. Del logo al sistema completo — color, tipografía, tono — para que cada punto de contacto se sienta parte de una misma historia.",
+    details: [
+      "Logo y variaciones",
+      "Paleta de color y tipografía",
+      "Guía de marca (brand guidelines)",
+      "Aplicaciones en piezas digitales e impresas",
+    ],
     priceFrom: 2500,
     media: { type: "image" as const, src: "/showcase/service-5.webp" },
   },
@@ -90,6 +130,14 @@ const SHOWCASE = [
     label: "Servicio 06",
     title: "Product Strategy",
     desc: "Estrategia de producto centrada en el usuario y el negocio.",
+    longDesc:
+      "Estrategia de producto que conecta la visión de negocio con las necesidades reales del usuario. Descubrimiento, priorización y roadmap para que cada decisión de diseño tenga un propósito claro.",
+    details: [
+      "Talleres de discovery y alineación",
+      "Priorización de funcionalidades",
+      "Roadmap de producto",
+      "Definición de métricas de éxito",
+    ],
     priceFrom: 3000,
     media: { type: "image" as const, src: "/showcase/service-6.png" },
   },
@@ -507,6 +555,38 @@ export default function MarketplaceHome() {
                   setCartOpen(true);
                 }}
               />
+            </div>
+
+            <div className="mx-auto max-w-[1100px] px-6 py-12 sm:px-8">
+              <div
+                className="grid grid-cols-1 gap-10 rounded-2xl border border-dashed p-8 sm:grid-cols-2 sm:p-10"
+                style={{ borderColor: "var(--mk-hr)" }}
+              >
+                <div>
+                  <div
+                    className="text-[11px] uppercase"
+                    style={{ color: "var(--mk-mut)", letterSpacing: ".18em" }}
+                  >
+                    Description
+                  </div>
+                  <p className="mt-4 text-[15px] leading-[1.7]" style={{ color: "var(--mk-tx)" }}>
+                    {activeService.longDesc}
+                  </p>
+                </div>
+                <div>
+                  <div
+                    className="text-[11px] uppercase"
+                    style={{ color: "var(--mk-mut)", letterSpacing: ".18em" }}
+                  >
+                    Details
+                  </div>
+                  <ul className="mt-4 flex flex-col gap-2 text-[15px]" style={{ color: "var(--mk-tx)" }}>
+                    {activeService.details.map((d) => (
+                      <li key={d}>{d}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
 
             <div className="relative w-full py-12">
