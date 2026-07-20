@@ -40,7 +40,7 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
 
   return (
     <>
-      <div aria-live="polite" className="flex gap-1 overflow-x-auto pb-2">
+      <div aria-live="polite" className="flex gap-1 overflow-x-auto pb-2" style={{ margin: "5px" }}>
         {results.map((p, i) => (
           <Link
             key={p.slug}
