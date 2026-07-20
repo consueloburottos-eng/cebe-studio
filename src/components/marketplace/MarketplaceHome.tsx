@@ -623,8 +623,15 @@ export default function MarketplaceHome() {
             </div>
 
             <div
-              className="mx-auto max-w-[1100px] px-6 sm:px-8"
-              style={{ marginTop: "150px", marginBottom: "150px" }}
+              className="max-w-[1100px]"
+              style={{
+                marginTop: "150px",
+                marginBottom: "150px",
+                marginLeft: 0,
+                marginRight: 0,
+                paddingLeft: "5px",
+                paddingRight: "5px",
+              }}
             >
               <h3 className="text-center font-serif text-[26px]" style={{ color: "var(--mk-tx)" }}>
                 Más servicios
