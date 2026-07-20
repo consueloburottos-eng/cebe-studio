@@ -19,10 +19,18 @@ export default function CartOverlay({ items, onClose, onRemove }: CartOverlayPro
   const total = items.reduce((sum, item) => sum + item.priceFrom, 0);
 
   return (
-    <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/65 px-6 backdrop-blur-sm">
+    <>
+      <div className="fixed inset-0 z-[299]" onClick={onClose} />
       <div
-        className="w-full max-w-[520px] rounded-[28px] p-7 font-sans"
-        style={{ background: "#F4F1EA", color: "#141210", maxHeight: "85vh", overflowY: "auto" }}
+        className="fixed top-20 right-4 z-[300] w-[min(420px,92vw)] rounded-[24px] border p-6 font-sans backdrop-blur-2xl sm:right-8"
+        style={{
+          background: "rgba(244,241,234,.65)",
+          borderColor: "rgba(20,18,16,.14)",
+          color: "#141210",
+          maxHeight: "75vh",
+          overflowY: "auto",
+          boxShadow: "0 25px 60px -20px rgba(0,0,0,.35)",
+        }}
       >
         <div className="flex items-center justify-between">
           <h3 className="font-serif text-[24px]">Mi selección ({items.length})</h3>
@@ -90,6 +98,6 @@ export default function CartOverlay({ items, onClose, onRemove }: CartOverlayPro
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }
