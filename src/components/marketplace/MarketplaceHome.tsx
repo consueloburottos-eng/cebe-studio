@@ -622,7 +622,10 @@ export default function MarketplaceHome() {
               </div>
             </div>
 
-            <div className="mx-auto max-w-[1100px] px-6 py-16 sm:px-8">
+            <div
+              className="mx-auto max-w-[1100px] px-6 sm:px-8"
+              style={{ marginTop: "150px", marginBottom: "150px" }}
+            >
               <h3 className="text-center font-serif text-[26px]" style={{ color: "var(--mk-tx)" }}>
                 Más servicios
               </h3>
