@@ -600,6 +600,9 @@ export default function MarketplaceHome() {
                 style={{ background: "rgba(20,18,16,.6)" }}
               />
               <div className="relative z-[1]">
+                <div className="px-6 pb-6 sm:px-8">
+                  <h3 className="font-serif text-[26px] text-white">Proyectos {activeService.title}</h3>
+                </div>
                 <ResultsGrid results={results} />
               </div>
             </div>

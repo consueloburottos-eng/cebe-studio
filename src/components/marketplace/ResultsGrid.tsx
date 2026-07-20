@@ -45,7 +45,7 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
           <Link
             key={p.slug}
             href={`/marketplace/${p.slug}`}
-            className="mk-blur flex h-[400px] w-[500px] flex-none flex-col text-left"
+            className="mk-blur flex h-[500px] w-[500px] flex-none flex-col text-left"
             style={{ animationDelay: `${i * 90}ms` }}
           >
             <div
