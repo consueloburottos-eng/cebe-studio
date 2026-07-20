@@ -44,6 +44,27 @@ const SERVICE_1_BANNER_C: Media = { type: "image", src: "/showcase/service-1-c.w
 const SERVICE_1_BANNER_D: Media = { type: "image", src: "/showcase/service-1-d.png" };
 const SERVICE_1_BANNER_E: Media = { type: "image", src: "/showcase/service-1-e.png" };
 
+const SERVICE_2_BANNER_B: Media = { type: "image", src: "/showcase/service-2-b.png" };
+const SERVICE_2_BANNER_C: Media = { type: "image", src: "/showcase/service-2-c.png" };
+const SERVICE_2_BANNER_D: Media = { type: "image", src: "/showcase/service-2-d.png" };
+const SERVICE_2_BANNER_E: Media = { type: "image", src: "/showcase/service-2-e.png" };
+
+const SERVICE_3_BANNER_B: Media = { type: "image", src: "/showcase/service-3-b.png" };
+const SERVICE_3_BANNER_C: Media = { type: "image", src: "/showcase/service-3-c.png" };
+
+const SERVICE_4_BANNER_B: Media = { type: "image", src: "/showcase/service-4-b.png" };
+const SERVICE_4_BANNER_C: Media = { type: "image", src: "/showcase/service-4-c.png" };
+
+const SERVICE_5_BANNER_B: Media = { type: "image", src: "/showcase/service-5-b.png" };
+
+const EXTRA_BANNER_PHOTOS: Record<string, Record<string, Media>> = {
+  "service-1": { b: SERVICE_1_BANNER_B, c: SERVICE_1_BANNER_C, d: SERVICE_1_BANNER_D, e: SERVICE_1_BANNER_E },
+  "service-2": { b: SERVICE_2_BANNER_B, c: SERVICE_2_BANNER_C, d: SERVICE_2_BANNER_D, e: SERVICE_2_BANNER_E },
+  "service-3": { b: SERVICE_3_BANNER_B, c: SERVICE_3_BANNER_C },
+  "service-4": { b: SERVICE_4_BANNER_B, c: SERVICE_4_BANNER_C },
+  "service-5": { b: SERVICE_5_BANNER_B },
+};
+
 const SHOWCASE = [
   {
     id: "service-1",
@@ -91,7 +112,7 @@ const SHOWCASE = [
       "Informe de hallazgos y recomendaciones",
     ],
     priceFrom: 2200,
-    media: { type: "image" as const, src: "/showcase/service-3.webp" },
+    media: { type: "image" as const, src: "/showcase/service-3.png" },
   },
   {
     id: "service-4",
@@ -107,7 +128,7 @@ const SHOWCASE = [
       "Sincronización con el código (Code Connect)",
     ],
     priceFrom: 5000,
-    media: { type: "image" as const, src: "/showcase/service-4.webp" },
+    media: { type: "image" as const, src: "/showcase/service-4.png" },
   },
   {
     id: "service-5",
@@ -123,7 +144,7 @@ const SHOWCASE = [
       "Aplicaciones en piezas digitales e impresas",
     ],
     priceFrom: 2500,
-    media: { type: "image" as const, src: "/showcase/service-5.webp" },
+    media: { type: "image" as const, src: "/showcase/service-5.png" },
   },
   {
     id: "service-6",
@@ -143,13 +164,7 @@ const SHOWCASE = [
   },
 ].map((item) => ({
   ...item,
-  bannerPhotos: bannerSlots(
-    item.id,
-    item.media,
-    item.id === "service-1"
-      ? { b: SERVICE_1_BANNER_B, c: SERVICE_1_BANNER_C, d: SERVICE_1_BANNER_D, e: SERVICE_1_BANNER_E }
-      : {}
-  ),
+  bannerPhotos: bannerSlots(item.id, item.media, EXTRA_BANNER_PHOTOS[item.id] ?? {}),
 }));
 
 type Mode = "home" | "loading" | "results" | "service";
@@ -601,7 +616,7 @@ export default function MarketplaceHome() {
               />
               <div className="relative z-[1]">
                 <div className="px-6 pb-6 sm:px-8">
-                  <h3 className="font-serif text-[26px] text-white">Proyectos {activeService.title}</h3>
+                  <h3 className="text-center font-serif text-[26px] text-white">Proyectos {activeService.title}</h3>
                 </div>
                 <ResultsGrid results={results} />
               </div>
