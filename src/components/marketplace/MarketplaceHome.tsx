@@ -605,7 +605,7 @@ export default function MarketplaceHome() {
               </div>
             </div>
 
-            <div className="relative w-full py-12">
+            <div className="relative w-full" style={{ paddingTop: "150px", paddingBottom: "150px" }}>
               <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: `url(${activeService.media.src})` }}
