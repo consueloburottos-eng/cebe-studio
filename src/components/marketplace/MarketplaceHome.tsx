@@ -626,7 +626,7 @@ export default function MarketplaceHome() {
               <h3 className="text-center font-serif text-[26px]" style={{ color: "var(--mk-tx)" }}>
                 Más servicios
               </h3>
-              <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
+              <div className="mt-8 grid grid-cols-1 gap-[5px] p-[5px] sm:grid-cols-3">
                 {SHOWCASE.filter((s) => s.id !== activeService.id).map((s) => (
                   <div key={s.id}>
                     <div
@@ -640,22 +640,40 @@ export default function MarketplaceHome() {
                         sizes="(min-width:768px) 33vw, 100vw"
                         uploadPath={`/showcase/${s.id}`}
                       />
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleFavorite(s.id);
-                        }}
-                        title="Agregar a favoritos"
-                        aria-pressed={favorited.has(s.id)}
-                        className="absolute right-2.5 bottom-2.5 z-20 flex h-8 w-8 items-center justify-center rounded-full border-none text-[14px] backdrop-blur-md"
-                        style={{
-                          background: favorited.has(s.id) ? "#B8623F" : "rgba(0,0,0,.4)",
-                          color: "#fff",
-                        }}
-                      >
-                        {favorited.has(s.id) ? "♥" : "♡"}
-                      </button>
+                      <div className="absolute right-2.5 bottom-2.5 z-20 flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleFavorite(s.id);
+                          }}
+                          title="Agregar a favoritos"
+                          aria-pressed={favorited.has(s.id)}
+                          className="flex h-8 w-8 items-center justify-center rounded-full border-none text-[14px] backdrop-blur-md"
+                          style={{
+                            background: favorited.has(s.id) ? "#B8623F" : "rgba(0,0,0,.4)",
+                            color: "#fff",
+                          }}
+                        >
+                          {favorited.has(s.id) ? "♥" : "♡"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleCart(s.id);
+                          }}
+                          title="Agregar al carro"
+                          aria-pressed={inCart.has(s.id)}
+                          className="flex h-8 w-8 items-center justify-center rounded-full border-none text-[16px] backdrop-blur-md"
+                          style={{
+                            background: inCart.has(s.id) ? "#B8623F" : "rgba(0,0,0,.4)",
+                            color: "#fff",
+                          }}
+                        >
+                          {inCart.has(s.id) ? "✓" : "+"}
+                        </button>
+                      </div>
                     </div>
                     <button
                       type="button"

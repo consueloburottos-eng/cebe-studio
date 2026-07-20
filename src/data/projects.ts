@@ -249,7 +249,7 @@ export const projects: Project[] = [
     services: "Web design",
     skills: ["Figma", "Webflow"],
     cover: "Amphora — e-commerce",
-    coverMedia: video("amphora", "hero.mp4"),
+    coverMedia: img("amphora", "hero.png"),
     brief:
       "Amphora necesitaba una tienda online que se sintiera tan cuidada como su producto. El proyecto cubrió la maquetación de página, presentación de producto y navegación.",
     strategy: [
