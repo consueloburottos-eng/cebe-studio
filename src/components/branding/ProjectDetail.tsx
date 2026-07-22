@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
+import ProgressiveBlur from "../ProgressiveBlur";
 import AboutModal from "./AboutModal";
 import BookModal from "./BookModal";
 import NavPill from "./NavPill";
@@ -58,50 +59,50 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
         <div className="absolute inset-0" style={{ background: "rgba(244,241,234,.55)" }} />
       </div>
 
-      <div
-        className="sticky top-0 z-10 flex h-[60px] items-center justify-between px-4 backdrop-blur-2xl sm:px-[26px]"
-        style={{ background: "linear-gradient(180deg, var(--cb-glass-hdr), var(--cb-glass-hdr-0))" }}
-      >
-        <NavPill
-          open={navOpen}
-          onToggle={() => setNavOpen((o) => !o)}
-          onOpenAbout={() => {
-            setNavOpen(false);
-            setAboutOpen(true);
-          }}
-          onOpenGrid={() => {
-            setNavOpen(false);
-            router.push("/");
-          }}
-          onOpenBook={() => {
-            setNavOpen(false);
-            setBookOpen(true);
-          }}
-        />
+      <div className="sticky top-0 z-10">
+        <ProgressiveBlur side="top" height={110} />
+        <div className="relative z-[1] flex h-[60px] items-center justify-between px-4 sm:px-[26px]">
+          <NavPill
+            open={navOpen}
+            onToggle={() => setNavOpen((o) => !o)}
+            onOpenAbout={() => {
+              setNavOpen(false);
+              setAboutOpen(true);
+            }}
+            onOpenGrid={() => {
+              setNavOpen(false);
+              router.push("/");
+            }}
+            onOpenBook={() => {
+              setNavOpen(false);
+              setBookOpen(true);
+            }}
+          />
 
-        <TopRight
-          audioOn={audioOn}
-          onToggleAudio={() => setAudioOn((a) => !a)}
-          onOpenBook={() => setBookOpen(true)}
-          onOpenAbout={() => setAboutOpen(true)}
-        />
+          <TopRight
+            audioOn={audioOn}
+            onToggleAudio={() => setAudioOn((a) => !a)}
+            onOpenBook={() => setBookOpen(true)}
+            onOpenAbout={() => setAboutOpen(true)}
+          />
+        </div>
       </div>
 
       {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} />}
       {bookOpen && <BookModal onClose={() => setBookOpen(false)} />}
 
-      <div
-        className="fixed inset-x-0 bottom-0 z-[110] flex h-[60px] items-center justify-end px-7 backdrop-blur-2xl"
-        style={{ background: "linear-gradient(0deg, var(--cb-glass-hdr), var(--cb-glass-hdr-0))" }}
-      >
-        <Link
-          href="/"
-          title="volver"
-          className="flex h-10 w-10 items-center justify-center rounded-full border text-[15px]"
-          style={{ borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
-        >
-          ✕
-        </Link>
+      <div className="fixed inset-x-0 bottom-0 z-[110]">
+        <ProgressiveBlur side="bottom" height={110} />
+        <div className="relative z-[1] flex h-[60px] items-center justify-end px-7">
+          <Link
+            href="/"
+            title="volver"
+            className="flex h-10 w-10 items-center justify-center rounded-full border text-[15px]"
+            style={{ borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
+          >
+            ✕
+          </Link>
+        </div>
       </div>
 
       <div className="mx-auto max-w-[1200px] px-7 py-10 pb-[90px]">
