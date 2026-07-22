@@ -621,12 +621,10 @@ export default function MarketplaceHome() {
             </div>
 
             <div
-              className="max-w-[1100px]"
+              className="mx-auto max-w-[1100px]"
               style={{
                 marginTop: "150px",
                 marginBottom: "150px",
-                marginLeft: 0,
-                marginRight: 0,
                 paddingLeft: "5px",
                 paddingRight: "5px",
               }}
