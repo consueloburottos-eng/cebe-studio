@@ -218,18 +218,6 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
           </div>
         </div>
 
-        <div
-          className="relative mt-12 h-[56vh] overflow-hidden rounded-[18px]"
-          style={{ background: "var(--cb-pill)" }}
-        >
-          <ProjectMedia
-            media={project.gallery[0]?.media}
-            label={project.gallery[0]?.label ?? "imagen destacada"}
-            sizes="(min-width:1200px) 1200px, 100vw"
-            uploadPath={`/projects/${folder}/feature`}
-          />
-        </div>
-
         <div className="my-[72px] text-center font-display font-extrabold uppercase leading-none tracking-[-0.01em]"
           style={{ fontSize: "clamp(30px,5.5vw,68px)" }}
         >
