@@ -11,7 +11,7 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
         <Link
           key={p.slug}
           href={`/marketplace/${p.slug}`}
-          className="mk-blur flex h-[500px] w-[500px] flex-none flex-col text-left"
+          className="mk-blur flex h-[500px] flex-none flex-col items-start text-left"
           style={{ animationDelay: `${i * 90}ms` }}
         >
           <div
@@ -23,6 +23,7 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
               label={p.cover}
               sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
               uploadPath={`/projects/${assetFolder(p)}/cover`}
+              fit="natural"
             />
           </div>
           <div className="mt-3.5 text-[17px]" style={{ color: "var(--mk-tx)" }}>

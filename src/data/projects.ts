@@ -441,7 +441,7 @@ export const projects: Project[] = [
       "La solución priorizó una UI limpia y modular, capaz de crecer con el catálogo y sostener nuevas categorías sin perder cohesión visual.",
     ],
     headline: "decisiones complejas, simples",
-    gallery: [],
+    gallery: introGallery("hbt", "HBT", 1, 13, "webp", { 4: "png", 5: "png", 11: "png" }),
   },
   {
     slug: "londra",
@@ -574,7 +574,7 @@ const PENDING_STUBS: {
     client: "BuildWithin",
   },
   { slug: "cnc", title: "cnc", displayTitle: "CNC", coverExt: "webp", introCount: 13 },
-  { slug: "dior", title: "dior", displayTitle: "Dior", coverExt: "gif", introCount: 0 },
+  { slug: "dior", title: "dior", displayTitle: "Dior", coverExt: "gif", introCount: 13 },
   { slug: "llay-llay", title: "llay llay", displayTitle: "Llay Llay", coverExt: "webp", introCount: 13 },
   {
     slug: "longboard",
@@ -592,7 +592,7 @@ const PENDING_STUBS: {
     introCount: 6,
     introExtOverrides: { 1: "png" },
   },
-  { slug: "marley-coffee", title: "marley coffee", displayTitle: "Marley Coffee", coverExt: "png", introCount: 0 },
+  { slug: "marley-coffee", title: "marley coffee", displayTitle: "Marley Coffee", coverExt: "png", introCount: 13 },
   { slug: "pants", title: "pants", displayTitle: "Pants", coverExt: "webp", introCount: 13 },
 ];
 
