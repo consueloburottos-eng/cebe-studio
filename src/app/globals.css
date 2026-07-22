@@ -190,23 +190,6 @@ body {
   animation: mk-blur-in 0.75s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
-@keyframes cb-col-scroll {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-50%);
-  }
-}
-.cb-col {
-  animation-name: cb-col-scroll;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-.cb-col:hover {
-  animation-play-state: paused;
-}
-
 @keyframes mk-glow-pulse {
   0%,
   100% {

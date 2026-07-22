@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
@@ -10,7 +11,6 @@ type ProjectsGridOverlayProps = {
 };
 
 const COLUMN_COUNT = 5;
-const SECONDS_PER_CARD = 6;
 
 function ProjectCard({ project }: { project: Project }) {
   return (
@@ -35,20 +35,49 @@ export default function ProjectsGridOverlay({ projects, onClose }: ProjectsGridO
     columns[i % COLUMN_COUNT].push(project);
   });
 
+  const trackRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const loopLengths = useRef<number[]>(Array(COLUMN_COUNT).fill(0));
+  const positions = useRef<number[]>(Array(COLUMN_COUNT).fill(0));
+
+  useEffect(() => {
+    function measure() {
+      trackRefs.current.forEach((el, i) => {
+        if (el) loopLengths.current[i] = el.scrollHeight / 2;
+      });
+    }
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  function handleWheel(e: React.WheelEvent) {
+    e.preventDefault();
+    trackRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const loop = loopLengths.current[i] || 1;
+      const vSign = i % 2 === 0 ? 1 : -1;
+      const hSign = i % 2 === 0 ? -1 : 1;
+      let pos = positions.current[i] + vSign * e.deltaY + hSign * e.deltaX;
+      pos = ((pos % loop) + loop) % loop;
+      positions.current[i] = pos;
+      el.style.transform = `translateY(${-pos}px)`;
+    });
+  }
+
   return (
     <div
       className="absolute inset-0 z-[100] overflow-hidden backdrop-blur-2xl"
       style={{ background: "var(--cb-glass)" }}
+      onWheel={handleWheel}
     >
       <div className="grid h-full grid-cols-5 gap-3 p-3">
         {columns.map((col, i) => (
           <div key={i} className="relative h-full overflow-hidden">
             <div
-              className="cb-col flex flex-col gap-3"
-              style={{
-                animationDirection: i % 2 === 1 ? "reverse" : "normal",
-                animationDuration: `${col.length * SECONDS_PER_CARD}s`,
+              ref={(el) => {
+                trackRefs.current[i] = el;
               }}
+              className="flex flex-col gap-3"
             >
               {[...col, ...col].map((project, j) => (
                 <ProjectCard key={`${project.slug}-${j}`} project={project} />
