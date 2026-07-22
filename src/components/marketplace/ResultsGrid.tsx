@@ -6,17 +6,17 @@ import ProjectMedia from "../ProjectMedia";
 
 export default function ResultsGrid({ results }: { results: Project[] }) {
   return (
-    <div aria-live="polite" className="flex gap-1 overflow-x-auto pb-2" style={{ margin: "5px" }}>
+    <div aria-live="polite" className="flex overflow-x-auto pb-2" style={{ margin: "5px", gap: "5px" }}>
       {results.map((p, i) => (
         <Link
           key={p.slug}
           href={`/marketplace/${p.slug}`}
-          className="mk-blur flex h-[500px] flex-none flex-col items-start text-left"
+          className="mk-blur flex flex-none flex-col items-start text-left"
           style={{ animationDelay: `${i * 90}ms` }}
         >
           <div
-            className="relative min-h-0 flex-1 overflow-hidden"
-            style={{ background: "var(--mk-surface)" }}
+            className="relative overflow-hidden"
+            style={{ background: "var(--mk-surface)", height: "500px" }}
           >
             <ProjectMedia
               media={p.coverMedia}
