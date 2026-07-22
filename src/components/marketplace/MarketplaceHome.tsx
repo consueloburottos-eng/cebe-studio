@@ -608,7 +608,7 @@ export default function MarketplaceHome() {
               />
               <div
                 className="absolute inset-0 backdrop-blur-2xl"
-                style={{ background: "rgba(var(--mk-bgrgb), .82)" }}
+                style={{ background: "rgba(var(--mk-bgrgb), .38)" }}
               />
               <div className="relative z-[1]">
                 <div className="px-6 pb-6 sm:px-8">
