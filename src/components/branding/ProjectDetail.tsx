@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
 import AboutModal from "./AboutModal";
+import BookModal from "./BookModal";
+import NavPill from "./NavPill";
+import TopRight from "./TopRight";
 
 // span sequence lifted from the original prototype's projSel.intro grid (indices 0-12)
 const INTRO_SPAN_PATTERN = [2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1];
@@ -16,8 +19,12 @@ type ProjectDetailProps = {
 };
 
 export default function ProjectDetail({ project, others }: ProjectDetailProps) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<"brief" | "strategy">("brief");
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [bookOpen, setBookOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
+  const [audioOn, setAudioOn] = useState(false);
   const folder = assetFolder(project);
 
   // In production the grid is adaptive — only tiles that actually have media
@@ -52,33 +59,36 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
       </div>
 
       <div
-        className="sticky top-0 z-10 flex h-[60px] items-center justify-between gap-4 px-7 backdrop-blur-2xl"
+        className="sticky top-0 z-10 flex h-[60px] items-center justify-between px-4 backdrop-blur-2xl sm:px-[26px]"
         style={{ background: "linear-gradient(180deg, var(--cb-glass-hdr), var(--cb-glass-hdr-0))" }}
       >
-        <span className="font-sans text-[13px] font-extrabold uppercase tracking-[0.12em]">
-          CEBE:STUDIO
-        </span>
-        <div className="flex items-center gap-2.5">
-          <button
-            type="button"
-            onClick={() => setAboutOpen(true)}
-            title="Perfil"
-            className="relative h-10 w-10 flex-none overflow-hidden rounded-full border"
-            style={{ borderColor: "var(--cb-hair)" }}
-          >
-            <Image src="/profile/avatar.webp" alt="Perfil" fill sizes="40px" className="object-cover" />
-          </button>
-          <Link
-            href="/"
-            className="rounded-full border-none px-5 py-2.5 font-sans text-xs font-extrabold uppercase tracking-[0.07em]"
-            style={{ background: "var(--cb-cta-bg)", color: "var(--cb-cta-text)" }}
-          >
-            Book me
-          </Link>
-        </div>
+        <NavPill
+          open={navOpen}
+          onToggle={() => setNavOpen((o) => !o)}
+          onOpenAbout={() => {
+            setNavOpen(false);
+            setAboutOpen(true);
+          }}
+          onOpenGrid={() => {
+            setNavOpen(false);
+            router.push("/");
+          }}
+          onOpenBook={() => {
+            setNavOpen(false);
+            setBookOpen(true);
+          }}
+        />
+
+        <TopRight
+          audioOn={audioOn}
+          onToggleAudio={() => setAudioOn((a) => !a)}
+          onOpenBook={() => setBookOpen(true)}
+          onOpenAbout={() => setAboutOpen(true)}
+        />
       </div>
 
       {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} />}
+      {bookOpen && <BookModal onClose={() => setBookOpen(false)} />}
 
       <div
         className="fixed inset-x-0 bottom-0 z-[110] flex h-[60px] items-center justify-end px-7 backdrop-blur-2xl"
