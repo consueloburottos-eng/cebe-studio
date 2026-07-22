@@ -34,11 +34,23 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
   );
 
   return (
-    <div
-      className="min-h-dvh"
-      style={{ background: "var(--cb-glass)", color: "var(--cb-text)" }}
-      data-cb-theme="light"
-    >
+    <div className="min-h-dvh" style={{ color: "var(--cb-text)" }} data-cb-theme="light">
+      {/* blurred backdrop from the project's own cover photo — filter lives on
+          this fixed leaf layer, not the root, so it never becomes a containing
+          block for the fixed bottom bar below (see ProjectMedia CSS bug notes) */}
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        {project.coverMedia?.type === "image" && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={project.coverMedia.src}
+            alt=""
+            className="h-full w-full scale-110 object-cover"
+            style={{ filter: "blur(48px)" }}
+          />
+        )}
+        <div className="absolute inset-0" style={{ background: "rgba(244,241,234,.55)" }} />
+      </div>
+
       <div
         className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b px-7 py-[15px] backdrop-blur-2xl"
         style={{ background: "var(--cb-glass-pill)", borderColor: "var(--cb-hair)" }}
