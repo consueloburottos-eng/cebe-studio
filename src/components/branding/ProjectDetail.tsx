@@ -52,7 +52,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
       </div>
 
       <div
-        className="sticky top-0 z-10 flex items-center justify-between gap-4 px-7 py-[15px] backdrop-blur-2xl"
+        className="sticky top-0 z-10 flex h-[60px] items-center justify-between gap-4 px-7 backdrop-blur-2xl"
         style={{ background: "linear-gradient(180deg, var(--cb-glass-hdr), var(--cb-glass-hdr-0))" }}
       >
         <span className="font-sans text-[13px] font-extrabold uppercase tracking-[0.12em]">
@@ -81,7 +81,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
       {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} />}
 
       <div
-        className="fixed inset-x-0 bottom-0 z-[110] flex items-center justify-end px-7 py-[15px] backdrop-blur-2xl"
+        className="fixed inset-x-0 bottom-0 z-[110] flex h-[60px] items-center justify-end px-7 backdrop-blur-2xl"
         style={{ background: "linear-gradient(0deg, var(--cb-glass-hdr), var(--cb-glass-hdr-0))" }}
       >
         <Link

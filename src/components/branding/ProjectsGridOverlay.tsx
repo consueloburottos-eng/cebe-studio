@@ -89,7 +89,7 @@ export default function ProjectsGridOverlay({ projects, onClose }: ProjectsGridO
       </div>
       <div className="fixed inset-x-0 bottom-0 z-[110]">
         <ProgressiveBlur side="bottom" height={220} />
-        <div className="relative z-[1] flex items-center justify-end px-7 py-[15px]">
+        <div className="relative z-[1] flex h-[60px] items-center justify-end px-7">
           <button
             type="button"
             onClick={onClose}

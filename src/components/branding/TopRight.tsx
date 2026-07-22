@@ -11,7 +11,7 @@ type TopRightProps = {
 
 export default function TopRight({ audioOn, onToggleAudio, onOpenBook, onOpenAbout }: TopRightProps) {
   return (
-    <div className="absolute top-4 right-4 z-[130] flex items-center gap-1.5 sm:top-[26px] sm:right-[26px] sm:gap-2.5">
+    <div className="flex items-center gap-1.5 sm:gap-2.5">
       <button
         type="button"
         onClick={onToggleAudio}

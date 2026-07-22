@@ -119,20 +119,22 @@ export default function BrandingHome() {
 
         <ProgressiveBlur side="top" height={260} className="z-[120]" />
 
-        <NavPill
-          open={navOpen}
-          onToggle={() => setNavOpen((o) => !o)}
-          onOpenAbout={() => closeNavAnd(() => setAboutOpen(true))}
-          onOpenGrid={() => closeNavAnd(() => setGridOpen(true))}
-          onOpenBook={() => closeNavAnd(() => setBookOpen(true))}
-        />
+        <div className="absolute inset-x-0 top-0 z-[130] flex h-[60px] items-center justify-between px-4 sm:px-[26px]">
+          <NavPill
+            open={navOpen}
+            onToggle={() => setNavOpen((o) => !o)}
+            onOpenAbout={() => closeNavAnd(() => setAboutOpen(true))}
+            onOpenGrid={() => closeNavAnd(() => setGridOpen(true))}
+            onOpenBook={() => closeNavAnd(() => setBookOpen(true))}
+          />
 
-        <TopRight
-          audioOn={audioOn}
-          onToggleAudio={() => setAudioOn((a) => !a)}
-          onOpenBook={() => setBookOpen(true)}
-          onOpenAbout={() => setAboutOpen(true)}
-        />
+          <TopRight
+            audioOn={audioOn}
+            onToggleAudio={() => setAudioOn((a) => !a)}
+            onOpenBook={() => setBookOpen(true)}
+            onOpenAbout={() => setAboutOpen(true)}
+          />
+        </div>
 
         <LastProjectWidget project={featuredProject} />
         <GridButton counter={counter} onOpen={() => setGridOpen(true)} />
