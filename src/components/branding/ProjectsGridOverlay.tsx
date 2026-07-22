@@ -9,35 +9,60 @@ type ProjectsGridOverlayProps = {
   onClose: () => void;
 };
 
+const COLUMN_COUNT = 5;
+const SECONDS_PER_CARD = 6;
+
+function ProjectCard({ project }: { project: Project }) {
+  return (
+    <Link
+      href={`/projects/${project.slug}`}
+      className="group relative block aspect-[1482/798] overflow-hidden rounded-2xl"
+      style={{ background: "var(--cb-glass-pill)" }}
+    >
+      <ProjectMedia
+        media={project.coverMedia}
+        label={project.cover}
+        sizes="20vw"
+        uploadPath={`/projects/${assetFolder(project)}/cover`}
+      />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+        <span className="font-display text-lg font-extrabold lowercase text-white">
+          {project.title}
+        </span>
+        <span className="block font-sans text-[11px] uppercase tracking-[0.12em] text-white/70">
+          {project.tag}
+        </span>
+      </div>
+    </Link>
+  );
+}
+
 export default function ProjectsGridOverlay({ projects, onClose }: ProjectsGridOverlayProps) {
+  const columns: Project[][] = Array.from({ length: COLUMN_COUNT }, () => []);
+  projects.forEach((project, i) => {
+    columns[i % COLUMN_COUNT].push(project);
+  });
+
   return (
     <div
-      className="absolute inset-0 z-[100] overflow-y-auto backdrop-blur-2xl"
+      className="absolute inset-0 z-[100] overflow-hidden backdrop-blur-2xl"
       style={{ background: "var(--cb-glass)" }}
     >
-      <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project) => (
-          <Link
-            key={project.slug}
-            href={`/projects/${project.slug}`}
-            className="group relative block aspect-[4/3] overflow-hidden rounded-2xl"
-            style={{ background: "var(--cb-glass-pill)" }}
-          >
-            <ProjectMedia
-              media={project.coverMedia}
-              label={project.cover}
-              sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-              uploadPath={`/projects/${assetFolder(project)}/cover`}
-            />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-              <span className="font-display text-lg font-extrabold lowercase text-white">
-                {project.title}
-              </span>
-              <span className="block font-sans text-[11px] uppercase tracking-[0.12em] text-white/70">
-                {project.tag}
-              </span>
+      <div className="grid h-full grid-cols-5 gap-3 p-3">
+        {columns.map((col, i) => (
+          <div key={i} className="relative h-full overflow-hidden">
+            <div
+              className="cb-col flex flex-col gap-3"
+              style={{
+                animationDirection: i % 2 === 1 ? "reverse" : "normal",
+                animationDuration: `${col.length * SECONDS_PER_CARD}s`,
+              }}
+            >
+              {[...col, ...col].map((project, j) => (
+                <ProjectCard key={`${project.slug}-${j}`} project={project} />
+              ))}
             </div>
-          </Link>
+          </div>
         ))}
       </div>
       <button
