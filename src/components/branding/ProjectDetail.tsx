@@ -154,7 +154,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
             <button
               type="button"
               onClick={() => setActiveTab("brief")}
-              className="text-left text-xs tracking-[0.06em] underline underline-offset-4"
+              className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
               style={{ opacity: activeTab === "brief" ? 1 : 0.45 }}
             >
               brief
@@ -163,7 +163,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
               <button
                 type="button"
                 onClick={() => setActiveTab("strategy")}
-                className="text-left text-xs tracking-[0.06em] underline underline-offset-4"
+                className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
                 style={{ opacity: activeTab === "strategy" ? 1 : 0.45 }}
               >
                 strategy
@@ -192,8 +192,8 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
                 {project.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="rounded-full border px-3.5 py-1.5 text-xs text-[var(--cb-muted)]"
-                    style={{ borderColor: "var(--cb-hair)" }}
+                    className="rounded-full border-none px-3.5 py-1.5 text-xs font-bold"
+                    style={{ background: "var(--cb-cta-bg)", color: "var(--cb-cta-text)" }}
                   >
                     {skill}
                   </span>
