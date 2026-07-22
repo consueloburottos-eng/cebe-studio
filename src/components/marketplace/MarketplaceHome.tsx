@@ -608,11 +608,13 @@ export default function MarketplaceHome() {
               />
               <div
                 className="absolute inset-0 backdrop-blur-2xl"
-                style={{ background: "rgba(20,18,16,.6)" }}
+                style={{ background: "rgba(255,255,255,.55)" }}
               />
               <div className="relative z-[1]">
                 <div className="px-6 pb-6 sm:px-8">
-                  <h3 className="text-center font-serif text-[26px] text-white">Proyectos {activeService.title}</h3>
+                  <h3 className="text-center font-serif text-[26px]" style={{ color: "#141210" }}>
+                    Proyectos {activeService.title}
+                  </h3>
                 </div>
                 <ResultsGrid results={results} />
               </div>
