@@ -116,6 +116,11 @@ export default function BrandingHome() {
           </h1>
         </div>
 
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 z-[120] h-[92px] backdrop-blur-2xl sm:h-[112px]"
+          style={{ background: "linear-gradient(180deg, rgba(var(--cb-bgrgb), .55), rgba(var(--cb-bgrgb), 0))" }}
+        />
+
         <NavPill
           open={navOpen}
           onToggle={() => setNavOpen((o) => !o)}
