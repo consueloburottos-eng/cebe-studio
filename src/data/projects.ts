@@ -194,10 +194,10 @@ export const projects: Project[] = [
     cover: "Bodas de Sangre — diseño teatral",
     coverMedia: img("obra-teatral-bodas-de-sangre", "01.jpg"),
     brief:
-      "Diseño escenográfico para una producción teatral de \"Bodas de Sangre\" de Federico García Lorca, trabajando color, textura y espacio para construir la atmósfera de la obra.",
+      "Diseño escenográfico para una producción teatral de \"Bodas de Sangre\" de Federico García Lorca, trabajando color, textura y espacio para construir una atmósfera que reforzara la tensión dramática de la obra y la identidad del lenguaje escénico.",
     strategy: [
-      "El diseño se pensó en función del texto y la dirección: cada elemento en escena refuerza la tensión dramática de la historia.",
-      "Una puesta en escena con una identidad visual y espacial coherente con el tono de la obra.",
+      "El diseño se pensó en función del texto y la dirección: cada elemento en escena refuerza la tensión dramática de la historia y ayuda a construir una lectura visual más intensa del conflicto.",
+      "La propuesta buscó una puesta en escena con una identidad espacial coherente, donde el material, el color y la composición reforzaran el tono emocional de la pieza.",
     ],
     headline: "el espacio como tensión",
     gallery: [
@@ -208,24 +208,34 @@ export const projects: Project[] = [
     ],
   },
   {
-    // real photos, copy still to be written — the previous "Afiche — Bodas de
-    // Sangre" text described a theatre poster and never matched these images
     slug: "polucio",
     title: "polucio",
-    category: "Próximamente",
-    tag: "proyecto por documentar",
-    subtitle: "Case study en preparación",
-    client: "Polucio",
-    role: "—",
-    year: "—",
-    result: "Próximamente",
-    skills: [],
-    cover: "Polucio — portada",
+    category: "Product Design",
+    tag: "product design · ux strategy",
+    subtitle: "Sistema de información ambiental para aulas",
+    client: "Proyecto académico",
+    role: "Product Design · UX Strategy · Prototyping · Electronic Design",
+    year: "2025",
+    result: "Prototipo funcional de monitoreo ambiental para aulas",
+    services: "Design strategy · Product design · Prototipado",
+    skills: [
+      "UX Strategy",
+      "Product Design",
+      "Prototipado",
+      "Diseño de interacción",
+      "Diseño electrónico",
+      "Investigación de contexto",
+    ],
+    cover: "Polucio — sistema de monitoreo ambiental",
     coverMedia: img("polucio", "01.jpg"),
     brief:
-      "El contenido de este proyecto está en preparación — pronto vas a poder ver el caso completo acá.",
-    strategy: [],
-    headline: "próximamente",
+      "La calidad del aire en las salas de clases suele pasar desapercibida. La acumulación de CO₂ se vuelve gradual y silenciosa, afectando el bienestar y la concentración de estudiantes y docentes sin señales claras para intervenir. Polucio fue concebido como un sistema de información ambiental accesible que transforma datos complejos en una señal visual simple, permitiendo que cualquier persona dentro del aula comprenda cuándo es momento de ventilar el espacio sin depender de datos técnicos ni de aplicaciones externas.",
+    strategy: [
+      "En lugar de desarrollar una plataforma con gráficos o mediciones técnicas, la estrategia consistió en convertir los datos ambientales en una señal visual compartida por toda la sala. El dispositivo comunica el estado de la calidad del aire mediante cambios de iluminación y promueve una acción concreta: ventilar el aula.",
+      "El proyecto se apoyó en tres principios de diseño: visibilidad inmediata, acción sobre la información y educación mediante el diseño. La repetición de estas señales facilita hábitos de ventilación y aumenta la conciencia sobre la relación entre ambiente, salud y aprendizaje.",
+      "Polucio se presenta no como un dispositivo electrónico aislado, sino como un proyecto de Product Design y UX centrado en cambiar el comportamiento de los usuarios mediante una interacción física sencilla y significativa.",
+    ],
+    headline: "hacer visible lo invisible",
     gallery: [
       { label: "Polucio — imagen 2", media: img("polucio", "02.jpg") },
       { label: "Polucio — imagen 3", media: img("polucio", "03.jpg") },
@@ -234,7 +244,6 @@ export const projects: Project[] = [
       { label: "Polucio — imagen 6", media: img("polucio", "06.jpg") },
       ...introGallery("polucio", "Polucio", 6, 13),
     ],
-    pending: true,
   },
   {
     slug: "amphora",
@@ -251,10 +260,10 @@ export const projects: Project[] = [
     cover: "Amphora — e-commerce",
     coverMedia: img("amphora", "hero.png"),
     brief:
-      "Amphora necesitaba una tienda online que se sintiera tan cuidada como su producto. El proyecto cubrió la maquetación de página, presentación de producto y navegación.",
+      "Amphora necesitaba una tienda online que transmitiera la misma delicadeza y cuidado que el producto que vende. El desafío era traducir una marca sensorial y estética a una experiencia digital clara, con suficiente fuerza para convertir sin perder su personalidad premium.",
     strategy: [
-      "A partir del lenguaje visual de la marca, diseñé un set de componentes para listados, fichas de producto y checkout, priorizando la escaneabilidad y un camino de compra fluido.",
-      "Una experiencia de e-commerce limpia y con personalidad de marca, con patrones de UI reutilizables para futuras páginas y campañas.",
+      "Diseñé la arquitectura de la tienda alrededor de la narrativa del producto: presentación visual, jerarquía de información y un recorrido de compra con ritmo fluido para que cada pantalla se sintiera cuidada y coherente.",
+      "El resultado fue una interfaz elegante y funcional, con componentes reutilizables que permitieron expandir el catálogo sin perder la identidad de marca.",
     ],
     headline: "una tienda con personalidad",
     gallery: [
@@ -342,10 +351,10 @@ export const projects: Project[] = [
     cover: "BULULU",
     coverMedia: img("bululu", "01.jpg"),
     brief:
-      "BULULU es un teatrino de títeres itinerante: un carro con ruedas construido a mano que se abre como escenario. El proyecto abarcó la identidad de marca (logo con motivo de rueda de carreta), el diseño de los personajes-títere y el diseño físico del carro y su textil.",
+      "BULULU nació como un proyecto de identidad y objeto para un teatrino de títeres itinerante. El desafío era construir una marca que se sintiera viva, artesanal y reconocible, capaz de sostenerse tanto en el lenguaje visual como en el propio carro-teatrino.",
     strategy: [
-      "Diseñé primero el sistema de marca y los personajes, y luego traduje esa identidad al objeto físico: estructura, tela, color y tipografía aplicados directamente sobre el carro-teatrino, documentado con fotografía de producto.",
-      "Un teatrino itinerante con identidad propia y coherente entre logo, personajes y objeto físico, listo para presentarse frente a público.",
+      "Diseñé una identidad que uniera logo, personajes y estructura física del objeto, para que cada parte del proyecto reforzara el resto y generara una experiencia visual coherente.",
+      "El resultado fue un sistema transportable y potente, con una presencia propia que funcionara en el escenario, en la fotografía de producto y en la comunicación de marca.",
     ],
     headline: "un teatrino con identidad propia",
     gallery: [
@@ -357,6 +366,29 @@ export const projects: Project[] = [
       { label: "BULULU — en uso", media: img("bululu", "07.jpg") },
       ...introGallery("bululu", "Bululu", 7, 13),
     ],
+  },
+  {
+    slug: "la-chanchada",
+    title: "la chanchada",
+    category: "Identidad",
+    tag: "identidad · brand design",
+    subtitle: "Propuesta de identidad para una marca local",
+    client: "La Chanchada",
+    role: "Brand Design",
+    year: "—",
+    result: "Identidad visual con personalidad propia",
+    services: "Branding · Diseño editorial",
+    skills: ["Branding", "Illustrator", "Photoshop", "Diseño editorial"],
+    cover: "La Chanchada — identidad",
+    coverMedia: img("la-chanchada", "cover.webp"),
+    brief:
+      "La Chanchada necesitaba una identidad que reflejara su carácter cercano, popular y distintivo. El reto era construir una propuesta visual con personalidad propia, capaz de sostenerse en la marca, el packaging y la comunicación cotidiana.",
+    strategy: [
+      "Diseñé una identidad visual que combinara una estética reconocible con un tono cercano, para que la marca se sintiera auténtica, memorable y diferente.",
+      "La solución buscó traducir la esencia del proyecto en un sistema flexible que funcionara en distintos puntos de contacto sin perder coherencia ni fuerza.",
+    ],
+    headline: "una identidad con sabor y presencia",
+    gallery: introGallery("la-chanchada", "La Chanchada", 1, 13),
   },
   {
     slug: "como-y-voto",
@@ -373,10 +405,10 @@ export const projects: Project[] = [
     cover: "Como & Voto",
     coverMedia: img("como-y-voto", "01.jpg"),
     brief:
-      "Como & Voto es una marca de malvaviscos bañados en chocolate. El proyecto incluyó el logo — un sello ilustrado con guiño tipo circular/vintage — y el packaging del producto.",
+      "Como & Voto buscaba una identidad que transmitiera ternura, humor y una propuesta gastronómica distinta. El proyecto combinó un logo con carácter ilustrado y un empaque que pudiera funcionar como parte de la experiencia de marca, no solo como contenedor.",
     strategy: [
-      "Diseñé un logo con estética de sello clásico e ilustración a mano, y lo trasladé al envase físico del producto, documentando el resultado con fotografía de producto.",
-      "Una identidad de marca con personalidad propia, aplicada de forma coherente entre el logo y el empaque final.",
+      "La solución se apoyó en una estética de sello artesanal y una ilustración a mano que aportara personalidad, sin perder claridad en el punto de venta.",
+      "La identidad se aplicó de manera consistente en el envase y la presentación del producto, generando una experiencia memorable y reconocible.",
     ],
     headline: "un sello con carácter",
     gallery: [
@@ -403,10 +435,10 @@ export const projects: Project[] = [
     cover: "HBT",
     coverMedia: img("hbt", "01.jpg"),
     brief:
-      "HBT vende artículos de cocina y hogar online. El proyecto abarcó la experiencia de tienda y presentación de producto para una categoría con muchas variantes y configuraciones.",
+      "HBT necesitaba una experiencia de tienda que facilitara la compra de productos muy diversos, sin perder claridad frente a una categoría con muchas variantes y decisiones de compra por resolver. El reto era transformar un catálogo amplio en una interfaz simple, visualmente ordenada y escalable.",
     strategy: [
-      "Diseñé la navegación y las fichas de producto priorizando claridad visual, para que decisiones de compra complejas se sintieran simples.",
-      "Una interfaz de tienda pulida, lista para escalar el catálogo sin perder claridad.",
+      "Diseñé la navegación y las fichas de producto para que la información se entendiera rápidamente, con jerarquías claras y un recorrido que guiara la decisión de compra.",
+      "La solución priorizó una UI limpia y modular, capaz de crecer con el catálogo y sostener nuevas categorías sin perder cohesión visual.",
     ],
     headline: "decisiones complejas, simples",
     gallery: [],
@@ -426,10 +458,10 @@ export const projects: Project[] = [
     cover: "Londra",
     coverMedia: img("londra", "01.jpg"),
     brief:
-      "Londra es una tienda de decoración para el hogar. El proyecto se centró en la navegación de colecciones, categorías y una portada que destaca novedades y promociones.",
+      "Londra necesitaba una tienda digital que se sintiera elegante, cálida y fácil de actualizar. El proyecto se concentró en mostrar colecciones y novedades de forma atractiva, mientras se mantenía una arquitectura de navegación flexible para el crecimiento del catálogo.",
     strategy: [
-      "Diseñé un sistema de grilla flexible para merchandising, de modo que nuevas colecciones y promociones puedan destacarse sin rediseñar el layout cada temporada.",
-      "Una portada de tienda y sistema de categorías pulido, fácil de actualizar con contenido nuevo.",
+      "Diseñé un sistema de grilla y bloques de contenido que permitiera destacar promociones, colecciones y novedades sin necesidad de reestructurar la página cada temporada.",
+      "El resultado fue una portada y una estructura de categorías claras, con un tono visual que reforzaba la propuesta de decoración del hogar.",
     ],
     headline: "una grilla que respira",
     gallery: [
@@ -451,10 +483,10 @@ export const projects: Project[] = [
     cover: "Nicopoly",
     coverMedia: img("nicopoly", "01.jpg"),
     brief:
-      "Nicopoly es una experiencia de e-commerce de moda diseñada para que navegar y comprar se sienta simple — desde la navegación por categoría hasta el detalle de producto y el carro.",
+      "Nicopoly requería una experiencia de compra que fuera simple, visualmente consistente y adecuada para un público que necesitaba navegar y decidir con rapidez. El proyecto abarcó la mirada general del e-commerce, desde categorías hasta el detalle de producto y el carro.",
     strategy: [
-      "Mapeé primero el flujo de compra completo y luego diseñé la interfaz alrededor de él: filtrado claro, tarjetas de producto consistentes y un checkout simplificado.",
-      "Una interfaz de tienda simplificada con un sistema visual consistente entre listado, detalle y checkout.",
+      "Mapeé el flujo de compra para diseñar una interfaz más fluida y comprensible, con filtrado claro, tarjetas de producto consistentes y un recorrido orientado a la conversión.",
+      "La propuesta buscó reducir fricción y hacer del proceso de compra una experiencia ordenada, elegante y fácil de seguir.",
     ],
     headline: "comprar, simplificado",
     gallery: [
@@ -477,10 +509,10 @@ export const projects: Project[] = [
     cover: "Rocket MKT",
     coverMedia: img("rocket-mkt", "01.jpg"),
     brief:
-      "Rocket MKT es un colectivo de marketing que quería un sitio tan enérgico como su marca. El proyecto combinó identidad visual con una UI web colorida y audaz.",
+      "Rocket MKT quería un sitio que transmitiera energía, confianza y una identidad de marca muy propia. El desafío era combinar una propuesta visual audaz con una experiencia web clara y funcional, capaz de sostener la personalidad del colectivo.",
     strategy: [
-      "Usé contraste fuerte de color y tipografía para darle a la marca una personalidad distintiva y segura, manteniendo el layout simple para soportar motion e interacción.",
-      "Un diseño de sitio distintivo y coherente con la marca, con un sistema de identidad visual listo para extenderse a otros puntos de contacto.",
+      "Usé contrastes fuertes, tipografía contundente y una estructura simple para construir una interfaz que se sintiera viva sin perder legibilidad.",
+      "La solución entregó una experiencia web con identidad potente, lista para expandirse a otros puntos de contacto y reforzar la marca en digital.",
     ],
     headline: "personalidad distintiva y segura",
     gallery: [
@@ -505,10 +537,10 @@ export const projects: Project[] = [
     cover: "SoyAdicto",
     coverMedia: img("soya-adicto", "01.jpg"),
     brief:
-      "SoyAdicto es una marca de hamburguesas a base de soya, con un juego de palabras entre \"soy\" (soja) y \"adicto\". La identidad se apoya en una ilustración de vaca a mano, aplicada en textil y empaque, junto con fotografía del producto.",
+      "SoyAdicto planteaba la oportunidad de construir una identidad de marca con carácter, a partir de un concepto que jugaba con el juego de palabras entre soja y adicción. El reto era traducir esa idea a una propuesta visual coherente, aplicable a empaque, textil e imagen del producto.",
     strategy: [
-      "Desarrollé la ilustración central de la marca y la tipografía manuscrita del logo, y las apliqué de forma consistente en piezas físicas y fotografía de producto.",
-      "Una identidad de marca con carácter propio, coherente entre ilustración, tipografía y presentación del producto.",
+      "Desarrollé una ilustración central y una tipografía manuscrita que sostuvieran la personalidad de la marca, aportando una sensación artesanal y reconocible.",
+      "La identidad se aplicó de forma consistente en las piezas físicas y en la comunicación visual, generando una presencia que se recordaba con facilidad.",
     ],
     headline: "identidad con carácter",
     gallery: [
@@ -543,7 +575,6 @@ const PENDING_STUBS: {
   },
   { slug: "cnc", title: "cnc", displayTitle: "CNC", coverExt: "webp", introCount: 13 },
   { slug: "dior", title: "dior", displayTitle: "Dior", coverExt: "gif", introCount: 0 },
-  { slug: "la-chanchada", title: "la chanchada", displayTitle: "La Chanchada", coverExt: "webp", introCount: 13 },
   { slug: "llay-llay", title: "llay llay", displayTitle: "Llay Llay", coverExt: "webp", introCount: 13 },
   {
     slug: "longboard",

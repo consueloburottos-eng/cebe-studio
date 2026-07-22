@@ -69,7 +69,7 @@ export default function ProjectMedia({
   }, [identityPath]);
 
   const effectiveMedia = media ?? (cached ? { type: cached.type, src: cached.src } : undefined);
-  const canUpload = DEV_UPLOAD_ENABLED && Boolean(identityPath);
+  const canUpload = false;
 
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];

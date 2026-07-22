@@ -10,6 +10,7 @@ import FullscreenMenu from "./FullscreenMenu";
 import ProjectMedia from "@/components/ProjectMedia";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
 import ServiceCard, { type ServiceCardConfig } from "./ServiceCard";
+import ServiceConfigPopover from "./ServiceConfigPopover";
 import CartOverlay from "./CartOverlay";
 
 const EXAMPLES = [
@@ -184,11 +185,11 @@ export default function MarketplaceHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [exampleIdx, setExampleIdx] = useState(0);
   const [favorited, setFavorited] = useState<Set<string>>(new Set());
-  const [inCart, setInCart] = useState<Set<string>>(new Set());
   const [heroCache, setHeroCache] = useState<HeroCacheEntry | null>(null);
   const [activeService, setActiveService] = useState<ShowcaseItem | null>(null);
   const [serviceCart, setServiceCart] = useState<Record<string, ServiceCardConfig>>({});
   const [cartOpen, setCartOpen] = useState(false);
+  const [configuringId, setConfiguringId] = useState<string | null>(null);
   const heroInputRef = useRef<HTMLInputElement>(null);
 
   // each mode is its own full "page" (hero, service banner, results grid) —
@@ -241,12 +242,10 @@ export default function MarketplaceHome() {
     });
   }
 
-  function toggleCart(id: string) {
-    setInCart((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
+  function confirmServiceConfig(id: string, config: ServiceCardConfig) {
+    setServiceCart((prev) => ({ ...prev, [id]: config }));
+    setConfiguringId(null);
+    setCartOpen(true);
   }
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -468,16 +467,16 @@ export default function MarketplaceHome() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => toggleCart(item.id)}
+                      onClick={() => setConfiguringId(item.id)}
                       title="Agregar al carro"
-                      aria-pressed={inCart.has(item.id)}
+                      aria-pressed={Boolean(serviceCart[item.id])}
                       className="flex h-8 w-8 items-center justify-center rounded-full border-none text-[16px] backdrop-blur-md"
                       style={{
-                        background: inCart.has(item.id) ? "#B8623F" : "rgba(0,0,0,.4)",
+                        background: serviceCart[item.id] ? "#B8623F" : "rgba(0,0,0,.4)",
                         color: "#fff",
                       }}
                     >
-                      {inCart.has(item.id) ? "✓" : "+"}
+                      {serviceCart[item.id] ? "✓" : "+"}
                     </button>
                   </div>
                 </div>
@@ -566,10 +565,7 @@ export default function MarketplaceHome() {
                 priceFrom={activeService.priceFrom}
                 thumbnailSrc={activeService.media.src}
                 initial={serviceCart[activeService.id]}
-                onConfirm={(config) => {
-                  setServiceCart((prev) => ({ ...prev, [activeService.id]: config }));
-                  setCartOpen(true);
-                }}
+                onConfirm={(config) => confirmServiceConfig(activeService.id, config)}
               />
             </div>
 
@@ -671,17 +667,17 @@ export default function MarketplaceHome() {
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation();
-                            toggleCart(s.id);
+                            setConfiguringId(s.id);
                           }}
                           title="Agregar al carro"
-                          aria-pressed={inCart.has(s.id)}
+                          aria-pressed={Boolean(serviceCart[s.id])}
                           className="flex h-8 w-8 items-center justify-center rounded-full border-none text-[16px] backdrop-blur-md"
                           style={{
-                            background: inCart.has(s.id) ? "#B8623F" : "rgba(0,0,0,.4)",
+                            background: serviceCart[s.id] ? "#B8623F" : "rgba(0,0,0,.4)",
                             color: "#fff",
                           }}
                         >
-                          {inCart.has(s.id) ? "✓" : "+"}
+                          {serviceCart[s.id] ? "✓" : "+"}
                         </button>
                       </div>
                     </div>
@@ -760,6 +756,15 @@ export default function MarketplaceHome() {
                 return next;
               })
             }
+          />
+        )}
+
+        {configuringId && (
+          <ServiceConfigPopover
+            title={SHOWCASE.find((s) => s.id === configuringId)?.title ?? ""}
+            initial={serviceCart[configuringId]}
+            onClose={() => setConfiguringId(null)}
+            onConfirm={(config) => confirmServiceConfig(configuringId, config)}
           />
         )}
       </div>
