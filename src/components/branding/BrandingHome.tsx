@@ -117,7 +117,7 @@ export default function BrandingHome() {
           </h1>
         </div>
 
-        <ProgressiveBlur side="top" height={260} className="z-[120]" />
+        <ProgressiveBlur side="top" height={110} className="z-[120]" />
 
         <div className="absolute inset-x-0 top-0 z-[130] flex h-[60px] items-center justify-between px-4 sm:px-[26px]">
           <NavPill
