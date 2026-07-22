@@ -88,6 +88,7 @@
   --mk-hr: rgba(255, 255, 255, 0.14);
   --mk-surface: #1c1a17;
   --mk-txrgb: 242, 237, 230;
+  --mk-bgrgb: 20, 18, 16;
 }
 
 [data-mk-theme="light"] {
@@ -97,6 +98,7 @@
   --mk-amber: #c68a3d;
   --mk-hr: rgba(20, 18, 16, 0.14);
   --mk-surface: #e8e2d6;
+  --mk-bgrgb: 244, 241, 234;
   --mk-txrgb: 20, 18, 16;
 }
 
