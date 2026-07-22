@@ -25,14 +25,6 @@ function ProjectCard({ project }: { project: Project }) {
         sizes="20vw"
         uploadPath={`/projects/${assetFolder(project)}/cover`}
       />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-        <span className="font-display text-lg font-extrabold lowercase text-white">
-          {project.title}
-        </span>
-        <span className="block font-sans text-[11px] uppercase tracking-[0.12em] text-white/70">
-          {project.tag}
-        </span>
-      </div>
     </Link>
   );
 }

@@ -26,7 +26,7 @@ export default function ModeSwitcher({
   variant = "light",
 }: ModeSwitcherProps) {
   const isDarkVariant = variant === "dark";
-  const stripBg = isDarkVariant ? "rgba(255,255,255,.06)" : "var(--cb-pill, #f1f0ee)";
+  const stripBg = isDarkVariant ? "rgba(30,30,30,.45)" : "var(--cb-glass-pill, rgba(255,255,255,.55))";
   const stripHr = isDarkVariant ? "rgba(255,255,255,.1)" : "var(--cb-hair, rgba(17,17,17,.12))";
   const segBg = isDarkVariant ? "rgba(0,0,0,.35)" : "var(--cb-bg, #fff)";
   const mutedColor = isDarkVariant ? "rgba(245,245,247,.5)" : "var(--cb-muted, #8a8a8a)";
@@ -37,7 +37,7 @@ export default function ModeSwitcher({
 
   return (
     <div
-      className="relative z-[90] flex flex-none flex-wrap items-center justify-center gap-x-3 gap-y-1.5 border-b px-3 py-2 sm:justify-between sm:px-5"
+      className="relative z-[120] flex flex-none flex-wrap items-center justify-center gap-x-3 gap-y-1.5 border-b px-3 py-2 backdrop-blur-xl sm:justify-between sm:px-5"
       style={{ background: stripBg, borderColor: stripHr }}
     >
       <span
