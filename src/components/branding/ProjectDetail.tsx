@@ -53,7 +53,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
 
       <div
         className="sticky top-0 z-10 flex items-center justify-between gap-4 px-7 py-[15px] backdrop-blur-2xl"
-        style={{ background: "linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,0))" }}
+        style={{ background: "linear-gradient(180deg, var(--cb-glass-hdr), var(--cb-glass-hdr-0))" }}
       >
         <span className="font-sans text-[13px] font-extrabold uppercase tracking-[0.12em]">
           CEBE:STUDIO
@@ -82,7 +82,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
 
       <div
         className="fixed inset-x-0 bottom-0 z-[110] flex items-center justify-end px-7 py-[15px] backdrop-blur-2xl"
-        style={{ background: "linear-gradient(0deg, rgba(255,255,255,.55), rgba(255,255,255,0))" }}
+        style={{ background: "linear-gradient(0deg, var(--cb-glass-hdr), var(--cb-glass-hdr-0))" }}
       >
         <Link
           href="/"

@@ -16,6 +16,10 @@
   --cb-cta-bg: #111111;
   --cb-cta-text: #ffffff;
 
+  /* Fixed header/footer glassmorphism — same blur both themes, overlay color/opacity swaps */
+  --cb-glass-hdr: rgba(255, 255, 255, 0.65);
+  --cb-glass-hdr-0: rgba(255, 255, 255, 0);
+
   /* MediaPlaceholder — theme-aware, adapts by inheriting the vars it points at */
   --ph-bg: var(--cb-pill);
   --ph-hair: var(--cb-hair);
@@ -34,6 +38,9 @@
   --cb-glass-pill: rgba(30, 30, 28, 0.55);
   --cb-cta-bg: #f5f5f0;
   --cb-cta-text: #111111;
+
+  --cb-glass-hdr: rgba(0, 0, 0, 0.45);
+  --cb-glass-hdr-0: rgba(0, 0, 0, 0);
 }
 
 /* SaaS mode — simulated macOS desktop (dark default) */

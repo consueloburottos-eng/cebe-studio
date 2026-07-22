@@ -118,7 +118,7 @@ export default function BrandingHome() {
 
         <div
           className="pointer-events-none absolute inset-x-0 top-0 z-[120] h-[70px] backdrop-blur-2xl"
-          style={{ background: "linear-gradient(180deg, rgba(var(--cb-bgrgb), .55), rgba(var(--cb-bgrgb), 0))" }}
+          style={{ background: "linear-gradient(180deg, var(--cb-glass-hdr), var(--cb-glass-hdr-0))" }}
         />
 
         <NavPill

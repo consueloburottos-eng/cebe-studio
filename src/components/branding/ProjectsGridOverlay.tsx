@@ -88,7 +88,7 @@ export default function ProjectsGridOverlay({ projects, onClose }: ProjectsGridO
       </div>
       <div
         className="fixed inset-x-0 bottom-0 z-[110] flex items-center justify-end px-7 py-[15px] backdrop-blur-2xl"
-        style={{ background: "linear-gradient(0deg, rgba(var(--cb-bgrgb), .55), rgba(var(--cb-bgrgb), 0))" }}
+        style={{ background: "linear-gradient(0deg, var(--cb-glass-hdr), var(--cb-glass-hdr-0))" }}
       >
         <button
           type="button"
