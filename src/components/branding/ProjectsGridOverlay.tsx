@@ -57,15 +57,20 @@ export default function ProjectsGridOverlay({ projects, onClose }: ProjectsGridO
           </div>
         ))}
       </div>
-      <button
-        type="button"
-        onClick={onClose}
-        title="cerrar"
-        className="fixed bottom-[26px] right-[26px] z-[110] flex h-[54px] w-[54px] items-center justify-center rounded-full border-none text-xl backdrop-blur-xl"
-        style={{ background: "var(--cb-glass-pill)", color: "var(--cb-text)" }}
+      <div
+        className="fixed inset-x-0 bottom-0 z-[110] flex items-center justify-end px-7 py-[15px] backdrop-blur-2xl"
+        style={{ background: "linear-gradient(0deg, rgba(var(--cb-bgrgb), .55), rgba(var(--cb-bgrgb), 0))" }}
       >
-        ✕
-      </button>
+        <button
+          type="button"
+          onClick={onClose}
+          title="cerrar"
+          className="flex h-10 w-10 items-center justify-center rounded-full border text-[15px]"
+          style={{ borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
+        >
+          ✕
+        </button>
+      </div>
     </div>
   );
 }
