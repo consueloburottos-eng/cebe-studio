@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
+import ProgressiveBlur from "../ProgressiveBlur";
 
 type ProjectsGridOverlayProps = {
   projects: Project[];
@@ -86,19 +87,19 @@ export default function ProjectsGridOverlay({ projects, onClose }: ProjectsGridO
           </div>
         ))}
       </div>
-      <div
-        className="fixed inset-x-0 bottom-0 z-[110] flex items-center justify-end px-7 py-[15px] backdrop-blur-2xl"
-        style={{ background: "linear-gradient(0deg, var(--cb-glass-hdr), var(--cb-glass-hdr-0))" }}
-      >
-        <button
-          type="button"
-          onClick={onClose}
-          title="cerrar"
-          className="flex h-10 w-10 items-center justify-center rounded-full border text-[15px]"
-          style={{ borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
-        >
-          ✕
-        </button>
+      <div className="fixed inset-x-0 bottom-0 z-[110]">
+        <ProgressiveBlur side="bottom" height={220} />
+        <div className="relative z-[1] flex items-center justify-end px-7 py-[15px]">
+          <button
+            type="button"
+            onClick={onClose}
+            title="cerrar"
+            className="flex h-10 w-10 items-center justify-center rounded-full border text-[15px]"
+            style={{ borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
+          >
+            ✕
+          </button>
+        </div>
       </div>
     </div>
   );

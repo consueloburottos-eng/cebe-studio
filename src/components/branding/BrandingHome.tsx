@@ -5,6 +5,7 @@ import { projects, getProject, featuredProjectSlug } from "@/data/projects";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
 import ModeSwitcher from "@/components/ModeSwitcher";
+import ProgressiveBlur from "@/components/ProgressiveBlur";
 import NavPill from "./NavPill";
 import TopRight from "./TopRight";
 import HeroDeck from "./HeroDeck";
@@ -116,10 +117,7 @@ export default function BrandingHome() {
           </h1>
         </div>
 
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 z-[120] h-[70px] backdrop-blur-2xl"
-          style={{ background: "linear-gradient(180deg, var(--cb-glass-hdr), var(--cb-glass-hdr-0))" }}
-        />
+        <ProgressiveBlur side="top" height={260} className="z-[120]" />
 
         <NavPill
           open={navOpen}
