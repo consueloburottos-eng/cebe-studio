@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { projects, getProject, type Project } from "@/data/projects";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
@@ -34,6 +34,12 @@ const heroProjects: Project[] = [
   ),
   ...projects.filter((p) => !HERO_PRIORITY_SLUGS.includes(p.slug)),
 ];
+
+// Hero intro: "product designer" split into per-letter spans so the .cb-letter
+// CSS animation (globals.css) can stagger each one in on first mount.
+const HERO_TITLE_LETTERS = "product designer"
+  .split("")
+  .map((char, i) => ({ char, i }));
 
 export default function BrandingHome() {
   const [dark, setDark] = useSiteTheme();
@@ -136,10 +142,22 @@ export default function BrandingHome() {
         />
 
         <div className="pointer-events-none absolute inset-0 z-[1] flex items-center justify-center px-[6vw]">
-          <h1 className="cb-title m-0 max-w-[15ch] text-center font-display font-extrabold lowercase leading-[.9] tracking-[-0.035em]"
+          <h1
+            className="m-0 max-w-[15ch] text-center font-display font-extrabold lowercase leading-[.9] tracking-[-0.035em]"
             style={{ fontSize: "clamp(40px,8.6vw,132px)", color: "var(--cb-text)" }}
+            aria-label="product designer"
           >
-            product designer
+            <span aria-hidden="true">
+              {HERO_TITLE_LETTERS.map(({ char, i }) => (
+                <span
+                  key={i}
+                  className="cb-letter"
+                  style={{ "--i": i } as CSSProperties}
+                >
+                  {char === " " ? " " : char}
+                </span>
+              ))}
+            </span>
           </h1>
         </div>
 

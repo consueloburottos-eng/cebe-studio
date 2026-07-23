@@ -16,7 +16,7 @@ export default function HeroDeck({ projects, front, onAdvance }: HeroDeckProps) 
 
   return (
     <div
-      className="absolute top-1/2 left-1/2 z-[5] aspect-[1482/798] w-[min(750px,86vw)] -translate-x-1/2 -translate-y-1/2"
+      className="cb-deck-intro absolute top-1/2 left-1/2 z-[5] aspect-[1482/798] w-[min(750px,86vw)]"
     >
       <div className="cb-deck h-full w-full">
         {projects.map((project, i) => {
