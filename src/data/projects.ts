@@ -110,6 +110,38 @@ export const projects: Project[] = [
     gallery: introGallery("talent-capital", "Talent Capital", 1, 13, "mp4", { 1: "webp", 2: "webp" }),
   },
   {
+    slug: "buildwithin-design-system",
+    title: "buildwithin — superadmin",
+    category: "Product Design",
+    tag: "product design · enterprise saas · ai-powered ops",
+    subtitle: "Plataforma Enterprise para gestionar programas Workforce con IA",
+    client: "BuildWithin",
+    role: "Lead Product Designer",
+    year: "2025",
+    result: "Ecosistema Enterprise configurable — programas, elegibilidad WIOA y matching automatizados por IA",
+    services: "Product Design · Design System · Estrategia de producto Enterprise",
+    skills: [
+      "Figma",
+      "Maze",
+      "Design Systems",
+      "Enterprise UX",
+      "AI-powered workflows",
+      "Prototipado",
+      "Stakeholder Management",
+    ],
+    cover: "BuildWithin — SuperAdmin",
+    coverMedia: img("buildwithin-design-system", "cover.png"),
+    brief:
+      "BuildWithin Admin Platform es el sistema Enterprise que administra el ciclo completo de programas Workforce — configuración, elegibilidad, aprendizaje y operación — para gobiernos, organizaciones y centros de capacitación. La plataforma original de BuildWithin estaba pensada para otro modelo de negocio; la evolucionamos hacia un producto Workforce que debía soportar seis perfiles de usuario distintos (Super Admin, Organization Admin, Talent Manager, Case Manager, Employer, Staff interno), cada uno con permisos, herramientas y flujos propios. Como Lead Product Designer lideré esta transformación completa durante 6 meses: definí la experiencia de producto de principio a fin, diseñé las funcionalidades principales, construí el Design System, y validé cada decisión junto con Product, la CEO y los stakeholders — sin perder de vista que cada organización cliente tiene reglas de negocio completamente distintas entre sí.",
+    strategy: [
+      "La estrategia se apoyó en tres principios. Configuración antes que desarrollo: siempre que fue posible, las organizaciones debían poder configurar el sistema —reglas WIOA, documentos requeridos, umbrales económicos, criterios de elegibilidad, programas, Pathways— sin depender del equipo técnico. Automatización mediante IA: en vez de trasladar procesos manuales al entorno digital, buscamos automatizarlos, para que la IA redujera trabajo operativo real y no se convirtiera en una funcionalidad más que aprender. Y plataforma escalable: cada módulo funciona de forma independiente pero comparte componentes, patrones y reglas — por eso diseñé un Design System desde cero.",
+      "El producto terminó siendo un ecosistema de módulos conectados: gestión de programas (módulos, unidades, competencias, documentos, horas de aprendizaje), un sistema de Learning Management para construir Pathways personalizados por organización, una vista unificada de administración de participantes con indicadores de progreso, estado, RTI y Journey Health para detectar casos en riesgo, y Candidate 360° — una sola pantalla con toda la información, documentos, aplicaciones, programas y elegibilidad de cada candidato, eliminando la navegación entre pantallas sueltas.",
+      "El mayor reto fue el motor de elegibilidad WIOA: transformar un proceso altamente regulado en una herramienta configurable, donde cada organización define sus propios documentos requeridos, límites económicos, tamaño familiar y criterios de revisión. La IA identifica y clasifica documentos automáticamente, reutiliza un mismo archivo para varios requisitos, valida vencimientos y firmas, detecta baja calidad, y determina elegibilidad antes de avanzar. Sumé además gestión de posiciones (creación manual, por URL, por documento o asistida por IA), un sistema de Matching que conecta candidato → programa → Pathway → posición → aplicación, y validé cada flujo nuevo con pruebas de usabilidad en Maze antes de pasar a desarrollo.",
+    ],
+    headline: "configurar, no codear",
+    gallery: introGallery("buildwithin-design-system", "BuildWithin — SuperAdmin", 1, 13),
+  },
+  {
     slug: "quartz",
     title: "quartz",
     category: "Dirección de Arte",
@@ -722,14 +754,6 @@ const PENDING_STUBS: {
 }[] = [
   { slug: "brava", title: "brava", displayTitle: "Brava", coverExt: "webp", introCount: 13 },
   { slug: "buildwithin", title: "buildwithin", displayTitle: "BuildWithin", coverExt: "png", introCount: 13, client: "BuildWithin" },
-  {
-    slug: "buildwithin-design-system",
-    title: "buildwithin — superadmin",
-    displayTitle: "BuildWithin — SuperAdmin",
-    coverExt: "png",
-    introCount: 13,
-    client: "BuildWithin",
-  },
   { slug: "dior", title: "dior", displayTitle: "Dior", coverExt: "gif", introCount: 13 },
   {
     slug: "maquillaje-teatral",
