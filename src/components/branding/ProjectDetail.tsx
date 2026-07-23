@@ -67,25 +67,18 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
             src={project.coverMedia.src}
             alt=""
             className="h-full w-full scale-125 object-cover"
-            style={{ filter: "blur(90px) saturate(1.6) brightness(1.04)" }}
+            style={{ filter: "blur(48px) saturate(1.5) brightness(1.02)" }}
           />
         )}
-        {/* soft light glow, upper-left, for a sense of depth */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(120% 90% at 12% -10%, rgba(255,255,255,.6), rgba(255,255,255,0) 55%)",
-          }}
-        />
-        {/* frosted wash — keeps foreground text legible over any photo */}
-        <div className="absolute inset-0" style={{ background: "rgba(244,241,234,.6)" }} />
+        {/* light wash — enough to keep foreground text legible without
+            flattening the blurred photo into a flat color wash */}
+        <div className="absolute inset-0" style={{ background: "rgba(244,241,234,.25)" }} />
         {/* gentle vignette for premium edge falloff */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(120% 100% at 50% 12%, transparent 45%, rgba(20,18,16,.12) 100%)",
+              "radial-gradient(120% 100% at 50% 12%, transparent 55%, rgba(20,18,16,.1) 100%)",
           }}
         />
       </div>
