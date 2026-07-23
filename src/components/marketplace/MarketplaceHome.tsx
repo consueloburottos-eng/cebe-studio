@@ -224,6 +224,56 @@ const SERVICE_PROJECT_SLUGS: Record<string, string[]> = {
   ],
 };
 
+// Page/deliverable chip options per service — shown in the "Add to Cart"
+// scope popover. Each service needs its own set: an ecommerce build has
+// PLP/PDP/Cart, not Dashboard/Billing/CRM. Keep in sync with SHOWCASE ids.
+const SERVICE_PAGE_OPTIONS: Record<string, string[]> = {
+  "service-1": [
+    "Dashboard",
+    "Onboarding",
+    "User Profile",
+    "Settings",
+    "Billing",
+    "Notifications",
+    "Analytics",
+    "Authentication",
+  ],
+  "service-2": ["Home", "PLP", "PDP", "Cart", "Checkout", "Landing Page"],
+  "service-3": [
+    "Research Plan",
+    "User Interviews",
+    "Usability Testing",
+    "Journey Map",
+    "Personas",
+    "Findings Report",
+  ],
+  "service-4": [
+    "Foundations",
+    "Components",
+    "Design Tokens",
+    "Icon Library",
+    "Patterns",
+    "Documentation",
+  ],
+  "service-5": [
+    "Logo",
+    "Color Palette",
+    "Typography",
+    "Brand Guidelines",
+    "Business Card",
+    "Social Kit",
+    "Packaging",
+  ],
+  "service-6": [
+    "Discovery Workshop",
+    "Roadmap",
+    "Prioritization",
+    "Competitive Analysis",
+    "Positioning",
+    "Success Metrics",
+  ],
+};
+
 function projectsForService(id: string, fallbackQuery: string): Project[] {
   const slugs = SERVICE_PROJECT_SLUGS[id];
   if (!slugs) return searchProjects(fallbackQuery);
@@ -628,6 +678,7 @@ export default function MarketplaceHome() {
                 title={activeService.title}
                 priceFrom={activeService.priceFrom}
                 thumbnailSrc={activeService.media.src}
+                pageOptions={SERVICE_PAGE_OPTIONS[activeService.id]}
                 initial={serviceCart[activeService.id]}
                 onConfirm={(config) => confirmServiceConfig(activeService.id, config)}
               />
@@ -826,6 +877,7 @@ export default function MarketplaceHome() {
         {configuringId && (
           <ServiceConfigPopover
             title={SHOWCASE.find((s) => s.id === configuringId)?.title ?? ""}
+            pageOptions={SERVICE_PAGE_OPTIONS[configuringId]}
             initial={serviceCart[configuringId]}
             onClose={() => setConfiguringId(null)}
             onConfirm={(config) => confirmServiceConfig(configuringId, config)}

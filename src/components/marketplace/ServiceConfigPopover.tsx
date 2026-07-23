@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 
-const BASIC_PAGES = [
+// Fallback list only — real per-service options come from SERVICE_PAGE_OPTIONS
+// in MarketplaceHome.tsx and are passed in via the `pages` prop. This default
+// only fires if a service is ever rendered without an explicit list.
+const DEFAULT_PAGES = [
   "User Profile",
   "Dashboard",
   "Login",
@@ -21,6 +24,7 @@ export type ServiceCardConfig = { pages: string[]; flows: number };
 
 type ServiceConfigPopoverProps = {
   title: string;
+  pageOptions?: string[];
   initial?: ServiceCardConfig;
   onConfirm: (config: ServiceCardConfig) => void;
   onClose: () => void;
@@ -28,10 +32,12 @@ type ServiceConfigPopoverProps = {
 
 export default function ServiceConfigPopover({
   title,
+  pageOptions,
   initial,
   onConfirm,
   onClose,
 }: ServiceConfigPopoverProps) {
+  const basicPages = pageOptions ?? DEFAULT_PAGES;
   const [pages, setPages] = useState<Set<string>>(new Set(initial?.pages ?? []));
   const [flows, setFlows] = useState(initial?.flows ?? 0);
 
@@ -71,7 +77,7 @@ export default function ServiceConfigPopover({
           Basic Template Pages
         </div>
         <div className="mt-2.5 flex max-h-[140px] flex-wrap gap-1.5 overflow-y-auto">
-          {BASIC_PAGES.map((p) => (
+          {basicPages.map((p) => (
             <button
               key={p}
               type="button"

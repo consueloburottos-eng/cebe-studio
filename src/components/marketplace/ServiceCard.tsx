@@ -9,6 +9,7 @@ type ServiceCardProps = {
   title: string;
   priceFrom: number;
   thumbnailSrc?: string;
+  pageOptions?: string[];
   initial?: ServiceCardConfig;
   onConfirm: (config: ServiceCardConfig) => void;
 };
@@ -17,6 +18,7 @@ export default function ServiceCard({
   title,
   priceFrom,
   thumbnailSrc,
+  pageOptions,
   initial,
   onConfirm,
 }: ServiceCardProps) {
@@ -64,6 +66,7 @@ export default function ServiceCard({
       {configuring && (
         <ServiceConfigPopover
           title={title}
+          pageOptions={pageOptions}
           initial={initial}
           onClose={() => setConfiguring(false)}
           onConfirm={(config) => {
