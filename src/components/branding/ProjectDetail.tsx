@@ -19,9 +19,17 @@ type ProjectDetailProps = {
   others: Project[];
 };
 
+type Tab = "brief" | "strategy" | "services" | "skills";
+
 export default function ProjectDetail({ project, others }: ProjectDetailProps) {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"brief" | "strategy">("brief");
+  const [activeTab, setActiveTab] = useState<Tab>("brief");
+  // services is stored as a single " · "-joined string (see data/projects.ts)
+  // in roughly the order the work happened — split back out for the tab's
+  // numbered list instead of showing it as one run-on line.
+  const serviceSteps = project.services
+    ? project.services.split("·").map((s) => s.trim()).filter(Boolean)
+    : [];
   const [aboutOpen, setAboutOpen] = useState(false);
   const [bookOpen, setBookOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
@@ -116,7 +124,16 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
 
       <div className="fixed inset-x-0 bottom-0 z-[110]">
         <ProgressiveBlur side="bottom" height={110} />
-        <div className="relative z-[1] flex h-[60px] items-center justify-end px-7">
+        <div className="relative z-[1] flex h-[60px] items-center justify-end gap-2.5 px-7">
+          <button
+            type="button"
+            onClick={() => router.push("/?grid=1")}
+            title="ver todos los proyectos"
+            className="flex h-10 w-10 items-center justify-center rounded-full border-none text-base leading-none"
+            style={{ background: "var(--cb-pill)", color: "var(--cb-text)" }}
+          >
+            ⊞
+          </button>
           <Link
             href="/"
             title="volver"
@@ -195,6 +212,26 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
                 strategy
               </button>
             )}
+            {serviceSteps.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setActiveTab("services")}
+                className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
+                style={{ opacity: activeTab === "services" ? 1 : 0.45 }}
+              >
+                services
+              </button>
+            )}
+            {project.skills.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setActiveTab("skills")}
+                className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
+                style={{ opacity: activeTab === "skills" ? 1 : 0.45 }}
+              >
+                skills
+              </button>
+            )}
           </div>
           <div>
             <div className="font-sans text-[11px] uppercase tracking-[0.2em] text-[var(--cb-muted)]">
@@ -207,30 +244,41 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
             </h1>
             <div className="mt-4 text-base font-bold">{project.subtitle}</div>
 
-            {project.services && (
-              <div className="mt-2.5 text-[13.5px] text-[var(--cb-muted)]">
-                {project.services}
-              </div>
-            )}
-
-            {project.skills.length > 0 && (
-              <div className="mt-4 flex max-w-[60ch] flex-wrap gap-2">
-                {project.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="rounded-full border px-3.5 py-1.5 text-xs font-bold"
-                    style={{ borderColor: "var(--cb-hair)", background: "transparent", color: "var(--cb-text)" }}
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            )}
-
             <div id="project-copy" className="mt-3.5 flex max-w-[60ch] flex-col gap-4 text-[15.5px] font-medium leading-[1.75]">
-              {activeTab === "brief"
-                ? <p>{project.brief}</p>
-                : project.strategy.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+              {activeTab === "brief" && <p>{project.brief}</p>}
+
+              {activeTab === "strategy" &&
+                project.strategy.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+
+              {activeTab === "services" && (
+                <ol className="flex flex-col gap-3">
+                  {serviceSteps.map((step, i) => (
+                    <li key={step} className="flex items-baseline gap-3">
+                      <span
+                        className="font-mono text-[12px] font-bold"
+                        style={{ color: "var(--cb-muted)" }}
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span>{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              )}
+
+              {activeTab === "skills" && (
+                <div className="flex flex-wrap gap-2">
+                  {project.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-full border px-3.5 py-1.5 text-xs font-bold"
+                      style={{ borderColor: "var(--cb-hair)", background: "transparent", color: "var(--cb-text)" }}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="mt-7 grid grid-cols-2 gap-3.5 border-t border-b py-4 sm:grid-cols-4"
