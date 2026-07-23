@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { categories, searchProjects, getProject, Project } from "@/data/projects";
+import { searchProjects, getProject, Project } from "@/data/projects";
 import ModeSwitcher from "@/components/ModeSwitcher";
 import MarketplaceHeader from "./MarketplaceHeader";
 import ConciergeBar from "./ConciergeBar";
@@ -389,10 +389,10 @@ export default function MarketplaceHome() {
     setActiveService(null);
   }
 
-  function pickCategory(category: string) {
+  function pickService(id: string) {
     setMenuOpen(false);
-    setQuery(category);
-    submit(category);
+    const service = SHOWCASE.find((s) => s.id === id);
+    if (service) viewService(service);
   }
 
   function viewService(item: ShowcaseItem) {
@@ -847,7 +847,11 @@ export default function MarketplaceHome() {
         )}
 
         {menuOpen && (
-          <FullscreenMenu categories={categories} onPick={pickCategory} onClose={() => setMenuOpen(false)} />
+          <FullscreenMenu
+            services={SHOWCASE.map((s) => ({ id: s.id, title: s.title }))}
+            onPick={pickService}
+            onClose={() => setMenuOpen(false)}
+          />
         )}
 
         {cartOpen && (
