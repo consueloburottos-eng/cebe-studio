@@ -43,20 +43,43 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
 
   return (
     <div className="min-h-dvh" style={{ color: "var(--cb-text)" }} data-cb-theme="light">
-      {/* blurred backdrop from the project's own cover photo — filter lives on
-          this fixed leaf layer, not the root, so it never becomes a containing
-          block for the fixed bottom bar below (see ProjectMedia CSS bug notes) */}
-      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      {/* premium fullscreen frosted-glass backdrop — built from the project's
+          own cover photo. Filter lives on this fixed leaf layer, not the
+          root, so it never becomes a containing block for the fixed bottom
+          bar below (see ProjectMedia CSS bug notes). Layered so it still
+          looks intentional (not just empty) on projects whose cover is a
+          video, which can't be blurred the same way. */}
+      <div
+        className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+        style={{ background: "linear-gradient(160deg, #efe9df 0%, #e4dccd 55%, #d8ceba 100%)" }}
+      >
         {project.coverMedia?.type === "image" && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={project.coverMedia.src}
             alt=""
-            className="h-full w-full scale-110 object-cover"
-            style={{ filter: "blur(48px)" }}
+            className="h-full w-full scale-125 object-cover"
+            style={{ filter: "blur(90px) saturate(1.6) brightness(1.04)" }}
           />
         )}
-        <div className="absolute inset-0" style={{ background: "rgba(244,241,234,.55)" }} />
+        {/* soft light glow, upper-left, for a sense of depth */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(120% 90% at 12% -10%, rgba(255,255,255,.6), rgba(255,255,255,0) 55%)",
+          }}
+        />
+        {/* frosted wash — keeps foreground text legible over any photo */}
+        <div className="absolute inset-0" style={{ background: "rgba(244,241,234,.6)" }} />
+        {/* gentle vignette for premium edge falloff */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(120% 100% at 50% 12%, transparent 45%, rgba(20,18,16,.12) 100%)",
+          }}
+        />
       </div>
 
       <div className="sticky top-0 z-10">
