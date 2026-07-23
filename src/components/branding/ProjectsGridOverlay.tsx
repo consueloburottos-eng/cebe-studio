@@ -68,7 +68,7 @@ export default function ProjectsGridOverlay({ projects, onClose }: ProjectsGridO
   return (
     <div
       className="absolute inset-0 z-[100] overflow-hidden backdrop-blur-2xl"
-      style={{ background: "var(--cb-glass)" }}
+      style={{ background: "var(--cb-glass-pill)" }}
       onWheel={handleWheel}
     >
       <div className="grid h-full grid-cols-5 gap-3 p-3">
