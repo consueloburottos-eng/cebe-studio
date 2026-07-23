@@ -137,6 +137,26 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
           ✕
         </button>
 
+        <div
+          className="flex w-[150px] flex-none flex-col gap-1.5 border-r p-4 pt-16"
+          style={{ borderColor: "var(--cb-hair)" }}
+        >
+          {TABS.map(({ key, label }) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setTab(key)}
+              className="cursor-pointer rounded-full border-none px-4 py-2.5 text-left font-sans text-[13px] font-bold tracking-[0.01em]"
+              style={{
+                background: tab === key ? "var(--cb-cta-bg)" : "var(--cb-pill)",
+                color: tab === key ? "var(--cb-cta-text)" : "var(--cb-muted)",
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
         <div className="flex-1 overflow-auto px-10 pt-11 pb-9">
         {tab === "perfil" && (
           <div>
@@ -329,26 +349,6 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
             </div>
           </div>
         )}
-        </div>
-
-        <div
-          className="flex w-[150px] flex-none flex-col gap-1.5 border-l p-4 pt-16"
-          style={{ borderColor: "var(--cb-hair)" }}
-        >
-          {TABS.map(({ key, label }) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setTab(key)}
-              className="cursor-pointer rounded-full border-none px-4 py-2.5 text-left font-sans text-[13px] font-bold tracking-[0.01em]"
-              style={{
-                background: tab === key ? "var(--cb-cta-bg)" : "var(--cb-pill)",
-                color: tab === key ? "var(--cb-cta-text)" : "var(--cb-muted)",
-              }}
-            >
-              {label}
-            </button>
-          ))}
         </div>
       </div>
     </div>
