@@ -4,8 +4,8 @@ import Link from "next/link";
 import ProjectMedia from "../ProjectMedia";
 
 // Independent of the featured/last-viewed project — always points at
-// talent-capital (the candidate portal) with its own dedicated photo slot.
-const TARGET_SLUG = "talent-capital";
+// buildwithin (the candidate portal) with its own dedicated photo slot.
+const TARGET_SLUG = "buildwithin";
 const UPLOAD_PATH = "/showcase/recommended";
 const MEDIA = { type: "video" as const, src: "/showcase/recommended.mp4" };
 
@@ -24,7 +24,7 @@ export default function LastProjectWidget() {
       </span>
       <ProjectMedia
         media={MEDIA}
-        label="Talent Capital — candidate portal (Celeste)"
+        label="BuildWithin — candidate portal (Celeste)"
         compact
         uploadPath={UPLOAD_PATH}
       />
