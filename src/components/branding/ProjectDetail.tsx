@@ -147,7 +147,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
 
       <div
         className="mx-auto max-w-[1200px] rounded-[24px] px-7 py-10 pb-[90px] backdrop-blur-2xl"
-        style={{ background: "var(--cb-glass)" }}
+        style={{ background: "var(--cb-glass-pill)" }}
       >
         <div
           className="relative mb-10 aspect-[1482/798] overflow-hidden rounded-[18px]"
