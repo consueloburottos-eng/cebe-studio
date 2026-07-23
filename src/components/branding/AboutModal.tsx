@@ -124,53 +124,23 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-[640px] max-h-[88vh] overflow-auto px-10 pt-11 pb-9"
+        className="relative flex w-full max-w-[760px] max-h-[88vh] overflow-hidden"
         style={{ background: "var(--cb-bg)", color: "var(--cb-text)" }}
       >
         <button
           type="button"
           onClick={onClose}
           title="cerrar"
-          className="absolute top-6 right-6 flex h-9 w-9 items-center justify-center rounded-full border text-sm"
-          style={{ borderColor: "var(--cb-hair)" }}
+          className="absolute top-6 right-6 z-10 flex h-9 w-9 items-center justify-center rounded-full border text-sm"
+          style={{ borderColor: "var(--cb-hair)", background: "var(--cb-bg)" }}
         >
           ✕
         </button>
 
-        <div className="flex flex-wrap gap-1.5">
-          {TABS.map(({ key, label }) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setTab(key)}
-              className="cursor-pointer rounded-full border-none px-4 py-2 font-sans text-[11.5px] font-bold uppercase tracking-[0.06em]"
-              style={{
-                background: tab === key ? "var(--cb-cta-bg)" : "var(--cb-pill)",
-                color: tab === key ? "var(--cb-cta-text)" : "var(--cb-muted)",
-              }}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-
+        <div className="flex-1 overflow-auto px-10 pt-11 pb-9">
         {tab === "perfil" && (
-          <div className="mt-7">
-            <div
-              className="relative aspect-video w-full overflow-hidden rounded-2xl"
-              style={{ background: "var(--cb-pill)" }}
-            >
-              <video
-                className="h-full w-full object-cover"
-                src="/profile/intro.mp4"
-                controls
-                playsInline
-                preload="metadata"
-                aria-label="Video introductorio de Consuelo Burotto"
-              />
-            </div>
-
-            <div className="mt-7 flex items-center gap-5">
+          <div>
+            <div className="flex items-center gap-5">
               <div className="relative h-[76px] w-[76px] flex-none overflow-hidden rounded-full">
                 <Image
                   src="/profile/avatar.webp"
@@ -188,6 +158,20 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
                   UX/UI Lead Senior Designer
                 </div>
               </div>
+            </div>
+
+            <div
+              className="relative mt-7 aspect-video w-full overflow-hidden rounded-2xl"
+              style={{ background: "var(--cb-pill)" }}
+            >
+              <video
+                className="h-full w-full object-cover"
+                src="/profile/intro.mp4"
+                controls
+                playsInline
+                preload="metadata"
+                aria-label="Video introductorio de Consuelo Burotto"
+              />
             </div>
 
             <p className="mt-[22px] max-w-[52ch] text-[14.5px] leading-[1.65] text-[var(--cb-muted)]">
@@ -345,6 +329,27 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
             </div>
           </div>
         )}
+        </div>
+
+        <div
+          className="flex w-[150px] flex-none flex-col gap-1.5 border-l p-4 pt-16"
+          style={{ borderColor: "var(--cb-hair)" }}
+        >
+          {TABS.map(({ key, label }) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setTab(key)}
+              className="cursor-pointer rounded-full border-none px-4 py-2.5 text-left font-sans text-[13px] font-bold tracking-[0.01em]"
+              style={{
+                background: tab === key ? "var(--cb-cta-bg)" : "var(--cb-pill)",
+                color: tab === key ? "var(--cb-cta-text)" : "var(--cb-muted)",
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
