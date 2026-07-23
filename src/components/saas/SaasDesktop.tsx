@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { projects } from "@/data/projects";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import ModeSwitcher from "@/components/ModeSwitcher";
 import BookModal from "@/components/branding/BookModal";
 import MenuBar from "./MenuBar";
@@ -14,6 +15,7 @@ import NotesWindow, { NoteId } from "./NotesWindow";
 
 export default function SaasDesktop() {
   const [dark, setDark] = useSiteTheme();
+  const [lang, setLang] = useSiteLanguage();
   const [win, setWin] = useState<SaasWindow>(null);
   const [note, setNote] = useState<NoteId>("about");
   const [bookOpen, setBookOpen] = useState(false);
@@ -35,6 +37,8 @@ export default function SaasDesktop() {
         dark={dark}
         onSetLight={() => setDark(false)}
         onSetDark={() => setDark(true)}
+        lang={lang}
+        onSetLang={setLang}
       />
 
       <div className="relative flex-1 overflow-clip font-sans" style={{ color: "var(--os-tx)" }}>

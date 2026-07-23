@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { projects, getProject, type Project } from "@/data/projects";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { t } from "@/lib/i18n";
 import ModeSwitcher from "@/components/ModeSwitcher";
 import ProgressiveBlur from "@/components/ProgressiveBlur";
 import NavPill from "./NavPill";
@@ -43,6 +45,7 @@ const HERO_TITLE_LETTERS = "product designer"
 
 export default function BrandingHome() {
   const [dark, setDark] = useSiteTheme();
+  const [lang, setLang] = useSiteLanguage();
   const [navOpen, setNavOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [bookOpen, setBookOpen] = useState(false);
@@ -126,6 +129,8 @@ export default function BrandingHome() {
         dark={dark}
         onSetLight={() => setDark(false)}
         onSetDark={() => setDark(true)}
+        lang={lang}
+        onSetLang={setLang}
       />
 
       <div
@@ -184,7 +189,7 @@ export default function BrandingHome() {
         <GridButton counter={counter} onOpen={() => setGridOpen(true)} />
 
         <div className="pointer-events-none absolute bottom-[30px] left-1/2 z-[15] -translate-x-1/2 font-sans text-[10.5px] uppercase tracking-[0.2em] text-[var(--cb-muted)]">
-          scroll ↕ para barajar
+          {t("projectDetail", lang).scrollHint}
         </div>
 
         {gridOpen && (

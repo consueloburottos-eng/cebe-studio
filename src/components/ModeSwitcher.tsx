@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import type { Lang } from "@/hooks/useSiteLanguage";
+import { t } from "@/lib/i18n";
 
 export type SiteMode = "branding" | "saas" | "marketplace";
 
@@ -9,6 +11,8 @@ type ModeSwitcherProps = {
   dark?: boolean;
   onSetLight?: () => void;
   onSetDark?: () => void;
+  lang?: Lang;
+  onSetLang?: (lang: Lang) => void;
   variant?: "light" | "dark";
 };
 
@@ -23,6 +27,8 @@ export default function ModeSwitcher({
   dark,
   onSetLight,
   onSetDark,
+  lang,
+  onSetLang,
   variant = "light",
 }: ModeSwitcherProps) {
   const isDarkVariant = variant === "dark";
@@ -34,6 +40,7 @@ export default function ModeSwitcher({
 
   const segBase =
     "cursor-pointer whitespace-nowrap rounded-full border-none px-2.5 py-1 font-sans text-[10px] font-bold uppercase tracking-[0.06em] sm:px-3.5 sm:py-1.5 sm:text-[11px] sm:tracking-[0.08em]";
+  const effectiveLang = lang ?? "es";
 
   return (
     <div
@@ -44,7 +51,7 @@ export default function ModeSwitcher({
         className="hidden font-sans text-[10.5px] font-bold uppercase tracking-[0.2em] whitespace-nowrap sm:inline"
         style={{ color: mutedColor }}
       >
-        Vista del sitio
+        {t("nav", effectiveLang).siteView}
       </span>
       <div className="flex gap-0.5 rounded-full p-[3px]" style={{ background: segBg }}>
         {MODES.map((m) => {
@@ -87,6 +94,32 @@ export default function ModeSwitcher({
             }}
           >
             ☾ Dark
+          </button>
+        </div>
+      )}
+      {onSetLang && (
+        <div className="flex gap-0.5 rounded-full p-[3px]" style={{ background: segBg }}>
+          <button
+            type="button"
+            onClick={() => onSetLang("es")}
+            className={segBase}
+            style={{
+              background: effectiveLang === "es" ? textColor : "transparent",
+              color: effectiveLang === "es" ? (isDarkVariant ? "#141419" : "#fff") : mutedColor,
+            }}
+          >
+            ES
+          </button>
+          <button
+            type="button"
+            onClick={() => onSetLang("en")}
+            className={segBase}
+            style={{
+              background: effectiveLang === "en" ? textColor : "transparent",
+              color: effectiveLang === "en" ? (isDarkVariant ? "#141419" : "#fff") : mutedColor,
+            }}
+          >
+            EN
           </button>
         </div>
       )}

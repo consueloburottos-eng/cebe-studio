@@ -9,6 +9,7 @@ import ResultsGrid from "./ResultsGrid";
 import FullscreenMenu from "./FullscreenMenu";
 import ProjectMedia from "@/components/ProjectMedia";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import ServiceCard, { type ServiceCardConfig } from "./ServiceCard";
 import ServiceConfigPopover from "./ServiceConfigPopover";
 import CartOverlay from "./CartOverlay";
@@ -292,6 +293,7 @@ type HeroCacheEntry = { type: "video" | "image"; src: string; version: number };
 
 export default function MarketplaceHome() {
   const [dark, setDark] = useSiteTheme();
+  const [lang, setLang] = useSiteLanguage();
   const [mode, setMode] = useState<Mode>("home");
   const [query, setQuery] = useState("");
   const [submitted, setSubmitted] = useState("");
@@ -418,6 +420,8 @@ export default function MarketplaceHome() {
         dark={dark}
         onSetLight={() => setDark(false)}
         onSetDark={() => setDark(true)}
+        lang={lang}
+        onSetLang={setLang}
       />
 
       <div

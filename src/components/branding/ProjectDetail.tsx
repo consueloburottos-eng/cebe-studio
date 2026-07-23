@@ -10,6 +10,8 @@ import AboutModal from "./AboutModal";
 import BookModal from "./BookModal";
 import NavPill from "./NavPill";
 import TopRight from "./TopRight";
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { localizeProject, localizeProjects, t } from "@/lib/i18n";
 
 // span sequence lifted from the original prototype's projSel.intro grid (indices 0-12)
 const INTRO_SPAN_PATTERN = [2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1];
@@ -21,8 +23,12 @@ type ProjectDetailProps = {
 
 type Tab = "brief" | "strategy" | "services" | "skills";
 
-export default function ProjectDetail({ project, others }: ProjectDetailProps) {
+export default function ProjectDetail({ project: rawProject, others: rawOthers }: ProjectDetailProps) {
   const router = useRouter();
+  const [lang] = useSiteLanguage();
+  const project = localizeProject(rawProject, lang);
+  const others = localizeProjects(rawOthers, lang);
+  const ui = t("projectDetail", lang);
   const [activeTab, setActiveTab] = useState<Tab>("brief");
   // services is stored as a single " · "-joined string (see data/projects.ts)
   // in roughly the order the work happened — split back out for the tab's
@@ -121,7 +127,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
           <button
             type="button"
             onClick={() => router.push("/?grid=1")}
-            title="ver todos los proyectos"
+            title={lang === "en" ? "view all projects" : "ver todos los proyectos"}
             className="flex h-10 w-10 items-center justify-center rounded-full border-none text-base leading-none"
             style={{ background: "var(--cb-pill)", color: "var(--cb-text)" }}
           >
@@ -129,7 +135,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
           </button>
           <Link
             href="/"
-            title="volver"
+            title={lang === "en" ? "back" : "volver"}
             className="flex h-10 w-10 items-center justify-center rounded-full border text-[15px]"
             style={{ borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
           >
@@ -193,7 +199,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
               className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
               style={{ opacity: activeTab === "brief" ? 1 : 0.45 }}
             >
-              brief
+              {ui.brief}
             </button>
             {project.strategy.length > 0 && (
               <button
@@ -202,7 +208,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
                 className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
                 style={{ opacity: activeTab === "strategy" ? 1 : 0.45 }}
               >
-                strategy
+                {ui.strategy}
               </button>
             )}
             {serviceSteps.length > 0 && (
@@ -212,7 +218,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
                 className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
                 style={{ opacity: activeTab === "services" ? 1 : 0.45 }}
               >
-                services
+                {ui.services}
               </button>
             )}
             {project.skills.length > 0 && (
@@ -222,7 +228,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
                 className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
                 style={{ opacity: activeTab === "skills" ? 1 : 0.45 }}
               >
-                skills
+                {ui.skills}
               </button>
             )}
           </div>
@@ -277,10 +283,10 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
             <div className="mt-7 grid grid-cols-2 gap-3.5 border-t border-b py-4 sm:grid-cols-4"
               style={{ borderColor: "var(--cb-hair)" }}
             >
-              <Meta label="Cliente" value={project.client} />
-              <Meta label="Rol" value={project.role} />
-              <Meta label="Año" value={project.year} />
-              <Meta label="Resultado" value={project.result} accent />
+              <Meta label={ui.client} value={project.client} />
+              <Meta label={ui.role} value={project.role} />
+              <Meta label={ui.year} value={project.year} />
+              <Meta label={ui.result} value={project.result} accent />
             </div>
           </div>
         </div>
@@ -294,17 +300,17 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
         <div className="mt-16 border-t pt-[34px]" style={{ borderColor: "var(--cb-hair)" }}>
           <div className="flex flex-wrap gap-6 text-[13px] text-[var(--cb-muted)]">
             <Link href="/" className="text-inherit no-underline">
-              home
+              {ui.home}
             </Link>
             <a href={`mailto:consuelo.burotto.s@gmail.com`} className="text-inherit no-underline">
-              email
+              {ui.email}
             </a>
           </div>
 
           {others.length > 0 && (
             <>
               <div className="mt-7 font-sans text-[11px] uppercase tracking-[0.2em] text-[var(--cb-muted)]">
-                Más proyectos
+                {ui.moreProjects}
               </div>
               <div className="mt-4 flex gap-4 overflow-x-auto pb-3">
                 {others.slice(0, 6).map((other) => (

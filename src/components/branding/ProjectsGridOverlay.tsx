@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
 import ProgressiveBlur from "../ProgressiveBlur";
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 
 type ProjectsGridOverlayProps = {
   projects: Project[];
@@ -31,6 +32,7 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export default function ProjectsGridOverlay({ projects, onClose }: ProjectsGridOverlayProps) {
+  const [lang] = useSiteLanguage();
   const columns: Project[][] = Array.from({ length: COLUMN_COUNT }, () => []);
   projects.forEach((project, i) => {
     columns[i % COLUMN_COUNT].push(project);
@@ -93,7 +95,7 @@ export default function ProjectsGridOverlay({ projects, onClose }: ProjectsGridO
           <button
             type="button"
             onClick={onClose}
-            title="cerrar"
+            title={lang === "en" ? "close" : "cerrar"}
             className="flex h-10 w-10 items-center justify-center rounded-full border text-[15px]"
             style={{ borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
           >

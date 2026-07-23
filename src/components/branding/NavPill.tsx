@@ -1,5 +1,8 @@
 "use client";
 
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { t } from "@/lib/i18n";
+
 type NavPillProps = {
   open: boolean;
   onToggle: () => void;
@@ -15,6 +18,8 @@ export default function NavPill({
   onOpenGrid,
   onOpenBook,
 }: NavPillProps) {
+  const [lang] = useSiteLanguage();
+  const nav = t("nav", lang);
   const linkClass =
     "cursor-pointer rounded-full border-none bg-transparent px-3 py-1.5 font-sans text-xs font-bold uppercase tracking-[0.05em] text-[var(--cb-text)]";
 
@@ -40,13 +45,13 @@ export default function NavPill({
       {open && (
         <div className="flex gap-0.5 pl-1">
           <button type="button" onClick={onOpenAbout} className={linkClass}>
-            about
+            {nav.about}
           </button>
           <button type="button" onClick={onOpenGrid} className={linkClass}>
-            projects
+            {nav.projects}
           </button>
           <button type="button" onClick={onOpenBook} className={linkClass}>
-            services
+            {nav.services}
           </button>
         </div>
       )}
