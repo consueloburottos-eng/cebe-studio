@@ -724,8 +724,8 @@ const PENDING_STUBS: {
   { slug: "buildwithin", title: "buildwithin", displayTitle: "BuildWithin", coverExt: "png", introCount: 13, client: "BuildWithin" },
   {
     slug: "buildwithin-design-system",
-    title: "buildwithin — design system",
-    displayTitle: "BuildWithin — Design System",
+    title: "buildwithin — superadmin",
+    displayTitle: "BuildWithin — SuperAdmin",
     coverExt: "png",
     introCount: 13,
     client: "BuildWithin",

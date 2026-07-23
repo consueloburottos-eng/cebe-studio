@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { projects, getProject, featuredProjectSlug } from "@/data/projects";
+import { projects, getProject, type Project } from "@/data/projects";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
 import ModeSwitcher from "@/components/ModeSwitcher";
@@ -16,7 +16,24 @@ import AboutModal from "./AboutModal";
 import BookModal from "./BookModal";
 import BrandingCursor from "./BrandingCursor";
 
-const featuredProject = getProject(featuredProjectSlug)!;
+// Curated hero order per Consu — these six lead the deck (best work first),
+// the rest of the catalogue follows behind in its normal order. Doesn't
+// affect the projects grid overlay or any other listing, only the hero.
+const HERO_PRIORITY_SLUGS = [
+  "buildwithin",
+  "buildwithin-design-system",
+  "altafid-design-system",
+  "altafid",
+  "rocket-mkt",
+  "talent-capital",
+];
+
+const heroProjects: Project[] = [
+  ...HERO_PRIORITY_SLUGS.map((slug) => getProject(slug)).filter(
+    (p): p is Project => Boolean(p)
+  ),
+  ...projects.filter((p) => !HERO_PRIORITY_SLUGS.includes(p.slug)),
+];
 
 export default function BrandingHome() {
   const [dark, setDark] = useSiteTheme();
@@ -40,7 +57,7 @@ export default function BrandingHome() {
     window.setTimeout(() => {
       cooldownRef.current = false;
     }, 360);
-    setFront((f) => (f + dir + projects.length) % projects.length);
+    setFront((f) => (f + dir + heroProjects.length) % heroProjects.length);
   }
 
   useEffect(() => {
@@ -80,7 +97,7 @@ export default function BrandingHome() {
   }
 
   const counter = `${String(front + 1).padStart(2, "0")} / ${String(
-    projects.length
+    heroProjects.length
   ).padStart(2, "0")}`;
 
   return (
@@ -102,10 +119,10 @@ export default function BrandingHome() {
         <BrandingCursor active={customCursor} />
 
         <HeroDeck
-          projects={projects}
+          projects={heroProjects}
           front={front}
           onAdvance={() =>
-            setFront((f) => (f + 1) % projects.length)
+            setFront((f) => (f + 1) % heroProjects.length)
           }
         />
 
@@ -136,7 +153,7 @@ export default function BrandingHome() {
           />
         </div>
 
-        <LastProjectWidget project={featuredProject} />
+        <LastProjectWidget />
         <GridButton counter={counter} onOpen={() => setGridOpen(true)} />
 
         <div className="pointer-events-none absolute bottom-[30px] left-1/2 z-[15] -translate-x-1/2 font-sans text-[10.5px] uppercase tracking-[0.2em] text-[var(--cb-muted)]">
