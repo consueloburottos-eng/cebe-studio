@@ -139,11 +139,11 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
       </div>
 
       <div
-        className="relative z-0 mx-auto min-h-dvh max-w-[1200px] rounded-none backdrop-blur-2xl"
+        className="relative z-0 mx-auto min-h-dvh max-w-[1200px] rounded-none px-7 py-10 pb-[90px] backdrop-blur-2xl"
         style={{ background: "var(--cb-glass-pill)" }}
       >
         <div
-          className="relative h-[calc(100dvh-60px)] w-full overflow-hidden"
+          className="relative mb-10 aspect-[1482/798] overflow-hidden rounded-none"
           style={{ background: "var(--cb-pill)" }}
         >
           <ProjectMedia
@@ -154,7 +154,6 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
           />
         </div>
 
-        <div className="px-7 py-10 pb-[90px]">
         <div className="mb-14" style={{ containerType: "inline-size" }}>
           <div
             className="grid gap-[10px]"
@@ -334,7 +333,6 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
               </div>
             </>
           )}
-        </div>
         </div>
       </div>
     </div>
