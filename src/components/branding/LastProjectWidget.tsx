@@ -1,27 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
 
-export default function LastProjectWidget({ project }: { project: Project }) {
+// Independent of the featured/last-viewed project — always points at
+// talent-capital (the candidate portal) with its own dedicated photo slot.
+const TARGET_SLUG = "talent-capital";
+const UPLOAD_PATH = "/showcase/recommended";
+const MEDIA = { type: "video" as const, src: "/showcase/recommended.mp4" };
+
+export default function LastProjectWidget() {
   return (
-    <div className="absolute bottom-4 left-4 z-20 flex flex-col gap-2 sm:bottom-[26px] sm:left-[26px]">
-      <span className="font-sans text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--cb-muted)]">
-        Destacado
-      </span>
-      <Link
-        href={`/projects/${project.slug}`}
-        className="block h-20 w-28 overflow-hidden sm:h-[112px] sm:w-[154px]"
-        style={{ background: "var(--cb-pill)" }}
+    <Link
+      href={`/projects/${TARGET_SLUG}`}
+      className="absolute bottom-4 left-4 z-20 block h-20 w-28 overflow-hidden sm:bottom-[26px] sm:left-[26px] sm:h-[112px] sm:w-[154px]"
+      style={{ background: "var(--cb-pill)" }}
+    >
+      <span
+        className="absolute top-2 left-2 z-20 rounded-full px-2 py-1 font-sans text-[9px] font-bold uppercase tracking-[0.1em] text-black shadow-md sm:top-2.5 sm:left-2.5"
+        style={{ background: "#fff" }}
       >
-        <ProjectMedia
-          media={project.coverMedia}
-          label={project.cover}
-          compact
-          uploadPath={`/projects/${assetFolder(project)}/cover`}
-        />
-      </Link>
-    </div>
+        Recommended
+      </span>
+      <ProjectMedia
+        media={MEDIA}
+        label="Talent Capital — candidate portal (Celeste)"
+        compact
+        uploadPath={UPLOAD_PATH}
+      />
+    </Link>
   );
 }
