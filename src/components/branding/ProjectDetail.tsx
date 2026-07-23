@@ -105,7 +105,10 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1200px] px-7 py-10 pb-[90px]">
+      <div
+        className="mx-auto max-w-[1200px] rounded-[24px] px-7 py-10 pb-[90px] backdrop-blur-2xl"
+        style={{ background: "var(--cb-glass)" }}
+      >
         <div
           className="relative mb-10 aspect-[1482/798] overflow-hidden rounded-[18px]"
           style={{ background: "var(--cb-pill)" }}
@@ -192,8 +195,8 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
                 {project.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="rounded-full border-none px-3.5 py-1.5 text-xs font-bold"
-                    style={{ background: "var(--cb-cta-bg)", color: "var(--cb-cta-text)" }}
+                    className="rounded-full border px-3.5 py-1.5 text-xs font-bold"
+                    style={{ borderColor: "var(--cb-hair)", background: "transparent", color: "var(--cb-text)" }}
                   >
                     {skill}
                   </span>
@@ -201,7 +204,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
               </div>
             )}
 
-            <div id="project-copy" className="mt-3.5 flex max-w-[60ch] flex-col gap-4 text-[15.5px] leading-[1.75]">
+            <div id="project-copy" className="mt-3.5 flex max-w-[60ch] flex-col gap-4 text-[15.5px] font-medium leading-[1.75]">
               {activeTab === "brief"
                 ? <p>{project.brief}</p>
                 : project.strategy.map((paragraph, i) => <p key={i}>{paragraph}</p>)}

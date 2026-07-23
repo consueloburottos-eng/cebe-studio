@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { categories, searchProjects, Project } from "@/data/projects";
+import { categories, searchProjects, getProject, Project } from "@/data/projects";
 import ModeSwitcher from "@/components/ModeSwitcher";
 import MarketplaceHeader from "./MarketplaceHeader";
 import ConciergeBar from "./ConciergeBar";
@@ -168,6 +168,70 @@ const SHOWCASE = [
   bannerPhotos: bannerSlots(item.id, item.media, EXTRA_BANNER_PHOTOS[item.id] ?? {}),
 }));
 
+// Curated project slugs per service card — shown instead of the fuzzy
+// searchProjects() match so "Ver servicio" only surfaces work that's
+// actually relevant to that service, not anything that happens to share a
+// keyword with the service title. Order matters (first slug shows first).
+// Keep in sync manually when new projects are added or recategorized.
+const SERVICE_PROJECT_SLUGS: Record<string, string[]> = {
+  // SaaS Design
+  "service-1": ["talent-capital", "altafid", "altafid-design-system"],
+  // Ecommerce Websites
+  "service-2": ["amphora", "marley-coffee", "hbt", "londra", "nicopoly"],
+  // UX Research — projects with real research/testing (interviews, usability
+  // sessions, validation with users), not just a UX Strategy mention
+  "service-3": ["altafid", "talent-capital", "bululu", "llay-llay"],
+  // Design Systems — per Consu: only the ecommerce and SaaS/product projects
+  // (the ones actually built around a reusable component system), not
+  // one-off branding/identity work
+  "service-4": [
+    "talent-capital",
+    "altafid",
+    "altafid-design-system",
+    "polucio",
+    "amphora",
+    "marley-coffee",
+    "hbt",
+    "londra",
+    "nicopoly",
+  ],
+  // Brand & Visual Identity — rocket-mkt first, per Consu
+  "service-5": [
+    "rocket-mkt",
+    "bululu",
+    "llay-llay",
+    "brava",
+    "la-chanchada",
+    "bodas-de-sangre",
+    "polucio",
+    "como-y-voto",
+    "soya-adicto",
+  ],
+  // Product Strategy — projects with a substantial, multi-step strategy
+  // (not the shorter generic-ecommerce strategy paragraphs)
+  "service-6": [
+    "altafid",
+    "talent-capital",
+    "bululu",
+    "llay-llay",
+    "bodas-de-sangre-teatral",
+    "rocket-mkt",
+    "como-y-voto",
+    "cnc",
+    "longboard",
+    "polucio",
+    "quartz",
+  ],
+};
+
+function projectsForService(id: string, fallbackQuery: string): Project[] {
+  const slugs = SERVICE_PROJECT_SLUGS[id];
+  if (!slugs) return searchProjects(fallbackQuery);
+  return slugs
+    .map((slug) => getProject(slug))
+    .filter((p): p is Project => Boolean(p));
+}
+
 type Mode = "home" | "loading" | "results" | "service";
 type ShowcaseItem = (typeof SHOWCASE)[number];
 
@@ -287,7 +351,7 @@ export default function MarketplaceHome() {
     setSubmitted(item.title);
     setMode("loading");
     timerRef.current = setTimeout(() => {
-      setResults(searchProjects(item.title));
+      setResults(projectsForService(item.id, item.title));
       setMode("service");
     }, 1100);
   }
