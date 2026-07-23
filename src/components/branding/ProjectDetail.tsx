@@ -143,7 +143,7 @@ export default function ProjectDetail({ project, others }: ProjectDetailProps) {
         style={{ background: "var(--cb-glass-pill)" }}
       >
         <div
-          className="relative mb-10 aspect-[1482/798] overflow-hidden rounded-[18px]"
+          className="relative mb-10 aspect-[1482/798] overflow-hidden rounded-none"
           style={{ background: "var(--cb-pill)" }}
         >
           <ProjectMedia
