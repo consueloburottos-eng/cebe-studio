@@ -51,6 +51,15 @@ export default function BrandingHome() {
   const cooldownRef = useRef(false);
   const touchStartYRef = useRef<number | null>(null);
 
+  // Landing here from ProjectDetail's grid button (?grid=1) opens the grid
+  // overlay directly instead of just dropping back onto the hero.
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("grid") === "1") {
+      setGridOpen(true);
+      window.history.replaceState(null, "", "/");
+    }
+  }, []);
+
   function shuffle(dir: number) {
     if (cooldownRef.current) return;
     cooldownRef.current = true;
