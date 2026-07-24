@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import type { Lang } from "@/hooks/useSiteLanguage";
-import { t } from "@/lib/i18n";
 
 export type SiteMode = "branding" | "saas" | "marketplace";
 
@@ -17,9 +16,9 @@ type ModeSwitcherProps = {
 };
 
 const MODES: { key: SiteMode; label: string; href: string }[] = [
-  { key: "branding", label: "Branding", href: "/" },
+  { key: "branding", label: "Corporate", href: "/" },
   { key: "saas", label: "SaaS", href: "/saas" },
-  { key: "marketplace", label: "Marketplace", href: "/marketplace" },
+  { key: "marketplace", label: "E-commerce", href: "/marketplace" },
 ];
 
 export default function ModeSwitcher({
@@ -47,56 +46,6 @@ export default function ModeSwitcher({
       className="relative z-[120] flex flex-none flex-wrap items-center justify-center gap-x-3 gap-y-1.5 border-b px-3 py-2 backdrop-blur-xl sm:justify-between sm:px-5"
       style={{ background: stripBg, borderColor: stripHr }}
     >
-      <span
-        className="hidden font-sans text-[10.5px] font-bold uppercase tracking-[0.2em] whitespace-nowrap sm:inline"
-        style={{ color: mutedColor }}
-      >
-        {t("nav", effectiveLang).siteView}
-      </span>
-      <div className="flex gap-0.5 rounded-full p-[3px]" style={{ background: segBg }}>
-        {MODES.map((m) => {
-          const active = m.key === mode;
-          return (
-            <Link
-              key={m.key}
-              href={m.href}
-              className={segBase}
-              style={{
-                background: active ? textColor : "transparent",
-                color: active ? (isDarkVariant ? "#141419" : "#fff") : mutedColor,
-              }}
-            >
-              {m.label}
-            </Link>
-          );
-        })}
-      </div>
-      {onSetLight && onSetDark && (
-        <div className="flex gap-0.5 rounded-full p-[3px]" style={{ background: segBg }}>
-          <button
-            type="button"
-            onClick={onSetLight}
-            className={segBase}
-            style={{
-              background: !dark ? textColor : "transparent",
-              color: !dark ? (isDarkVariant ? "#141419" : "#fff") : mutedColor,
-            }}
-          >
-            ☀ Light
-          </button>
-          <button
-            type="button"
-            onClick={onSetDark}
-            className={segBase}
-            style={{
-              background: dark ? textColor : "transparent",
-              color: dark ? (isDarkVariant ? "#141419" : "#fff") : mutedColor,
-            }}
-          >
-            ☾ Dark
-          </button>
-        </div>
-      )}
       {onSetLang && (
         <div className="flex gap-0.5 rounded-full p-[3px]" style={{ background: segBg }}>
           <button
@@ -120,6 +69,54 @@ export default function ModeSwitcher({
             }}
           >
             EN
+          </button>
+        </div>
+      )}
+      <div className="flex gap-0.5 rounded-full p-[3px]" style={{ background: segBg }}>
+        {MODES.map((m) => {
+          const active = m.key === mode;
+          return (
+            <Link
+              key={m.key}
+              href={m.href}
+              className={segBase}
+              style={{
+                background: active ? textColor : "transparent",
+                color: active ? (isDarkVariant ? "#141419" : "#fff") : mutedColor,
+              }}
+            >
+              {m.label}
+            </Link>
+          );
+        })}
+      </div>
+      {onSetLight && onSetDark && (
+        <div className="flex gap-0.5 rounded-full p-[3px]" style={{ background: segBg }}>
+          <button
+            type="button"
+            onClick={onSetLight}
+            title="Light"
+            aria-label="Light"
+            className={segBase}
+            style={{
+              background: !dark ? textColor : "transparent",
+              color: !dark ? (isDarkVariant ? "#141419" : "#fff") : mutedColor,
+            }}
+          >
+            ☀
+          </button>
+          <button
+            type="button"
+            onClick={onSetDark}
+            title="Dark"
+            aria-label="Dark"
+            className={segBase}
+            style={{
+              background: dark ? textColor : "transparent",
+              color: dark ? (isDarkVariant ? "#141419" : "#fff") : mutedColor,
+            }}
+          >
+            ☾
           </button>
         </div>
       )}

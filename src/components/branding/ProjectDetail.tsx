@@ -39,7 +39,6 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
   const [aboutOpen, setAboutOpen] = useState(false);
   const [bookOpen, setBookOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
-  const [audioOn, setAudioOn] = useState(false);
   const folder = assetFolder(project);
 
   // In production the grid is adaptive — only tiles that actually have media
@@ -110,8 +109,6 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
           />
 
           <TopRight
-            audioOn={audioOn}
-            onToggleAudio={() => setAudioOn((a) => !a)}
             onOpenBook={() => setBookOpen(true)}
             onOpenAbout={() => setAboutOpen(true)}
           />

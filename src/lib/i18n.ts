@@ -30,8 +30,8 @@ export function localizeProjects(projects: Project[], lang: Lang): Project[] {
 // each component only pulls in what it needs: `t("nav", lang).about`.
 export const UI = {
   nav: {
-    es: { siteView: "Vista del sitio", about: "sobre mí", projects: "proyectos", services: "servicios" },
-    en: { siteView: "Site view", about: "about", projects: "projects", services: "services" },
+    es: { siteView: "Vista del sitio", about: "sobre mí", projects: "proyectos", services: "servicios", bookMe: "Agéndame" },
+    en: { siteView: "Site view", about: "about", projects: "projects", services: "services", bookMe: "Book me" },
   },
   projectDetail: {
     es: {

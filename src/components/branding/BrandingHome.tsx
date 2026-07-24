@@ -50,7 +50,6 @@ export default function BrandingHome() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [bookOpen, setBookOpen] = useState(false);
   const [gridOpen, setGridOpen] = useState(false);
-  const [audioOn, setAudioOn] = useState(false);
   const [front, setFront] = useState(0);
 
   const finePointer = useMediaQuery("(pointer: fine)");
@@ -178,8 +177,6 @@ export default function BrandingHome() {
           />
 
           <TopRight
-            audioOn={audioOn}
-            onToggleAudio={() => setAudioOn((a) => !a)}
             onOpenBook={() => setBookOpen(true)}
             onOpenAbout={() => setAboutOpen(true)}
           />
