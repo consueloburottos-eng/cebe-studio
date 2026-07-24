@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
@@ -15,6 +14,7 @@ type ProjectsWindowProps = {
 export default function ProjectsWindow({ projects: rawProjects, onClose }: ProjectsWindowProps) {
   const [lang] = useSiteLanguage();
   const ui = t("saas", lang);
+  const pd = t("projectDetail", lang);
   const projects = localizeProjects(rawProjects, lang);
   const [query, setQuery] = useState("");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
@@ -197,19 +197,90 @@ export default function ProjectsWindow({ projects: rawProjects, onClose }: Proje
                   <Meta label={ui.year} value={selected.year} />
                   <Meta label={ui.result} value={selected.result} accent />
                 </div>
-                <p
-                  className="mt-4 max-w-[70ch] text-[13.5px] leading-[1.7]"
-                  style={{ color: "rgba(var(--os-txrgb),.72)" }}
-                >
-                  {selected.brief}
-                </p>
-                <Link
-                  href={`/projects/${selected.slug}`}
-                  className="mt-4 inline-block text-[13px] font-semibold underline underline-offset-4"
-                  style={{ color: "var(--os-accent)" }}
-                >
-                  {ui.viewFullCaseStudy}
-                </Link>
+                {selected.subtitle && (
+                  <div className="mt-4 text-[14px] font-bold" style={{ color: "var(--os-tx)" }}>
+                    {selected.subtitle}
+                  </div>
+                )}
+
+                {selected.brief && (
+                  <section className="mt-5 max-w-[70ch]">
+                    <div
+                      className="text-[10.5px] font-bold uppercase tracking-[0.14em]"
+                      style={{ color: "rgba(var(--os-txrgb),.4)" }}
+                    >
+                      {pd.brief}
+                    </div>
+                    <p className="mt-2 text-[13.5px] leading-[1.7]" style={{ color: "rgba(var(--os-txrgb),.72)" }}>
+                      {selected.brief}
+                    </p>
+                  </section>
+                )}
+
+                {selected.strategy.length > 0 && (
+                  <section className="mt-6 max-w-[70ch]">
+                    <div
+                      className="text-[10.5px] font-bold uppercase tracking-[0.14em]"
+                      style={{ color: "rgba(var(--os-txrgb),.4)" }}
+                    >
+                      {pd.strategy}
+                    </div>
+                    <div className="mt-2 flex flex-col gap-3">
+                      {selected.strategy.map((paragraph, i) => (
+                        <p key={i} className="text-[13.5px] leading-[1.7]" style={{ color: "rgba(var(--os-txrgb),.72)" }}>
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {selected.services && (
+                  <section className="mt-6 max-w-[70ch]">
+                    <div
+                      className="text-[10.5px] font-bold uppercase tracking-[0.14em]"
+                      style={{ color: "rgba(var(--os-txrgb),.4)" }}
+                    >
+                      {pd.services}
+                    </div>
+                    <ol className="mt-2 flex flex-col gap-2 p-0">
+                      {selected.services
+                        .split("·")
+                        .map((s) => s.trim())
+                        .filter(Boolean)
+                        .map((step, i) => (
+                          <li key={step} className="flex items-baseline gap-3 text-[13.5px]" style={{ color: "rgba(var(--os-txrgb),.72)" }}>
+                            <span className="font-mono text-[11px] font-bold" style={{ color: "rgba(var(--os-txrgb),.4)" }}>
+                              {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <span>{step}</span>
+                          </li>
+                        ))}
+                    </ol>
+                  </section>
+                )}
+
+                {selected.skills.length > 0 && (
+                  <section className="mt-6 mb-2 max-w-[70ch]">
+                    <div
+                      className="text-[10.5px] font-bold uppercase tracking-[0.14em]"
+                      style={{ color: "rgba(var(--os-txrgb),.4)" }}
+                    >
+                      {pd.skills}
+                    </div>
+                    <div className="mt-2.5 flex flex-wrap gap-2">
+                      {selected.skills.map((skill) => (
+                        <span
+                          key={skill}
+                          className="rounded-full border px-3.5 py-1.5 text-xs font-bold"
+                          style={{ borderColor: "var(--os-hr)", background: "transparent", color: "var(--os-tx)" }}
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </section>
+                )}
               </div>
             )}
           </div>
