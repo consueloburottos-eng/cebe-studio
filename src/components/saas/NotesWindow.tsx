@@ -2,34 +2,10 @@
 
 import Link from "next/link";
 import { Project } from "@/data/projects";
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { localizeProjects, t } from "@/lib/i18n";
 
 export type NoteId = "about" | "experiencia" | "servicios" | "contacto";
-
-const NOTES: { id: NoteId; label: string }[] = [
-  { id: "about", label: "About" },
-  { id: "experiencia", label: "Experiencia" },
-  { id: "servicios", label: "Servicios" },
-  { id: "contacto", label: "Contacto" },
-];
-
-const SERVICES = [
-  {
-    name: "Product Design & UX/UI",
-    desc: "Diseño de producto end-to-end: research, flujos, sistemas y pulido de interfaz.",
-  },
-  {
-    name: "Diseño de experiencia agéntica",
-    desc: "Conversational UX para agentes de IA — puertas de entrada conversacionales, no formularios con filtros.",
-  },
-  {
-    name: "Dirección de arte & fotografía conceptual",
-    desc: "De la idea al concepto visual completo: dirección de arte, styling y fotografía.",
-  },
-  {
-    name: "Dirección editorial",
-    desc: "Estructura narrativa y sistemas editoriales para publicaciones impresas.",
-  },
-];
 
 type NotesWindowProps = {
   projects: Project[];
@@ -46,6 +22,15 @@ export default function NotesWindow({
   onClose,
   onOpenBook,
 }: NotesWindowProps) {
+  const [lang] = useSiteLanguage();
+  const ui = t("saas", lang);
+  const localizedProjects = localizeProjects(projects, lang);
+  const NOTES: { id: NoteId; label: string }[] = [
+    { id: "about", label: ui.notesTabs.about },
+    { id: "experiencia", label: ui.notesTabs.experiencia },
+    { id: "servicios", label: ui.notesTabs.servicios },
+    { id: "contacto", label: ui.notesTabs.contacto },
+  ];
   return (
     <div
       className="absolute inset-0 z-[100] flex items-center justify-center p-4 sm:p-10"
@@ -69,7 +54,7 @@ export default function NotesWindow({
             <button
               type="button"
               onClick={onClose}
-              title="Cerrar"
+              title={ui.close}
               className="h-3 w-3 rounded-full border-none p-0"
               style={{ background: "#ED6A5E" }}
             />
@@ -114,31 +99,30 @@ export default function NotesWindow({
                   <div>
                     <div className="text-xl font-bold">consuelo</div>
                     <div className="text-[13px]" style={{ color: "rgba(var(--os-txrgb),.6)" }}>
-                      Product Designer · UX/UI
+                      {ui.aboutRole}
                     </div>
                   </div>
                 </div>
                 <p className="mt-4 max-w-[56ch] text-[14px] leading-[1.65]" style={{ color: "rgba(var(--os-txrgb),.75)" }}>
-                  Diseño flujos B2B complejos y sistemas de diseño multimarca — moviéndome
-                  entre research, sistemas y pulido pixel a pixel.
+                  {ui.aboutBio}
                 </p>
                 <div className="mt-5 grid grid-cols-2 gap-3">
                   <div className="rounded-xl p-3.5" style={{ border: "1px solid var(--os-hr)" }}>
                     <div className="font-mono text-[26px] font-bold leading-none">10+</div>
                     <div className="mt-1 text-[11px] uppercase" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
-                      años de experiencia
+                      {ui.yearsExperience}
                     </div>
                   </div>
                   <div className="rounded-xl p-3.5" style={{ border: "1px solid var(--os-hr)" }}>
                     <div className="font-mono text-[26px] font-bold leading-none">30+</div>
                     <div className="mt-1 text-[11px] uppercase" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
-                      proyectos entregados
+                      {ui.projectsDelivered}
                     </div>
                   </div>
                 </div>
                 <div className="mt-5">
                   <span className="text-[11px] font-semibold uppercase" style={{ color: "rgba(var(--os-txrgb),.4)" }}>
-                    Certificados
+                    {ui.certifications}
                   </span>
                   <div className="mt-2 flex flex-wrap gap-2">
                     <span
@@ -160,14 +144,14 @@ export default function NotesWindow({
                   className="mt-5 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-bold no-underline"
                   style={{ background: "var(--os-tx)", color: "var(--os-win)" }}
                 >
-                  Download CV <span>↓</span>
+                  {ui.downloadCV} <span>↓</span>
                 </a>
               </div>
             )}
 
             {note === "experiencia" && (
               <div className="flex flex-col gap-4">
-                {projects.map((p) => (
+                {localizedProjects.map((p) => (
                   <Link
                     key={p.slug}
                     href={`/projects/${p.slug}`}
@@ -193,7 +177,7 @@ export default function NotesWindow({
 
             {note === "servicios" && (
               <div className="flex flex-col gap-4">
-                {SERVICES.map((s) => (
+                {ui.services.map((s) => (
                   <div key={s.name}>
                     <div className="text-[14.5px] font-bold">{s.name}</div>
                     <div className="mt-1 text-[13px] leading-[1.5]" style={{ color: "rgba(var(--os-txrgb),.65)" }}>
@@ -207,8 +191,7 @@ export default function NotesWindow({
             {note === "contacto" && (
               <div>
                 <p className="max-w-[46ch] text-[14px] leading-[1.6]" style={{ color: "rgba(var(--os-txrgb),.75)" }}>
-                  Cuéntame sobre tu proyecto de identidad, producto o experiencia. Respondo
-                  en 24–48 h.
+                  {ui.contactBody}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2.5">
                   <a
@@ -224,7 +207,7 @@ export default function NotesWindow({
                     className="rounded-full px-5 py-2.5 text-[13px] font-semibold"
                     style={{ border: "1px solid var(--os-hr)", background: "transparent", color: "inherit" }}
                   >
-                    Reservar llamada
+                    {ui.bookCallBtn}
                   </button>
                 </div>
               </div>

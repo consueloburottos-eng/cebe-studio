@@ -1,14 +1,19 @@
 "use client";
 
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { t } from "@/lib/i18n";
+
 type DesktopIconsProps = {
   onOpenCV: () => void;
   onOpenProjects: () => void;
 };
 
 export default function DesktopIcons({ onOpenCV, onOpenProjects }: DesktopIconsProps) {
+  const [lang] = useSiteLanguage();
+  const ui = t("saas", lang);
   const icons = [
-    { glyph: "⤓", label: "CV.pdf", fn: onOpenCV },
-    { glyph: "▦", label: "Proyectos", fn: onOpenProjects },
+    { glyph: "⤓", label: ui.iconCV, fn: onOpenCV },
+    { glyph: "▦", label: ui.iconProjects, fn: onOpenProjects },
   ];
 
   return (

@@ -1,5 +1,8 @@
 "use client";
 
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { t } from "@/lib/i18n";
+
 export type SaasWindow = "projects" | "about" | null;
 
 type DockProps = {
@@ -12,12 +15,14 @@ type DockProps = {
 };
 
 export default function Dock({ active, onHome, onProjects, onAbout, onCV, onContacto }: DockProps) {
+  const [lang] = useSiteLanguage();
+  const ui = t("saas", lang);
   const items: { id: SaasWindow | "home"; glyph: string; label: string; fn: () => void }[] = [
-    { id: "home", glyph: "⌂", label: "Escritorio", fn: onHome },
-    { id: "projects", glyph: "▦", label: "Proyectos", fn: onProjects },
-    { id: "about", glyph: "✎", label: "About", fn: onAbout },
-    { id: "about", glyph: "⤓", label: "CV", fn: onCV },
-    { id: "about", glyph: "✉", label: "Contacto", fn: onContacto },
+    { id: "home", glyph: "⌂", label: ui.dockDesktop, fn: onHome },
+    { id: "projects", glyph: "▦", label: ui.dockProjects, fn: onProjects },
+    { id: "about", glyph: "✎", label: ui.dockAbout, fn: onAbout },
+    { id: "about", glyph: "⤓", label: ui.dockCV, fn: onCV },
+    { id: "about", glyph: "✉", label: ui.dockContact, fn: onContacto },
   ];
 
   return (

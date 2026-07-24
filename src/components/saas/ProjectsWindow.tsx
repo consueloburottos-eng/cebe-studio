@@ -4,13 +4,18 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { localizeProjects, t } from "@/lib/i18n";
 
 type ProjectsWindowProps = {
   projects: Project[];
   onClose: () => void;
 };
 
-export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProps) {
+export default function ProjectsWindow({ projects: rawProjects, onClose }: ProjectsWindowProps) {
+  const [lang] = useSiteLanguage();
+  const ui = t("saas", lang);
+  const projects = localizeProjects(rawProjects, lang);
   const [query, setQuery] = useState("");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
 
@@ -45,7 +50,7 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
             <button
               type="button"
               onClick={onClose}
-              title="Cerrar"
+              title={ui.close}
               className="h-3 w-3 rounded-full border-none p-0"
               style={{ background: "#ED6A5E" }}
             />
@@ -53,13 +58,13 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
             <span className="h-3 w-3 rounded-full" style={{ background: "#61C554" }} />
           </div>
           <span className="text-[13px] font-semibold" style={{ color: "rgba(var(--os-txrgb),.85)" }}>
-            Proyectos — CEBE:STUDIO
+            {ui.projectsWindowTitle} — CEBE:STUDIO
           </span>
           <div className="relative ml-auto hidden sm:block">
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Buscar proyecto…"
+              placeholder={ui.searchPlaceholder}
               className="w-[210px] rounded-lg py-1.5 pr-3 pl-[30px] font-sans text-[12.5px] outline-none focus:ring-2 focus:ring-[var(--os-accent)]"
               style={{
                 background: "rgba(var(--os-sfrgb),.06)",
@@ -85,7 +90,7 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
               className="px-2 pb-2.5 text-[10.5px] font-semibold tracking-[0.14em] uppercase"
               style={{ color: "rgba(var(--os-txrgb),.4)" }}
             >
-              Proyectos
+              {ui.projectsWindowTitle}
             </div>
             {projects.map((p) => (
               <button
@@ -158,7 +163,7 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
                   className="border-none bg-transparent p-0 pb-3.5 font-sans text-[12.5px]"
                   style={{ color: "rgba(var(--os-txrgb),.6)" }}
                 >
-                  ‹ Todos los proyectos
+                  {ui.allProjects}
                 </button>
                 <div
                   className="h-[200px] overflow-hidden rounded-xl"
@@ -183,10 +188,10 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
                   className="mt-4.5 grid grid-cols-2 gap-3.5 border-t border-b py-4 sm:grid-cols-4"
                   style={{ borderColor: "var(--os-hr)" }}
                 >
-                  <Meta label="Cliente" value={selected.client} />
-                  <Meta label="Rol" value={selected.role} />
-                  <Meta label="Año" value={selected.year} />
-                  <Meta label="Resultado" value={selected.result} accent />
+                  <Meta label={ui.client} value={selected.client} />
+                  <Meta label={ui.role} value={selected.role} />
+                  <Meta label={ui.year} value={selected.year} />
+                  <Meta label={ui.result} value={selected.result} accent />
                 </div>
                 <p
                   className="mt-4 max-w-[70ch] text-[13.5px] leading-[1.7]"
@@ -199,7 +204,7 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
                   className="mt-4 inline-block text-[13px] font-semibold underline underline-offset-4"
                   style={{ color: "var(--os-accent)" }}
                 >
-                  Ver estudio de caso completo →
+                  {ui.viewFullCaseStudy}
                 </Link>
               </div>
             )}
@@ -210,7 +215,7 @@ export default function ProjectsWindow({ projects, onClose }: ProjectsWindowProp
           className="flex-none px-4 py-2 font-mono text-[11px]"
           style={{ color: "rgba(var(--os-txrgb),.4)", borderTop: "1px solid var(--os-hr)" }}
         >
-          Proyectos{selected ? ` / ${selected.title}` : ""}
+          {ui.projectsWindowTitle}{selected ? ` / ${selected.title}` : ""}
         </div>
       </div>
     </div>

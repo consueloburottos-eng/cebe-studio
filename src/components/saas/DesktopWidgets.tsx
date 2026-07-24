@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { t } from "@/lib/i18n";
 
 const SKILLS = [
   "Figma",
@@ -13,11 +15,29 @@ const SKILLS = [
   "Storytelling",
 ];
 
+const SKILLS_EN = [
+  "Figma",
+  "Design Systems",
+  "UX Research",
+  "Prototyping",
+  "Conversational UX",
+  "Art Direction",
+  "Editorial Direction",
+  "Storytelling",
+];
+
 const DISCIPLINES = [
   "Product Design & UX/UI",
   "Diseño de experiencia agéntica",
   "Dirección de arte & fotografía conceptual",
   "Dirección editorial",
+];
+
+const DISCIPLINES_EN = [
+  "Product Design & UX/UI",
+  "Agentic Experience Design",
+  "Art Direction & Conceptual Photography",
+  "Editorial Direction",
 ];
 
 function Widget({
@@ -44,15 +64,19 @@ function Widget({
 }
 
 export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void }) {
+  const [lang] = useSiteLanguage();
+  const ui = t("saas", lang);
+  const skills = lang === "en" ? SKILLS_EN : SKILLS;
+  const disciplines = lang === "en" ? DISCIPLINES_EN : DISCIPLINES;
   const [today, setToday] = useState<{ day: string; date: number } | null>(null);
 
   useEffect(() => {
     const kickoff = setTimeout(() => {
       const now = new Date();
-      setToday({ day: now.toLocaleDateString("es-ES", { weekday: "long" }), date: now.getDate() });
+      setToday({ day: now.toLocaleDateString(lang === "en" ? "en-US" : "es-ES", { weekday: "long" }), date: now.getDate() });
     }, 0);
     return () => clearTimeout(kickoff);
-  }, []);
+  }, [lang]);
 
   const day = today?.day ?? "";
   const date = today?.date ?? "";
@@ -62,7 +86,7 @@ export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void 
       <div className="flex w-full flex-col gap-4 sm:w-[280px]">
         <div className="flex gap-4">
           <div className="flex-1">
-            <Widget label="Años">
+            <Widget label={ui.years}>
               <div
                 className="mt-4 text-[38px] leading-none font-bold tracking-[-0.02em]"
                 style={{ color: "var(--os-tx)" }}
@@ -70,12 +94,12 @@ export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void 
                 10+
               </div>
               <div className="mt-1.5 text-xs" style={{ color: "var(--os-mut)" }}>
-                de experiencia
+                {ui.yearsSub}
               </div>
             </Widget>
           </div>
           <div className="flex-1">
-            <Widget label="Proyectos">
+            <Widget label={ui.projects}>
               <div
                 className="mt-4 text-[38px] leading-none font-bold tracking-[-0.02em]"
                 style={{ color: "var(--os-tx)" }}
@@ -83,15 +107,15 @@ export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void 
                 30+
               </div>
               <div className="mt-1.5 text-xs" style={{ color: "var(--os-mut)" }}>
-                entregados
+                {ui.projectsSub}
               </div>
             </Widget>
           </div>
         </div>
 
-        <Widget label="Skills">
+        <Widget label={ui.skills}>
           <div className="mt-3.5 flex flex-wrap gap-2">
-            {SKILLS.map((s) => (
+            {skills.map((s) => (
               <span
                 key={s}
                 className="rounded-full px-3 py-1.5 text-xs font-medium"
@@ -107,9 +131,9 @@ export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void 
           </div>
         </Widget>
 
-        <Widget label="Disciplinas">
+        <Widget label={ui.disciplines}>
           <ul className="mt-3 flex list-none flex-col gap-2 p-0 text-[13px]" style={{ color: "var(--os-tx)" }}>
-            {DISCIPLINES.map((d) => (
+            {disciplines.map((d) => (
               <li key={d} className="flex items-start gap-2">
                 <span style={{ color: "var(--os-accent)" }}>—</span>
                 {d}
@@ -141,7 +165,7 @@ export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void 
         </div>
         <div className="flex-1" />
         <div className="text-[13px] leading-[1.4]" style={{ color: "rgba(var(--os-txrgb),.8)" }}>
-          Agenda una llamada de 30 min →
+          {ui.bookCall}
         </div>
       </button>
     </div>
