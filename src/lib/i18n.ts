@@ -245,6 +245,7 @@ export const UI = {
       closeX: "✕ Cerrar",
       category: "Categoría",
       alsoInterested: "También te puede interesar…",
+      profile: "Perfil",
     },
     en: {
       designServices: "Design Services",
@@ -299,6 +300,7 @@ export const UI = {
       closeX: "✕ Close",
       category: "Category",
       alsoInterested: "You might also like…",
+      profile: "Profile",
     },
   },
 } as const;

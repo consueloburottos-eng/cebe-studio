@@ -8,10 +8,17 @@ type MarketplaceHeaderProps = {
   onOpenMenu: () => void;
   onBack?: () => void;
   onOpenCart?: () => void;
+  onOpenProfile?: () => void;
   cartCount?: number;
 };
 
-export default function MarketplaceHeader({ onOpenMenu, onBack, onOpenCart, cartCount = 0 }: MarketplaceHeaderProps) {
+export default function MarketplaceHeader({
+  onOpenMenu,
+  onBack,
+  onOpenCart,
+  onOpenProfile,
+  cartCount = 0,
+}: MarketplaceHeaderProps) {
   const [lang] = useSiteLanguage();
   const ui = t("marketplace", lang);
   return (
@@ -28,13 +35,19 @@ export default function MarketplaceHeader({ onOpenMenu, onBack, onOpenCart, cart
         <Image src="/marketplace/logo.png" alt="Cebe:Studio" fill sizes="187px" className="object-contain" />
       </div>
       <div className="flex gap-4" style={{ color: "var(--mk-tx)" }} aria-hidden="true">
-        <span title={ui.history}>
+        <button
+          type="button"
+          onClick={onOpenProfile}
+          title={ui.profile}
+          aria-hidden={!onOpenProfile}
+          className="border-none bg-transparent p-0"
+          style={{ color: "inherit" }}
+        >
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M3 12a9 9 0 1 0 3-6.7" />
-            <path d="M3 4v5h5" />
-            <path d="M12 7v5l3 3" />
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" />
           </svg>
-        </span>
+        </button>
         <span title={ui.saved}>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 20.5s-7.5-4.6-10-9.3C.4 8 1.8 4.5 5.2 4c2-.3 3.7.7 4.8 2.3C11.1 4.7 12.8 3.7 14.8 4c3.4.5 4.8 4 3.2 7.2C15.5 15.9 12 20.5 12 20.5Z" />

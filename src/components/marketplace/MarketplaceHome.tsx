@@ -14,6 +14,7 @@ import { t, localizeProjects } from "@/lib/i18n";
 import ServiceCard, { type ServiceCardConfig } from "./ServiceCard";
 import ServiceConfigPopover from "./ServiceConfigPopover";
 import CartOverlay from "./CartOverlay";
+import AboutModal from "@/components/branding/AboutModal";
 
 // asymmetric 6-photo showcase grid (tall-short-short-tall), styled after a
 // gallery landing strip. Not tied to any single project — these represent
@@ -372,6 +373,7 @@ export default function MarketplaceHome() {
   const [submitted, setSubmitted] = useState("");
   const [results, setResults] = useState<Project[]>([]);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [exampleIdx, setExampleIdx] = useState(0);
   const [favorited, setFavorited] = useState<Set<string>>(new Set());
   const [heroCache, setHeroCache] = useState<HeroCacheEntry | null>(null);
@@ -523,6 +525,7 @@ export default function MarketplaceHome() {
             <MarketplaceHeader
               onOpenMenu={() => setMenuOpen(true)}
               onOpenCart={() => setCartOpen(true)}
+              onOpenProfile={() => setAboutOpen(true)}
               cartCount={Object.keys(serviceCart).length}
             />
             <div className="absolute inset-0">
@@ -751,6 +754,7 @@ export default function MarketplaceHome() {
                 onOpenMenu={() => setMenuOpen(true)}
                 onBack={clear}
                 onOpenCart={() => setCartOpen(true)}
+                onOpenProfile={() => setAboutOpen(true)}
                 cartCount={Object.keys(serviceCart).length}
               />
 
@@ -923,6 +927,12 @@ export default function MarketplaceHome() {
               label={ui.refineLabel}
               className="fixed bottom-8 left-1/2 z-[6] w-[min(640px,88vw)] -translate-x-1/2"
             />
+          </div>
+        )}
+
+        {aboutOpen && (
+          <div data-cb-theme={dark ? "dark" : "light"}>
+            <AboutModal onClose={() => setAboutOpen(false)} />
           </div>
         )}
 
