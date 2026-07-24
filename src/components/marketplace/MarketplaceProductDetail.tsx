@@ -50,7 +50,7 @@ export default function MarketplaceProductDetail({ project: rawProject, suggesti
         </div>
 
         <div className="mt-9 max-w-[70ch]">
-          <div className="font-serif text-[clamp(32px,5vw,52px)] italic" style={{ color: "var(--mk-tx)" }}>
+          <div className="font-serif text-[clamp(32px,5vw,52px)] italic capitalize" style={{ color: "var(--mk-tx)" }}>
             {project.title}
           </div>
           <div
@@ -97,7 +97,7 @@ export default function MarketplaceProductDetail({ project: rawProject, suggesti
                     uploadPath={`/projects/${assetFolder(s)}/cover`}
                   />
                   </div>
-                  <div className="mt-3 font-serif text-[17px] italic" style={{ color: "var(--mk-tx)" }}>
+                  <div className="mt-3 font-serif text-[17px] italic capitalize" style={{ color: "var(--mk-tx)" }}>
                     {s.title}
                   </div>
                   <div

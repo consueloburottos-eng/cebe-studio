@@ -97,7 +97,7 @@ export default function ProjectsWindow({ projects: rawProjects, onClose }: Proje
                 key={p.slug}
                 type="button"
                 onClick={() => setSelectedSlug(p.slug)}
-                className="mb-0.5 flex w-full items-center gap-2.5 rounded-lg border-none px-2.5 py-2 text-left font-sans text-[13px]"
+                className="mb-0.5 flex w-full items-center gap-2.5 rounded-lg border-none px-2.5 py-2 text-left font-sans text-[13px] capitalize"
                 style={{
                   background: selectedSlug === p.slug ? "rgba(110,124,255,.16)" : "transparent",
                   color:
@@ -140,7 +140,7 @@ export default function ProjectsWindow({ projects: rawProjects, onClose }: Proje
                     </div>
                     <div className="px-3.5 pt-3 pb-3.5">
                       <div className="flex items-baseline justify-between gap-2">
-                        <span className="text-sm font-bold uppercase">{p.title}</span>
+                        <span className="text-sm font-bold capitalize">{p.title}</span>
                         <span className="font-mono text-[11px]" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
                           {p.year}
                         </span>
@@ -174,7 +174,7 @@ export default function ProjectsWindow({ projects: rawProjects, onClose }: Proje
                   />
                 </div>
                 <div className="mt-4.5 flex items-baseline justify-between gap-3">
-                  <span className="text-[26px] font-bold tracking-[-0.01em]" style={{ color: "var(--os-tx)" }}>
+                  <span className="text-[26px] font-bold tracking-[-0.01em] capitalize" style={{ color: "var(--os-tx)" }}>
                     {selected.title}
                   </span>
                   <span className="font-mono text-xs" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
@@ -212,7 +212,15 @@ export default function ProjectsWindow({ projects: rawProjects, onClose }: Proje
           className="flex-none px-4 py-2 font-mono text-[11px]"
           style={{ color: "rgba(var(--os-txrgb),.4)", borderTop: "1px solid var(--os-hr)" }}
         >
-          {ui.projectsWindowTitle}{selected ? ` / ${selected.title}` : ""}
+          {ui.projectsWindowTitle}
+          {selected ? (
+            <>
+              {" / "}
+              <span className="capitalize">{selected.title}</span>
+            </>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
               fit="natural"
             />
           </div>
-          <div className="mt-3.5 text-[17px]" style={{ color: "var(--mk-tx)" }}>
+          <div className="mt-3.5 text-[17px] capitalize" style={{ color: "var(--mk-tx)" }}>
             {p.title}
           </div>
           <div

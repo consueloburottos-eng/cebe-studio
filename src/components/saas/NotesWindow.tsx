@@ -159,7 +159,7 @@ export default function NotesWindow({
                     style={{ border: "1px solid var(--os-hr)", color: "inherit" }}
                   >
                     <div className="flex items-baseline justify-between gap-3">
-                      <span className="text-base font-bold">{p.title}</span>
+                      <span className="text-base font-bold capitalize">{p.title}</span>
                       <span className="font-mono text-xs" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
                         {p.year}
                       </span>
