@@ -1,5 +1,8 @@
 "use client";
 
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { t } from "@/lib/i18n";
+
 type MenuService = { id: string; title: string };
 
 type FullscreenMenuProps = {
@@ -9,13 +12,15 @@ type FullscreenMenuProps = {
 };
 
 export default function FullscreenMenu({ services, onPick, onClose }: FullscreenMenuProps) {
+  const [lang] = useSiteLanguage();
+  const ui = t("marketplace", lang);
   return (
     <div className="absolute inset-0 z-[200] flex">
       {/* dim/blurred backdrop over the rest of the page — click to close */}
       <button
         type="button"
         onClick={onClose}
-        aria-label="Cerrar menú"
+        aria-label={ui.closeMenu}
         className="absolute inset-0 cursor-default border-none bg-black/35 backdrop-blur-sm"
       />
 

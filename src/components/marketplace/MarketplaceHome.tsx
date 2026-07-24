@@ -9,17 +9,11 @@ import ResultsGrid from "./ResultsGrid";
 import FullscreenMenu from "./FullscreenMenu";
 import ProjectMedia from "@/components/ProjectMedia";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
-import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { useSiteLanguage, type Lang } from "@/hooks/useSiteLanguage";
+import { t, localizeProjects } from "@/lib/i18n";
 import ServiceCard, { type ServiceCardConfig } from "./ServiceCard";
 import ServiceConfigPopover from "./ServiceConfigPopover";
 import CartOverlay from "./CartOverlay";
-
-const EXAMPLES = [
-  "Muéstrame tu trabajo en product design",
-  "Quiero ver dirección de arte y fotografía conceptual",
-  "Busco un proyecto de dirección editorial",
-  "Enséñame diseño de experiencia agéntica",
-];
 
 // asymmetric 6-photo showcase grid (tall-short-short-tall), styled after a
 // gallery landing strip. Not tied to any single project — these represent
@@ -67,10 +61,10 @@ const EXTRA_BANNER_PHOTOS: Record<string, Record<string, Media>> = {
   "service-5": { b: SERVICE_5_BANNER_B },
 };
 
-const SHOWCASE = [
+const SHOWCASE_BASE = [
   {
     id: "service-1",
-    label: "Servicio 01",
+    number: "01",
     title: "SaaS Design",
     desc: "Interfaces intuitivas que convierten usuarios en clientes.",
     longDesc:
@@ -81,12 +75,23 @@ const SHOWCASE = [
       "Prototipos interactivos para validación",
       "Handoff documentado para desarrollo",
     ],
+    en: {
+      desc: "Intuitive interfaces that turn users into customers.",
+      longDesc:
+        "We design product interfaces for SaaS platforms that need clarity, speed, and adoption. From first login to the most complex dashboard flows, every screen is built to shorten the learning curve and boost retention.",
+      details: [
+        "End-to-end product design in Figma",
+        "Reusable component system",
+        "Interactive prototypes for validation",
+        "Documented handoff for development",
+      ],
+    },
     priceFrom: 4500,
     media: { type: "image" as const, src: "/showcase/service-1.webp" },
   },
   {
     id: "service-2",
-    label: "Servicio 02",
+    number: "02",
     title: "Ecommerce Websites",
     desc: "Tiendas online diseñadas para vender más y mejor.",
     longDesc:
@@ -97,12 +102,23 @@ const SHOWCASE = [
       "Adaptación mobile-first",
       "Integración con plataformas de e-commerce",
     ],
+    en: {
+      desc: "Online stores designed to sell more, and sell better.",
+      longDesc:
+        "Online stores that combine brand aesthetics with a seamless shopping experience. We work every step of the funnel — from storefront to checkout — so navigation feels natural and conversion improves measurably.",
+      details: [
+        "Catalog and product-page design",
+        "Optimized cart and checkout flow",
+        "Mobile-first adaptation",
+        "E-commerce platform integration",
+      ],
+    },
     priceFrom: 3200,
     media: { type: "image" as const, src: "/showcase/service-2.webp" },
   },
   {
     id: "service-3",
-    label: "Servicio 03",
+    number: "03",
     title: "UX Research",
     desc: "Investigación de usuarios para tomar decisiones acertadas.",
     longDesc:
@@ -113,12 +129,23 @@ const SHOWCASE = [
       "Mapas de journey y personas",
       "Informe de hallazgos y recomendaciones",
     ],
+    en: {
+      desc: "User research to make the right decisions.",
+      longDesc:
+        "Research centered on the people who'll actually use the product. Interviews, usability tests, and behavioral analysis that turn assumptions into design decisions backed by real evidence.",
+      details: [
+        "User interviews and surveys",
+        "Moderated usability testing",
+        "Journey maps and personas",
+        "Findings and recommendations report",
+      ],
+    },
     priceFrom: 2200,
     media: { type: "image" as const, src: "/showcase/service-3.png" },
   },
   {
     id: "service-4",
-    label: "Servicio 04",
+    number: "04",
     title: "Design Systems",
     desc: "Sistemas de diseño escalables que alinean equipos y productos.",
     longDesc:
@@ -129,12 +156,23 @@ const SHOWCASE = [
       "Documentación de uso y accesibilidad",
       "Sincronización con el código (Code Connect)",
     ],
+    en: {
+      desc: "Scalable design systems that align teams and products.",
+      longDesc:
+        "Scalable design systems that align product, design, and engineering teams under one visual language. Tokens, components, and documentation built to grow without losing consistency.",
+      details: [
+        "Component library in Figma",
+        "Color, typography, and spacing tokens",
+        "Usage and accessibility documentation",
+        "Code sync (Code Connect)",
+      ],
+    },
     priceFrom: 5000,
     media: { type: "image" as const, src: "/showcase/service-4.png" },
   },
   {
     id: "service-5",
-    label: "Servicio 05",
+    number: "05",
     title: "Brand & Visual Identity",
     desc: "Marcas memorables que comunican valor y generan confianza.",
     longDesc:
@@ -145,12 +183,23 @@ const SHOWCASE = [
       "Guía de marca (brand guidelines)",
       "Aplicaciones en piezas digitales e impresas",
     ],
+    en: {
+      desc: "Memorable brands that communicate value and build trust.",
+      longDesc:
+        "Memorable visual identities that communicate a brand's real value. From logo to full system — color, typography, tone — so every touchpoint feels part of the same story.",
+      details: [
+        "Logo and variations",
+        "Color palette and typography",
+        "Brand guidelines",
+        "Applications across digital and print pieces",
+      ],
+    },
     priceFrom: 2500,
     media: { type: "image" as const, src: "/showcase/service-5.png" },
   },
   {
     id: "service-6",
-    label: "Servicio 06",
+    number: "06",
     title: "Product Strategy",
     desc: "Estrategia de producto centrada en el usuario y el negocio.",
     longDesc:
@@ -161,13 +210,35 @@ const SHOWCASE = [
       "Roadmap de producto",
       "Definición de métricas de éxito",
     ],
+    en: {
+      desc: "Product strategy centered on the user and the business.",
+      longDesc:
+        "Product strategy that connects business vision with real user needs. Discovery, prioritization, and roadmapping so every design decision has a clear purpose.",
+      details: [
+        "Discovery and alignment workshops",
+        "Feature prioritization",
+        "Product roadmap",
+        "Success-metric definition",
+      ],
+    },
     priceFrom: 3000,
     media: { type: "image" as const, src: "/showcase/service-6.png" },
   },
-].map((item) => ({
-  ...item,
-  bannerPhotos: bannerSlots(item.id, item.media, EXTRA_BANNER_PHOTOS[item.id] ?? {}),
-}));
+];
+
+function buildShowcase(lang: Lang) {
+  return SHOWCASE_BASE.map((item) => {
+    const localized =
+      lang === "en"
+        ? { ...item, desc: item.en.desc, longDesc: item.en.longDesc, details: item.en.details }
+        : item;
+    return {
+      ...localized,
+      label: `${t("marketplace", lang).serviceLabel} ${item.number}`,
+      bannerPhotos: bannerSlots(item.id, item.media, EXTRA_BANNER_PHOTOS[item.id] ?? {}),
+    };
+  });
+}
 
 // Curated project slugs per service card — shown instead of the fuzzy
 // searchProjects() match so "Ver servicio" only surfaces work that's
@@ -284,7 +355,7 @@ function projectsForService(id: string, fallbackQuery: string): Project[] {
 }
 
 type Mode = "home" | "loading" | "results" | "service";
-type ShowcaseItem = (typeof SHOWCASE)[number];
+type ShowcaseItem = ReturnType<typeof buildShowcase>[number];
 
 const DEV_UPLOAD_ENABLED = process.env.NODE_ENV === "development";
 const HERO_UPLOAD_PATH = "/marketplace/hero";
@@ -294,6 +365,8 @@ type HeroCacheEntry = { type: "video" | "image"; src: string; version: number };
 export default function MarketplaceHome() {
   const [dark, setDark] = useSiteTheme();
   const [lang, setLang] = useSiteLanguage();
+  const ui = t("marketplace", lang);
+  const SHOWCASE = buildShowcase(lang);
   const [mode, setMode] = useState<Mode>("home");
   const [query, setQuery] = useState("");
   const [submitted, setSubmitted] = useState("");
@@ -367,7 +440,7 @@ export default function MarketplaceHome() {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const id = setInterval(() => setExampleIdx((i) => (i + 1) % EXAMPLES.length), 4000);
+    const id = setInterval(() => setExampleIdx((i) => (i + 1) % ui.examples.length), 4000);
     return () => clearInterval(id);
   }, []);
 
@@ -378,7 +451,7 @@ export default function MarketplaceHome() {
     setSubmitted(q);
     setMode("loading");
     timerRef.current = setTimeout(() => {
-      setResults(searchProjects(q));
+      setResults(localizeProjects(searchProjects(q), lang));
       setMode("results");
     }, 1100);
   }
@@ -403,7 +476,7 @@ export default function MarketplaceHome() {
     setSubmitted(item.title);
     setMode("loading");
     timerRef.current = setTimeout(() => {
-      setResults(projectsForService(item.id, item.title));
+      setResults(localizeProjects(projectsForService(item.id, item.title), lang));
       setMode("service");
     }, 1100);
   }
@@ -501,16 +574,19 @@ export default function MarketplaceHome() {
                 className="font-serif text-[clamp(34px,6vw,60px)] leading-[1.15]"
                 style={{ color: "var(--mk-tx)" }}
               >
-                Design with <em className="italic">purpose</em>.
+                {ui.heroLine1Pre}
+                <em className="italic">{ui.heroLine1Em}</em>
+                {ui.heroLine1Post}
                 <br />
-                Create with <em className="italic">clarity</em>.
+                {ui.heroLine2Pre}
+                <em className="italic">{ui.heroLine2Em}</em>
+                {ui.heroLine2Post}
               </span>
               <span
                 className="max-w-[560px] text-[15px] leading-[1.5]"
                 style={{ color: "rgba(var(--mk-txrgb),.82)" }}
               >
-                A design studio crafting digital products, brands and experiences that are
-                beautiful, functional and meaningful.
+                {ui.heroSubtitle}
               </span>
             </div>
             <ConciergeBar
@@ -518,8 +594,8 @@ export default function MarketplaceHome() {
               value={query}
               onChange={setQuery}
               onSubmit={() => submit(query)}
-              placeholder={EXAMPLES[exampleIdx]}
-              label="Describe qué proyectos del portafolio quieres ver"
+              placeholder={ui.examples[exampleIdx % ui.examples.length]}
+              label={ui.conciergeHomeLabel}
               className="absolute bottom-11 left-1/2 z-[6] w-[min(640px,88vw)] -translate-x-1/2"
             />
           </div>
@@ -529,7 +605,7 @@ export default function MarketplaceHome() {
               className="font-serif text-[clamp(26px,4vw,40px)]"
               style={{ color: "var(--mk-tx)" }}
             >
-              Design Services
+              {ui.designServices}
             </span>
           </div>
 
@@ -566,14 +642,14 @@ export default function MarketplaceHome() {
                       onClick={() => viewService(item)}
                       className="mt-3 inline-flex items-center gap-1.5 rounded-full border-none bg-white/90 px-3.5 py-1.5 text-[11.5px] font-semibold text-[#141210] backdrop-blur-md"
                     >
-                      Ver servicio <span aria-hidden="true">→</span>
+                      {ui.viewService} <span aria-hidden="true">→</span>
                     </button>
                   </div>
                   <div className="absolute right-2.5 bottom-2.5 z-20 flex items-center gap-1.5">
                     <button
                       type="button"
                       onClick={() => toggleFavorite(item.id)}
-                      title="Agregar a favoritos"
+                      title={ui.addToFavorites}
                       aria-pressed={favorited.has(item.id)}
                       className="flex h-8 w-8 items-center justify-center rounded-full border-none text-[14px] backdrop-blur-md"
                       style={{
@@ -586,7 +662,7 @@ export default function MarketplaceHome() {
                     <button
                       type="button"
                       onClick={() => setConfiguringId(item.id)}
-                      title="Agregar al carro"
+                      title={ui.addToCart}
                       aria-pressed={Boolean(serviceCart[item.id])}
                       className="flex h-8 w-8 items-center justify-center rounded-full border-none text-[16px] backdrop-blur-md"
                       style={{
@@ -605,7 +681,7 @@ export default function MarketplaceHome() {
               style={{ color: "var(--mk-tx)", letterSpacing: ".18em" }}
             >
               <span>↓</span>
-              <span>Scroll to explore</span>
+              <span>{ui.scrollToExplore}</span>
             </div>
           </div>
 
@@ -619,7 +695,7 @@ export default function MarketplaceHome() {
               style={{ background: "radial-gradient(circle,rgba(198,138,61,.5),transparent 70%)" }}
             />
             <span className="mk-blur relative font-serif text-[26px] italic" style={{ color: "var(--mk-tx)" }}>
-              Crafting your experience
+              {ui.craftingExperience}
             </span>
             <ConciergeBar
               id="mkt-loading"
@@ -628,7 +704,7 @@ export default function MarketplaceHome() {
               onSubmit={() => {}}
               onClear={clear}
               placeholder=""
-              label="Consulta enviada"
+              label={ui.conciergeSentLabel}
               className="absolute bottom-11 left-1/2 z-[6] w-[min(640px,88vw)] -translate-x-1/2 opacity-70"
             />
           </div>
@@ -698,7 +774,7 @@ export default function MarketplaceHome() {
                     className="text-[11px] uppercase"
                     style={{ color: "var(--mk-mut)", letterSpacing: ".18em" }}
                   >
-                    Description
+                    {ui.description}
                   </div>
                   <p className="mt-4 text-[15px] leading-[1.7]" style={{ color: "var(--mk-tx)" }}>
                     {activeService.longDesc}
@@ -709,7 +785,7 @@ export default function MarketplaceHome() {
                     className="text-[11px] uppercase"
                     style={{ color: "var(--mk-mut)", letterSpacing: ".18em" }}
                   >
-                    Details
+                    {ui.details}
                   </div>
                   <ul className="mt-4 flex flex-col gap-2 text-[15px]" style={{ color: "var(--mk-tx)" }}>
                     {activeService.details.map((d) => (
@@ -732,7 +808,7 @@ export default function MarketplaceHome() {
               <div className="relative z-[1]">
                 <div className="px-6 pb-6 sm:px-8">
                   <h3 className="text-center font-serif text-[26px]" style={{ color: "var(--mk-tx)" }}>
-                    Proyectos {activeService.title}
+                    {ui.projectsOf} {activeService.title}
                   </h3>
                 </div>
                 <ResultsGrid results={results} />
@@ -749,7 +825,7 @@ export default function MarketplaceHome() {
               }}
             >
               <h3 className="text-center font-serif text-[26px]" style={{ color: "var(--mk-tx)" }}>
-                Más servicios
+                {ui.moreServices}
               </h3>
               <div className="mt-8 grid grid-cols-1 gap-[5px] p-[5px] sm:grid-cols-3">
                 {SHOWCASE.filter((s) => s.id !== activeService.id).map((s) => (
@@ -772,7 +848,7 @@ export default function MarketplaceHome() {
                             e.stopPropagation();
                             toggleFavorite(s.id);
                           }}
-                          title="Agregar a favoritos"
+                          title={ui.addToFavorites}
                           aria-pressed={favorited.has(s.id)}
                           className="flex h-8 w-8 items-center justify-center rounded-full border-none text-[14px] backdrop-blur-md"
                           style={{
@@ -788,7 +864,7 @@ export default function MarketplaceHome() {
                             e.stopPropagation();
                             setConfiguringId(s.id);
                           }}
-                          title="Agregar al carro"
+                          title={ui.addToCart}
                           aria-pressed={Boolean(serviceCart[s.id])}
                           className="flex h-8 w-8 items-center justify-center rounded-full border-none text-[16px] backdrop-blur-md"
                           style={{
@@ -824,7 +900,7 @@ export default function MarketplaceHome() {
                 className="flex items-center gap-2 border-none bg-transparent font-sans text-[13px]"
                 style={{ color: "var(--mk-tx)" }}
               >
-                ☰ Menu
+                {ui.menu}
               </button>
               <span
                 className="font-serif text-[15px]"
@@ -843,8 +919,8 @@ export default function MarketplaceHome() {
               onChange={setQuery}
               onSubmit={() => submit(query)}
               onClear={clear}
-              placeholder="Escribe otra consulta o refina esta selección"
-              label="Refina tu búsqueda de proyectos"
+              placeholder={ui.refinePlaceholder}
+              label={ui.refineLabel}
               className="fixed bottom-8 left-1/2 z-[6] w-[min(640px,88vw)] -translate-x-1/2"
             />
           </div>

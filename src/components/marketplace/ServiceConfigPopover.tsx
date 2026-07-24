@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { t } from "@/lib/i18n";
 
 // Fallback list only — real per-service options come from SERVICE_PAGE_OPTIONS
 // in MarketplaceHome.tsx and are passed in via the `pages` prop. This default
@@ -37,6 +39,8 @@ export default function ServiceConfigPopover({
   onConfirm,
   onClose,
 }: ServiceConfigPopoverProps) {
+  const [lang] = useSiteLanguage();
+  const ui = t("marketplace", lang);
   const basicPages = pageOptions ?? DEFAULT_PAGES;
   const [pages, setPages] = useState<Set<string>>(new Set(initial?.pages ?? []));
   const [flows, setFlows] = useState(initial?.flows ?? 0);
@@ -65,7 +69,7 @@ export default function ServiceConfigPopover({
           <button
             type="button"
             onClick={onClose}
-            title="Cerrar"
+            title={ui.close}
             className="flex h-7 w-7 flex-none items-center justify-center rounded-full border-none text-[12px] text-white"
             style={{ background: "rgba(255,255,255,.12)" }}
           >
@@ -123,7 +127,7 @@ export default function ServiceConfigPopover({
           className="mt-4 w-full rounded-full border-none py-2.5 text-[13px] font-semibold text-[#141210]"
           style={{ background: "#fff", opacity: pages.size === 0 ? 0.5 : 1 }}
         >
-          Add to Cart
+          {ui.addToCartBtn}
         </button>
       </div>
     </>

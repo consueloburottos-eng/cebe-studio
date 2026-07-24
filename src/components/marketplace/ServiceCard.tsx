@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import ServiceConfigPopover, { type ServiceCardConfig } from "./ServiceConfigPopover";
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { t } from "@/lib/i18n";
 
 export type { ServiceCardConfig };
 
@@ -22,6 +24,8 @@ export default function ServiceCard({
   initial,
   onConfirm,
 }: ServiceCardProps) {
+  const [lang] = useSiteLanguage();
+  const ui = t("marketplace", lang);
   const [configuring, setConfiguring] = useState(false);
   const configured = Boolean(initial);
 
@@ -44,11 +48,12 @@ export default function ServiceCard({
           )}
           <div className="min-w-0 flex-1 text-left">
             <div className="text-[11px] uppercase text-white/50" style={{ letterSpacing: ".16em" }}>
-              Servicio
+              {ui.serviceLabel}
             </div>
             <div className="mt-0.5 truncate font-serif text-[19px] text-white">{title}</div>
             <div className="mt-0.5 text-[12.5px] text-white/70">
-              Desde ${priceFrom.toLocaleString("en-US")}
+              {ui.priceFromLabel}
+              {priceFrom.toLocaleString("en-US")}
             </div>
           </div>
         </div>
@@ -59,7 +64,7 @@ export default function ServiceCard({
           className="mt-4 w-full rounded-full border-none py-2.5 text-[13px] font-semibold text-[#141210]"
           style={{ background: "#fff" }}
         >
-          {configured ? "Configurado ✓ — Editar" : "Add to Cart"}
+          {configured ? ui.configuredEdit : ui.addToCartBtn}
         </button>
       </div>
 

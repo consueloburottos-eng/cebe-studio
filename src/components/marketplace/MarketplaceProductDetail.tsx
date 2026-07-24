@@ -1,13 +1,22 @@
+"use client";
+
 import Link from "next/link";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { localizeProject, localizeProjects, t } from "@/lib/i18n";
 
 type MarketplaceProductDetailProps = {
   project: Project;
   suggestions: Project[];
 };
 
-export default function MarketplaceProductDetail({ project, suggestions }: MarketplaceProductDetailProps) {
+export default function MarketplaceProductDetail({ project: rawProject, suggestions: rawSuggestions }: MarketplaceProductDetailProps) {
+  const [lang] = useSiteLanguage();
+  const ui = t("saas", lang);
+  const mk = t("marketplace", lang);
+  const project = localizeProject(rawProject, lang);
+  const suggestions = localizeProjects(rawSuggestions, lang);
   return (
     <div className="min-h-dvh" style={{ background: "var(--mk-bg)", color: "var(--mk-tx)" }}>
       <div className="flex items-center justify-between px-6 py-6 sm:px-8">
@@ -16,7 +25,7 @@ export default function MarketplaceProductDetail({ project, suggestions }: Marke
           className="font-sans text-[13px] no-underline"
           style={{ color: "var(--mk-tx)" }}
         >
-          ✕ Cerrar
+          {mk.closeX}
         </Link>
         <span
           className="font-serif text-[15px]"
@@ -59,11 +68,11 @@ export default function MarketplaceProductDetail({ project, suggestions }: Marke
           className="mt-8 flex flex-wrap gap-8 border-t border-b py-6"
           style={{ borderColor: "var(--mk-hr)" }}
         >
-          <Meta label="Categoría" value={project.category} />
-          <Meta label="Cliente" value={project.client} />
-          <Meta label="Rol" value={project.role} />
-          <Meta label="Año" value={project.year} />
-          <Meta label="Resultado" value={project.result} accent />
+          <Meta label={mk.category} value={project.category} />
+          <Meta label={ui.client} value={project.client} />
+          <Meta label={ui.role} value={project.role} />
+          <Meta label={ui.year} value={project.year} />
+          <Meta label={ui.result} value={project.result} accent />
         </div>
 
         {suggestions.length > 0 && (
@@ -72,7 +81,7 @@ export default function MarketplaceProductDetail({ project, suggestions }: Marke
               className="font-serif text-[19px] italic"
               style={{ color: "var(--mk-tx)" }}
             >
-              También te puede interesar…
+              {mk.alsoInterested}
             </div>
             <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
               {suggestions.map((s) => (

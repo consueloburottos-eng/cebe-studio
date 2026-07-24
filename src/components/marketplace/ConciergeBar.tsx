@@ -1,5 +1,8 @@
 "use client";
 
+import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { t } from "@/lib/i18n";
+
 type ConciergeBarProps = {
   value: string;
   onChange: (v: string) => void;
@@ -21,6 +24,8 @@ export default function ConciergeBar({
   id,
   className = "",
 }: ConciergeBarProps) {
+  const [lang] = useSiteLanguage();
+  const ui = t("marketplace", lang);
   return (
     <div className={className}>
       <div
@@ -48,7 +53,7 @@ export default function ConciergeBar({
           <button
             type="button"
             onClick={onClear}
-            title="Limpiar"
+            title={ui.clear}
             className="flex h-10 w-10 flex-none items-center justify-center rounded-full border text-sm"
             style={{ borderColor: "rgba(255,255,255,.25)", background: "transparent", color: "var(--mk-tx)" }}
           >
@@ -58,7 +63,7 @@ export default function ConciergeBar({
         <button
           type="button"
           onClick={onSubmit}
-          title="Enviar"
+          title={ui.send}
           className="flex h-10 w-10 flex-none items-center justify-center rounded-full border-none text-base"
           style={{ background: "var(--mk-amber)", color: "#141210" }}
         >
