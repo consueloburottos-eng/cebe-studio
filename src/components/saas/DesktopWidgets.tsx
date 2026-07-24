@@ -162,11 +162,11 @@ export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void 
           {ui.bookCall}
         </div>
       </button>
-      </div>
 
-      <div className="w-full sm:w-[380px]">
+      <div className="w-full sm:mt-[104px] sm:w-[340px]">
         <SkillsRadar />
       </div>
+    </div>
     </div>
   );
 }
