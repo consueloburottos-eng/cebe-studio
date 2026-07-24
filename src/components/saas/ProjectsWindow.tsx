@@ -140,16 +140,13 @@ export default function ProjectsWindow({ projects: rawProjects, onClose }: Proje
                     </div>
                     <div className="px-3.5 pt-3 pb-3.5">
                       <div className="flex items-baseline justify-between gap-2">
-                        <span className="text-sm font-bold">{p.title}</span>
+                        <span className="text-sm font-bold uppercase">{p.title}</span>
                         <span className="font-mono text-[11px]" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
                           {p.year}
                         </span>
                       </div>
                       <div className="mt-1 text-[11.5px]" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
                         {p.category}
-                      </div>
-                      <div className="mt-2 text-[11.5px] font-semibold" style={{ color: "var(--os-accent)" }}>
-                        {p.result}
                       </div>
                     </div>
                   </button>
