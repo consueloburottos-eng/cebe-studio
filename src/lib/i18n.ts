@@ -109,7 +109,13 @@ export const UI = {
   },
   saas: {
     es: {
-      menu: { file: "Archivo", edit: "Edición", go: "Ir", window: "Ventana", help: "Ayuda", available: "Disponible" },
+      menu: {
+        overview: "Overview",
+        projects: "Projects",
+        skills: "Skills",
+        contact: "Contacto",
+        available: "Disponible",
+      },
       years: "Años",
       yearsSub: "de experiencia",
       projects: "Proyectos",
@@ -150,7 +156,13 @@ export const UI = {
       close: "Cerrar",
     },
     en: {
-      menu: { file: "File", edit: "Edit", go: "Go", window: "Window", help: "Help", available: "Available" },
+      menu: {
+        overview: "Overview",
+        projects: "Projects",
+        skills: "Skills",
+        contact: "Contact",
+        available: "Available",
+      },
       years: "Years",
       yearsSub: "of experience",
       projects: "Projects",

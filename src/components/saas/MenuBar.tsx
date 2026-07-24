@@ -4,7 +4,14 @@ import { useEffect, useState } from "react";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
 
-export default function MenuBar() {
+type MenuBarProps = {
+  onOverview: () => void;
+  onProjects: () => void;
+  onSkills: () => void;
+  onContact: () => void;
+};
+
+export default function MenuBar({ onOverview, onProjects, onSkills, onContact }: MenuBarProps) {
   const [lang] = useSiteLanguage();
   const ui = t("saas", lang);
   const [now, setNow] = useState<Date | null>(null);
@@ -41,21 +48,38 @@ export default function MenuBar() {
           </svg>
           CEBE:STUDIO
         </span>
-        <span className="hidden font-medium sm:inline" style={{ color: "var(--os-mut)" }}>
-          {ui.menu.file}
-        </span>
-        <span className="hidden font-medium sm:inline" style={{ color: "var(--os-mut)" }}>
-          {ui.menu.edit}
-        </span>
-        <span className="hidden font-medium sm:inline" style={{ color: "var(--os-mut)" }}>
-          {ui.menu.go}
-        </span>
-        <span className="hidden font-medium md:inline" style={{ color: "var(--os-mut)" }}>
-          {ui.menu.window}
-        </span>
-        <span className="hidden font-medium md:inline" style={{ color: "var(--os-mut)" }}>
-          {ui.menu.help}
-        </span>
+        <button
+          type="button"
+          onClick={onOverview}
+          className="hidden border-none bg-transparent p-0 font-medium sm:inline"
+          style={{ color: "var(--os-mut)" }}
+        >
+          {ui.menu.overview}
+        </button>
+        <button
+          type="button"
+          onClick={onProjects}
+          className="hidden border-none bg-transparent p-0 font-medium sm:inline"
+          style={{ color: "var(--os-mut)" }}
+        >
+          {ui.menu.projects}
+        </button>
+        <button
+          type="button"
+          onClick={onSkills}
+          className="hidden border-none bg-transparent p-0 font-medium sm:inline"
+          style={{ color: "var(--os-mut)" }}
+        >
+          {ui.menu.skills}
+        </button>
+        <button
+          type="button"
+          onClick={onContact}
+          className="hidden border-none bg-transparent p-0 font-medium md:inline"
+          style={{ color: "var(--os-mut)" }}
+        >
+          {ui.menu.contact}
+        </button>
       </div>
       <div className="flex flex-none items-center gap-4 text-[12.5px]" style={{ color: "var(--os-mut)" }}>
         <span className="hidden items-center gap-1.5 sm:flex">

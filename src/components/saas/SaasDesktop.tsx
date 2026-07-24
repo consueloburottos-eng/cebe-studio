@@ -50,7 +50,12 @@ export default function SaasDesktop() {
           className="pointer-events-none absolute -bottom-[180px] left-[16%] h-[520px] w-[520px] rounded-full"
           style={{ background: "radial-gradient(circle,rgba(150,90,120,.09),transparent 70%)" }}
         />
-        <MenuBar />
+        <MenuBar
+          onOverview={() => setWin(null)}
+          onProjects={() => setWin("projects")}
+          onSkills={() => openAbout("about")}
+          onContact={() => openAbout("contacto")}
+        />
         <DesktopWidgets onBookCall={() => setBookOpen(true)} />
         <DesktopIcons onOpenCV={() => openAbout("about")} onOpenProjects={() => setWin("projects")} />
         <Dock
