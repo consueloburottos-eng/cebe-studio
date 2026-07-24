@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Project } from "@/data/projects";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
-import { localizeProjects, t } from "@/lib/i18n";
+import { localizeProjects, t, titleCase } from "@/lib/i18n";
 
 export type NoteId = "about" | "experiencia" | "servicios" | "contacto";
 
@@ -159,7 +159,7 @@ export default function NotesWindow({
                     style={{ border: "1px solid var(--os-hr)", color: "inherit" }}
                   >
                     <div className="flex items-baseline justify-between gap-3">
-                      <span className="text-base font-bold capitalize">{p.title}</span>
+                      <span className="text-base font-bold">{titleCase(p.title)}</span>
                       <span className="font-mono text-xs" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
                         {p.year}
                       </span>
@@ -195,7 +195,7 @@ export default function NotesWindow({
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2.5">
                   <a
-                    href="mailto:consuelo.burotto.s@gmail.com"
+                    href={`mailto:consuelo.burotto.s@gmail.com?subject=${encodeURIComponent(lang === "en" ? "Contact from CEBE:STUDIO" : "Contacto desde CEBE:STUDIO")}`}
                     className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-bold no-underline"
                     style={{ background: "var(--os-tx)", color: "var(--os-win)" }}
                   >

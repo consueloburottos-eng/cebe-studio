@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
-import { localizeProjects, t } from "@/lib/i18n";
+import { localizeProjects, t, titleCase } from "@/lib/i18n";
 
 type ProjectsWindowProps = {
   projects: Project[];
@@ -97,7 +97,7 @@ export default function ProjectsWindow({ projects: rawProjects, onClose }: Proje
                 key={p.slug}
                 type="button"
                 onClick={() => setSelectedSlug(p.slug)}
-                className="mb-0.5 flex w-full items-center gap-2.5 rounded-lg border-none px-2.5 py-2 text-left font-sans text-[13px] capitalize"
+                className="mb-0.5 flex w-full items-center gap-2.5 rounded-lg border-none px-2.5 py-2 text-left font-sans text-[13px]"
                 style={{
                   background: selectedSlug === p.slug ? "rgba(110,124,255,.16)" : "transparent",
                   color:
@@ -109,7 +109,7 @@ export default function ProjectsWindow({ projects: rawProjects, onClose }: Proje
                   className="h-1.5 w-1.5 flex-none rounded-sm"
                   style={{ background: "var(--os-accent)" }}
                 />
-                {p.title}
+                {titleCase(p.title)}
               </button>
             ))}
           </div>
@@ -118,11 +118,18 @@ export default function ProjectsWindow({ projects: rawProjects, onClose }: Proje
             {!selected ? (
               <div className="grid grid-cols-2 gap-4 p-5 sm:grid-cols-3">
                 {filtered.map((p) => (
-                  <button
+                  <div
                     key={p.slug}
-                    type="button"
+                    role="button"
+                    tabIndex={0}
                     onClick={() => setSelectedSlug(p.slug)}
-                    className="overflow-hidden rounded-xl border-none p-0 text-left font-sans"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setSelectedSlug(p.slug);
+                      }
+                    }}
+                    className="cursor-pointer overflow-hidden rounded-xl p-0 text-left font-sans"
                     style={{
                       background: "rgba(var(--os-sfrgb),.04)",
                       border: "1px solid var(--os-hr)",
@@ -140,7 +147,7 @@ export default function ProjectsWindow({ projects: rawProjects, onClose }: Proje
                     </div>
                     <div className="px-3.5 pt-3 pb-3.5">
                       <div className="flex items-baseline justify-between gap-2">
-                        <span className="text-sm font-bold capitalize">{p.title}</span>
+                        <span className="text-sm font-bold">{titleCase(p.title)}</span>
                         <span className="font-mono text-[11px]" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
                           {p.year}
                         </span>
@@ -149,7 +156,7 @@ export default function ProjectsWindow({ projects: rawProjects, onClose }: Proje
                         {p.category}
                       </div>
                     </div>
-                  </button>
+                  </div>
                 ))}
               </div>
             ) : (
@@ -174,8 +181,8 @@ export default function ProjectsWindow({ projects: rawProjects, onClose }: Proje
                   />
                 </div>
                 <div className="mt-4.5 flex items-baseline justify-between gap-3">
-                  <span className="text-[26px] font-bold tracking-[-0.01em] capitalize" style={{ color: "var(--os-tx)" }}>
-                    {selected.title}
+                  <span className="text-[26px] font-bold tracking-[-0.01em]" style={{ color: "var(--os-tx)" }}>
+                    {titleCase(selected.title)}
                   </span>
                   <span className="font-mono text-xs" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
                     {selected.category}
@@ -216,7 +223,7 @@ export default function ProjectsWindow({ projects: rawProjects, onClose }: Proje
           {selected ? (
             <>
               {" / "}
-              <span className="capitalize">{selected.title}</span>
+              {titleCase(selected.title)}
             </>
           ) : (
             ""

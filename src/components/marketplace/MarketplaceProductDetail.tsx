@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
-import { localizeProject, localizeProjects, t } from "@/lib/i18n";
+import { localizeProject, localizeProjects, t, titleCase } from "@/lib/i18n";
 
 type MarketplaceProductDetailProps = {
   project: Project;
@@ -50,8 +50,8 @@ export default function MarketplaceProductDetail({ project: rawProject, suggesti
         </div>
 
         <div className="mt-9 max-w-[70ch]">
-          <div className="font-serif text-[clamp(32px,5vw,52px)] italic capitalize" style={{ color: "var(--mk-tx)" }}>
-            {project.title}
+          <div className="font-serif text-[clamp(32px,5vw,52px)] italic" style={{ color: "var(--mk-tx)" }}>
+            {titleCase(project.title)}
           </div>
           <div
             className="mt-2.5 text-[12.5px]"
@@ -97,8 +97,8 @@ export default function MarketplaceProductDetail({ project: rawProject, suggesti
                     uploadPath={`/projects/${assetFolder(s)}/cover`}
                   />
                   </div>
-                  <div className="mt-3 font-serif text-[17px] italic capitalize" style={{ color: "var(--mk-tx)" }}>
-                    {s.title}
+                  <div className="mt-3 font-serif text-[17px] italic" style={{ color: "var(--mk-tx)" }}>
+                    {titleCase(s.title)}
                   </div>
                   <div
                     className="mt-1 text-[11px]"

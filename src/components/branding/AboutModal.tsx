@@ -399,14 +399,21 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
             <p className="mt-4 max-w-[46ch] text-[14.5px] leading-[1.6] text-[var(--cb-muted)]">
               {ui.bookBody}
             </p>
-            <div className="mt-[26px]">
+            <div className="mt-[26px] flex flex-wrap items-center gap-2.5">
+              <a
+                href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(ui.mailSubject)}&body=${encodeURIComponent(ui.mailBody)}`}
+                className="inline-flex items-center gap-2 rounded-full border-none px-[22px] py-[13px] font-sans text-[13.5px] font-bold no-underline"
+                style={{ background: "var(--cb-cta-bg)", color: "var(--cb-cta-text)" }}
+              >
+                {ui.sendMessage} <span>→</span>
+              </a>
               <button
                 type="button"
                 onClick={handleCopy}
-                className="inline-flex items-center gap-2 rounded-full border-none px-[22px] py-[13px] font-sans text-[13.5px] font-bold"
-                style={{ background: "var(--cb-cta-bg)", color: "var(--cb-cta-text)" }}
+                className="inline-flex items-center gap-2 rounded-full border px-[22px] py-[13px] font-sans text-[13.5px] font-semibold"
+                style={{ borderColor: "var(--cb-muted)", background: "transparent", color: "inherit" }}
               >
-                {copied ? ui.copied : CONTACT_EMAIL} <span>⧉</span>
+                {copied ? ui.copied : ui.copyEmail} <span>⧉</span>
               </button>
             </div>
           </div>

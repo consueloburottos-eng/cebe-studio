@@ -26,6 +26,14 @@ export function localizeProjects(projects: Project[], lang: Lang): Project[] {
   return projects.map((p) => localizeProject(p, lang));
 }
 
+// Project titles are stored lowercase ("talent capital"). CSS
+// text-transform:capitalize renders this inconsistently depending on
+// surrounding DOM (e.g. breaks when preceded by other inline text), so we
+// title-case the string itself instead of relying on CSS.
+export function titleCase(str: string): string {
+  return str.replace(/\p{L}[\p{L}\p{M}]*/gu, (word) => word[0].toUpperCase() + word.slice(1));
+}
+
 // Static UI copy shared across Branding/SaaS/Marketplace. Keyed by section so
 // each component only pulls in what it needs: `t("nav", lang).about`.
 export const UI = {
@@ -87,6 +95,10 @@ export const UI = {
       bookHeadline: "let's build something",
       bookBody: "Cuéntame sobre tu proyecto de identidad, producto o experiencia. Respondo en 24–48 h.",
       copied: "Copiado ✓",
+      sendMessage: "Enviar mensaje",
+      copyEmail: "Copiar email",
+      mailSubject: "Contacto desde CEBE:STUDIO",
+      mailBody: "Hola Consuelo, quiero contarte sobre mi proyecto...",
       bio: "UX/UI Lead con 8 años de experiencia diseñando plataformas SaaS complejas y sistemas de diseño escalables. He liderado el diseño de punta a punta de plataformas de desarrollo laboral y fintech, traduciendo research de usuarios en experiencias intuitivas — con research, journey mapping y prototipado en Figma que se entrega listo para desarrollo.",
     },
     en: {
@@ -104,6 +116,10 @@ export const UI = {
       bookHeadline: "let's build something",
       bookBody: "Tell me about your identity, product, or experience project. I reply within 24–48 h.",
       copied: "Copied ✓",
+      sendMessage: "Send message",
+      copyEmail: "Copy email",
+      mailSubject: "Contact from CEBE:STUDIO",
+      mailBody: "Hi Consuelo, I wanted to tell you about my project...",
       bio: "UX/UI Lead with 8 years of experience designing complex SaaS platforms and scalable design systems. I've led end-to-end design for workforce-development and fintech platforms, translating user research into intuitive experiences — with research, journey mapping, and Figma prototyping delivered dev-ready.",
     },
   },

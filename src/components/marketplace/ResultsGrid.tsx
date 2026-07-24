@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
+import { titleCase } from "@/lib/i18n";
 
 export default function ResultsGrid({ results }: { results: Project[] }) {
   return (
@@ -26,8 +27,8 @@ export default function ResultsGrid({ results }: { results: Project[] }) {
               fit="natural"
             />
           </div>
-          <div className="mt-3.5 text-[17px] capitalize" style={{ color: "var(--mk-tx)" }}>
-            {p.title}
+          <div className="mt-3.5 text-[17px]" style={{ color: "var(--mk-tx)" }}>
+            {titleCase(p.title)}
           </div>
           <div
             className="mt-1 text-xs"
