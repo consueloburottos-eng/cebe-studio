@@ -26,14 +26,7 @@ export default function Dock({ active, onHome, onProjects, onAbout, onCV, onCont
   ];
 
   return (
-    <div
-      className="absolute bottom-4 left-1/2 z-40 flex -translate-x-1/2 items-end gap-3 rounded-[20px] px-3.5 py-2.5 backdrop-blur-2xl"
-      style={{
-        background: "rgba(var(--os-sfrgb),.06)",
-        border: "1px solid rgba(var(--os-sfrgb),.12)",
-        boxShadow: "0 20px 50px -20px rgba(0,0,0,.6)",
-      }}
-    >
+    <div className="os-glass absolute bottom-4 left-1/2 z-40 flex -translate-x-1/2 items-end gap-3 rounded-[20px] px-3.5 py-2.5">
       {items.map((d, i) => {
         const isActive = d.id === active;
         return (

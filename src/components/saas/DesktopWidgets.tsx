@@ -48,10 +48,7 @@ function Widget({
   children: React.ReactNode;
 }) {
   return (
-    <div
-      className="rounded-2xl px-[18px] py-4 backdrop-blur-xl"
-      style={{ background: "var(--os-sf)", border: "1px solid var(--os-hr)" }}
-    >
+    <div className="os-glass rounded-2xl px-[18px] py-4">
       <div
         className="text-[11px] font-semibold tracking-[0.14em] uppercase"
         style={{ color: "var(--os-mut)" }}
@@ -146,13 +143,8 @@ export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void 
       <button
         type="button"
         onClick={onBookCall}
-        className="flex min-h-[190px] w-full flex-col rounded-2xl px-[18px] py-4 text-left backdrop-blur-xl sm:w-[190px]"
-        style={{
-          background: "var(--os-sf)",
-          border: "1px solid var(--os-hr)",
-          color: "var(--os-tx)",
-          fontFamily: "inherit",
-        }}
+        className="os-glass flex min-h-[190px] w-full flex-col rounded-2xl px-[18px] py-4 text-left sm:w-[190px]"
+        style={{ color: "var(--os-tx)", fontFamily: "inherit" }}
       >
         <div
           className="text-[11px] font-bold tracking-[0.14em] uppercase"

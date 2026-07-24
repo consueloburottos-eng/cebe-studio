@@ -50,15 +50,6 @@ export default function SaasDesktop() {
           className="pointer-events-none absolute -bottom-[180px] left-[16%] h-[520px] w-[520px] rounded-full"
           style={{ background: "radial-gradient(circle,rgba(150,90,120,.09),transparent 70%)" }}
         />
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-          <span
-            className="font-display font-extrabold tracking-[-0.04em] whitespace-nowrap"
-            style={{ fontSize: "clamp(80px,15vw,240px)", color: "rgba(var(--os-txrgb),.028)" }}
-          >
-            CEBE:STUDIO
-          </span>
-        </div>
-
         <MenuBar />
         <DesktopWidgets onBookCall={() => setBookOpen(true)} />
         <DesktopIcons onOpenCV={() => openAbout("about")} onOpenProjects={() => setWin("projects")} />

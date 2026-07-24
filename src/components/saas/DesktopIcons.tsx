@@ -27,10 +27,7 @@ export default function DesktopIcons({ onOpenCV, onOpenProjects }: DesktopIconsP
           className="flex w-[78px] flex-col items-center gap-2 border-none bg-transparent font-sans"
           style={{ color: "var(--os-tx)" }}
         >
-          <span
-            className="flex h-[58px] w-[58px] items-center justify-center rounded-2xl text-[25px] transition-colors"
-            style={{ background: "rgba(var(--os-sfrgb),.07)", border: "1px solid var(--os-hr)" }}
-          >
+          <span className="os-glass flex h-[58px] w-[58px] items-center justify-center rounded-2xl text-[25px] transition-colors">
             {ic.glyph}
           </span>
           <span className="text-xs" style={{ color: "rgba(var(--os-txrgb),.75)" }}>
