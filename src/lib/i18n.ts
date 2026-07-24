@@ -170,6 +170,15 @@ export const UI = {
       result: "Resultado",
       viewFullCaseStudy: "Ver estudio de caso completo →",
       close: "Cerrar",
+      radarTitle: "Perfil de Expertise",
+      radarAxes: [
+        "Product Design",
+        "UX Research",
+        "Design Systems",
+        "Dirección de Arte",
+        "Estrategia",
+        "Conversational UX",
+      ],
     },
     en: {
       menu: {
@@ -217,6 +226,15 @@ export const UI = {
       result: "Result",
       viewFullCaseStudy: "View full case study →",
       close: "Close",
+      radarTitle: "Expertise Profile",
+      radarAxes: [
+        "Product Design",
+        "UX Research",
+        "Design Systems",
+        "Art Direction",
+        "Strategy",
+        "Conversational UX",
+      ],
     },
   },
   marketplace: {

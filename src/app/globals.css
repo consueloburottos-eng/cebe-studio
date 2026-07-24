@@ -275,6 +275,20 @@ body {
   transform: translateY(-8px) scale(1.05);
 }
 
+@keyframes radar-in {
+  from {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.radar-shape {
+  animation: radar-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cb-letter,
   .cb-deck-intro,

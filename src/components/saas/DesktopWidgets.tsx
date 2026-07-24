@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
+import SkillsRadar from "./SkillsRadar";
 
 const SKILLS = [
   "Figma",
@@ -79,7 +80,8 @@ export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void 
   const date = today?.date ?? "";
 
   return (
-    <div className="absolute top-12 right-4 bottom-24 left-4 z-20 flex max-w-[calc(100%-32px)] flex-col gap-4 overflow-y-auto pb-4 sm:right-auto sm:bottom-auto sm:max-h-[calc(100%-96px)] sm:flex-row sm:items-start sm:overflow-visible sm:pb-0 sm:left-6">
+    <div className="absolute top-12 right-4 bottom-24 left-4 z-20 flex max-w-[calc(100%-32px)] flex-col gap-4 overflow-y-auto pb-4 sm:right-auto sm:bottom-auto sm:max-h-[calc(100%-96px)] sm:overflow-visible sm:pb-0 sm:left-6">
+    <div className="flex w-full flex-col gap-4 sm:flex-row sm:items-start">
       <div className="flex w-full flex-col gap-4 sm:w-[280px]">
         <div className="flex gap-4">
           <div className="flex-1">
@@ -160,6 +162,11 @@ export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void 
           {ui.bookCall}
         </div>
       </button>
+      </div>
+
+      <div className="w-full sm:w-[380px]">
+        <SkillsRadar />
+      </div>
     </div>
   );
 }
