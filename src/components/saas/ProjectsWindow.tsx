@@ -9,15 +9,16 @@ import { localizeProjects, t, titleCase } from "@/lib/i18n";
 type ProjectsWindowProps = {
   projects: Project[];
   onClose: () => void;
+  initialSlug?: string | null;
 };
 
-export default function ProjectsWindow({ projects: rawProjects, onClose }: ProjectsWindowProps) {
+export default function ProjectsWindow({ projects: rawProjects, onClose, initialSlug }: ProjectsWindowProps) {
   const [lang] = useSiteLanguage();
   const ui = t("saas", lang);
   const pd = t("projectDetail", lang);
   const projects = localizeProjects(rawProjects, lang);
   const [query, setQuery] = useState("");
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const [selectedSlug, setSelectedSlug] = useState<string | null>(initialSlug ?? null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();

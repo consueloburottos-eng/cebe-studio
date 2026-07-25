@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
 import SkillsRadar from "./SkillsRadar";
+import RecommendedProject from "./RecommendedProject";
 
 const SKILLS = [
   "Figma",
@@ -61,7 +62,13 @@ function Widget({
   );
 }
 
-export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void }) {
+export default function DesktopWidgets({
+  onBookCall,
+  onOpenProject,
+}: {
+  onBookCall: () => void;
+  onOpenProject: (slug: string) => void;
+}) {
   const [lang] = useSiteLanguage();
   const ui = t("saas", lang);
   const skills = lang === "en" ? SKILLS_EN : SKILLS;
@@ -140,6 +147,8 @@ export default function DesktopWidgets({ onBookCall }: { onBookCall: () => void 
             ))}
           </ul>
         </Widget>
+
+        <RecommendedProject onOpen={onOpenProject} />
       </div>
 
       <button

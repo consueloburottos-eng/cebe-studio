@@ -19,10 +19,21 @@ export default function SaasDesktop() {
   const [win, setWin] = useState<SaasWindow>(null);
   const [note, setNote] = useState<NoteId>("about");
   const [bookOpen, setBookOpen] = useState(false);
+  const [projectSlug, setProjectSlug] = useState<string | null>(null);
 
   function openAbout(n: NoteId = "about") {
     setNote(n);
     setWin("about");
+  }
+
+  function openProject(slug: string) {
+    setProjectSlug(slug);
+    setWin("projects");
+  }
+
+  function openProjects() {
+    setProjectSlug(null);
+    setWin("projects");
   }
 
   return (
@@ -52,23 +63,30 @@ export default function SaasDesktop() {
         />
         <MenuBar
           onOverview={() => setWin(null)}
-          onProjects={() => setWin("projects")}
+          onProjects={openProjects}
           onSkills={() => openAbout("about")}
           onContact={() => openAbout("contacto")}
         />
-        <DesktopWidgets onBookCall={() => setBookOpen(true)} />
-        <DesktopIcons onOpenCV={() => openAbout("about")} onOpenProjects={() => setWin("projects")} />
+        <DesktopWidgets onBookCall={() => setBookOpen(true)} onOpenProject={openProject} />
+        <DesktopIcons onOpenCV={() => openAbout("about")} onOpenProjects={openProjects} />
         <Dock
           active={win}
           onHome={() => setWin(null)}
-          onProjects={() => setWin("projects")}
+          onProjects={openProjects}
           onAbout={() => openAbout("about")}
           onCV={() => openAbout("about")}
           onContacto={() => openAbout("contacto")}
         />
 
         {win === "projects" && (
-          <ProjectsWindow projects={projects} onClose={() => setWin(null)} />
+          <ProjectsWindow
+            projects={projects}
+            onClose={() => {
+              setWin(null);
+              setProjectSlug(null);
+            }}
+            initialSlug={projectSlug}
+          />
         )}
         {win === "about" && (
           <NotesWindow

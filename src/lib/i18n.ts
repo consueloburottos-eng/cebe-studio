@@ -179,6 +179,9 @@ export const UI = {
         "Estrategia",
         "Conversational UX",
       ],
+      recommended: "Recomendado",
+      recommendedTitle: "Último proyecto",
+      viewProject: "Ver proyecto →",
     },
     en: {
       menu: {
@@ -235,6 +238,9 @@ export const UI = {
         "Strategy",
         "Conversational UX",
       ],
+      recommended: "Recommended",
+      recommendedTitle: "Latest project",
+      viewProject: "View project →",
     },
   },
   marketplace: {
