@@ -54,12 +54,12 @@ export default function SkillsRadar() {
   const count = axes.length;
 
   return (
-    <div className="os-glass rounded-2xl px-[18px] py-4">
+    <div className="os-glass flex h-full flex-col rounded-2xl px-[18px] py-4">
       <div className="text-[11px] font-semibold tracking-[0.14em] uppercase" style={{ color: "var(--os-mut)" }}>
         {ui.radarTitle}
       </div>
 
-      <div className="mt-3 flex items-center justify-center">
+      <div className="mt-3 flex flex-1 items-center justify-center">
         <svg
           width={SIZE}
           height={SIZE}
