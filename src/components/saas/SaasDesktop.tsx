@@ -8,7 +8,6 @@ import ModeSwitcher from "@/components/ModeSwitcher";
 import BookModal from "@/components/branding/BookModal";
 import MenuBar from "./MenuBar";
 import DesktopWidgets from "./DesktopWidgets";
-import DesktopIcons from "./DesktopIcons";
 import Dock, { SaasWindow } from "./Dock";
 import ProjectsWindow from "./ProjectsWindow";
 import NotesWindow, { NoteId } from "./NotesWindow";
@@ -68,7 +67,6 @@ export default function SaasDesktop() {
           onContact={() => openAbout("contacto")}
         />
         <DesktopWidgets onBookCall={() => setBookOpen(true)} onOpenProject={openProject} />
-        <DesktopIcons onOpenCV={() => openAbout("about")} onOpenProjects={openProjects} />
         <Dock
           active={win}
           onHome={() => setWin(null)}
