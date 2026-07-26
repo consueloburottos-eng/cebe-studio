@@ -8,6 +8,7 @@ import RecommendedProject from "./RecommendedProject";
 import AiNativeSkills from "./AiNativeSkills";
 import ConnectCard from "./ConnectCard";
 import ToolIcon from "./ToolIcon";
+import FeaturedExperience from "./FeaturedExperience";
 
 const DISCIPLINES = [
   "Product Design & UX/UI",
@@ -126,6 +127,10 @@ export default function DesktopWidgets({
                 ))}
               </div>
             </Widget>
+
+            <div className="sm:flex-1">
+              <FeaturedExperience />
+            </div>
           </div>
 
           <div className="flex flex-col gap-3.5 sm:flex-row sm:gap-4">
