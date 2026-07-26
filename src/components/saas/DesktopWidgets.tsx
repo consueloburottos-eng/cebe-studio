@@ -9,28 +9,6 @@ import AiNativeSkills from "./AiNativeSkills";
 import ConnectCard from "./ConnectCard";
 import ToolIcon from "./ToolIcon";
 
-const SKILLS = [
-  "Figma",
-  "Design Systems",
-  "UX Research",
-  "Prototipado",
-  "Conversational UX",
-  "Dirección de arte",
-  "Dirección editorial",
-  "Storytelling",
-];
-
-const SKILLS_EN = [
-  "Figma",
-  "Design Systems",
-  "UX Research",
-  "Prototyping",
-  "Conversational UX",
-  "Art Direction",
-  "Editorial Direction",
-  "Storytelling",
-];
-
 const DISCIPLINES = [
   "Product Design & UX/UI",
   "Diseño de experiencia agéntica",
@@ -45,7 +23,6 @@ const DISCIPLINES_EN = [
   "Editorial Direction",
 ];
 
-// Tools/software, not capabilities — kept distinct from SKILLS above.
 const STACK = ["Figma", "FigJam", "Notion", "Slack", "Maze", "Miro", "Zeplin", "Claude"];
 
 function Widget({
@@ -79,7 +56,6 @@ export default function DesktopWidgets({
 }) {
   const [lang] = useSiteLanguage();
   const ui = t("saas", lang);
-  const skills = lang === "en" ? SKILLS_EN : SKILLS;
   const disciplines = lang === "en" ? DISCIPLINES_EN : DISCIPLINES;
   const [today, setToday] = useState<{ day: string; date: number } | null>(null);
 
@@ -134,24 +110,6 @@ export default function DesktopWidgets({
           </div>
 
           <div className="flex flex-col gap-3.5 sm:flex-row sm:gap-4">
-            <Widget label={ui.skills} className="sm:flex-1">
-              <div className="mt-3 flex flex-wrap gap-2">
-                {skills.map((s) => (
-                  <span
-                    key={s}
-                    className="rounded-full px-3 py-1.5 text-xs font-medium"
-                    style={{
-                      background: "rgba(var(--os-sfrgb),.06)",
-                      border: "1px solid var(--os-hr)",
-                      color: "rgba(var(--os-txrgb),.85)",
-                    }}
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </Widget>
-
             <Widget label={ui.designStack} className="sm:flex-1">
               <div className="mt-3 grid grid-cols-3 gap-2">
                 {STACK.map((s) => (
