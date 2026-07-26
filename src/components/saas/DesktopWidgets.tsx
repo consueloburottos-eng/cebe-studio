@@ -6,7 +6,6 @@ import { t } from "@/lib/i18n";
 import SkillsRadar from "./SkillsRadar";
 import RecommendedProject from "./RecommendedProject";
 import AiNativeSkills from "./AiNativeSkills";
-import Roadmap from "./Roadmap";
 import ConnectCard from "./ConnectCard";
 import ToolIcon from "./ToolIcon";
 
@@ -192,7 +191,6 @@ export default function DesktopWidgets({
         <div className="flex w-full flex-col gap-2 sm:w-[260px] sm:flex-none">
           <SkillsRadar />
           <AiNativeSkills />
-          <Roadmap />
           <ConnectCard onBookCall={onBookCall} />
         </div>
       </div>
