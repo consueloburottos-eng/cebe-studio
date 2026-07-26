@@ -4,11 +4,11 @@ import { EXPERIENCE, EXPERIENCE_EN } from "@/data/experience";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
 
-// Condensed to the four roles that read cleanly as a career timeline —
-// same source data as Branding's AboutModal, just skipping the short
-// freelance stint (Alba Studio) to keep this glanceable.
+// Condensed to the three most recent roles that read cleanly as a career
+// timeline — same source data as Branding's AboutModal, just trimmed to
+// keep this glanceable.
 function pickTimeline(entries: typeof EXPERIENCE) {
-  return [...entries.slice(0, 3), entries[entries.length - 1]];
+  return entries.slice(0, 3);
 }
 
 export default function FeaturedExperience() {
@@ -30,15 +30,11 @@ export default function FeaturedExperience() {
         <div className="flex flex-col gap-3">
           {entries.map((entry, i) => {
             const isCurrent = i === 0;
-            const isEarliest = i === entries.length - 1;
             return (
               <div key={entry.company} className="relative flex gap-2.5">
                 <span
                   className="relative z-[1] mt-[3px] h-[10px] w-[10px] flex-none rounded-full"
-                  style={{
-                    background: isCurrent ? "#61c554" : isEarliest ? "var(--os-win)" : "var(--os-accent)",
-                    border: isEarliest ? "1.5px solid var(--os-mut)" : "none",
-                  }}
+                  style={{ background: isCurrent ? "#61c554" : "var(--os-accent)" }}
                 />
                 <div className="min-w-0">
                   <div className="text-[12.5px] font-bold" style={{ color: "var(--os-tx)" }}>
