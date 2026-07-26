@@ -8,6 +8,7 @@ import RecommendedProject from "./RecommendedProject";
 import AiNativeSkills from "./AiNativeSkills";
 import Roadmap from "./Roadmap";
 import ConnectCard from "./ConnectCard";
+import ToolIcon from "./ToolIcon";
 
 const SKILLS = [
   "Figma",
@@ -153,19 +154,18 @@ export default function DesktopWidgets({
             </Widget>
 
             <Widget label={ui.designStack} className="sm:flex-1">
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="mt-3 grid grid-cols-3 gap-2">
                 {STACK.map((s) => (
-                  <span
+                  <div
                     key={s}
-                    className="rounded-full px-3 py-1.5 text-xs font-medium"
-                    style={{
-                      background: "rgba(var(--os-sfrgb),.06)",
-                      border: "1px solid var(--os-accent)",
-                      color: "rgba(var(--os-txrgb),.85)",
-                    }}
+                    className="flex items-center gap-1.5 rounded-lg px-2 py-1.5"
+                    style={{ border: "1px solid var(--os-hr)", background: "rgba(var(--os-sfrgb),.03)" }}
                   >
-                    {s}
-                  </span>
+                    <ToolIcon name={s} />
+                    <span className="truncate text-[11px] font-medium" style={{ color: "rgba(var(--os-txrgb),.85)" }}>
+                      {s}
+                    </span>
+                  </div>
                 ))}
               </div>
             </Widget>
