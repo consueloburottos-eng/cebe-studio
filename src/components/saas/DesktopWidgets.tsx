@@ -111,22 +111,9 @@ export default function DesktopWidgets({
           </div>
 
           <div className="flex flex-col gap-3.5 sm:flex-row sm:gap-4">
-            <Widget label={ui.designStack} className="sm:flex-1">
-              <div className="mt-3 grid grid-cols-3 gap-2">
-                {STACK.map((s) => (
-                  <div
-                    key={s}
-                    className="flex items-center gap-1.5 rounded-lg px-2 py-1.5"
-                    style={{ border: "1px solid var(--os-hr)", background: "rgba(var(--os-sfrgb),.03)" }}
-                  >
-                    <ToolIcon name={s} />
-                    <span className="truncate text-[11px] font-medium" style={{ color: "rgba(var(--os-txrgb),.85)" }}>
-                      {s}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </Widget>
+            <div className="sm:flex-1">
+              <RecommendedProject onOpen={onOpenProject} />
+            </div>
 
             <div className="sm:flex-1">
               <FeaturedExperience />
@@ -145,9 +132,22 @@ export default function DesktopWidgets({
               </ul>
             </Widget>
 
-            <div className="sm:flex-1">
-              <RecommendedProject onOpen={onOpenProject} />
-            </div>
+            <Widget label={ui.designStack} className="sm:flex-1">
+              <div className="mt-3 grid grid-cols-3 gap-2">
+                {STACK.map((s) => (
+                  <div
+                    key={s}
+                    className="flex items-center gap-1.5 rounded-lg px-2 py-1.5"
+                    style={{ border: "1px solid var(--os-hr)", background: "rgba(var(--os-sfrgb),.03)" }}
+                  >
+                    <ToolIcon name={s} />
+                    <span className="truncate text-[11px] font-medium" style={{ color: "rgba(var(--os-txrgb),.85)" }}>
+                      {s}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </Widget>
           </div>
         </div>
 
