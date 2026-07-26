@@ -10,20 +10,6 @@ import ConnectCard from "./ConnectCard";
 import ToolIcon from "./ToolIcon";
 import FeaturedExperience from "./FeaturedExperience";
 
-const DISCIPLINES = [
-  "Product Design & UX/UI",
-  "Diseño de experiencia agéntica",
-  "Dirección de arte & fotografía conceptual",
-  "Dirección editorial",
-];
-
-const DISCIPLINES_EN = [
-  "Product Design & UX/UI",
-  "Agentic Experience Design",
-  "Art Direction & Conceptual Photography",
-  "Editorial Direction",
-];
-
 const STACK = [
   "Figma",
   "FigJam",
@@ -72,7 +58,6 @@ export default function DesktopWidgets({
 }) {
   const [lang] = useSiteLanguage();
   const ui = t("saas", lang);
-  const disciplines = lang === "en" ? DISCIPLINES_EN : DISCIPLINES;
   const [today, setToday] = useState<{ day: string; date: number } | null>(null);
 
   useEffect(() => {
@@ -136,17 +121,6 @@ export default function DesktopWidgets({
           </div>
 
           <div className="flex flex-col gap-3.5 sm:flex-row sm:gap-4">
-            <Widget label={ui.disciplines} className="sm:flex-1">
-              <ul className="mt-2.5 flex list-none flex-col gap-1.5 p-0 text-[13px]" style={{ color: "var(--os-tx)" }}>
-                {disciplines.map((d) => (
-                  <li key={d} className="flex items-start gap-2">
-                    <span style={{ color: "var(--os-accent)" }}>—</span>
-                    {d}
-                  </li>
-                ))}
-              </ul>
-            </Widget>
-
             <Widget label={ui.designStack} className="sm:flex-1">
               <div className="mt-3 grid grid-cols-3 gap-2">
                 {STACK.map((s) => (
