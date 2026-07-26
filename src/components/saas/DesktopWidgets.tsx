@@ -140,7 +140,7 @@ export default function DesktopWidgets({
           </div>
         </div>
 
-        <div className="flex w-full flex-col gap-2 sm:w-[260px] sm:flex-none">
+        <div className="flex w-full flex-col gap-2 sm:w-[300px] sm:flex-none">
           <SkillsRadar />
           <AiNativeSkills />
           <ConnectCard onBookCall={onBookCall} />
