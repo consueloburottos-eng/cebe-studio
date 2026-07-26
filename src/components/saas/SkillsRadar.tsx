@@ -8,10 +8,10 @@ import { t } from "@/lib/i18n";
 // i18n's `radarAxes` array (same index = same axis).
 const VALUES = [96, 88, 92, 82, 78, 90];
 
-const SIZE = 300;
+const SIZE = 178;
 const CENTER = SIZE / 2;
-const MAX_RADIUS = 66;
-const LABEL_RADIUS = MAX_RADIUS + 30;
+const MAX_RADIUS = 38;
+const LABEL_RADIUS = MAX_RADIUS + 20;
 const RINGS = [0.25, 0.5, 0.75, 1];
 
 function axisPoint(index: number, count: number, radius: number): [number, number] {
@@ -54,12 +54,12 @@ export default function SkillsRadar() {
   const count = axes.length;
 
   return (
-    <div className="os-glass flex h-full flex-col rounded-2xl px-[18px] py-4">
+    <div className="os-glass flex flex-col rounded-2xl px-[16px] py-3">
       <div className="text-[11px] font-semibold tracking-[0.14em] uppercase" style={{ color: "var(--os-mut)" }}>
         {ui.radarTitle}
       </div>
 
-      <div className="mt-3 flex flex-1 items-center justify-center">
+      <div className="mt-2 flex items-center justify-center">
         <svg
           width={SIZE}
           height={SIZE}

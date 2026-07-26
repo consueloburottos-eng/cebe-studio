@@ -266,35 +266,6 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* SaaS dashboard bento grid — single column on mobile (stacked in a
-   sensible reading order), a 4-column layout with the radar chart
-   spanning all three rows on the right once there's room for it. */
-.os-dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-  grid-template-areas:
-    "years"
-    "projects"
-    "book"
-    "skills"
-    "stack"
-    "disc"
-    "rec"
-    "radar";
-}
-@media (min-width: 640px) {
-  .os-dashboard-grid {
-    gap: 16px;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) 300px;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-      "years projects book radar"
-      "skills skills stack radar"
-      "disc disc rec radar";
-  }
-}
-
 .os-dockitem {
   transition:
     transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1),
