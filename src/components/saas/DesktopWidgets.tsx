@@ -24,7 +24,22 @@ const DISCIPLINES_EN = [
   "Editorial Direction",
 ];
 
-const STACK = ["Figma", "FigJam", "Notion", "Slack", "Maze", "Miro", "Zeplin", "Claude"];
+const STACK = [
+  "Figma",
+  "FigJam",
+  "Notion",
+  "Slack",
+  "Maze",
+  "Miro",
+  "Zeplin",
+  "Claude",
+  "UXPilot",
+  "Visily",
+  "Uizard",
+  "ChatGPT",
+  "Gemini",
+  "Voiceflow",
+];
 
 function Widget({
   label,

@@ -73,6 +73,69 @@ const ICONS: Record<string, { bg: string; render: React.ReactNode }> = {
       </svg>
     ),
   },
+  UXPilot: {
+    bg: "#2563EB",
+    render: (
+      <svg width="15" height="15" viewBox="0 0 16 16">
+        <path d="M2 8.6 13.5 2.5l-3.8 11.2-2.2-4.3-3-1.4Z" fill="#fff" />
+      </svg>
+    ),
+  },
+  Visily: {
+    bg: "#6D28D9",
+    render: (
+      <svg width="15" height="15" viewBox="0 0 16 16">
+        <path d="M8 3.5c3.2 0 5.6 2.2 6.5 4.5-.9 2.3-3.3 4.5-6.5 4.5S2.4 10.3 1.5 8c.9-2.3 3.3-4.5 6.5-4.5Z" fill="none" stroke="#fff" strokeWidth="1.3" />
+        <circle cx="8" cy="8" r="1.8" fill="#fff" />
+      </svg>
+    ),
+  },
+  Uizard: {
+    bg: "#EC4899",
+    render: (
+      <svg width="14" height="14" viewBox="0 0 16 16">
+        <path d="M8 1 9.6 6.4 15 8l-5.4 1.6L8 15l-1.6-5.4L1 8l5.4-1.6Z" fill="#fff" />
+      </svg>
+    ),
+  },
+  ChatGPT: {
+    bg: "#10A37F",
+    render: (
+      <svg width="14" height="14" viewBox="0 0 16 16">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <ellipse key={i} cx="8" cy="4.3" rx="1.9" ry="3.1" fill="none" stroke="#fff" strokeWidth="1.1" transform={`rotate(${i * 60} 8 8)`} />
+        ))}
+      </svg>
+    ),
+  },
+  Gemini: {
+    bg: "#1B1B1F",
+    render: (
+      <svg width="15" height="15" viewBox="0 0 16 16">
+        <path
+          d="M8 1.5c.5 3.1 2.4 5 5.5 5.5-3.1.5-5 2.4-5.5 5.5-.5-3.1-2.4-5-5.5-5.5 3.1-.5 5-2.4 5.5-5.5Z"
+          fill="url(#gemGrad)"
+        />
+        <defs>
+          <linearGradient id="gemGrad" x1="0" y1="0" x2="16" y2="16">
+            <stop offset="0%" stopColor="#4C8DF6" />
+            <stop offset="100%" stopColor="#A259FF" />
+          </linearGradient>
+        </defs>
+      </svg>
+    ),
+  },
+  Voiceflow: {
+    bg: "#5C4DFF",
+    render: (
+      <svg width="16" height="16" viewBox="0 0 16 16">
+        <rect x="2.5" y="6" width="1.8" height="4" rx="0.9" fill="#fff" />
+        <rect x="6" y="3" width="1.8" height="10" rx="0.9" fill="#fff" />
+        <rect x="9.5" y="5" width="1.8" height="6" rx="0.9" fill="#fff" />
+        <rect x="13" y="7" width="1.8" height="2" rx="0.9" fill="#fff" />
+      </svg>
+    ),
+  },
 };
 
 export default function ToolIcon({ name }: { name: string }) {
