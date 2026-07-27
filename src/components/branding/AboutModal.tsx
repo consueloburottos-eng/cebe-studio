@@ -300,23 +300,23 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
               </span>
             </div>
 
-            <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row sm:items-center">
-              <TalentRadar
-                axes={SNAPSHOT_DIMENSIONS.map(
-                  ([key]) => ui.snapshotDimensions[key as keyof typeof ui.snapshotDimensions]
-                )}
-                values={SNAPSHOT_DIMENSIONS.map(([, score]) => score)}
-              />
-              <div>
-                <h3 className="m-0 text-[19px] font-extrabold leading-snug">
-                  {ui.snapshotHeadlinePrefix}{" "}
-                  <span style={{ background: "#ffe066", boxDecorationBreak: "clone" }}>
-                    {ui.snapshotHeadlineHighlight}
-                  </span>
-                </h3>
-                <p className="mt-2.5 max-w-[40ch] text-[13px] leading-[1.6] text-[var(--cb-muted)]">
-                  {ui.snapshotSubtext}
-                </p>
+            <div className="mt-4">
+              <h3 className="m-0 text-[19px] font-extrabold leading-snug">
+                {ui.snapshotHeadlinePrefix}{" "}
+                <span style={{ background: "#ffe066", boxDecorationBreak: "clone" }}>
+                  {ui.snapshotHeadlineHighlight}
+                </span>
+              </h3>
+              <p className="mt-2.5 max-w-[52ch] text-[13px] leading-[1.6] text-[var(--cb-muted)]">
+                {ui.snapshotSubtext}
+              </p>
+              <div className="mt-4 flex items-center justify-center">
+                <TalentRadar
+                  axes={SNAPSHOT_DIMENSIONS.map(
+                    ([key]) => ui.snapshotDimensions[key as keyof typeof ui.snapshotDimensions]
+                  )}
+                  values={SNAPSHOT_DIMENSIONS.map(([, score]) => score)}
+                />
               </div>
             </div>
 
