@@ -99,6 +99,18 @@ export const UI = {
         criticalAi: "Uso crítico de IA",
         technicalDepth: "Profundidad técnica",
       },
+      snapshotStrongestLabel: "Dónde eres más fuerte",
+      snapshotScale: "Escala de 5",
+      snapshotHeadlinePrefix: "Una lectura clara de tus fortalezas, liderada por",
+      snapshotHeadlineHighlight: "comunicación.",
+      snapshotSubtext:
+        "En seis dimensiones extraídas de tu conversación, comunicación es la que más se nota.",
+      snapshotEvidenceLabel: "Lo que escuchamos",
+      snapshotEvidenceDimension: "Comunicación",
+      snapshotEvidenceText:
+        "Consuelo comunica su proceso de diseño con claridad, destacando sus interacciones con stakeholders (PMs, CS, CEO) para estructurar la jerarquía.",
+      snapshotEvidenceSignal:
+        "Señal: Respuestas estructuradas y directas que separan con claridad la investigación de usuarios, la fase de diseño y el uso de IA.",
       downloadCV: "Download CV",
       experience: "Experiencia",
       languages: "Idiomas",
@@ -134,6 +146,18 @@ export const UI = {
         criticalAi: "Critical AI usage",
         technicalDepth: "Technical depth",
       },
+      snapshotStrongestLabel: "Where you're strongest",
+      snapshotScale: "Scale of 5",
+      snapshotHeadlinePrefix: "A clear read on your strengths, led by",
+      snapshotHeadlineHighlight: "communication.",
+      snapshotSubtext:
+        "Across six dimensions drawn from your conversation, communication comes through the strongest.",
+      snapshotEvidenceLabel: "What we heard",
+      snapshotEvidenceDimension: "Communication",
+      snapshotEvidenceText:
+        "Consuelo communicates her design process clearly, highlighting her interactions with stakeholders (PMs, CS, CEO) to structure hierarchy.",
+      snapshotEvidenceSignal:
+        "Signal: Structured, direct answers that clearly separate user research, design phase, and AI leverage.",
       downloadCV: "Download CV",
       experience: "Experience",
       languages: "Languages",

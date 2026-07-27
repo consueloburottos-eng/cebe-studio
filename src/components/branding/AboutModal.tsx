@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { projects } from "@/data/projects";
 import { EXPERIENCE, EXPERIENCE_EN } from "@/data/experience";
+import TalentRadar from "./TalentRadar";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
 
@@ -298,6 +299,27 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
                 {ui.snapshotBadge}
               </span>
             </div>
+
+            <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row sm:items-center">
+              <TalentRadar
+                axes={SNAPSHOT_DIMENSIONS.map(
+                  ([key]) => ui.snapshotDimensions[key as keyof typeof ui.snapshotDimensions]
+                )}
+                values={SNAPSHOT_DIMENSIONS.map(([, score]) => score)}
+              />
+              <div>
+                <h3 className="m-0 text-[19px] font-extrabold leading-snug">
+                  {ui.snapshotHeadlinePrefix}{" "}
+                  <span style={{ background: "#ffe066", boxDecorationBreak: "clone" }}>
+                    {ui.snapshotHeadlineHighlight}
+                  </span>
+                </h3>
+                <p className="mt-2.5 max-w-[40ch] text-[13px] leading-[1.6] text-[var(--cb-muted)]">
+                  {ui.snapshotSubtext}
+                </p>
+              </div>
+            </div>
+
             <div className="mt-2.5 rounded-2xl border p-4" style={{ borderColor: "var(--cb-hair)" }}>
               <div className="text-[13.5px] font-bold">{ui.snapshotTagline}</div>
 
@@ -330,7 +352,13 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
                 </div>
               </div>
 
-              <div className="mt-4 flex flex-col gap-2">
+              <div className="mt-5 flex items-center justify-between">
+                <span className="text-[11px] font-bold tracking-[0.1em] uppercase" style={{ color: "var(--cb-muted)" }}>
+                  {ui.snapshotStrongestLabel}
+                </span>
+                <span className="font-mono text-[10.5px] text-[var(--cb-muted)]">{ui.snapshotScale}</span>
+              </div>
+              <div className="mt-2 flex flex-col gap-2">
                 {SNAPSHOT_DIMENSIONS.map(([key, score]) => (
                   <div key={key} className="flex items-center gap-2.5">
                     <span className="w-[140px] flex-none text-[11.5px] text-[var(--cb-muted)]">
@@ -351,6 +379,20 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
                   </div>
                 ))}
               </div>
+            </div>
+
+            <div className="mt-2.5 rounded-2xl p-4" style={{ background: "var(--cb-pill)" }}>
+              <div className="text-[11px] font-bold tracking-[0.1em] uppercase" style={{ color: "var(--cb-muted)" }}>
+                {ui.snapshotEvidenceLabel}
+              </div>
+              <div className="mt-1.5 text-[13.5px] font-bold">{ui.snapshotEvidenceDimension}</div>
+              <p className="mt-2 text-[13px] leading-[1.6] text-[var(--cb-muted)]">{ui.snapshotEvidenceText}</p>
+              <p className="mt-2 text-[13px] leading-[1.6]">
+                <span className="font-bold">{ui.snapshotEvidenceSignal.split(":")[0]}:</span>
+                <span className="underline decoration-[var(--cb-hair)] underline-offset-2 text-[var(--cb-muted)]">
+                  {ui.snapshotEvidenceSignal.split(":").slice(1).join(":")}
+                </span>
+              </p>
             </div>
           </div>
         )}
