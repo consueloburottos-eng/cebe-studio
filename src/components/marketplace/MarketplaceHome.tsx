@@ -390,6 +390,37 @@ export default function MarketplaceHome() {
     window.scrollTo(0, 0);
   }, [mode]);
 
+  // CEBE:STUDIO Assistant (Voiceflow) — lives only in Marketplace mode, since
+  // this mode is the "AI concierge" of the site. Injected on mount / torn
+  // down on unmount so it never follows the visitor into Branding or SaaS.
+  useEffect(() => {
+    const SCRIPT_ID = "voiceflow-widget-script";
+    const w = window as unknown as {
+      voiceflow?: { chat?: { load: (cfg: unknown) => void; close?: () => void; destroy?: () => void } };
+    };
+
+    const script = document.createElement("script");
+    script.id = SCRIPT_ID;
+    script.type = "text/javascript";
+    script.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
+    script.onload = () => {
+      w.voiceflow?.chat?.load({
+        verify: { projectID: "6a6760a952d1ef6a6a48daa4" },
+        url: "https://general-runtime.voiceflow.com",
+        versionID: "production",
+        voice: { url: "https://runtime-api.voiceflow.com" },
+      });
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      w.voiceflow?.chat?.close?.();
+      w.voiceflow?.chat?.destroy?.();
+      document.getElementById(SCRIPT_ID)?.remove();
+      document.querySelectorAll('[id^="voiceflow-chat"]').forEach((el) => el.remove());
+    };
+  }, []);
+
   useEffect(() => {
     if (!DEV_UPLOAD_ENABLED) return;
     try {
