@@ -9,7 +9,7 @@ import { t } from "@/lib/i18n";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
 
-type Tab = "perfil" | "experiencia" | "skills" | "book";
+type Tab = "perfil" | "snapshot" | "experiencia" | "skills" | "book";
 
 const EDUCATION_EN = {
   school: "Pontificia Universidad Católica de Chile",
@@ -124,6 +124,7 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
   const ui = t("about", lang);
   const TABS: { key: Tab; label: string }[] = [
     { key: "perfil", label: ui.tabs.perfil },
+    { key: "snapshot", label: ui.tabs.snapshot },
     { key: "experiencia", label: ui.tabs.experiencia },
     { key: "skills", label: ui.tabs.skills },
     { key: "book", label: ui.tabs.book },
@@ -273,72 +274,6 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
               ))}
             </div>
 
-            <div className="mt-[26px]">
-              <div className="flex items-center justify-between gap-2">
-                <SectionLabel>{ui.snapshotTitle}</SectionLabel>
-                <span
-                  className="rounded-full px-2.5 py-1 text-[10px] font-bold tracking-[0.04em]"
-                  style={{ background: "var(--cb-pill)", color: "var(--cb-muted)" }}
-                >
-                  {ui.snapshotBadge}
-                </span>
-              </div>
-              <div className="mt-2.5 rounded-2xl border p-4" style={{ borderColor: "var(--cb-hair)" }}>
-                <div className="text-[13.5px] font-bold">{ui.snapshotTagline}</div>
-
-                <div className="mt-3.5 flex flex-col gap-2 text-[12px]">
-                  <div className="flex flex-wrap items-center gap-1.5">
-                    <span className="text-[var(--cb-muted)]">{ui.snapshotBestFit}:</span>
-                    <span
-                      className="rounded-full px-2.5 py-1 text-[11.5px] font-bold"
-                      style={{ background: "var(--cb-cta-bg)", color: "var(--cb-cta-text)" }}
-                    >
-                      {SNAPSHOT_BEST_FIT}
-                    </span>
-                  </div>
-                  <ul className="m-0 flex list-disc flex-col gap-1 pl-4 text-[11.5px] text-[var(--cb-muted)]">
-                    {snapshotBestFitReasons.map((reason) => (
-                      <li key={reason}>{reason}</li>
-                    ))}
-                  </ul>
-                  <div className="mt-1 flex flex-wrap items-center gap-1.5">
-                    <span className="text-[var(--cb-muted)]">{ui.snapshotAlsoFit}:</span>
-                    {SNAPSHOT_ALSO_FIT.map((role) => (
-                      <span
-                        key={role}
-                        className="rounded-full border px-2.5 py-1 text-[11.5px]"
-                        style={{ borderColor: "var(--cb-hair)" }}
-                      >
-                        {role}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mt-4 flex flex-col gap-2">
-                  {SNAPSHOT_DIMENSIONS.map(([key, score]) => (
-                    <div key={key} className="flex items-center gap-2.5">
-                      <span className="w-[140px] flex-none text-[11.5px] text-[var(--cb-muted)]">
-                        {ui.snapshotDimensions[key as keyof typeof ui.snapshotDimensions]}
-                      </span>
-                      <div
-                        className="h-1.5 flex-1 overflow-hidden rounded-full"
-                        style={{ background: "var(--cb-pill)" }}
-                      >
-                        <div
-                          className="h-full rounded-full"
-                          style={{ width: `${(score / 5) * 100}%`, background: "var(--cb-cta-bg)" }}
-                        />
-                      </div>
-                      <span className="w-5 flex-none text-right font-mono text-[11px] text-[var(--cb-muted)]">
-                        {score}/5
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
             <div className="mt-7">
               <a
                 href="/profile/cv.pdf"
@@ -348,6 +283,74 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
               >
                 {ui.downloadCV} <span>↓</span>
               </a>
+            </div>
+          </div>
+        )}
+
+        {tab === "snapshot" && (
+          <div>
+            <div className="flex items-center justify-between gap-2">
+              <SectionLabel>{ui.snapshotTitle}</SectionLabel>
+              <span
+                className="rounded-full px-2.5 py-1 text-[10px] font-bold tracking-[0.04em]"
+                style={{ background: "var(--cb-pill)", color: "var(--cb-muted)" }}
+              >
+                {ui.snapshotBadge}
+              </span>
+            </div>
+            <div className="mt-2.5 rounded-2xl border p-4" style={{ borderColor: "var(--cb-hair)" }}>
+              <div className="text-[13.5px] font-bold">{ui.snapshotTagline}</div>
+
+              <div className="mt-3.5 flex flex-col gap-2 text-[12px]">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-[var(--cb-muted)]">{ui.snapshotBestFit}:</span>
+                  <span
+                    className="rounded-full px-2.5 py-1 text-[11.5px] font-bold"
+                    style={{ background: "var(--cb-cta-bg)", color: "var(--cb-cta-text)" }}
+                  >
+                    {SNAPSHOT_BEST_FIT}
+                  </span>
+                </div>
+                <ul className="m-0 flex list-disc flex-col gap-1 pl-4 text-[11.5px] text-[var(--cb-muted)]">
+                  {snapshotBestFitReasons.map((reason) => (
+                    <li key={reason}>{reason}</li>
+                  ))}
+                </ul>
+                <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                  <span className="text-[var(--cb-muted)]">{ui.snapshotAlsoFit}:</span>
+                  {SNAPSHOT_ALSO_FIT.map((role) => (
+                    <span
+                      key={role}
+                      className="rounded-full border px-2.5 py-1 text-[11.5px]"
+                      style={{ borderColor: "var(--cb-hair)" }}
+                    >
+                      {role}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-4 flex flex-col gap-2">
+                {SNAPSHOT_DIMENSIONS.map(([key, score]) => (
+                  <div key={key} className="flex items-center gap-2.5">
+                    <span className="w-[140px] flex-none text-[11.5px] text-[var(--cb-muted)]">
+                      {ui.snapshotDimensions[key as keyof typeof ui.snapshotDimensions]}
+                    </span>
+                    <div
+                      className="h-1.5 flex-1 overflow-hidden rounded-full"
+                      style={{ background: "var(--cb-pill)" }}
+                    >
+                      <div
+                        className="h-full rounded-full"
+                        style={{ width: `${(score / 5) * 100}%`, background: "var(--cb-cta-bg)" }}
+                      />
+                    </div>
+                    <span className="w-5 flex-none text-right font-mono text-[11px] text-[var(--cb-muted)]">
+                      {score}/5
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
