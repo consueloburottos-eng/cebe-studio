@@ -19,6 +19,14 @@ const EDUCATION_EN = {
 
 const LANGUAGES_EN = ["Spanish — Native", "English — Advanced (ETAPP, IGCSE, PET)"];
 
+const CERTIFICATIONS_EN = [
+  {
+    name: "Generative AI for UI/UX Design",
+    issuer: "IBM · Coursera",
+    period: "2026",
+  },
+];
+
 const EDUCATION = {
   school: "Pontificia Universidad Católica de Chile",
   degree: "Título profesional en Diseño — mención Diseño Estratégico",
@@ -26,6 +34,14 @@ const EDUCATION = {
 };
 
 const LANGUAGES = ["Español — Nativo", "Inglés — Avanzado (ETAPP, IGCSE, PET)"];
+
+const CERTIFICATIONS = [
+  {
+    name: "Generative AI for UI/UX Design",
+    issuer: "IBM · Coursera",
+    period: "2026",
+  },
+];
 
 // derived from every real project's skill tags, not hand-picked — reflects
 // what she's actually tagged her case studies with across the site
@@ -88,6 +104,7 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
   ];
   const experience = lang === "en" ? EXPERIENCE_EN : EXPERIENCE;
   const education = lang === "en" ? EDUCATION_EN : EDUCATION;
+  const certifications = lang === "en" ? CERTIFICATIONS_EN : CERTIFICATIONS;
   const languages = lang === "en" ? LANGUAGES_EN : LANGUAGES;
   const toolkit = lang === "en" ? TOOLKIT_EN : TOOLKIT;
   const [tab, setTab] = useState<Tab>("perfil");
@@ -212,6 +229,21 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
                 <div className="mt-1 text-[13px] text-[var(--cb-muted)]">{education.degree}</div>
                 <div className="mt-1 font-mono text-[11.5px] text-[var(--cb-muted)]">{education.period}</div>
               </div>
+            </div>
+
+            <div className="mt-[26px]">
+              <SectionLabel>{ui.certifications}</SectionLabel>
+              {certifications.map((cert) => (
+                <div
+                  key={cert.name}
+                  className="mt-2.5 rounded-2xl border p-4"
+                  style={{ borderColor: "var(--cb-hair)" }}
+                >
+                  <div className="text-[13.5px] font-bold">{cert.name}</div>
+                  <div className="mt-1 text-[13px] text-[var(--cb-muted)]">{cert.issuer}</div>
+                  <div className="mt-1 font-mono text-[11.5px] text-[var(--cb-muted)]">{cert.period}</div>
+                </div>
+              ))}
             </div>
 
             <div className="mt-7">
