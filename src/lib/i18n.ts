@@ -81,7 +81,7 @@ export const UI = {
   },
   about: {
     es: {
-      tabs: { perfil: "Perfil", snapshot: "Talent Snapshot", experiencia: "Experiencia", skills: "Skills", book: "Book me" },
+      tabs: { perfil: "Perfil", snapshot: "Talent", experiencia: "Experiencia", skills: "Skills", book: "Book me" },
       yearsExperience: "Años de experiencia",
       companiesRoles: "Empresas · roles UX/UI",
       education: "Educación",
@@ -128,7 +128,7 @@ export const UI = {
       bio: "UX/UI Lead con 8 años de experiencia diseñando plataformas SaaS complejas y sistemas de diseño escalables. He liderado el diseño de punta a punta de plataformas de desarrollo laboral y fintech, traduciendo research de usuarios en experiencias intuitivas — con research, journey mapping y prototipado en Figma que se entrega listo para desarrollo.",
     },
     en: {
-      tabs: { perfil: "Profile", snapshot: "Talent Snapshot", experiencia: "Experience", skills: "Skills", book: "Book me" },
+      tabs: { perfil: "Profile", snapshot: "Talent", experiencia: "Experience", skills: "Skills", book: "Book me" },
       yearsExperience: "Years of experience",
       companiesRoles: "Companies · UX/UI roles",
       education: "Education",
