@@ -43,6 +43,20 @@ const CERTIFICATIONS = [
   },
 ];
 
+// from Niuro's Talent Snapshot (conversational assessment) — scores are out
+// of 5, same both languages since they're just numbers plus a fixed key.
+const SNAPSHOT_DIMENSIONS: [string, number][] = [
+  ["communication", 4],
+  ["ownership", 4],
+  ["proactivity", 4],
+  ["adaptability", 4],
+  ["criticalAi", 4],
+  ["technicalDepth", 3],
+];
+
+const SNAPSHOT_BEST_FIT = "Senior Product Designer";
+const SNAPSHOT_ALSO_FIT = ["UX/UI Lead", "AI UX Designer"];
+
 // derived from every real project's skill tags, not hand-picked — reflects
 // what she's actually tagged her case studies with across the site
 function topSkills(lang: "es" | "en", limit = 8): [string, number][] {
@@ -244,6 +258,63 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
                   <div className="mt-1 font-mono text-[11.5px] text-[var(--cb-muted)]">{cert.period}</div>
                 </div>
               ))}
+            </div>
+
+            <div className="mt-[26px]">
+              <div className="flex items-center justify-between gap-2">
+                <SectionLabel>{ui.snapshotTitle}</SectionLabel>
+                <span
+                  className="rounded-full px-2.5 py-1 text-[10px] font-bold tracking-[0.04em]"
+                  style={{ background: "var(--cb-pill)", color: "var(--cb-muted)" }}
+                >
+                  {ui.snapshotBadge}
+                </span>
+              </div>
+              <div className="mt-2.5 rounded-2xl border p-4" style={{ borderColor: "var(--cb-hair)" }}>
+                <div className="text-[13.5px] font-bold">{ui.snapshotTagline}</div>
+
+                <div className="mt-3.5 flex flex-wrap items-center gap-1.5 text-[12px]">
+                  <span className="text-[var(--cb-muted)]">{ui.snapshotBestFit}:</span>
+                  <span
+                    className="rounded-full px-2.5 py-1 text-[11.5px] font-bold"
+                    style={{ background: "var(--cb-cta-bg)", color: "var(--cb-cta-text)" }}
+                  >
+                    {SNAPSHOT_BEST_FIT}
+                  </span>
+                  <span className="ml-2 text-[var(--cb-muted)]">{ui.snapshotAlsoFit}:</span>
+                  {SNAPSHOT_ALSO_FIT.map((role) => (
+                    <span
+                      key={role}
+                      className="rounded-full border px-2.5 py-1 text-[11.5px]"
+                      style={{ borderColor: "var(--cb-hair)" }}
+                    >
+                      {role}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-4 flex flex-col gap-2">
+                  {SNAPSHOT_DIMENSIONS.map(([key, score]) => (
+                    <div key={key} className="flex items-center gap-2.5">
+                      <span className="w-[140px] flex-none text-[11.5px] text-[var(--cb-muted)]">
+                        {ui.snapshotDimensions[key as keyof typeof ui.snapshotDimensions]}
+                      </span>
+                      <div
+                        className="h-1.5 flex-1 overflow-hidden rounded-full"
+                        style={{ background: "var(--cb-pill)" }}
+                      >
+                        <div
+                          className="h-full rounded-full"
+                          style={{ width: `${(score / 5) * 100}%`, background: "var(--cb-cta-bg)" }}
+                        />
+                      </div>
+                      <span className="w-5 flex-none text-right font-mono text-[11px] text-[var(--cb-muted)]">
+                        {score}/5
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <div className="mt-7">
