@@ -273,24 +273,28 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
               <div className="mt-2.5 rounded-2xl border p-4" style={{ borderColor: "var(--cb-hair)" }}>
                 <div className="text-[13.5px] font-bold">{ui.snapshotTagline}</div>
 
-                <div className="mt-3.5 flex flex-wrap items-center gap-1.5 text-[12px]">
-                  <span className="text-[var(--cb-muted)]">{ui.snapshotBestFit}:</span>
-                  <span
-                    className="rounded-full px-2.5 py-1 text-[11.5px] font-bold"
-                    style={{ background: "var(--cb-cta-bg)", color: "var(--cb-cta-text)" }}
-                  >
-                    {SNAPSHOT_BEST_FIT}
-                  </span>
-                  <span className="ml-2 text-[var(--cb-muted)]">{ui.snapshotAlsoFit}:</span>
-                  {SNAPSHOT_ALSO_FIT.map((role) => (
+                <div className="mt-3.5 flex flex-col gap-2 text-[12px]">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-[var(--cb-muted)]">{ui.snapshotBestFit}:</span>
                     <span
-                      key={role}
-                      className="rounded-full border px-2.5 py-1 text-[11.5px]"
-                      style={{ borderColor: "var(--cb-hair)" }}
+                      className="rounded-full px-2.5 py-1 text-[11.5px] font-bold"
+                      style={{ background: "var(--cb-cta-bg)", color: "var(--cb-cta-text)" }}
                     >
-                      {role}
+                      {SNAPSHOT_BEST_FIT}
                     </span>
-                  ))}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-[var(--cb-muted)]">{ui.snapshotAlsoFit}:</span>
+                    {SNAPSHOT_ALSO_FIT.map((role) => (
+                      <span
+                        key={role}
+                        className="rounded-full border px-2.5 py-1 text-[11.5px]"
+                        style={{ borderColor: "var(--cb-hair)" }}
+                      >
+                        {role}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="mt-4 flex flex-col gap-2">
