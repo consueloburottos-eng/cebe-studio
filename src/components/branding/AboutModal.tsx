@@ -57,6 +57,18 @@ const SNAPSHOT_DIMENSIONS: [string, number][] = [
 const SNAPSHOT_BEST_FIT = "Senior Product Designer";
 const SNAPSHOT_ALSO_FIT = ["UX/UI Lead", "AI UX Designer"];
 
+const SNAPSHOT_BEST_FIT_REASONS_EN = [
+  "Strong emphasis on early stage discovery, research",
+  "Very mature, balanced perspective on leveraging AI tools",
+  "Solid prioritization framework built on pain point frequency…",
+];
+
+const SNAPSHOT_BEST_FIT_REASONS = [
+  "Fuerte énfasis en discovery e investigación en etapas tempranas",
+  "Perspectiva madura y equilibrada sobre el uso de herramientas de IA",
+  "Marco sólido de priorización basado en frecuencia de pain points…",
+];
+
 // derived from every real project's skill tags, not hand-picked — reflects
 // what she's actually tagged her case studies with across the site
 function topSkills(lang: "es" | "en", limit = 8): [string, number][] {
@@ -119,6 +131,7 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
   const experience = lang === "en" ? EXPERIENCE_EN : EXPERIENCE;
   const education = lang === "en" ? EDUCATION_EN : EDUCATION;
   const certifications = lang === "en" ? CERTIFICATIONS_EN : CERTIFICATIONS;
+  const snapshotBestFitReasons = lang === "en" ? SNAPSHOT_BEST_FIT_REASONS_EN : SNAPSHOT_BEST_FIT_REASONS;
   const languages = lang === "en" ? LANGUAGES_EN : LANGUAGES;
   const toolkit = lang === "en" ? TOOLKIT_EN : TOOLKIT;
   const [tab, setTab] = useState<Tab>("perfil");
@@ -283,7 +296,12 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
                       {SNAPSHOT_BEST_FIT}
                     </span>
                   </div>
-                  <div className="flex flex-wrap items-center gap-1.5">
+                  <ul className="m-0 flex list-disc flex-col gap-1 pl-4 text-[11.5px] text-[var(--cb-muted)]">
+                    {snapshotBestFitReasons.map((reason) => (
+                      <li key={reason}>{reason}</li>
+                    ))}
+                  </ul>
+                  <div className="mt-1 flex flex-wrap items-center gap-1.5">
                     <span className="text-[var(--cb-muted)]">{ui.snapshotAlsoFit}:</span>
                     {SNAPSHOT_ALSO_FIT.map((role) => (
                       <span
