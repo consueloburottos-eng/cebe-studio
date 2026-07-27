@@ -122,7 +122,7 @@ export default function DesktopWidgets({
 
           <div className="flex flex-col gap-3.5 sm:flex-row sm:gap-4">
             <Widget label={ui.designStack} className="sm:flex-1">
-              <div className="mt-3 grid grid-cols-3 gap-2">
+              <div className="mt-3 grid grid-cols-6 gap-2">
                 {STACK.map((s) => (
                   <div
                     key={s}
