@@ -142,200 +142,202 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
       </div>
 
       <div
-        className="relative z-0 mx-auto min-h-dvh max-w-[1200px] rounded-none px-7 py-10 pb-[90px] backdrop-blur-2xl"
+        className="relative z-0 min-h-dvh w-full rounded-none backdrop-blur-2xl"
         style={{ background: "var(--cb-glass-pill)" }}
       >
-        <div
-          className="relative mb-10 aspect-[1482/798] overflow-hidden rounded-[20px]"
-          style={{ background: "var(--cb-pill)" }}
-        >
-          <ProjectMedia
-            media={project.coverMedia}
-            label={project.cover}
-            sizes="(min-width:1200px) 1200px, 100vw"
-            uploadPath={`/projects/${folder}/cover`}
-          />
-        </div>
-
-        <div className="mb-14" style={{ containerType: "inline-size" }}>
+        <div className="mx-auto max-w-[1130px] px-7 py-10 pb-[90px]">
           <div
-            className="grid gap-[10px]"
-            style={{
-              gridTemplateColumns: "repeat(9, 1fr)",
-              // row height follows the fluid column width, keeping the
-              // original 120:168 (1:1.4) tile proportions at any viewport
-              gridAutoRows: "calc((100cqw - 80px) / 9 * 1.4)",
-              gridAutoFlow: "row dense",
-            }}
+            className="relative mb-10 aspect-[1482/798] overflow-hidden rounded-[20px]"
+            style={{ background: "var(--cb-pill)" }}
           >
-            {introItems.map((g, i) => {
-              const span = INTRO_SPAN_PATTERN[i];
-              return (
-                <div
-                  key={i}
-                  className="overflow-hidden rounded-[10px]"
-                  style={{ background: "var(--cb-pill)", gridColumn: `span ${span}` }}
-                >
-                  <ProjectMedia
-                    media={g.media}
-                    label={g.label}
-                    sizes={span === 2 ? "(min-width:1200px) 246px, 24vw" : "(min-width:1200px) 118px, 11vw"}
-                    uploadPath={`/projects/${folder}/intro-${String(i + 1).padStart(2, "0")}`}
-                  />
-                </div>
-              );
-            })}
+            <ProjectMedia
+              media={project.coverMedia}
+              label={project.cover}
+              sizes="(min-width:1130px) 1130px, 100vw"
+              uploadPath={`/projects/${folder}/cover`}
+            />
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-[200px_1fr]">
-          <div className="flex flex-col gap-3 font-sans">
-            <button
-              type="button"
-              onClick={() => setActiveTab("brief")}
-              className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
-              style={{ opacity: activeTab === "brief" ? 1 : 0.45 }}
+          <div className="mb-14" style={{ containerType: "inline-size" }}>
+            <div
+              className="grid gap-[10px]"
+              style={{
+                gridTemplateColumns: "repeat(9, 1fr)",
+                // row height follows the fluid column width, keeping the
+                // original 120:168 (1:1.4) tile proportions at any viewport
+                gridAutoRows: "calc((100cqw - 80px) / 9 * 1.4)",
+                gridAutoFlow: "row dense",
+              }}
             >
-              {ui.brief}
-            </button>
-            {project.strategy.length > 0 && (
-              <button
-                type="button"
-                onClick={() => setActiveTab("strategy")}
-                className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
-                style={{ opacity: activeTab === "strategy" ? 1 : 0.45 }}
-              >
-                {ui.strategy}
-              </button>
-            )}
-            {serviceSteps.length > 0 && (
-              <button
-                type="button"
-                onClick={() => setActiveTab("services")}
-                className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
-                style={{ opacity: activeTab === "services" ? 1 : 0.45 }}
-              >
-                {ui.services}
-              </button>
-            )}
-            {project.skills.length > 0 && (
-              <button
-                type="button"
-                onClick={() => setActiveTab("skills")}
-                className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
-                style={{ opacity: activeTab === "skills" ? 1 : 0.45 }}
-              >
-                {ui.skills}
-              </button>
-            )}
-          </div>
-          <div>
-            <div className="font-sans text-[11px] uppercase tracking-[0.2em] text-[var(--cb-muted)]">
-              {project.tag}
-            </div>
-            <h1 className="mt-2.5 font-display font-extrabold lowercase leading-none tracking-[-0.02em]"
-              style={{ fontSize: "clamp(34px,4.6vw,54px)" }}
-            >
-              {project.title}
-            </h1>
-            <div className="mt-4 text-base font-bold">{project.subtitle}</div>
-
-            <div id="project-copy" className="mt-3.5 flex max-w-[60ch] flex-col gap-4 text-[15.5px] font-medium leading-[1.75]">
-              {activeTab === "brief" && <p>{project.brief}</p>}
-
-              {activeTab === "strategy" &&
-                project.strategy.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
-
-              {activeTab === "services" && (
-                <ol className="flex flex-col gap-3">
-                  {serviceSteps.map((step, i) => (
-                    <li key={step} className="flex items-baseline gap-3">
-                      <span
-                        className="font-mono text-[12px] font-bold"
-                        style={{ color: "var(--cb-muted)" }}
-                      >
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span>{step}</span>
-                    </li>
-                  ))}
-                </ol>
-              )}
-
-              {activeTab === "skills" && (
-                <div className="flex flex-wrap gap-2">
-                  {project.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="rounded-full border px-3.5 py-1.5 text-xs font-bold"
-                      style={{ borderColor: "var(--cb-hair)", background: "transparent", color: "var(--cb-text)" }}
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="mt-7 grid grid-cols-2 gap-3.5 border-t border-b py-4 sm:grid-cols-4"
-              style={{ borderColor: "var(--cb-hair)" }}
-            >
-              <Meta label={ui.client} value={project.client} />
-              <Meta label={ui.role} value={project.role} />
-              <Meta label={ui.year} value={project.year} />
-              <Meta label={ui.result} value={project.result} accent />
-            </div>
-          </div>
-        </div>
-
-        <div className="my-[72px] text-center font-display font-extrabold uppercase leading-none tracking-[-0.01em]"
-          style={{ fontSize: "clamp(30px,5.5vw,68px)" }}
-        >
-          {project.headline}
-        </div>
-
-        <div className="mt-16 border-t pt-[34px]" style={{ borderColor: "var(--cb-hair)" }}>
-          <div className="flex flex-wrap gap-6 text-[13px] text-[var(--cb-muted)]">
-            <Link href="/" className="text-inherit no-underline">
-              {ui.home}
-            </Link>
-            <a href={`mailto:consuelo.burotto.s@gmail.com`} className="text-inherit no-underline">
-              {ui.email}
-            </a>
-          </div>
-
-          {others.length > 0 && (
-            <>
-              <div className="mt-7 font-sans text-[11px] uppercase tracking-[0.2em] text-[var(--cb-muted)]">
-                {ui.moreProjects}
-              </div>
-              <div className="mt-4 flex gap-4 overflow-x-auto pb-3">
-                {others.slice(0, 6).map((other) => (
-                  <Link
-                    key={other.slug}
-                    href={`/projects/${other.slug}`}
-                    className="block w-[260px] flex-none text-inherit no-underline"
+              {introItems.map((g, i) => {
+                const span = INTRO_SPAN_PATTERN[i];
+                return (
+                  <div
+                    key={i}
+                    className="overflow-hidden rounded-[10px]"
+                    style={{ background: "var(--cb-pill)", gridColumn: `span ${span}` }}
                   >
-                    <div
-                      className="h-[150px] w-[260px] overflow-hidden rounded-xl"
-                      style={{ background: "var(--cb-pill)" }}
-                    >
-                      <ProjectMedia
-                        media={other.coverMedia}
-                        label={other.cover}
-                        compact
-                        sizes="260px"
-                        uploadPath={`/projects/${assetFolder(other)}/cover`}
-                      />
-                    </div>
-                    <div className="mt-2.5 text-[15px] font-bold lowercase">
-                      {other.title}
-                    </div>
-                  </Link>
-                ))}
+                    <ProjectMedia
+                      media={g.media}
+                      label={g.label}
+                      sizes={span === 2 ? "(min-width:1200px) 246px, 24vw" : "(min-width:1200px) 118px, 11vw"}
+                      uploadPath={`/projects/${folder}/intro-${String(i + 1).padStart(2, "0")}`}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-[200px_1fr]">
+            <div className="flex flex-col gap-3 font-sans">
+              <button
+                type="button"
+                onClick={() => setActiveTab("brief")}
+                className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
+                style={{ opacity: activeTab === "brief" ? 1 : 0.45 }}
+              >
+                {ui.brief}
+              </button>
+              {project.strategy.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("strategy")}
+                  className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
+                  style={{ opacity: activeTab === "strategy" ? 1 : 0.45 }}
+                >
+                  {ui.strategy}
+                </button>
+              )}
+              {serviceSteps.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("services")}
+                  className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
+                  style={{ opacity: activeTab === "services" ? 1 : 0.45 }}
+                >
+                  {ui.services}
+                </button>
+              )}
+              {project.skills.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("skills")}
+                  className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
+                  style={{ opacity: activeTab === "skills" ? 1 : 0.45 }}
+                >
+                  {ui.skills}
+                </button>
+              )}
+            </div>
+            <div>
+              <div className="font-sans text-[11px] uppercase tracking-[0.2em] text-[var(--cb-muted)]">
+                {project.tag}
               </div>
-            </>
-          )}
+              <h1 className="mt-2.5 font-display font-extrabold lowercase leading-none tracking-[-0.02em]"
+                style={{ fontSize: "clamp(34px,4.6vw,54px)" }}
+              >
+                {project.title}
+              </h1>
+              <div className="mt-4 text-base font-bold">{project.subtitle}</div>
+
+              <div id="project-copy" className="mt-3.5 flex max-w-[60ch] flex-col gap-4 text-[15.5px] font-medium leading-[1.75]">
+                {activeTab === "brief" && <p>{project.brief}</p>}
+
+                {activeTab === "strategy" &&
+                  project.strategy.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+
+                {activeTab === "services" && (
+                  <ol className="flex flex-col gap-3">
+                    {serviceSteps.map((step, i) => (
+                      <li key={step} className="flex items-baseline gap-3">
+                        <span
+                          className="font-mono text-[12px] font-bold"
+                          style={{ color: "var(--cb-muted)" }}
+                        >
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span>{step}</span>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+
+                {activeTab === "skills" && (
+                  <div className="flex flex-wrap gap-2">
+                    {project.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="rounded-full border px-3.5 py-1.5 text-xs font-bold"
+                        style={{ borderColor: "var(--cb-hair)", background: "transparent", color: "var(--cb-text)" }}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-7 grid grid-cols-2 gap-3.5 border-t border-b py-4 sm:grid-cols-4"
+                style={{ borderColor: "var(--cb-hair)" }}
+              >
+                <Meta label={ui.client} value={project.client} />
+                <Meta label={ui.role} value={project.role} />
+                <Meta label={ui.year} value={project.year} />
+                <Meta label={ui.result} value={project.result} accent />
+              </div>
+            </div>
+          </div>
+
+          <div className="my-[72px] text-center font-display font-extrabold uppercase leading-none tracking-[-0.01em]"
+            style={{ fontSize: "clamp(30px,5.5vw,68px)" }}
+          >
+            {project.headline}
+          </div>
+
+          <div className="mt-16 border-t pt-[34px]" style={{ borderColor: "var(--cb-hair)" }}>
+            <div className="flex flex-wrap gap-6 text-[13px] text-[var(--cb-muted)]">
+              <Link href="/" className="text-inherit no-underline">
+                {ui.home}
+              </Link>
+              <a href={`mailto:consuelo.burotto.s@gmail.com`} className="text-inherit no-underline">
+                {ui.email}
+              </a>
+            </div>
+
+            {others.length > 0 && (
+              <>
+                <div className="mt-7 font-sans text-[11px] uppercase tracking-[0.2em] text-[var(--cb-muted)]">
+                  {ui.moreProjects}
+                </div>
+                <div className="mt-4 flex gap-4 overflow-x-auto pb-3">
+                  {others.slice(0, 6).map((other) => (
+                    <Link
+                      key={other.slug}
+                      href={`/projects/${other.slug}`}
+                      className="block w-[260px] flex-none text-inherit no-underline"
+                    >
+                      <div
+                        className="h-[150px] w-[260px] overflow-hidden rounded-xl"
+                        style={{ background: "var(--cb-pill)" }}
+                      >
+                        <ProjectMedia
+                          media={other.coverMedia}
+                          label={other.cover}
+                          compact
+                          sizes="260px"
+                          uploadPath={`/projects/${assetFolder(other)}/cover`}
+                        />
+                      </div>
+                      <div className="mt-2.5 text-[15px] font-bold lowercase">
+                        {other.title}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>
