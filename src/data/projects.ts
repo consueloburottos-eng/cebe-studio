@@ -199,7 +199,7 @@ export const projects: Project[] = [
   },
   {
     slug: "quartz",
-    title: "quartz",
+    title: "el hilo de la novia",
     category: "Dirección de Arte",
     tag: "dirección de arte · fotografía conceptual",
     subtitle: "El hilo de la Novia — interpretación de Bodas de Sangre",

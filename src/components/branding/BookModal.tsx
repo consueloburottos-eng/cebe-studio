@@ -40,6 +40,16 @@ export default function BookModal({ onClose }: { onClose: () => void }) {
         className="relative w-full max-w-[440px] px-10 pt-11 pb-9"
         style={{ background: "var(--cb-bg)", color: "var(--cb-text)" }}
       >
+        <button
+          type="button"
+          onClick={onClose}
+          title={lang === "en" ? "close" : "cerrar"}
+          className="absolute top-6 right-6 z-10 flex h-9 w-9 items-center justify-center rounded-full border text-sm"
+          style={{ borderColor: "var(--cb-hair)", background: "var(--cb-bg)" }}
+        >
+          ✕
+        </button>
+
         <span className="font-sans text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--cb-muted)]">
           {ui.tabs.book}
         </span>
@@ -64,14 +74,6 @@ export default function BookModal({ onClose }: { onClose: () => void }) {
             style={{ borderColor: "var(--cb-muted)", background: "transparent", color: "inherit" }}
           >
             {copied ? ui.copied : ui.copyEmail} <span>⧉</span>
-          </button>
-          <button
-            type="button"
-            onClick={onClose}
-            className="rounded-full border px-[22px] py-[13px] font-sans text-[13.5px] font-semibold"
-            style={{ borderColor: "var(--cb-muted)", background: "transparent", color: "inherit" }}
-          >
-            {lang === "en" ? "Close" : "Cerrar"}
           </button>
         </div>
       </div>

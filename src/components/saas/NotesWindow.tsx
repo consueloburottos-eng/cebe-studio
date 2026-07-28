@@ -1,14 +1,30 @@
 "use client";
 
-import Link from "next/link";
-import { Project } from "@/data/projects";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { EXPERIENCE, EXPERIENCE_EN } from "@/data/experience";
+import {
+  EDUCATION,
+  EDUCATION_EN,
+  CERTIFICATIONS,
+  CERTIFICATIONS_EN,
+} from "@/data/profile";
+import {
+  SNAPSHOT_DIMENSIONS,
+  SNAPSHOT_BEST_FIT,
+  SNAPSHOT_ALSO_FIT,
+  SNAPSHOT_BEST_FIT_REASONS,
+  SNAPSHOT_BEST_FIT_REASONS_EN,
+} from "@/data/talentSnapshot";
+import TalentRadar from "@/components/TalentRadar";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
-import { localizeProjects, t, titleCase } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-export type NoteId = "about" | "experiencia" | "servicios" | "contacto";
+const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
+
+export type NoteId = "about" | "talent" | "experiencia" | "servicios" | "contacto";
 
 type NotesWindowProps = {
-  projects: Project[];
   note: NoteId;
   onNoteChange: (note: NoteId) => void;
   onClose: () => void;
@@ -16,7 +32,6 @@ type NotesWindowProps = {
 };
 
 export default function NotesWindow({
-  projects,
   note,
   onNoteChange,
   onClose,
@@ -24,9 +39,33 @@ export default function NotesWindow({
 }: NotesWindowProps) {
   const [lang] = useSiteLanguage();
   const ui = t("saas", lang);
-  const localizedProjects = localizeProjects(projects, lang);
+  const snapshotUi = t("about", lang);
+  const experience = lang === "en" ? EXPERIENCE_EN : EXPERIENCE;
+  const education = lang === "en" ? EDUCATION_EN : EDUCATION;
+  const certifications = lang === "en" ? CERTIFICATIONS_EN : CERTIFICATIONS;
+  const snapshotBestFitReasons = lang === "en" ? SNAPSHOT_BEST_FIT_REASONS_EN : SNAPSHOT_BEST_FIT_REASONS;
+  const [copied, setCopied] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(CONTACT_EMAIL);
+    } catch {
+      // clipboard unavailable — the email is still shown on screen to copy manually
+    }
+    setCopied(true);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => setCopied(false), 1600);
+  }
   const NOTES: { id: NoteId; label: string }[] = [
     { id: "about", label: ui.notesTabs.about },
+    { id: "talent", label: ui.notesTabs.talent },
     { id: "experiencia", label: ui.notesTabs.experiencia },
     { id: "servicios", label: ui.notesTabs.servicios },
     { id: "contacto", label: ui.notesTabs.contacto },
@@ -92,55 +131,83 @@ export default function NotesWindow({
             {note === "about" && (
               <div>
                 <div className="flex items-center gap-4">
-                  <div
-                    className="h-[64px] w-[64px] flex-none rounded-full"
-                    style={{ background: "rgba(var(--os-sfrgb),.06)" }}
-                  />
+                  <div className="relative h-[64px] w-[64px] flex-none overflow-hidden rounded-full">
+                    <Image src="/profile/avatar.webp" alt="Consuelo Burotto" fill sizes="64px" className="object-cover" />
+                  </div>
                   <div>
                     <div className="text-xl font-bold">consuelo</div>
                     <div className="text-[13px]" style={{ color: "rgba(var(--os-txrgb),.6)" }}>
-                      {ui.aboutRole}
+                      UX/UI Lead Senior Designer
                     </div>
                   </div>
                 </div>
+
+                <div className="relative mt-4 aspect-video w-full overflow-hidden rounded-xl" style={{ background: "rgba(var(--os-sfrgb),.06)" }}>
+                  <video
+                    className="h-full w-full object-cover"
+                    src="/profile/intro.mp4"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    aria-label="Video introductorio de Consuelo Burotto"
+                  />
+                </div>
+
                 <p className="mt-4 max-w-[56ch] text-[14px] leading-[1.65]" style={{ color: "rgba(var(--os-txrgb),.75)" }}>
-                  {ui.aboutBio}
+                  {snapshotUi.bio}
                 </p>
                 <div className="mt-5 grid grid-cols-2 gap-3">
                   <div className="rounded-xl p-3.5" style={{ border: "1px solid var(--os-hr)" }}>
-                    <div className="font-mono text-[26px] font-bold leading-none">10+</div>
+                    <div className="font-mono text-[26px] font-bold leading-none">8+</div>
                     <div className="mt-1 text-[11px] uppercase" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
-                      {ui.yearsExperience}
+                      {snapshotUi.yearsExperience}
                     </div>
                   </div>
                   <div className="rounded-xl p-3.5" style={{ border: "1px solid var(--os-hr)" }}>
-                    <div className="font-mono text-[26px] font-bold leading-none">30+</div>
+                    <div className="font-mono text-[26px] font-bold leading-none">5</div>
                     <div className="mt-1 text-[11px] uppercase" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
-                      {ui.projectsDelivered}
+                      {snapshotUi.companiesRoles}
                     </div>
                   </div>
                 </div>
+
                 <div className="mt-5">
                   <span className="text-[11px] font-semibold uppercase" style={{ color: "rgba(var(--os-txrgb),.4)" }}>
-                    {ui.certifications}
+                    {snapshotUi.education}
                   </span>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    <span
-                      className="rounded-full px-3 py-1.5 text-[12px]"
-                      style={{ border: "1px solid var(--os-hr)", color: "rgba(var(--os-txrgb),.7)" }}
-                    >
-                      Foundations of UX Design — Google (Coursera)
-                    </span>
-                    <span
-                      className="rounded-full px-3 py-1.5 text-[12px]"
-                      style={{ border: "1px solid var(--os-hr)", color: "rgba(var(--os-txrgb),.7)" }}
-                    >
-                      Generative AI: Introduction and Applications — IBM (Coursera)
-                    </span>
+                  <div className="mt-2 rounded-xl p-3.5" style={{ border: "1px solid var(--os-hr)" }}>
+                    <div className="text-[13.5px] font-bold">{education.school}</div>
+                    <div className="mt-1 text-[13px]" style={{ color: "rgba(var(--os-txrgb),.6)" }}>
+                      {education.degree}
+                    </div>
+                    <div className="mt-1 font-mono text-[11.5px]" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
+                      {education.period}
+                    </div>
                   </div>
                 </div>
+
+                <div className="mt-5">
+                  <span className="text-[11px] font-semibold uppercase" style={{ color: "rgba(var(--os-txrgb),.4)" }}>
+                    {snapshotUi.certifications}
+                  </span>
+                  <div className="mt-2 flex flex-col gap-2">
+                    {certifications.map((cert) => (
+                      <div key={cert.name} className="rounded-xl p-3.5" style={{ border: "1px solid var(--os-hr)" }}>
+                        <div className="text-[13.5px] font-bold">{cert.name}</div>
+                        <div className="mt-1 text-[13px]" style={{ color: "rgba(var(--os-txrgb),.6)" }}>
+                          {cert.issuer}
+                        </div>
+                        <div className="mt-1 font-mono text-[11.5px]" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
+                          {cert.period}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
                 <a
-                  href="#"
+                  href="/profile/cv.pdf"
+                  download
                   className="mt-5 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-bold no-underline"
                   style={{ background: "var(--os-tx)", color: "var(--os-win)" }}
                 >
@@ -149,28 +216,141 @@ export default function NotesWindow({
               </div>
             )}
 
-            {note === "experiencia" && (
-              <div className="flex flex-col gap-4">
-                {localizedProjects.map((p) => (
-                  <Link
-                    key={p.slug}
-                    href={`/projects/${p.slug}`}
-                    className="block rounded-xl p-4 no-underline"
-                    style={{ border: "1px solid var(--os-hr)", color: "inherit" }}
+            {note === "talent" && (
+              <div>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[11px] font-bold tracking-[0.15em] uppercase" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
+                    {snapshotUi.snapshotTitle}
+                  </span>
+                  <span
+                    className="rounded-full px-2.5 py-1 text-[10px] font-bold tracking-[0.04em]"
+                    style={{ background: "rgba(var(--os-sfrgb),.06)", color: "rgba(var(--os-txrgb),.55)" }}
                   >
-                    <div className="flex items-baseline justify-between gap-3">
-                      <span className="text-base font-bold">{titleCase(p.title)}</span>
-                      <span className="font-mono text-xs" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
-                        {p.year}
+                    {snapshotUi.snapshotBadge}
+                  </span>
+                </div>
+
+                <div className="mt-4">
+                  <h3 className="m-0 text-[19px] font-extrabold leading-snug">
+                    {snapshotUi.snapshotHeadlinePrefix}{" "}
+                    <span style={{ background: "#ffe066", color: "#141419", boxDecorationBreak: "clone" }}>
+                      {snapshotUi.snapshotHeadlineHighlight}
+                    </span>
+                  </h3>
+                  <p className="mt-2.5 max-w-[52ch] text-[13px] leading-[1.6]" style={{ color: "rgba(var(--os-txrgb),.6)" }}>
+                    {snapshotUi.snapshotSubtext}
+                  </p>
+                  <div className="mt-4 flex items-center justify-center">
+                    <TalentRadar
+                      axes={SNAPSHOT_DIMENSIONS.map(
+                        ([key]) => snapshotUi.snapshotDimensions[key as keyof typeof snapshotUi.snapshotDimensions]
+                      )}
+                      values={SNAPSHOT_DIMENSIONS.map(([, score]) => score)}
+                      hairColor="var(--os-hr)"
+                      bgColor="var(--os-win)"
+                      labelColor="rgba(var(--os-txrgb),.55)"
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-2.5 rounded-xl p-4" style={{ border: "1px solid var(--os-hr)" }}>
+                  <div className="text-[13.5px] font-bold">{snapshotUi.snapshotTagline}</div>
+
+                  <div className="mt-3.5 flex flex-col gap-2 text-[12px]">
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span style={{ color: "rgba(var(--os-txrgb),.55)" }}>{snapshotUi.snapshotBestFit}:</span>
+                      <span
+                        className="rounded-full px-2.5 py-1 text-[11.5px] font-bold"
+                        style={{ background: "var(--os-tx)", color: "var(--os-win)" }}
+                      >
+                        {SNAPSHOT_BEST_FIT}
                       </span>
                     </div>
-                    <div className="mt-1 text-[12.5px]" style={{ color: "rgba(var(--os-txrgb),.55)" }}>
-                      {p.role} · {p.client}
+                    <ul className="m-0 flex list-disc flex-col gap-1 pl-4 text-[11.5px]" style={{ color: "rgba(var(--os-txrgb),.55)" }}>
+                      {snapshotBestFitReasons.map((reason) => (
+                        <li key={reason}>{reason}</li>
+                      ))}
+                    </ul>
+                    <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                      <span style={{ color: "rgba(var(--os-txrgb),.55)" }}>{snapshotUi.snapshotAlsoFit}:</span>
+                      {SNAPSHOT_ALSO_FIT.map((role) => (
+                        <span
+                          key={role}
+                          className="rounded-full px-2.5 py-1 text-[11.5px]"
+                          style={{ border: "1px solid var(--os-hr)" }}
+                        >
+                          {role}
+                        </span>
+                      ))}
                     </div>
-                    <div className="mt-2 text-[12.5px] font-semibold" style={{ color: "var(--os-accent)" }}>
-                      {p.result}
+                  </div>
+
+                  <div className="mt-5 flex items-center justify-between">
+                    <span className="text-[11px] font-bold tracking-[0.1em] uppercase" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
+                      {snapshotUi.snapshotStrongestLabel}
+                    </span>
+                    <span className="font-mono text-[10.5px]" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
+                      {snapshotUi.snapshotScale}
+                    </span>
+                  </div>
+                  <div className="mt-2 flex flex-col gap-2">
+                    {SNAPSHOT_DIMENSIONS.map(([key, score]) => (
+                      <div key={key} className="flex items-center gap-2.5">
+                        <span className="w-[140px] flex-none text-[11.5px]" style={{ color: "rgba(var(--os-txrgb),.55)" }}>
+                          {snapshotUi.snapshotDimensions[key as keyof typeof snapshotUi.snapshotDimensions]}
+                        </span>
+                        <div className="h-1.5 flex-1 overflow-hidden rounded-full" style={{ background: "rgba(var(--os-sfrgb),.08)" }}>
+                          <div
+                            className="h-full rounded-full"
+                            style={{ width: `${(score / 5) * 100}%`, background: "var(--os-tx)" }}
+                          />
+                        </div>
+                        <span className="w-5 flex-none text-right font-mono text-[11px]" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
+                          {score}/5
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-2.5 rounded-xl p-4" style={{ background: "rgba(var(--os-sfrgb),.04)" }}>
+                  <div className="text-[11px] font-bold tracking-[0.1em] uppercase" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
+                    {snapshotUi.snapshotEvidenceLabel}
+                  </div>
+                  <div className="mt-1.5 text-[13.5px] font-bold">{snapshotUi.snapshotEvidenceDimension}</div>
+                  <p className="mt-2 text-[13px] leading-[1.6]" style={{ color: "rgba(var(--os-txrgb),.6)" }}>
+                    {snapshotUi.snapshotEvidenceText}
+                  </p>
+                  <p className="mt-2 text-[13px] leading-[1.6]">
+                    <span className="font-bold">{snapshotUi.snapshotEvidenceSignal.split(":")[0]}:</span>
+                    <span className="underline decoration-[var(--os-hr)] underline-offset-2" style={{ color: "rgba(var(--os-txrgb),.6)" }}>
+                      {snapshotUi.snapshotEvidenceSignal.split(":").slice(1).join(":")}
+                    </span>
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {note === "experiencia" && (
+              <div className="flex flex-col gap-4">
+                {experience.map((job) => (
+                  <div
+                    key={`${job.role}-${job.company}`}
+                    className="rounded-xl p-4"
+                    style={{ border: "1px solid var(--os-hr)" }}
+                  >
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                      <span className="text-base font-bold">
+                        {job.role} — {job.company}
+                      </span>
+                      <span className="font-mono text-xs" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
+                        {job.period} · {job.place}
+                      </span>
                     </div>
-                  </Link>
+                    <p className="mt-1.5 text-[12.5px] leading-[1.6]" style={{ color: "rgba(var(--os-txrgb),.55)" }}>
+                      {job.note}
+                    </p>
+                  </div>
                 ))}
               </div>
             )}
@@ -195,12 +375,20 @@ export default function NotesWindow({
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2.5">
                   <a
-                    href={`mailto:consuelo.burotto.s@gmail.com?subject=${encodeURIComponent(lang === "en" ? "Contact from CEBE:STUDIO" : "Contacto desde CEBE:STUDIO")}`}
+                    href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(ui.mailSubject)}&body=${encodeURIComponent(ui.mailBody)}`}
                     className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-bold no-underline"
                     style={{ background: "var(--os-tx)", color: "var(--os-win)" }}
                   >
-                    consuelo.burotto.s@gmail.com
+                    {ui.sendMessage} <span>→</span>
                   </a>
+                  <button
+                    type="button"
+                    onClick={handleCopy}
+                    className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-semibold"
+                    style={{ border: "1px solid var(--os-hr)", background: "transparent", color: "inherit" }}
+                  >
+                    {copied ? ui.copied : ui.copyEmail} <span>⧉</span>
+                  </button>
                   <button
                     type="button"
                     onClick={onOpenBook}

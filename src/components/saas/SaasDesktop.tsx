@@ -35,6 +35,13 @@ export default function SaasDesktop() {
     setWin("projects");
   }
 
+  function downloadCV() {
+    const link = document.createElement("a");
+    link.href = "/profile/cv.pdf";
+    link.download = "";
+    link.click();
+  }
+
   return (
     <div
       data-os-theme={dark ? "dark" : "light"}
@@ -72,7 +79,7 @@ export default function SaasDesktop() {
           onHome={() => setWin(null)}
           onProjects={openProjects}
           onAbout={() => openAbout("about")}
-          onCV={() => openAbout("about")}
+          onCV={downloadCV}
           onContacto={() => openAbout("contacto")}
         />
 
@@ -88,7 +95,6 @@ export default function SaasDesktop() {
         )}
         {win === "about" && (
           <NotesWindow
-            projects={projects}
             note={note}
             onNoteChange={setNote}
             onClose={() => setWin(null)}

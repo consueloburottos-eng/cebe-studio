@@ -4,71 +4,28 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { projects } from "@/data/projects";
 import { EXPERIENCE, EXPERIENCE_EN } from "@/data/experience";
-import TalentRadar from "./TalentRadar";
+import {
+  SNAPSHOT_DIMENSIONS,
+  SNAPSHOT_BEST_FIT,
+  SNAPSHOT_ALSO_FIT,
+  SNAPSHOT_BEST_FIT_REASONS,
+  SNAPSHOT_BEST_FIT_REASONS_EN,
+} from "@/data/talentSnapshot";
+import TalentRadar from "@/components/TalentRadar";
+import {
+  EDUCATION,
+  EDUCATION_EN,
+  LANGUAGES,
+  LANGUAGES_EN,
+  CERTIFICATIONS,
+  CERTIFICATIONS_EN,
+} from "@/data/profile";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
 
 type Tab = "perfil" | "snapshot" | "experiencia" | "skills" | "book";
-
-const EDUCATION_EN = {
-  school: "Pontificia Universidad Católica de Chile",
-  degree: "Professional degree in Design — Strategic Design major",
-  period: "2012–2018",
-};
-
-const LANGUAGES_EN = ["Spanish — Native", "English — Advanced (ETAPP, IGCSE, PET)"];
-
-const CERTIFICATIONS_EN = [
-  {
-    name: "Generative AI for UI/UX Design",
-    issuer: "IBM · Coursera",
-    period: "2026",
-  },
-];
-
-const EDUCATION = {
-  school: "Pontificia Universidad Católica de Chile",
-  degree: "Título profesional en Diseño — mención Diseño Estratégico",
-  period: "2012–2018",
-};
-
-const LANGUAGES = ["Español — Nativo", "Inglés — Avanzado (ETAPP, IGCSE, PET)"];
-
-const CERTIFICATIONS = [
-  {
-    name: "Generative AI for UI/UX Design",
-    issuer: "IBM · Coursera",
-    period: "2026",
-  },
-];
-
-// from Niuro's Talent Snapshot (conversational assessment) — scores are out
-// of 5, same both languages since they're just numbers plus a fixed key.
-const SNAPSHOT_DIMENSIONS: [string, number][] = [
-  ["communication", 4],
-  ["ownership", 4],
-  ["proactivity", 4],
-  ["adaptability", 4],
-  ["criticalAi", 4],
-  ["technicalDepth", 3],
-];
-
-const SNAPSHOT_BEST_FIT = "Senior Product Designer";
-const SNAPSHOT_ALSO_FIT = ["UX/UI Lead", "AI UX Designer"];
-
-const SNAPSHOT_BEST_FIT_REASONS_EN = [
-  "Strong emphasis on early stage discovery, research",
-  "Very mature, balanced perspective on leveraging AI tools",
-  "Solid prioritization framework built on pain point frequency…",
-];
-
-const SNAPSHOT_BEST_FIT_REASONS = [
-  "Fuerte énfasis en discovery e investigación en etapas tempranas",
-  "Perspectiva madura y equilibrada sobre el uso de herramientas de IA",
-  "Marco sólido de priorización basado en frecuencia de pain points…",
-];
 
 // derived from every real project's skill tags, not hand-picked — reflects
 // what she's actually tagged her case studies with across the site

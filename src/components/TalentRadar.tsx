@@ -24,10 +24,16 @@ export default function TalentRadar({
   axes,
   values,
   max = 5,
+  hairColor = "var(--cb-hair)",
+  bgColor = "var(--cb-bg)",
+  labelColor = "var(--cb-muted)",
 }: {
   axes: string[];
   values: number[];
   max?: number;
+  hairColor?: string;
+  bgColor?: string;
+  labelColor?: string;
 }) {
   const count = axes.length;
 
@@ -54,16 +60,14 @@ export default function TalentRadar({
             cy={CENTER}
             r={MAX_RADIUS * r}
             fill="none"
-            stroke="var(--cb-hair)"
+            stroke={hairColor}
             strokeWidth={1}
           />
         ))}
 
         {axes.map((_, i) => {
           const [x, y] = axisPoint(i, count, MAX_RADIUS);
-          return (
-            <line key={i} x1={CENTER} y1={CENTER} x2={x} y2={y} stroke="var(--cb-hair)" strokeWidth={1} />
-          );
+          return <line key={i} x1={CENTER} y1={CENTER} x2={x} y2={y} stroke={hairColor} strokeWidth={1} />;
         })}
 
         <polygon
@@ -75,7 +79,7 @@ export default function TalentRadar({
         />
         {values.map((v, i) => {
           const [x, y] = axisPoint(i, count, (v / max) * MAX_RADIUS);
-          return <circle key={i} cx={x} cy={y} r={4} fill={ACCENT} stroke="var(--cb-bg)" strokeWidth={1.5} />;
+          return <circle key={i} cx={x} cy={y} r={4} fill={ACCENT} stroke={bgColor} strokeWidth={1.5} />;
         })}
 
         {axes.map((label, i) => {
@@ -92,7 +96,7 @@ export default function TalentRadar({
                 fontSize: 11,
                 fontWeight: 600,
                 letterSpacing: "0.01em",
-                fill: "var(--cb-muted)",
+                fill: labelColor,
                 fontFamily: "inherit",
               }}
             >
