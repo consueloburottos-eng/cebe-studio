@@ -369,7 +369,7 @@ export default function NotesWindow({
             )}
 
             {note === "contacto" && (
-              <div>
+              <div className="flex h-full min-h-[380px] flex-col items-center justify-center text-center">
                 <span className="text-[11px] font-bold tracking-[0.2em] uppercase" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
                   {snapshotUi.tabs.book}
                 </span>
@@ -379,7 +379,7 @@ export default function NotesWindow({
                 <p className="mt-4 max-w-[46ch] text-[14px] leading-[1.6]" style={{ color: "rgba(var(--os-txrgb),.75)" }}>
                   {snapshotUi.bookBody}
                 </p>
-                <div className="mt-[26px] flex flex-wrap items-center gap-2.5">
+                <div className="mt-[26px] flex flex-wrap items-center justify-center gap-2.5">
                   <a
                     href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(snapshotUi.mailSubject)}&body=${encodeURIComponent(snapshotUi.mailBody)}`}
                     className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13.5px] font-bold no-underline"
