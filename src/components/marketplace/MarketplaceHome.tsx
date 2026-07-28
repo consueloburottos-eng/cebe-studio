@@ -390,7 +390,7 @@ export default function MarketplaceHome() {
   useEffect(() => {
     const SCRIPT_ID = "voiceflow-widget-script";
     const w = window as unknown as {
-      voiceflow?: { chat?: { load: (cfg: unknown) => void; close?: () => void; destroy?: () => void } };
+      voiceflow?: { chat?: { load: (cfg: unknown) => Promise<void>; close?: () => void; destroy?: () => void } };
     };
 
     const script = document.createElement("script");
@@ -398,12 +398,16 @@ export default function MarketplaceHome() {
     script.type = "text/javascript";
     script.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
     script.onload = () => {
-      w.voiceflow?.chat?.load({
-        verify: { projectID: "6a6760a952d1ef6a6a48daa4" },
-        url: "https://general-runtime.voiceflow.com",
-        versionID: "production",
-        voice: { url: "https://runtime-api.voiceflow.com" },
-      });
+      w.voiceflow?.chat
+        ?.load({
+          verify: { projectID: "6a6760a952d1ef6a6a48daa4" },
+          url: "https://general-runtime.voiceflow.com",
+          versionID: "production",
+          voice: { url: "https://runtime-api.voiceflow.com" },
+        })
+        // the project has no published "production" version yet — swallow so
+        // it doesn't surface as an unhandled rejection until it's published
+        .catch(() => {});
     };
     document.body.appendChild(script);
 
