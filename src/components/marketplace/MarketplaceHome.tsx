@@ -402,11 +402,11 @@ export default function MarketplaceHome() {
         ?.load({
           verify: { projectID: "6a6760a952d1ef6a6a48daa4" },
           url: "https://general-runtime.voiceflow.com",
-          versionID: "production",
+          versionID: "main",
           voice: { url: "https://runtime-api.voiceflow.com" },
         })
-        // the project has no published "production" version yet — swallow so
-        // it doesn't surface as an unhandled rejection until it's published
+        // keep any transient load failure from surfacing as an unhandled
+        // rejection — the widget just won't render if this happens
         .catch(() => {});
     };
     document.body.appendChild(script);
