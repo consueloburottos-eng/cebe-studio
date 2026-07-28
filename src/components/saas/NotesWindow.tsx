@@ -370,29 +370,35 @@ export default function NotesWindow({
 
             {note === "contacto" && (
               <div>
-                <p className="max-w-[46ch] text-[14px] leading-[1.6]" style={{ color: "rgba(var(--os-txrgb),.75)" }}>
-                  {ui.contactBody}
+                <span className="text-[11px] font-bold tracking-[0.2em] uppercase" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
+                  {snapshotUi.tabs.book}
+                </span>
+                <h2 className="mt-3.5 text-[36px] leading-[.98] font-extrabold lowercase tracking-[-0.03em]">
+                  {snapshotUi.bookHeadline}
+                </h2>
+                <p className="mt-4 max-w-[46ch] text-[14px] leading-[1.6]" style={{ color: "rgba(var(--os-txrgb),.75)" }}>
+                  {snapshotUi.bookBody}
                 </p>
-                <div className="mt-4 flex flex-wrap gap-2.5">
+                <div className="mt-[26px] flex flex-wrap items-center gap-2.5">
                   <a
-                    href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(ui.mailSubject)}&body=${encodeURIComponent(ui.mailBody)}`}
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-bold no-underline"
+                    href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(snapshotUi.mailSubject)}&body=${encodeURIComponent(snapshotUi.mailBody)}`}
+                    className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13.5px] font-bold no-underline"
                     style={{ background: "var(--os-tx)", color: "var(--os-win)" }}
                   >
-                    {ui.sendMessage} <span>→</span>
+                    {snapshotUi.sendMessage} <span>→</span>
                   </a>
                   <button
                     type="button"
                     onClick={handleCopy}
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-semibold"
+                    className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13.5px] font-semibold"
                     style={{ border: "1px solid var(--os-hr)", background: "transparent", color: "inherit" }}
                   >
-                    {copied ? ui.copied : ui.copyEmail} <span>⧉</span>
+                    {copied ? snapshotUi.copied : snapshotUi.copyEmail} <span>⧉</span>
                   </button>
                   <button
                     type="button"
                     onClick={onOpenBook}
-                    className="rounded-full px-5 py-2.5 text-[13px] font-semibold"
+                    className="rounded-full px-5 py-2.5 text-[13.5px] font-semibold"
                     style={{ border: "1px solid var(--os-hr)", background: "transparent", color: "inherit" }}
                   >
                     {ui.bookCallBtn}
