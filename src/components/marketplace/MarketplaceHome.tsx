@@ -87,7 +87,6 @@ const SHOWCASE_BASE = [
         "Documented handoff for development",
       ],
     },
-    priceFrom: 4500,
     media: { type: "image" as const, src: "/showcase/service-1.webp" },
   },
   {
@@ -114,7 +113,6 @@ const SHOWCASE_BASE = [
         "E-commerce platform integration",
       ],
     },
-    priceFrom: 3200,
     media: { type: "image" as const, src: "/showcase/service-2.webp" },
   },
   {
@@ -141,7 +139,6 @@ const SHOWCASE_BASE = [
         "Findings and recommendations report",
       ],
     },
-    priceFrom: 2200,
     media: { type: "image" as const, src: "/showcase/service-3.png" },
   },
   {
@@ -168,7 +165,6 @@ const SHOWCASE_BASE = [
         "Code sync (Code Connect)",
       ],
     },
-    priceFrom: 5000,
     media: { type: "image" as const, src: "/showcase/service-4.png" },
   },
   {
@@ -195,7 +191,6 @@ const SHOWCASE_BASE = [
         "Applications across digital and print pieces",
       ],
     },
-    priceFrom: 2500,
     media: { type: "image" as const, src: "/showcase/service-5.png" },
   },
   {
@@ -222,7 +217,6 @@ const SHOWCASE_BASE = [
         "Success-metric definition",
       ],
     },
-    priceFrom: 3000,
     media: { type: "image" as const, src: "/showcase/service-6.png" },
   },
 ];
@@ -791,7 +785,6 @@ export default function MarketplaceHome() {
 
               <ServiceCard
                 title={activeService.title}
-                priceFrom={activeService.priceFrom}
                 thumbnailSrc={activeService.media.src}
                 pageOptions={SERVICE_PAGE_OPTIONS[activeService.id]}
                 initial={serviceCart[activeService.id]}
@@ -982,7 +975,6 @@ export default function MarketplaceHome() {
               return {
                 id,
                 title: service.title,
-                priceFrom: service.priceFrom,
                 thumbnailSrc: service.media.src,
                 pages: config.pages,
                 flows: config.flows,

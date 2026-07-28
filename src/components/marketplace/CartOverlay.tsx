@@ -6,7 +6,6 @@ import { t } from "@/lib/i18n";
 export type CartItem = {
   id: string;
   title: string;
-  priceFrom: number;
   thumbnailSrc: string;
   pages: string[];
   flows: number;
@@ -21,7 +20,6 @@ type CartOverlayProps = {
 export default function CartOverlay({ items, onClose, onRemove }: CartOverlayProps) {
   const [lang] = useSiteLanguage();
   const ui = t("marketplace", lang);
-  const total = items.reduce((sum, item) => sum + item.priceFrom, 0);
 
   return (
     <>
@@ -65,7 +63,6 @@ export default function CartOverlay({ items, onClose, onRemove }: CartOverlayPro
                 <div className="min-w-0 flex-1">
                   <div className="flex items-start justify-between gap-3">
                     <div className="font-serif text-[17px]">{item.title}</div>
-                    <div className="flex-none text-[14px]">{ui.priceFromLabel}{item.priceFrom.toLocaleString("en-US")}</div>
                   </div>
                   <div className="mt-1.5 text-[12.5px]" style={{ color: "rgba(20,18,16,.6)" }}>
                     {item.pages.length > 0 ? item.pages.join(", ") : ui.noPagesSelected}
@@ -84,11 +81,6 @@ export default function CartOverlay({ items, onClose, onRemove }: CartOverlayPro
                 </div>
               </div>
             ))}
-
-            <div className="flex items-center justify-between text-[15px] font-semibold">
-              <span>{ui.estimatedTotal}</span>
-              <span>{ui.priceFromLabel}{total.toLocaleString("en-US")}</span>
-            </div>
 
             <button
               type="button"

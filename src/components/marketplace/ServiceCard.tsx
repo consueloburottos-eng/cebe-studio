@@ -9,7 +9,6 @@ export type { ServiceCardConfig };
 
 type ServiceCardProps = {
   title: string;
-  priceFrom: number;
   thumbnailSrc?: string;
   pageOptions?: string[];
   initial?: ServiceCardConfig;
@@ -18,7 +17,6 @@ type ServiceCardProps = {
 
 export default function ServiceCard({
   title,
-  priceFrom,
   thumbnailSrc,
   pageOptions,
   initial,
@@ -51,10 +49,6 @@ export default function ServiceCard({
               {ui.serviceLabel}
             </div>
             <div className="mt-0.5 truncate font-serif text-[19px] text-white">{title}</div>
-            <div className="mt-0.5 text-[12.5px] text-white/70">
-              {ui.priceFromLabel}
-              {priceFrom.toLocaleString("en-US")}
-            </div>
           </div>
         </div>
 
