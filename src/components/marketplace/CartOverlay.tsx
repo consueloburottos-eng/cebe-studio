@@ -3,6 +3,8 @@
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
 
+const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
+
 export type CartItem = {
   id: string;
   title: string;
@@ -20,6 +22,18 @@ type CartOverlayProps = {
 export default function CartOverlay({ items, onClose, onRemove }: CartOverlayProps) {
   const [lang] = useSiteLanguage();
   const ui = t("marketplace", lang);
+
+  const quoteBody = [
+    ui.quoteIntro,
+    "",
+    ...items.map((item) =>
+      [
+        `- ${item.title}`,
+        `  ${ui.quotePages}: ${item.pages.length > 0 ? item.pages.join(", ") : ui.noPagesSelected}`,
+        `  ${ui.quoteFlows}: ${item.flows}`,
+      ].join("\n")
+    ),
+  ].join("\n");
 
   return (
     <>
@@ -82,13 +96,13 @@ export default function CartOverlay({ items, onClose, onRemove }: CartOverlayPro
               </div>
             ))}
 
-            <button
-              type="button"
-              className="mt-1 w-full rounded-full border-none py-3.5 text-[13px] font-semibold uppercase text-white"
+            <a
+              href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(ui.quoteSubject)}&body=${encodeURIComponent(quoteBody)}`}
+              className="mt-1 block w-full rounded-full border-none py-3.5 text-center text-[13px] font-semibold uppercase text-white no-underline"
               style={{ background: "#141210", letterSpacing: ".06em" }}
             >
               {ui.submitRequest}
-            </button>
+            </a>
             <p className="text-center text-[11.5px]" style={{ color: "rgba(20,18,16,.5)" }}>
               {ui.cartFooterNote}
             </p>
