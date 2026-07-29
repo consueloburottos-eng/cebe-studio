@@ -95,8 +95,8 @@ export default function ModeSwitcher({
           <button
             type="button"
             onClick={onSetLight}
-            title="Light"
-            aria-label="Light"
+            title={effectiveLang === "en" ? "Light" : "Claro"}
+            aria-label={effectiveLang === "en" ? "Light" : "Claro"}
             className={segBase}
             style={{
               background: !dark ? textColor : "transparent",
@@ -108,8 +108,8 @@ export default function ModeSwitcher({
           <button
             type="button"
             onClick={onSetDark}
-            title="Dark"
-            aria-label="Dark"
+            title={effectiveLang === "en" ? "Dark" : "Oscuro"}
+            aria-label={effectiveLang === "en" ? "Dark" : "Oscuro"}
             className={segBase}
             style={{
               background: dark ? textColor : "transparent",

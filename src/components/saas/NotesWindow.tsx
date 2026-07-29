@@ -135,7 +135,7 @@ export default function NotesWindow({
                     <Image src="/profile/avatar.webp" alt="Consuelo Burotto" fill sizes="64px" className="object-cover" />
                   </div>
                   <div>
-                    <div className="text-xl font-bold">consuelo</div>
+                    <div className="text-xl font-bold">Consuelo Burotto</div>
                     <div className="text-[13px]" style={{ color: "rgba(var(--os-txrgb),.6)" }}>
                       UX/UI Lead Senior Designer
                     </div>

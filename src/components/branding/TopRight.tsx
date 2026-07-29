@@ -17,11 +17,11 @@ export default function TopRight({ onOpenBook, onOpenAbout }: TopRightProps) {
       <button
         type="button"
         onClick={onOpenAbout}
-        title="Perfil"
+        title={lang === "en" ? "Profile" : "Perfil"}
         className="relative h-8 w-8 flex-none overflow-hidden rounded-full border-none backdrop-blur-xl sm:h-[38px] sm:w-[38px]"
         style={{ background: "var(--cb-glass-pill)" }}
       >
-        <Image src="/profile/avatar.webp" alt="Perfil" fill sizes="38px" className="object-cover" />
+        <Image src="/profile/avatar.webp" alt={lang === "en" ? "Profile" : "Perfil"} fill sizes="38px" className="object-cover" />
       </button>
       <button
         type="button"

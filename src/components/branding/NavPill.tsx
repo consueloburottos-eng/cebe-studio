@@ -34,9 +34,17 @@ export default function NavPill({
       <button
         type="button"
         onClick={onToggle}
-        title="menú"
+        title={lang === "en" ? "menu" : "menú"}
         aria-expanded={open}
-        aria-label={open ? "Cerrar menú" : "Abrir menú"}
+        aria-label={
+          open
+            ? lang === "en"
+              ? "Close menu"
+              : "Cerrar menú"
+            : lang === "en"
+              ? "Open menu"
+              : "Abrir menú"
+        }
         className="flex h-[26px] w-[26px] items-center justify-center rounded-full border-none font-display text-xs font-black leading-none sm:h-[30px] sm:w-[30px]"
         style={{ background: "var(--cb-cta-bg)", color: "var(--cb-cta-text)" }}
       >

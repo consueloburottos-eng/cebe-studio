@@ -78,7 +78,7 @@ export default function ServiceConfigPopover({
         </div>
 
         <div className="mt-4 text-[11px] uppercase text-white/50" style={{ letterSpacing: ".16em" }}>
-          Basic Template Pages
+          {ui.basicTemplatePages}
         </div>
         <div className="mt-2.5 flex max-h-[140px] flex-wrap gap-1.5 overflow-y-auto">
           {basicPages.map((p) => (
@@ -99,7 +99,7 @@ export default function ServiceConfigPopover({
         </div>
 
         <div className="mt-4 text-[11px] uppercase text-white/50" style={{ letterSpacing: ".16em" }}>
-          Custom Flows
+          {ui.customFlows}
         </div>
         <div className="mt-2.5 flex gap-2">
           {FLOW_OPTIONS.map((n) => (

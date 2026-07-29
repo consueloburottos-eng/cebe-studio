@@ -178,8 +178,8 @@ export const UI = {
   saas: {
     es: {
       menu: {
-        overview: "Overview",
-        projects: "Projects",
+        overview: "Resumen",
+        projects: "Proyectos",
         skills: "Skills",
         contact: "Contacto",
         available: "Disponible",
@@ -313,7 +313,7 @@ export const UI = {
   },
   marketplace: {
     es: {
-      designServices: "Design Services",
+      designServices: "Servicios de Diseño",
       heroLine1Pre: "Diseño con ",
       heroLine1Em: "propósito",
       heroLine1Post: ".",
@@ -355,6 +355,7 @@ export const UI = {
       mySelection: "Mi selección",
       noServicesYet: "Todavía no agregaste ningún servicio.",
       noPagesSelected: "Sin páginas seleccionadas",
+      basicTemplatePages: "Páginas de la plantilla",
       customFlows: "Custom Flows",
       remove: "Quitar",
       submitRequest: "Enviar solicitud",
@@ -412,6 +413,7 @@ export const UI = {
       mySelection: "My selection",
       noServicesYet: "You haven't added any services yet.",
       noPagesSelected: "No pages selected",
+      basicTemplatePages: "Basic Template Pages",
       customFlows: "Custom Flows",
       remove: "Remove",
       submitRequest: "Submit request",

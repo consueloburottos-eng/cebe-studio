@@ -167,7 +167,7 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
               </div>
               <div>
                 <h2 className="m-0 font-display text-[30px] font-extrabold lowercase leading-none tracking-[-0.02em]">
-                  consuelo
+                  Consuelo Burotto
                 </h2>
                 <div className="mt-2 text-[13.5px] text-[var(--cb-muted)]">
                   UX/UI Lead Senior Designer
