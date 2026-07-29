@@ -81,7 +81,7 @@ export const UI = {
   },
   about: {
     es: {
-      tabs: { perfil: "Perfil", snapshot: "Talent", experiencia: "Experiencia", skills: "Skills", book: "Book me" },
+      tabs: { perfil: "Perfil", snapshot: "Talent", experiencia: "Experiencia", skills: "Skills", book: "Agéndame" },
       yearsExperience: "Años de experiencia",
       companiesRoles: "Empresas · roles UX/UI",
       education: "Educación",
@@ -118,7 +118,7 @@ export const UI = {
       project: "proyecto",
       projectsPlural: "proyectos",
       fullToolkit: "Toolkit completo",
-      bookHeadline: "let's build something",
+      bookHeadline: "construyamos algo juntos",
       bookBody: "Cuéntame sobre tu proyecto de identidad, producto o experiencia. Respondo en 24–48 h.",
       copied: "Copiado ✓",
       sendMessage: "Enviar mensaje",
