@@ -5,8 +5,9 @@ import { t } from "@/lib/i18n";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/cburotto/";
+const CALENDLY_URL = "https://calendly.com/consuelo-burotto-s/30min";
 
-export default function ConnectCard({ onBookCall }: { onBookCall: () => void }) {
+export default function ConnectCard() {
   const [lang] = useSiteLanguage();
   const ui = t("saas", lang);
 
@@ -34,15 +35,16 @@ export default function ConnectCard({ onBookCall }: { onBookCall: () => void }) 
         >
           in
         </a>
-        <button
-          type="button"
-          onClick={onBookCall}
+        <a
+          href={CALENDLY_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           title={ui.connectBookCall}
           className="flex h-8 w-8 flex-none items-center justify-center rounded-full border-none text-[13px]"
           style={{ background: "rgba(var(--os-sfrgb),.08)", color: "var(--os-tx)" }}
         >
           🗓
-        </button>
+        </a>
       </div>
     </div>
   );
