@@ -4,6 +4,7 @@ import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
+const LINKEDIN_URL = "https://www.linkedin.com/in/cburotto/";
 
 export default function ConnectCard({ onBookCall }: { onBookCall: () => void }) {
   const [lang] = useSiteLanguage();
@@ -22,6 +23,16 @@ export default function ConnectCard({ onBookCall }: { onBookCall: () => void }) 
           style={{ background: "rgba(var(--os-sfrgb),.08)", color: "var(--os-tx)" }}
         >
           ✉
+        </a>
+        <a
+          href={LINKEDIN_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={ui.connectLinkedin}
+          className="flex h-8 w-8 flex-none items-center justify-center rounded-full border-none text-[13px] font-bold"
+          style={{ background: "rgba(var(--os-sfrgb),.08)", color: "var(--os-tx)" }}
+        >
+          in
         </a>
         <button
           type="button"
