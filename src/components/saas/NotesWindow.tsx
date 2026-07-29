@@ -373,7 +373,7 @@ export default function NotesWindow({
                 <span className="text-[11px] font-bold tracking-[0.2em] uppercase" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
                   {snapshotUi.tabs.book}
                 </span>
-                <h2 className="mt-3.5 text-[36px] leading-[.98] font-extrabold lowercase tracking-[-0.03em]">
+                <h2 className="mt-3.5 text-[36px] leading-[.98] font-extrabold tracking-[-0.03em]">
                   {snapshotUi.bookHeadline}
                 </h2>
                 <p className="mt-4 max-w-[46ch] text-[14px] leading-[1.6]" style={{ color: "rgba(var(--os-txrgb),.75)" }}>

@@ -53,7 +53,7 @@ export default function BookModal({ onClose }: { onClose: () => void }) {
         <span className="font-sans text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--cb-muted)]">
           {ui.tabs.book}
         </span>
-        <h2 className="mt-3.5 font-display text-[40px] font-extrabold lowercase leading-[.98] tracking-[-0.03em]">
+        <h2 className="mt-3.5 font-display text-[40px] font-extrabold leading-[.98] tracking-[-0.03em]">
           {ui.bookHeadline}
         </h2>
         <p className="mt-4 text-[14.5px] leading-[1.6] text-[var(--cb-muted)]">
