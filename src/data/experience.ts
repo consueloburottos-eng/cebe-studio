@@ -1,4 +1,4 @@
-// From her real CV (2026-06-30-cv-consuelo-burotto.pdf), most recent first.
+// From her real CV (CB_CV.pdf, uploaded 2026-07-29), most recent first.
 // Shared between Branding's AboutModal and SaaS's FeaturedExperience card
 // so the two stay in sync instead of drifting apart.
 export type ExperienceEntry = {
@@ -11,18 +11,18 @@ export type ExperienceEntry = {
 
 export const EXPERIENCE: ExperienceEntry[] = [
   {
-    role: "UX/UI Lead Senior Designer",
+    role: "Senior Product Designer",
     company: "BuildWithin",
     period: "2025–Hoy",
     place: "Remote",
-    note: "Diseño UX/UI de una plataforma de desarrollo laboral que conecta aprendizaje, formación y empleo; personas, journey maps y experience blueprints de punta a punta para programas, postulantes y case managers.",
+    note: "Diseño de experiencias enterprise AI-native para desarrollo laboral gubernamental — flujos multi-rol, IA conversacional y un sistema de diseño robusto para programas, postulantes y case managers.",
   },
   {
-    role: "UX/UI Lead Senior Designer",
+    role: "Lead Senior Product Designer",
     company: "Altafid",
-    period: "Jun 2022–Hoy",
-    place: "Remote",
-    note: "Diseño end-to-end de una plataforma SaaS para asesores financieros e inversionistas. Sistema de diseño propio de la empresa y +20% en retención de clientes al integrar UX con marketing, ventas y customer success.",
+    period: "Jun 2022–Sep 2024",
+    place: "Hybrid",
+    note: "Diseño end-to-end de una plataforma SaaS para asesores financieros e inversionistas. Sistema de diseño propio de la empresa, con design tokens y component libraries, y +20% en retención de clientes al integrar UX con marketing, ventas y customer success.",
   },
   {
     role: "UX/UI Senior Designer",
@@ -49,18 +49,18 @@ export const EXPERIENCE: ExperienceEntry[] = [
 
 export const EXPERIENCE_EN: ExperienceEntry[] = [
   {
-    role: "UX/UI Lead Senior Designer",
+    role: "Senior Product Designer",
     company: "BuildWithin",
     period: "2025–Present",
     place: "Remote",
-    note: "UX/UI design for a workforce-development platform connecting learning, training, and employment; end-to-end personas, journey maps, and experience blueprints for programs, applicants, and case managers.",
+    note: "Designing AI-native enterprise experiences for government workforce development — multi-role flows, conversational AI, and a robust design system for programs, applicants, and case managers.",
   },
   {
-    role: "UX/UI Lead Senior Designer",
+    role: "Lead Senior Product Designer",
     company: "Altafid",
-    period: "Jun 2022–Present",
-    place: "Remote",
-    note: "End-to-end design of a SaaS platform for financial advisors and investors. Built the company's own design system and drove +20% client retention by integrating UX with marketing, sales, and customer success.",
+    period: "Jun 2022–Sep 2024",
+    place: "Hybrid",
+    note: "End-to-end design of a SaaS platform for financial advisors and investors. Built the company's own design system — with design tokens and component libraries — and drove +20% client retention by integrating UX with marketing, sales, and customer success.",
   },
   {
     role: "UX/UI Senior Designer",
