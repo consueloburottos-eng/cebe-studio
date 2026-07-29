@@ -98,7 +98,6 @@ export default function SaasDesktop() {
             note={note}
             onNoteChange={setNote}
             onClose={() => setWin(null)}
-            onOpenBook={() => setBookOpen(true)}
           />
         )}
         {bookOpen && <BookModal onClose={() => setBookOpen(false)} />}

@@ -17,6 +17,7 @@ import {
   SNAPSHOT_BEST_FIT_REASONS_EN,
 } from "@/data/talentSnapshot";
 import TalentRadar from "@/components/TalentRadar";
+import CalendlyModal from "@/components/CalendlyModal";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
 
@@ -28,14 +29,12 @@ type NotesWindowProps = {
   note: NoteId;
   onNoteChange: (note: NoteId) => void;
   onClose: () => void;
-  onOpenBook: () => void;
 };
 
 export default function NotesWindow({
   note,
   onNoteChange,
   onClose,
-  onOpenBook,
 }: NotesWindowProps) {
   const [lang] = useSiteLanguage();
   const ui = t("saas", lang);
@@ -45,6 +44,7 @@ export default function NotesWindow({
   const certifications = lang === "en" ? CERTIFICATIONS_EN : CERTIFICATIONS;
   const snapshotBestFitReasons = lang === "en" ? SNAPSHOT_BEST_FIT_REASONS_EN : SNAPSHOT_BEST_FIT_REASONS;
   const [copied, setCopied] = useState(false);
+  const [calendlyOpen, setCalendlyOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -380,12 +380,20 @@ export default function NotesWindow({
                   {snapshotUi.bookBody}
                 </p>
                 <div className="mt-[26px] flex flex-wrap items-center justify-center gap-2.5">
-                  <a
-                    href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(snapshotUi.mailSubject)}&body=${encodeURIComponent(snapshotUi.mailBody)}`}
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13.5px] font-bold no-underline"
+                  <button
+                    type="button"
+                    onClick={() => setCalendlyOpen(true)}
+                    className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13.5px] font-bold"
                     style={{ background: "var(--os-tx)", color: "var(--os-win)" }}
                   >
-                    {snapshotUi.sendMessage} <span>→</span>
+                    {snapshotUi.scheduleCalendly} <span>→</span>
+                  </button>
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(snapshotUi.mailSubject)}&body=${encodeURIComponent(snapshotUi.mailBody)}`}
+                    className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13.5px] font-semibold no-underline"
+                    style={{ border: "1px solid var(--os-hr)", background: "transparent", color: "inherit" }}
+                  >
+                    {snapshotUi.sendMessage}
                   </a>
                   <button
                     type="button"
@@ -395,20 +403,19 @@ export default function NotesWindow({
                   >
                     {copied ? snapshotUi.copied : snapshotUi.copyEmail} <span>⧉</span>
                   </button>
-                  <button
-                    type="button"
-                    onClick={onOpenBook}
-                    className="rounded-full px-5 py-2.5 text-[13.5px] font-semibold"
-                    style={{ border: "1px solid var(--os-hr)", background: "transparent", color: "inherit" }}
-                  >
-                    {ui.bookCallBtn}
-                  </button>
                 </div>
               </div>
             )}
           </div>
         </div>
       </div>
+
+      {calendlyOpen && (
+        <CalendlyModal
+          onClose={() => setCalendlyOpen(false)}
+          closeLabel={lang === "en" ? "close" : "cerrar"}
+        />
+      )}
     </div>
   );
 }

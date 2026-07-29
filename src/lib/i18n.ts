@@ -204,7 +204,6 @@ export const UI = {
       dockContact: "Contacto",
       notesTabs: { about: "About", talent: "Talent", experiencia: "Experiencia", servicios: "Servicios", contacto: "Contacto" },
       downloadCV: "Download CV",
-      bookCallBtn: "Reservar llamada",
       services: [
         { name: "Product Design & UX/UI", desc: "Diseño de producto end-to-end: research, flujos, sistemas y pulido de interfaz." },
         { name: "Diseño de experiencia agéntica", desc: "Conversational UX para agentes de IA — puertas de entrada conversacionales, no formularios con filtros." },
@@ -272,7 +271,6 @@ export const UI = {
       dockContact: "Contact",
       notesTabs: { about: "About", talent: "Talent", experiencia: "Experience", servicios: "Services", contacto: "Contact" },
       downloadCV: "Download CV",
-      bookCallBtn: "Book a call",
       services: [
         { name: "Product Design & UX/UI", desc: "End-to-end product design: research, flows, systems, and interface polish." },
         { name: "Agentic Experience Design", desc: "Conversational UX for AI agents — conversational front doors, not filter-based forms." },
