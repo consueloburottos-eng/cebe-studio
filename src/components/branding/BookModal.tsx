@@ -3,14 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
+import CalendlyModal from "@/components/CalendlyModal";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
-const CALENDLY_URL = "https://calendly.com/consuelo-burotto-s/30min";
 
 export default function BookModal({ onClose }: { onClose: () => void }) {
   const [lang] = useSiteLanguage();
   const ui = t("about", lang);
   const [copied, setCopied] = useState(false);
+  const [calendlyOpen, setCalendlyOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -61,15 +62,14 @@ export default function BookModal({ onClose }: { onClose: () => void }) {
           {ui.bookBody}
         </p>
         <div className="mt-[26px] flex flex-wrap items-center gap-2.5">
-          <a
-            href={CALENDLY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border-none px-[22px] py-[13px] font-sans text-[13.5px] font-bold no-underline"
+          <button
+            type="button"
+            onClick={() => setCalendlyOpen(true)}
+            className="inline-flex items-center gap-2 rounded-full border-none px-[22px] py-[13px] font-sans text-[13.5px] font-bold"
             style={{ background: "var(--cb-cta-bg)", color: "var(--cb-cta-text)" }}
           >
             {ui.scheduleCalendly} <span>→</span>
-          </a>
+          </button>
           <a
             href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(ui.mailSubject)}&body=${encodeURIComponent(ui.mailBody)}`}
             className="inline-flex items-center gap-2 rounded-full border px-[22px] py-[13px] font-sans text-[13.5px] font-semibold no-underline"
@@ -87,6 +87,15 @@ export default function BookModal({ onClose }: { onClose: () => void }) {
           </button>
         </div>
       </div>
+
+      {calendlyOpen && (
+        <div onClick={(e) => e.stopPropagation()}>
+          <CalendlyModal
+            onClose={() => setCalendlyOpen(false)}
+            closeLabel={lang === "en" ? "close" : "cerrar"}
+          />
+        </div>
+      )}
     </div>
   );
 }

@@ -1,15 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
+import CalendlyModal from "@/components/CalendlyModal";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/cburotto/";
-const CALENDLY_URL = "https://calendly.com/consuelo-burotto-s/30min";
 
 export default function ConnectCard() {
   const [lang] = useSiteLanguage();
   const ui = t("saas", lang);
+  const [calendlyOpen, setCalendlyOpen] = useState(false);
 
   return (
     <div className="os-glass rounded-2xl px-[16px] py-3">
@@ -35,17 +37,23 @@ export default function ConnectCard() {
         >
           in
         </a>
-        <a
-          href={CALENDLY_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          onClick={() => setCalendlyOpen(true)}
           title={ui.connectBookCall}
           className="flex h-8 w-8 flex-none items-center justify-center rounded-full border-none text-[13px]"
           style={{ background: "rgba(var(--os-sfrgb),.08)", color: "var(--os-tx)" }}
         >
           🗓
-        </a>
+        </button>
       </div>
+
+      {calendlyOpen && (
+        <CalendlyModal
+          onClose={() => setCalendlyOpen(false)}
+          closeLabel={lang === "en" ? "close" : "cerrar"}
+        />
+      )}
     </div>
   );
 }
