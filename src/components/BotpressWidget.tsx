@@ -2,6 +2,28 @@
 
 import { useEffect } from "react";
 
+const FAB_STYLE_ID = "botpress-fab-position-override";
+const FAB_OVERRIDE_CSS = `
+  .bpFabWrapper {
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+  }
+  .bpFABMessagePreview {
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(calc(-50% - 46px)) !important;
+  }
+`;
+
+function injectFabOverride(shadowRoot: ShadowRoot) {
+  if (shadowRoot.getElementById(FAB_STYLE_ID)) return;
+  const style = document.createElement("style");
+  style.id = FAB_STYLE_ID;
+  style.textContent = FAB_OVERRIDE_CSS;
+  shadowRoot.appendChild(style);
+}
+
 // Consuelo AI (Botpress) — mounted once at the root layout so it's present
 // across Corporate, SaaS, and Marketplace alike.
 export default function BotpressWidget() {
@@ -21,7 +43,20 @@ export default function BotpressWidget() {
     };
     document.body.appendChild(injectScript);
 
+    let fabObserver: MutationObserver | null = null;
+    const poll = window.setInterval(() => {
+      const fabRoot = document.getElementById("fab-root");
+      if (fabRoot?.shadowRoot) {
+        injectFabOverride(fabRoot.shadowRoot);
+        fabObserver = new MutationObserver(() => injectFabOverride(fabRoot.shadowRoot!));
+        fabObserver.observe(fabRoot.shadowRoot, { childList: true, subtree: true });
+        window.clearInterval(poll);
+      }
+    }, 300);
+
     return () => {
+      window.clearInterval(poll);
+      fabObserver?.disconnect();
       const w = window as unknown as { botpress?: { close?: () => void } };
       w.botpress?.close?.();
       document.getElementById(INJECT_ID)?.remove();
