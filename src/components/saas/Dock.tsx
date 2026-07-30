@@ -17,10 +17,20 @@ type DockProps = {
 export default function Dock({ active, onHome, onProjects, onAbout, onCV, onContacto }: DockProps) {
   const [lang] = useSiteLanguage();
   const ui = t("saas", lang);
-  const items: { id: SaasWindow | "home"; glyph: string; label: string; fn: () => void }[] = [
+  const items: { id: SaasWindow | "home"; glyph: React.ReactNode; label: string; fn: () => void }[] = [
     { id: "home", glyph: "⌂", label: ui.dockDesktop, fn: onHome },
     { id: "projects", glyph: "▦", label: ui.dockProjects, fn: onProjects },
-    { id: "about", glyph: "✎", label: ui.dockAbout, fn: onAbout },
+    {
+      id: "about",
+      glyph: (
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" />
+        </svg>
+      ),
+      label: ui.dockAbout,
+      fn: onAbout,
+    },
     { id: "about", glyph: "⤓", label: ui.dockCV, fn: onCV },
     { id: "about", glyph: "✉", label: ui.dockContact, fn: onContacto },
   ];
