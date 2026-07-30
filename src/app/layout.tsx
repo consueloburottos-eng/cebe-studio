@@ -7,6 +7,7 @@ import {
   Space_Mono,
 } from "next/font/google";
 import { siteUrl, siteName, siteDescription } from "@/lib/site";
+import BotpressWidget from "@/components/BotpressWidget";
 import "./globals.css";
 
 const raleway = Raleway({
@@ -81,7 +82,10 @@ export default function RootLayout({
       lang="es"
       className={`${raleway.variable} ${montserrat.variable} ${instrumentSerif.variable} ${spaceGrotesk.variable} ${spaceMono.variable} h-full antialiased`}
     >
-      <body className="h-full">{children}</body>
+      <body className="h-full">
+        {children}
+        <BotpressWidget />
+      </body>
     </html>
   );
 }
