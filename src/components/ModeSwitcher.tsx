@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { Lang } from "@/hooks/useSiteLanguage";
 
 export type SiteMode = "branding" | "saas" | "marketplace";
@@ -30,6 +31,7 @@ export default function ModeSwitcher({
   onSetLang,
   variant = "light",
 }: ModeSwitcherProps) {
+  const router = useRouter();
   const isDarkVariant = variant === "dark";
   const stripBg = isDarkVariant ? "rgba(30,30,30,.45)" : "var(--cb-glass-pill, rgba(255,255,255,.55))";
   const stripHr = isDarkVariant ? "rgba(255,255,255,.1)" : "var(--cb-hair, rgba(17,17,17,.12))";
@@ -72,7 +74,23 @@ export default function ModeSwitcher({
           </button>
         </div>
       )}
-      <div className="flex gap-0.5 rounded-full p-[3px]" style={{ background: segBg }}>
+      <select
+        value={mode}
+        onChange={(e) => {
+          const next = MODES.find((m) => m.key === e.target.value);
+          if (next) router.push(next.href);
+        }}
+        aria-label={effectiveLang === "en" ? "Mode" : "Modo"}
+        className="rounded-full border-none px-3 py-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.06em] sm:hidden"
+        style={{ background: segBg, color: textColor }}
+      >
+        {MODES.map((m) => (
+          <option key={m.key} value={m.key}>
+            {m.label}
+          </option>
+        ))}
+      </select>
+      <div className="hidden gap-0.5 rounded-full p-[3px] sm:flex" style={{ background: segBg }}>
         {MODES.map((m) => {
           const active = m.key === mode;
           return (

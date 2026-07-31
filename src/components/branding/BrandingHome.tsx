@@ -117,6 +117,12 @@ export default function BrandingHome() {
     heroProjects.length
   ).padStart(2, "0")}`;
 
+  // "Scroll ↕ para barajar" / "Scroll ↕ to shuffle" — on mobile this wraps
+  // to two lines (first two words, then the rest) instead of one long line.
+  const scrollHintWords = t("projectDetail", lang).scrollHint.split(" ");
+  const scrollHintLine1 = scrollHintWords.slice(0, 2).join(" ");
+  const scrollHintLine2 = scrollHintWords.slice(2).join(" ");
+
   return (
     <div
       data-cb-theme={dark ? "dark" : "light"}
@@ -185,8 +191,15 @@ export default function BrandingHome() {
         <LastProjectWidget />
         <GridButton counter={counter} onOpen={() => setGridOpen(true)} />
 
-        <div className="pointer-events-none absolute bottom-[30px] left-1/2 z-[15] -translate-x-1/2 font-sans text-[10.5px] uppercase tracking-[0.2em] text-[var(--cb-muted)]">
-          {t("projectDetail", lang).scrollHint}
+        <div className="pointer-events-none absolute bottom-[30px] left-1/2 z-[15] -translate-x-1/2 text-center font-sans text-[10.5px] uppercase leading-[1.6] tracking-[0.2em] text-[var(--cb-muted)]">
+          <span className="sm:hidden">
+            {scrollHintLine1}
+            <br />
+            {scrollHintLine2}
+          </span>
+          <span className="hidden sm:inline">
+            {scrollHintLine1} {scrollHintLine2}
+          </span>
         </div>
 
         {gridOpen && (

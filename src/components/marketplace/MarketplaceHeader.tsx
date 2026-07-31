@@ -9,7 +9,9 @@ type MarketplaceHeaderProps = {
   onBack?: () => void;
   onOpenCart?: () => void;
   onOpenProfile?: () => void;
+  onOpenSaved?: () => void;
   cartCount?: number;
+  savedCount?: number;
 };
 
 export default function MarketplaceHeader({
@@ -17,7 +19,9 @@ export default function MarketplaceHeader({
   onBack,
   onOpenCart,
   onOpenProfile,
+  onOpenSaved,
   cartCount = 0,
+  savedCount = 0,
 }: MarketplaceHeaderProps) {
   const [lang] = useSiteLanguage();
   const ui = t("marketplace", lang);
@@ -48,11 +52,26 @@ export default function MarketplaceHeader({
             <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" />
           </svg>
         </button>
-        <span title={ui.saved}>
+        <button
+          type="button"
+          onClick={onOpenSaved}
+          title={ui.saved}
+          aria-hidden={!onOpenSaved}
+          className="relative border-none bg-transparent p-0"
+          style={{ color: "inherit" }}
+        >
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 20.5s-7.5-4.6-10-9.3C.4 8 1.8 4.5 5.2 4c2-.3 3.7.7 4.8 2.3C11.1 4.7 12.8 3.7 14.8 4c3.4.5 4.8 4 3.2 7.2C15.5 15.9 12 20.5 12 20.5Z" />
           </svg>
-        </span>
+          {savedCount > 0 && (
+            <span
+              className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-bold text-white"
+              style={{ background: "#B8623F" }}
+            >
+              {savedCount}
+            </span>
+          )}
+        </button>
         <button
           type="button"
           onClick={onOpenCart}

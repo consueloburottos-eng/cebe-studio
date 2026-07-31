@@ -17,6 +17,7 @@ import {
   SNAPSHOT_BEST_FIT_REASONS_EN,
 } from "@/data/talentSnapshot";
 import TalentRadar from "@/components/TalentRadar";
+import ServiceIllustration from "@/components/branding/ServiceIllustration";
 import CalendlyModal from "@/components/CalendlyModal";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
@@ -105,17 +106,17 @@ export default function NotesWindow({
           </span>
         </div>
 
-        <div className="flex min-h-0 flex-1">
+        <div className="flex min-h-0 flex-1 flex-col sm:flex-row">
           <div
-            className="w-[150px] flex-none overflow-y-auto px-2.5 py-3.5 sm:w-[190px]"
-            style={{ borderRight: "1px solid var(--os-hr)", background: "rgba(var(--os-sfrgb),.02)" }}
+            className="flex flex-none flex-row gap-0.5 overflow-x-auto border-b px-2.5 py-2 sm:w-[190px] sm:flex-col sm:gap-0 sm:overflow-y-auto sm:border-b-0 sm:border-r sm:py-3.5"
+            style={{ borderColor: "var(--os-hr)", background: "rgba(var(--os-sfrgb),.02)" }}
           >
             {NOTES.map((n) => (
               <button
                 key={n.id}
                 type="button"
                 onClick={() => onNoteChange(n.id)}
-                className="mb-0.5 w-full rounded-lg border-none px-2.5 py-2 text-left font-sans text-[13px]"
+                className="mb-0.5 flex-none rounded-lg border-none px-2.5 py-2 text-left font-sans text-[13px] whitespace-nowrap sm:w-full"
                 style={{
                   background: note === n.id ? "rgba(110,124,255,.16)" : "transparent",
                   color: note === n.id ? "var(--os-tx)" : "rgba(var(--os-txrgb),.6)",
@@ -127,7 +128,7 @@ export default function NotesWindow({
             ))}
           </div>
 
-          <div className="min-w-0 flex-1 overflow-y-auto px-6 py-5" style={{ color: "var(--os-tx)" }}>
+          <div className="min-w-0 flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5" style={{ color: "var(--os-tx)" }}>
             {note === "about" && (
               <div>
                 <div className="flex items-center gap-4">
@@ -356,12 +357,22 @@ export default function NotesWindow({
             )}
 
             {note === "servicios" && (
-              <div className="flex flex-col gap-4">
-                {ui.services.map((s) => (
-                  <div key={s.name}>
-                    <div className="text-[14.5px] font-bold">{s.name}</div>
-                    <div className="mt-1 text-[13px] leading-[1.5]" style={{ color: "rgba(var(--os-txrgb),.65)" }}>
+              <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-6">
+                {snapshotUi.services.map((s, i) => (
+                  <div
+                    key={s.name}
+                    className={`flex flex-col gap-2.5 rounded-xl p-4 ${i < 2 ? "sm:col-span-3" : "sm:col-span-2"}`}
+                    style={{ border: "1px solid var(--os-hr)" }}
+                  >
+                    <div className="text-[14.5px] font-bold leading-snug">{s.name}</div>
+                    <p className="m-0 text-[12.5px] leading-[1.55]" style={{ color: "rgba(var(--os-txrgb),.65)" }}>
                       {s.desc}
+                    </p>
+                    <div
+                      className="mt-1 overflow-hidden rounded-lg"
+                      style={{ background: "rgba(var(--os-sfrgb),.06)", color: "var(--os-tx)" }}
+                    >
+                      <ServiceIllustration index={i} bgColor="var(--os-win)" />
                     </div>
                   </div>
                 ))}

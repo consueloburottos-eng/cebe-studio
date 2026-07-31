@@ -295,6 +295,81 @@ body {
   animation: radar-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
+/* Servicios tab (AboutModal) — small monochrome illustrations, one per
+   service card, each with its own subtle looping motion. */
+@keyframes cb-svc-wave {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+.cb-svc-wave-line {
+  animation: cb-svc-wave 3.2s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 220ms);
+}
+
+@keyframes cb-svc-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.cb-svc-orbit-dot {
+  animation: cb-svc-orbit 6s linear infinite;
+  transform-origin: 50px 50px;
+}
+
+@keyframes cb-svc-scan {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(38px);
+    opacity: 0.4;
+  }
+}
+.cb-svc-scan-line {
+  animation: cb-svc-scan 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes cb-svc-pulse-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+.cb-svc-pulse-ring {
+  animation: cb-svc-pulse-ring 2.2s ease-out infinite;
+  transform-origin: center;
+}
+
+@keyframes cb-svc-bar {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.45);
+  }
+}
+.cb-svc-bar {
+  animation: cb-svc-bar 1.8s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 160ms);
+  transform-box: fill-box;
+  transform-origin: bottom;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cb-letter,
   .cb-deck-intro,

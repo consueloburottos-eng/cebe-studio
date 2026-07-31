@@ -12,6 +12,7 @@ import {
   SNAPSHOT_BEST_FIT_REASONS_EN,
 } from "@/data/talentSnapshot";
 import TalentRadar from "@/components/TalentRadar";
+import ServiceIllustration from "./ServiceIllustration";
 import {
   EDUCATION,
   EDUCATION_EN,
@@ -25,7 +26,7 @@ import { t } from "@/lib/i18n";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
 
-type Tab = "perfil" | "snapshot" | "experiencia" | "skills" | "book";
+type Tab = "perfil" | "snapshot" | "experiencia" | "skills" | "servicios" | "book";
 
 // derived from every real project's skill tags, not hand-picked — reflects
 // what she's actually tagged her case studies with across the site
@@ -85,6 +86,7 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
     { key: "snapshot", label: ui.tabs.snapshot },
     { key: "experiencia", label: ui.tabs.experiencia },
     { key: "skills", label: ui.tabs.skills },
+    { key: "servicios", label: ui.tabs.servicios },
     { key: "book", label: ui.tabs.book },
   ];
   const experience = lang === "en" ? EXPERIENCE_EN : EXPERIENCE;
@@ -113,27 +115,27 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-[120] flex items-center justify-center overflow-auto p-6"
+      className="fixed inset-0 z-[200] flex items-center justify-center overflow-auto p-3 sm:p-6"
       style={{ background: "rgba(0,0,0,.55)" }}
       onClick={onClose}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative flex w-full max-w-[760px] max-h-[88vh] overflow-hidden"
+        className="relative flex w-full max-w-[760px] max-h-[92vh] sm:max-h-[88vh] flex-col sm:flex-row overflow-hidden"
         style={{ background: "var(--cb-bg)", color: "var(--cb-text)" }}
       >
         <button
           type="button"
           onClick={onClose}
           title={lang === "en" ? "close" : "cerrar"}
-          className="absolute top-6 right-6 z-10 flex h-9 w-9 items-center justify-center rounded-full border text-sm"
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 flex h-9 w-9 items-center justify-center rounded-full border text-sm"
           style={{ borderColor: "var(--cb-hair)", background: "var(--cb-bg)" }}
         >
           ✕
         </button>
 
         <div
-          className="flex w-[150px] flex-none flex-col gap-1.5 border-r p-4 pt-16"
+          className="flex flex-none flex-row gap-1.5 overflow-x-auto border-b p-3 pr-14 sm:w-[150px] sm:flex-col sm:overflow-visible sm:border-b-0 sm:border-r sm:p-4 sm:pt-16"
           style={{ borderColor: "var(--cb-hair)" }}
         >
           {TABS.map(({ key, label }) => (
@@ -141,7 +143,7 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
               key={key}
               type="button"
               onClick={() => setTab(key)}
-              className="cursor-pointer rounded-full border-none px-4 py-2.5 text-left font-sans text-[13px] font-bold tracking-[0.01em]"
+              className="flex-none cursor-pointer whitespace-nowrap rounded-full border-none px-4 py-2.5 text-left font-sans text-[13px] font-bold tracking-[0.01em]"
               style={{
                 background: tab === key ? "var(--cb-cta-bg)" : "var(--cb-pill)",
                 color: tab === key ? "var(--cb-cta-text)" : "var(--cb-muted)",
@@ -152,7 +154,7 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
           ))}
         </div>
 
-        <div className="flex-1 overflow-auto px-10 pt-11 pb-9">
+        <div className="flex-1 overflow-auto px-5 py-6 sm:px-10 sm:pt-11 sm:pb-9">
         {tab === "perfil" && (
           <div>
             <div className="flex items-center gap-5">
@@ -437,6 +439,30 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
                   </span>
                 ))}
               </div>
+            </div>
+          </div>
+        )}
+
+        {tab === "servicios" && (
+          <div className="mt-7">
+            <SectionLabel>{ui.tabs.servicios}</SectionLabel>
+            <div className="mt-4 grid grid-cols-1 gap-3.5 sm:grid-cols-6">
+              {ui.services.map((s, i) => (
+                <div
+                  key={s.name}
+                  className={`flex flex-col gap-2.5 rounded-2xl border p-4 ${i < 2 ? "sm:col-span-3" : "sm:col-span-2"}`}
+                  style={{ borderColor: "var(--cb-hair)" }}
+                >
+                  <div className="text-[14.5px] font-bold leading-snug">{s.name}</div>
+                  <p className="m-0 text-[12.5px] leading-[1.55] text-[var(--cb-muted)]">{s.desc}</p>
+                  <div
+                    className="mt-1 overflow-hidden rounded-xl"
+                    style={{ background: "var(--cb-pill)", color: "var(--cb-text)" }}
+                  >
+                    <ServiceIllustration index={i} />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}

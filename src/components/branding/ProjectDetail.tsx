@@ -10,11 +10,28 @@ import AboutModal from "./AboutModal";
 import BookModal from "./BookModal";
 import NavPill from "./NavPill";
 import TopRight from "./TopRight";
+import ModeSwitcher from "@/components/ModeSwitcher";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { localizeProject, localizeProjects, t } from "@/lib/i18n";
 
 // span sequence lifted from the original prototype's projSel.intro grid (indices 0-12)
 const INTRO_SPAN_PATTERN = [2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1];
+
+// Mobile intro strip: tiles keep the exact pixel size they'd have on desktop
+// (computed from the same 9-column / 10px-gap formula as the desktop grid,
+// at the page's max content width) instead of shrinking to fit — the strip
+// scrolls horizontally in a single row instead.
+const DESKTOP_CONTENT_WIDTH = 1130 - 28 * 2; // max-w-[1130px] minus px-7 both sides
+const INTRO_GRID_GAP = 10;
+const INTRO_UNIT = (DESKTOP_CONTENT_WIDTH - INTRO_GRID_GAP * 8) / 9;
+// row height is a single fixed value shared by every tile (as on desktop,
+// where grid-auto-rows is one constant) — only width scales with the span,
+// so a span-2 tile reads as wide/landscape rather than tall/portrait.
+const INTRO_ROW_HEIGHT = Math.round(INTRO_UNIT * 1.4);
+function mobileTileSize(span: number) {
+  const width = Math.round(INTRO_UNIT * span + INTRO_GRID_GAP * (span - 1));
+  return { width, height: INTRO_ROW_HEIGHT };
+}
 
 type ProjectDetailProps = {
   project: Project;
@@ -25,7 +42,7 @@ type Tab = "brief" | "strategy" | "services" | "skills";
 
 export default function ProjectDetail({ project: rawProject, others: rawOthers }: ProjectDetailProps) {
   const router = useRouter();
-  const [lang] = useSiteLanguage();
+  const [lang, setLang] = useSiteLanguage();
   const project = localizeProject(rawProject, lang);
   const others = localizeProjects(rawOthers, lang);
   const ui = t("projectDetail", lang);
@@ -89,6 +106,7 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
       </div>
 
       <div className="sticky top-0 z-10">
+        <ModeSwitcher mode="branding" lang={lang} onSetLang={setLang} />
         <ProgressiveBlur side="top" height={110} />
         <div className="relative z-[1] flex h-[60px] items-center justify-between px-4 sm:px-[26px]">
           <NavPill
@@ -145,9 +163,9 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
         className="relative z-0 min-h-dvh w-full rounded-none backdrop-blur-2xl"
         style={{ background: "var(--cb-glass-pill)" }}
       >
-        <div className="mx-auto max-w-[1130px] px-7 py-10 pb-[90px]">
+        <div className="mx-auto max-w-[1130px] px-7 pt-[100px] pb-[90px]">
           <div
-            className="relative mb-10 aspect-[1482/798] overflow-hidden rounded-[20px]"
+            className="relative mb-10 aspect-[1482/798] overflow-hidden rounded-[4px] sm:rounded-[20px]"
             style={{ background: "var(--cb-pill)" }}
           >
             <ProjectMedia
@@ -158,7 +176,28 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
             />
           </div>
 
-          <div className="mb-14" style={{ containerType: "inline-size" }}>
+          <div className="mb-14 flex gap-[10px] overflow-x-auto pb-1 sm:hidden">
+            {introItems.map((g, i) => {
+              const span = INTRO_SPAN_PATTERN[i];
+              const { width, height } = mobileTileSize(span);
+              return (
+                <div
+                  key={i}
+                  className="flex-none overflow-hidden rounded-[4px]"
+                  style={{ width, height, background: "var(--cb-pill)" }}
+                >
+                  <ProjectMedia
+                    media={g.media}
+                    label={g.label}
+                    sizes={`${width}px`}
+                    uploadPath={`/projects/${folder}/intro-${String(i + 1).padStart(2, "0")}`}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mb-14 hidden sm:block" style={{ containerType: "inline-size" }}>
             <div
               className="grid gap-[10px]"
               style={{

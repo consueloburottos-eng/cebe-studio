@@ -6,19 +6,21 @@ import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
 import ProgressiveBlur from "../ProgressiveBlur";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 type ProjectsGridOverlayProps = {
   projects: Project[];
   onClose: () => void;
 };
 
-const COLUMN_COUNT = 5;
+const DESKTOP_COLUMN_COUNT = 5;
+const MOBILE_COLUMN_COUNT = 3;
 
 function ProjectCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="group relative block aspect-[1482/798] overflow-hidden rounded-2xl"
+      className="group relative block aspect-[1482/798] overflow-hidden rounded-[4px] sm:rounded-2xl"
       style={{ background: "var(--cb-glass-pill)" }}
     >
       <ProjectMedia
@@ -33,14 +35,16 @@ function ProjectCard({ project }: { project: Project }) {
 
 export default function ProjectsGridOverlay({ projects, onClose }: ProjectsGridOverlayProps) {
   const [lang] = useSiteLanguage();
-  const columns: Project[][] = Array.from({ length: COLUMN_COUNT }, () => []);
+  const isMobile = useMediaQuery("(max-width: 639px)");
+  const columnCount = isMobile ? MOBILE_COLUMN_COUNT : DESKTOP_COLUMN_COUNT;
+  const columns: Project[][] = Array.from({ length: columnCount }, () => []);
   projects.forEach((project, i) => {
-    columns[i % COLUMN_COUNT].push(project);
+    columns[i % columnCount].push(project);
   });
 
   const trackRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const loopLengths = useRef<number[]>(Array(COLUMN_COUNT).fill(0));
-  const positions = useRef<number[]>(Array(COLUMN_COUNT).fill(0));
+  const loopLengths = useRef<number[]>(Array(columnCount).fill(0));
+  const positions = useRef<number[]>(Array(columnCount).fill(0));
 
   useEffect(() => {
     function measure() {
@@ -73,7 +77,7 @@ export default function ProjectsGridOverlay({ projects, onClose }: ProjectsGridO
       style={{ background: "var(--cb-glass-pill)" }}
       onWheel={handleWheel}
     >
-      <div className="grid h-full grid-cols-5 gap-3 p-3">
+      <div className={`grid h-full gap-3 p-3 ${columnCount === MOBILE_COLUMN_COUNT ? "grid-cols-3" : "grid-cols-5"}`}>
         {columns.map((col, i) => (
           <div key={i} className="relative h-full overflow-hidden">
             <div

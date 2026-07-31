@@ -9,11 +9,13 @@ import ResultsGrid from "./ResultsGrid";
 import FullscreenMenu from "./FullscreenMenu";
 import ProjectMedia from "@/components/ProjectMedia";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useSiteLanguage, type Lang } from "@/hooks/useSiteLanguage";
 import { t, localizeProjects } from "@/lib/i18n";
 import ServiceCard, { type ServiceCardConfig } from "./ServiceCard";
 import ServiceConfigPopover from "./ServiceConfigPopover";
 import CartOverlay from "./CartOverlay";
+import FavoritesOverlay from "./FavoritesOverlay";
 import AboutModal from "@/components/branding/AboutModal";
 
 // asymmetric 6-photo showcase grid (tall-short-short-tall), styled after a
@@ -375,7 +377,9 @@ export default function MarketplaceHome() {
   const [serviceCart, setServiceCart] = useState<Record<string, ServiceCardConfig>>({});
   const [cartOpen, setCartOpen] = useState(false);
   const [configuringId, setConfiguringId] = useState<string | null>(null);
+  const [savedOpen, setSavedOpen] = useState(false);
   const heroInputRef = useRef<HTMLInputElement>(null);
+  const isMobileGrid = useMediaQuery("(max-width: 639px)");
 
   // each mode is its own full "page" (hero, service banner, results grid) —
   // switching between them should always start scrolled to the top rather
@@ -520,7 +524,9 @@ export default function MarketplaceHome() {
               onOpenMenu={() => setMenuOpen(true)}
               onOpenCart={() => setCartOpen(true)}
               onOpenProfile={() => setAboutOpen(true)}
+              onOpenSaved={() => setSavedOpen(true)}
               cartCount={Object.keys(serviceCart).length}
+              savedCount={favorited.size}
             />
             <div className="absolute inset-0">
               {heroMedia.type === "video" ? (
@@ -606,19 +612,23 @@ export default function MarketplaceHome() {
             </span>
           </div>
 
-          <div className="relative h-[86vh] w-full px-3 py-3 sm:px-5 sm:py-5">
+          <div className={`relative w-full px-3 py-3 sm:px-5 sm:py-5 ${isMobileGrid ? "" : "h-[86vh]"}`}>
             <div
-              className="grid h-full gap-2.5"
-              style={{ gridTemplateColumns: "1.15fr 1fr 1fr 1.15fr", gridTemplateRows: "1fr 1fr" }}
+              className={isMobileGrid ? "flex flex-col gap-2.5" : "grid h-full gap-2.5"}
+              style={isMobileGrid ? undefined : { gridTemplateColumns: "1.15fr 1fr 1fr 1.15fr", gridTemplateRows: "1fr 1fr" }}
             >
               {SHOWCASE.map((item, i) => (
                 <div
                   key={item.id}
-                  className="group relative overflow-hidden rounded-[6px]"
+                  className={`group relative overflow-hidden rounded-[6px] ${isMobileGrid ? "aspect-[4/3] w-full" : ""}`}
                   style={{
                     background: "var(--mk-hr)",
-                    gridColumn: i === 0 || i === 5 ? (i === 0 ? "1" : "4") : i <= 2 ? "2" : "3",
-                    gridRow: i === 0 || i === 5 ? "1 / span 2" : i % 2 === 1 ? "1" : "2",
+                    ...(isMobileGrid
+                      ? {}
+                      : {
+                          gridColumn: i === 0 || i === 5 ? (i === 0 ? "1" : "4") : i <= 2 ? "2" : "3",
+                          gridRow: i === 0 || i === 5 ? "1 / span 2" : i % 2 === 1 ? "1" : "2",
+                        }),
                   }}
                 >
                   <ProjectMedia
@@ -673,13 +683,15 @@ export default function MarketplaceHome() {
                 </div>
               ))}
             </div>
-            <div
-              className="pointer-events-none absolute bottom-9 left-1/2 flex -translate-x-1/2 items-center gap-2 font-sans text-[12px] uppercase"
-              style={{ color: "var(--mk-tx)", letterSpacing: ".18em" }}
-            >
-              <span>↓</span>
-              <span>{ui.scrollToExplore}</span>
-            </div>
+            {!isMobileGrid && (
+              <div
+                className="pointer-events-none absolute bottom-9 left-1/2 flex -translate-x-1/2 items-center gap-2 font-sans text-[12px] uppercase"
+                style={{ color: "var(--mk-tx)", letterSpacing: ".18em" }}
+              >
+                <span>↓</span>
+                <span>{ui.scrollToExplore}</span>
+              </div>
+            )}
           </div>
 
           </>
@@ -957,6 +969,22 @@ export default function MarketplaceHome() {
                 return next;
               })
             }
+          />
+        )}
+
+        {savedOpen && (
+          <FavoritesOverlay
+            items={Array.from(favorited).map((id) => {
+              const service = SHOWCASE.find((s) => s.id === id)!;
+              return { id, title: service.title, desc: service.desc, thumbnailSrc: service.media.src };
+            })}
+            onClose={() => setSavedOpen(false)}
+            onRemove={(id) => toggleFavorite(id)}
+            onView={(id) => {
+              const service = SHOWCASE.find((s) => s.id === id);
+              if (service) viewService(service);
+              setSavedOpen(false);
+            }}
           />
         )}
 
