@@ -5,14 +5,26 @@ import { useEffect } from "react";
 const FAB_STYLE_ID = "botpress-fab-position-override";
 const FAB_OVERRIDE_CSS = `
   .bpFabWrapper {
-    top: 50% !important;
-    bottom: auto !important;
-    transform: translateY(-50%) !important;
+    top: auto !important;
+    bottom: 24px !important;
+    right: auto !important;
+    left: 24px !important;
+    transform: none !important;
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .bpFab,
+  .bpFabIcon,
+  .bpFabContainer {
+    width: 48px !important;
+    height: 48px !important;
   }
   .bpFABMessagePreview {
-    top: 50% !important;
-    bottom: auto !important;
-    transform: translateY(calc(-50% - 46px)) !important;
+    top: auto !important;
+    bottom: 88px !important;
+    right: auto !important;
+    left: 24px !important;
+    transform: none !important;
   }
 `;
 
