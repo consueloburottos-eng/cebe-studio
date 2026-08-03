@@ -12,6 +12,19 @@ type ProjectsWindowProps = {
   initialSlug?: string | null;
 };
 
+// gallery carousel below the cover banner — same span pattern and pixel
+// widths as the Corporate project detail's mobile intro strip, so tile
+// proportions (2-unit vs 1-unit tiles) stay consistent across modes.
+const INTRO_SPAN_PATTERN = [2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1];
+const INTRO_GRID_GAP = 10;
+const INTRO_CONTENT_WIDTH = 1130 - 28 * 2;
+const INTRO_UNIT = (INTRO_CONTENT_WIDTH - INTRO_GRID_GAP * 8) / 9;
+const INTRO_ROW_HEIGHT = Math.round(INTRO_UNIT * 1.4);
+function galleryTileSize(span: number) {
+  const width = Math.round(INTRO_UNIT * span + INTRO_GRID_GAP * (span - 1));
+  return { width, height: INTRO_ROW_HEIGHT };
+}
+
 export default function ProjectsWindow({ projects: rawProjects, onClose, initialSlug }: ProjectsWindowProps) {
   const [lang] = useSiteLanguage();
   const ui = t("saas", lang);
@@ -181,6 +194,30 @@ export default function ProjectsWindow({ projects: rawProjects, onClose, initial
                     uploadPath={`/projects/${assetFolder(selected)}/cover`}
                   />
                 </div>
+
+                {selected.gallery.length > 0 && (
+                  <div className="mt-3.5 flex gap-[10px] overflow-x-auto pb-1">
+                    {selected.gallery.map((g, i) => {
+                      const span = INTRO_SPAN_PATTERN[i % INTRO_SPAN_PATTERN.length];
+                      const { width, height } = galleryTileSize(span);
+                      return (
+                        <div
+                          key={i}
+                          className="flex-none overflow-hidden rounded-lg"
+                          style={{ width, height, background: "rgba(var(--os-sfrgb),.03)" }}
+                        >
+                          <ProjectMedia
+                            media={g.media}
+                            label={g.label}
+                            sizes={`${width}px`}
+                            uploadPath={`/projects/${assetFolder(selected)}/intro-${String(i + 1).padStart(2, "0")}`}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
                 <div className="mt-4.5 flex items-baseline justify-between gap-3">
                   <span className="text-[26px] font-bold tracking-[-0.01em]" style={{ color: "var(--os-tx)" }}>
                     {titleCase(selected.title)}

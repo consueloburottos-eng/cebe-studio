@@ -34,8 +34,8 @@ export const buildwithinSuperAdmin: Project = {
   features: [
     {
       id: "wioa-eligibility-rules",
-      label: "Reglas de elegibilidad WIOA",
-      title: "Motor de reglas de elegibilidad WIOA, configurable por organización",
+      label: "IA en escaneo de documentos",
+      title: "Motor de reglas de elegibilidad configurable, con escaneo de documentos por IA",
       body: [
         "WIOA (Workforce Innovation and Opportunity Act) exige verificar elegibilidad por categorías como residencia, edad, tamaño familiar, ingresos y discapacidad. Antes de este rediseño, todo esto se validaba manualmente desde una oficina, por teléfono o chat: un proceso lento, sin ninguna vista de seguimiento — no se sabía en qué estado estaba cada candidato, y muchas personas simplemente no terminaban de aplicar.",
         "La primera versión del flujo asumió que una lista fija de documentos por categoría alcanzaba para todas las organizaciones. La UX research mostró que no: cada organización cliente aceptaba distintos documentos válidos por categoría y aplicaba sus propias reglas, como ventanas de vigencia (por ejemplo, solo documentos de los últimos 30 o 60 días) — así que rediseñé el sistema como un motor de definiciones configurable por organización, sin depender del equipo técnico.",
@@ -43,8 +43,8 @@ export const buildwithinSuperAdmin: Project = {
         "Del lado del Super Admin, la vista muestra a cada candidato con su estado real: sin iniciar elegibilidad, en proceso, need review, not eligible o eligible. El case manager revisa cada prueba por categoría con la información de compliance extraída por IA directamente de los documentos — edad, residencia, ingreso familiar consolidado, historial escolar — dándole datos reales para generar matches más precisos con los programas disponibles.",
       ],
       en: {
-        label: "WIOA eligibility rules",
-        title: "Configurable WIOA eligibility rules engine",
+        label: "AI document scanning",
+        title: "Configurable eligibility rules engine with AI document scanning",
         body: [
           "WIOA (Workforce Innovation and Opportunity Act) requires verifying eligibility across categories like residency, age, family size, income, and disability. Before this redesign, all of this was validated manually out of an office, by phone, or through chat: a slow process with no tracking view at all — there was no way to see what status each candidate was in, and many people simply never finished applying.",
           "The flow's first version assumed a fixed document list per category would work for every organization. UX research showed it didn't: each client organization accepted different valid documents per category and applied its own rules, like validity windows (for example, only documents from the last 30 or 60 days) — so I redesigned the system as a definitions engine configurable per organization, without depending on the engineering team.",
