@@ -11,6 +11,7 @@ import BookModal from "./BookModal";
 import NavPill from "./NavPill";
 import TopRight from "./TopRight";
 import ModeSwitcher from "@/components/ModeSwitcher";
+import { useSiteTheme } from "@/hooks/useSiteTheme";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { localizeProject, localizeProjects, t } from "@/lib/i18n";
 
@@ -42,6 +43,7 @@ type Tab = "brief" | "strategy" | "services" | "skills";
 
 export default function ProjectDetail({ project: rawProject, others: rawOthers }: ProjectDetailProps) {
   const router = useRouter();
+  const [dark, setDark] = useSiteTheme();
   const [lang, setLang] = useSiteLanguage();
   const project = localizeProject(rawProject, lang);
   const others = localizeProjects(rawOthers, lang);
@@ -72,7 +74,7 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
   );
 
   return (
-    <div className="min-h-dvh" style={{ color: "var(--cb-text)" }} data-cb-theme="light">
+    <div className="min-h-dvh" style={{ color: "var(--cb-text)" }} data-cb-theme={dark ? "dark" : "light"}>
       {/* premium fullscreen frosted-glass backdrop — built from the project's
           own cover photo. Filter lives on this fixed leaf layer, not the
           root, so it never becomes a containing block for the fixed bottom
@@ -81,7 +83,11 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
           video, which can't be blurred the same way. */}
       <div
         className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
-        style={{ background: "linear-gradient(160deg, #efe9df 0%, #e4dccd 55%, #d8ceba 100%)" }}
+        style={{
+          background: dark
+            ? "linear-gradient(160deg, #2a2622 0%, #201d1a 55%, #17150f 100%)"
+            : "linear-gradient(160deg, #efe9df 0%, #e4dccd 55%, #d8ceba 100%)",
+        }}
       >
         {project.coverMedia?.type === "image" && (
           // eslint-disable-next-line @next/next/no-img-element
@@ -92,9 +98,12 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
             style={{ filter: "blur(48px) saturate(1.5) brightness(1.02)" }}
           />
         )}
-        {/* light wash — enough to keep foreground text legible without
-            flattening the blurred photo into a flat color wash */}
-        <div className="absolute inset-0" style={{ background: "rgba(244,241,234,.25)" }} />
+        {/* wash — enough to keep foreground text legible without flattening
+            the blurred photo into a flat color wash */}
+        <div
+          className="absolute inset-0"
+          style={{ background: dark ? "rgba(20,18,16,.4)" : "rgba(244,241,234,.25)" }}
+        />
         {/* gentle vignette for premium edge falloff */}
         <div
           className="absolute inset-0"
@@ -105,8 +114,16 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
         />
       </div>
 
-      <div className="sticky top-0 z-10">
-        <ModeSwitcher mode="branding" lang={lang} onSetLang={setLang} />
+      <div className="fixed inset-x-0 top-0 z-10">
+        <ModeSwitcher
+          mode="branding"
+          variant={dark ? "dark" : "light"}
+          dark={dark}
+          onSetLight={() => setDark(false)}
+          onSetDark={() => setDark(true)}
+          lang={lang}
+          onSetLang={setLang}
+        />
         <ProgressiveBlur side="top" height={110} />
         <div className="relative z-[1] flex h-[60px] items-center justify-between px-4 sm:px-[26px]">
           <NavPill
@@ -163,7 +180,7 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
         className="relative z-0 min-h-dvh w-full rounded-none backdrop-blur-2xl"
         style={{ background: "var(--cb-glass-pill)" }}
       >
-        <div className="mx-auto max-w-[1130px] px-7 pt-[100px] pb-[90px]">
+        <div className="mx-auto max-w-[1130px] px-7 pt-[120px] pb-[90px]">
           <div
             className="relative mb-10 aspect-[1482/798] overflow-hidden rounded-[4px] sm:rounded-[20px]"
             style={{ background: "var(--cb-pill)" }}

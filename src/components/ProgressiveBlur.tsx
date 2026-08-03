@@ -2,6 +2,11 @@ type ProgressiveBlurProps = {
   side: "top" | "bottom";
   height?: number;
   className?: string;
+  // color the wash fades toward — defaults to fully transparent (edge of
+  // the page fading to nothing). Pass the tone of whatever sits just past
+  // this blur's far edge (e.g. a glass panel's own flat tint) so the wash
+  // blends into it instead of dropping to transparent and creating a seam.
+  toColor?: string;
 };
 
 // Layered backdrop-blur with shrinking mask stops: near the edge every layer
@@ -15,7 +20,12 @@ const LAYERS = [
   { blur: 30, fade: 22 },
 ];
 
-export default function ProgressiveBlur({ side, height = 260, className = "" }: ProgressiveBlurProps) {
+export default function ProgressiveBlur({
+  side,
+  height = 260,
+  className = "",
+  toColor = "var(--cb-glass-hdr-0)",
+}: ProgressiveBlurProps) {
   const dir = side === "top" ? "to bottom" : "to top";
   const gradientAngle = side === "top" ? "180deg" : "0deg";
 
@@ -38,7 +48,7 @@ export default function ProgressiveBlur({ side, height = 260, className = "" }: 
       ))}
       <div
         className="absolute inset-0"
-        style={{ background: `linear-gradient(${gradientAngle}, var(--cb-glass-hdr), var(--cb-glass-hdr-0))` }}
+        style={{ background: `linear-gradient(${gradientAngle}, var(--cb-glass-hdr), ${toColor})` }}
       />
     </div>
   );

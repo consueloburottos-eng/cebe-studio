@@ -12,6 +12,7 @@ import {
   SNAPSHOT_BEST_FIT_REASONS_EN,
 } from "@/data/talentSnapshot";
 import TalentRadar from "@/components/TalentRadar";
+import CalendlyModal from "@/components/CalendlyModal";
 import ServiceIllustration from "./ServiceIllustration";
 import {
   EDUCATION,
@@ -25,6 +26,8 @@ import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
+const LINKEDIN_URL = "https://www.linkedin.com/in/cburotto/";
+const WHATSAPP_URL = "https://wa.me/56984253021";
 
 type Tab = "perfil" | "snapshot" | "experiencia" | "skills" | "servicios" | "book";
 
@@ -81,6 +84,7 @@ const SectionLabel = ({ children }: { children: React.ReactNode }) => (
 export default function AboutModal({ onClose }: { onClose: () => void }) {
   const [lang] = useSiteLanguage();
   const ui = t("about", lang);
+  const connectUi = t("saas", lang);
   const TABS: { key: Tab; label: string }[] = [
     { key: "perfil", label: ui.tabs.perfil },
     { key: "snapshot", label: ui.tabs.snapshot },
@@ -96,6 +100,7 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
   const languages = lang === "en" ? LANGUAGES_EN : LANGUAGES;
   const toolkit = lang === "en" ? TOOLKIT_EN : TOOLKIT;
   const [tab, setTab] = useState<Tab>("perfil");
+  const [calendlyOpen, setCalendlyOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -173,6 +178,60 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
                 </h2>
                 <div className="mt-2 text-[13.5px] text-[var(--cb-muted)]">
                   UX/UI Lead Senior Designer
+                </div>
+                <div className="mt-2.5 flex gap-2">
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={connectUi.connectWhatsapp}
+                    className="flex h-8 w-8 flex-none items-center justify-center rounded-full border-none"
+                    style={{ background: "var(--cb-pill)", color: "var(--cb-text)" }}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z" />
+                      <path
+                        d="M8.5 8.7c.2-.5.4-.5.6-.5h.5c.2 0 .4 0 .6.4.2.5.7 1.6.7 1.8.1.1.1.3 0 .4-.1.2-.2.3-.3.4l-.4.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.7.8c.2.1.3.2.4.3.1.2.1.9-.2 1.4-.3.5-1.3 1-2.5.9-1-.1-3-.7-4.7-2.4-1.6-1.5-2.2-3-2.4-3.5-.1-.4-.1-.9.1-1.3Z"
+                        fill="currentColor"
+                        stroke="none"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}`}
+                    title={connectUi.connectEmail}
+                    className="flex h-8 w-8 flex-none items-center justify-center rounded-full border-none text-[13px]"
+                    style={{ background: "var(--cb-pill)", color: "var(--cb-text)" }}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="5" width="18" height="14" rx="2" />
+                      <path d="M3 6.5l9 6.5 9-6.5" />
+                    </svg>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => setCalendlyOpen(true)}
+                    title={ui.scheduleCalendly}
+                    className="flex h-8 w-8 flex-none items-center justify-center rounded-full border-none"
+                    style={{ background: "var(--cb-pill)", color: "var(--cb-text)" }}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                  </button>
+                  <a
+                    href={LINKEDIN_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={connectUi.connectLinkedin}
+                    className="flex h-8 w-8 flex-none items-center justify-center rounded-full border-none text-[13px] font-bold"
+                    style={{ background: "var(--cb-pill)", color: "var(--cb-text)" }}
+                  >
+                    in
+                  </a>
                 </div>
               </div>
             </div>
@@ -497,6 +556,15 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
         )}
         </div>
       </div>
+
+      {calendlyOpen && (
+        <div onClick={(e) => e.stopPropagation()}>
+          <CalendlyModal
+            onClose={() => setCalendlyOpen(false)}
+            closeLabel={lang === "en" ? "close" : "cerrar"}
+          />
+        </div>
+      )}
     </div>
   );
 }

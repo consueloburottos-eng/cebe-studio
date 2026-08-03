@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
 import { t } from "@/lib/i18n";
 
@@ -28,9 +29,12 @@ export default function NavPill({
       className="flex items-center gap-1 rounded-full border-2 border-white py-1 pr-1 pl-3 backdrop-blur-xl sm:py-1.5 sm:pr-1.5 sm:pl-4"
       style={{ background: "var(--cb-glass-pill)" }}
     >
-      <span className="font-sans text-[11px] font-extrabold uppercase tracking-[0.04em] text-[var(--cb-text)] sm:text-sm">
+      <Link
+        href="/"
+        className="font-sans text-[11px] font-extrabold uppercase tracking-[0.04em] text-[var(--cb-text)] no-underline sm:text-sm"
+      >
         CEBE:STUDIO
-      </span>
+      </Link>
       <button
         type="button"
         onClick={onToggle}
