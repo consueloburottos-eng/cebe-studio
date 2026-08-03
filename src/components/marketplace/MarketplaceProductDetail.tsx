@@ -15,7 +15,7 @@ type MarketplaceProductDetailProps = {
   suggestions: Project[];
 };
 
-type Tab = "brief" | "strategy" | "services" | "skills";
+type Tab = "brief" | "strategy" | "services" | "skills" | (string & {});
 
 export default function MarketplaceProductDetail({ project: rawProject, suggestions: rawSuggestions }: MarketplaceProductDetailProps) {
   const [dark, setDark] = useSiteTheme();
@@ -32,6 +32,7 @@ export default function MarketplaceProductDetail({ project: rawProject, suggesti
   const serviceSteps = project.services
     ? project.services.split("·").map((s) => s.trim()).filter(Boolean)
     : [];
+  const activeFeature = project.features?.find((f) => f.id === activeTab);
   return (
     <div
       data-mk-theme={dark ? "dark" : "light"}
@@ -151,6 +152,17 @@ export default function MarketplaceProductDetail({ project: rawProject, suggesti
                 {pd.skills}
               </button>
             )}
+            {project.features?.map((feature) => (
+              <button
+                key={feature.id}
+                type="button"
+                onClick={() => setActiveTab(feature.id)}
+                className="border-none bg-transparent p-0 text-[12px] font-bold tracking-[0.1em] uppercase underline underline-offset-4"
+                style={{ color: "var(--mk-tx)", opacity: activeTab === feature.id ? 1 : 0.45 }}
+              >
+                {feature.label}
+              </button>
+            ))}
           </div>
 
           <div className="mt-4 text-[16px] leading-[1.6]" style={{ color: "rgba(var(--mk-txrgb),.82)" }}>
@@ -187,6 +199,14 @@ export default function MarketplaceProductDetail({ project: rawProject, suggesti
                   >
                     {skill}
                   </span>
+                ))}
+              </div>
+            )}
+
+            {activeFeature && (
+              <div className="flex flex-col gap-4">
+                {activeFeature.body.map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
                 ))}
               </div>
             )}

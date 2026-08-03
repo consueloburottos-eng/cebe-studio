@@ -1,11 +1,28 @@
-import type { Project } from "@/data/projects";
+import type { FeatureDeepDive, Project } from "@/data/projects";
 import type { Lang } from "@/hooks/useSiteLanguage";
+
+// Same fallback convention as localizeProject below, but for a single
+// feature deep-dive tab: any field missing from `en` falls back to Spanish.
+function localizeFeature(feature: FeatureDeepDive, lang: Lang): FeatureDeepDive {
+  if (lang === "es" || !feature.en) return feature;
+  return {
+    ...feature,
+    label: feature.en.label ?? feature.label,
+    title: feature.en.title ?? feature.title,
+    body: feature.en.body ?? feature.body,
+  };
+}
 
 // Merges a project's optional `en` overrides on top of its (Spanish) base
 // fields. Any field missing from `en` quietly falls back to Spanish, so a
 // project can be translated incrementally without breaking the toggle.
 export function localizeProject(project: Project, lang: Lang): Project {
-  if (lang === "es" || !project.en) return project;
+  const features = project.features?.map((f) => localizeFeature(f, lang));
+
+  if (lang === "es" || !project.en) {
+    return features ? { ...project, features } : project;
+  }
+
   const en = project.en;
   return {
     ...project,
@@ -19,6 +36,7 @@ export function localizeProject(project: Project, lang: Lang): Project {
     brief: en.brief ?? project.brief,
     strategy: en.strategy ?? project.strategy,
     headline: en.headline ?? project.headline,
+    features,
   };
 }
 

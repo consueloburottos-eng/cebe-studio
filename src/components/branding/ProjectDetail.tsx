@@ -39,7 +39,7 @@ type ProjectDetailProps = {
   others: Project[];
 };
 
-type Tab = "brief" | "strategy" | "services" | "skills";
+type Tab = "brief" | "strategy" | "services" | "skills" | (string & {});
 
 export default function ProjectDetail({ project: rawProject, others: rawOthers }: ProjectDetailProps) {
   const router = useRouter();
@@ -55,6 +55,7 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
   const serviceSteps = project.services
     ? project.services.split("·").map((s) => s.trim()).filter(Boolean)
     : [];
+  const activeFeature = project.features?.find((f) => f.id === activeTab);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [bookOpen, setBookOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
@@ -285,6 +286,17 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
                   {ui.skills}
                 </button>
               )}
+              {project.features?.map((feature) => (
+                <button
+                  key={feature.id}
+                  type="button"
+                  onClick={() => setActiveTab(feature.id)}
+                  className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
+                  style={{ opacity: activeTab === feature.id ? 1 : 0.45 }}
+                >
+                  {feature.label}
+                </button>
+              ))}
             </div>
             <div>
               <div className="font-sans text-[11px] uppercase tracking-[0.2em] text-[var(--cb-muted)]">
@@ -332,6 +344,9 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers }
                     ))}
                   </div>
                 )}
+
+                {activeFeature &&
+                  activeFeature.body.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
               </div>
 
               <div className="mt-7 grid grid-cols-2 gap-3.5 border-t border-b py-4 sm:grid-cols-4"

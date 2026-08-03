@@ -282,6 +282,24 @@ export default function ProjectsWindow({ projects: rawProjects, onClose, initial
                     </div>
                   </section>
                 )}
+
+                {selected.features?.map((feature) => (
+                  <section key={feature.id} className="mt-6 mb-2 max-w-[70ch]">
+                    <div
+                      className="text-[10.5px] font-bold uppercase tracking-[0.14em]"
+                      style={{ color: "rgba(var(--os-txrgb),.4)" }}
+                    >
+                      {feature.label}
+                    </div>
+                    <div className="mt-2 flex flex-col gap-3">
+                      {feature.body.map((paragraph, i) => (
+                        <p key={i} className="text-[13.5px] leading-[1.7]" style={{ color: "rgba(var(--os-txrgb),.72)" }}>
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                  </section>
+                ))}
               </div>
             )}
           </div>

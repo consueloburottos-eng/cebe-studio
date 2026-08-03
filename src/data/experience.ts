@@ -22,7 +22,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
     company: "Altafid",
     period: "Jun 2022–Sep 2024",
     place: "Hybrid",
-    note: "Diseño end-to-end de una plataforma SaaS para asesores financieros e inversionistas. Sistema de diseño propio de la empresa, con design tokens y component libraries, y +20% en retención de clientes al integrar UX con marketing, ventas y customer success.",
+    note: "Diseño end-to-end de una plataforma SaaS para asesores financieros e inversionistas. Sistema de diseño propio de la empresa, con design tokens y component libraries, integrando UX con marketing, ventas y customer success para aumentar la retención de clientes.",
   },
   {
     role: "UX/UI Senior Designer",
@@ -60,7 +60,7 @@ export const EXPERIENCE_EN: ExperienceEntry[] = [
     company: "Altafid",
     period: "Jun 2022–Sep 2024",
     place: "Hybrid",
-    note: "End-to-end design of a SaaS platform for financial advisors and investors. Built the company's own design system — with design tokens and component libraries — and drove +20% client retention by integrating UX with marketing, sales, and customer success.",
+    note: "End-to-end design of a SaaS platform for financial advisors and investors. Built the company's own design system — with design tokens and component libraries — and increased client retention by integrating UX with marketing, sales, and customer success.",
   },
   {
     role: "UX/UI Senior Designer",

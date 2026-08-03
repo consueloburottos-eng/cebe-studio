@@ -1,202 +1,20 @@
-export type MediaAsset = {
-  type: "image" | "video";
-  src: string;
-};
+export type {
+  MediaAsset,
+  GalleryItem,
+  ProjectTranslation,
+  Project,
+  FeatureDeepDive,
+} from "./projects/helpers";
+export { assetFolder } from "./projects/helpers";
 
-export type GalleryItem = {
-  label: string;
-  media?: MediaAsset;
-};
-
-export type ProjectTranslation = {
-  category?: string;
-  tag?: string;
-  subtitle?: string;
-  role?: string;
-  result?: string;
-  services?: string;
-  skills?: string[];
-  brief?: string;
-  strategy?: string[];
-  headline?: string;
-};
-
-export type Project = {
-  slug: string;
-  title: string;
-  category: string;
-  tag: string;
-  subtitle: string;
-  client: string;
-  role: string;
-  year: string;
-  result: string;
-  services?: string;
-  skills: string[];
-  cover: string;
-  coverMedia?: MediaAsset;
-  brief: string;
-  strategy: string[];
-  headline: string;
-  gallery: GalleryItem[];
-  pending?: boolean;
-  // English overrides for the EN/ES site-wide language toggle — see
-  // src/lib/i18n.ts:localizeProject(). Undefined fields fall back to the
-  // Spanish original above.
-  en?: ProjectTranslation;
-};
-
-function img(slug: string, file: string): MediaAsset {
-  return { type: "image", src: `/projects/${slug}/${file}` };
-}
-
-function video(slug: string, file: string): MediaAsset {
-  return { type: "video", src: `/projects/${slug}/${file}` };
-}
-
-function mediaFor(folder: string, file: string): MediaAsset {
-  return file.endsWith(".mp4") || file.endsWith(".mov") ? video(folder, file) : img(folder, file);
-}
-
-// generates generic-labeled gallery items for intro-<start>..<end> uploads;
-// `defaultExt` covers projects uploaded mostly as one format (e.g. mostly
-// .mp4), `extOverrides` covers individual slots re-uploaded in a different
-// format (e.g. { 4: "png" } when intro-04 exists as .png instead of the rest)
-function introGallery(
-  folder: string,
-  title: string,
-  start: number,
-  end: number,
-  defaultExt: string = "webp",
-  extOverrides: Record<number, string> = {}
-): GalleryItem[] {
-  const items: GalleryItem[] = [];
-  for (let n = start; n <= end; n++) {
-    const ext = extOverrides[n] ?? defaultExt;
-    items.push({
-      label: `${title} — imagen ${n}`,
-      media: mediaFor(folder, `intro-${String(n).padStart(2, "0")}.${ext}`),
-    });
-  }
-  return items;
-}
-
-// A project's public/projects/<folder> name doesn't always match its URL
-// slug (e.g. "bodas-de-sangre" ships assets under "violencia-normalizada").
-// Derive the real folder from any media the project already has, falling
-// back to the slug only for projects with no assets yet.
-export function assetFolder(project: Project): string {
-  const sample = project.coverMedia?.src ?? project.gallery.find((g) => g.media)?.media?.src;
-  const match = sample?.match(/^\/projects\/([^/]+)\//);
-  return match ? match[1] : project.slug;
-}
+import { img, introGallery, mediaFor, type Project } from "./projects/helpers";
+import { talentCapital } from "./projects/talent-capital";
+import { buildwithinSuperAdmin } from "./projects/buildwithin-design-system";
+import { altafidPlatform } from "./projects/altafid";
 
 export const projects: Project[] = [
-  {
-    slug: "talent-capital",
-    title: "talent capital",
-    category: "Product Design",
-    tag: "product design · ux & ui",
-    subtitle: "Powered by BuildWithin",
-    client: "BuildWithin",
-    role: "Lead Product Designer",
-    year: "2025",
-    result: "Ecosistema unificado DC · MD · VA + validación documental automatizada por IA",
-    services:
-      "Diseño de experiencia agéntica · Diseño de sitio web y plataforma de candidatos · Design System",
-    skills: [
-      "Figma",
-      "Conversational UX",
-      "Design Systems",
-      "UX Research",
-      "Prototipado (Maze)",
-      "Diseño responsive",
-      "Accesibilidad",
-      "Colaboración multi-stakeholder",
-    ],
-    cover: "Talent Capital — plataforma de candidatos",
-    coverMedia: video("talent-capital", "hero.mp4"),
-    brief:
-      "Talent Capital nació de un mandato de una coalición regional (DC, Maryland, Virginia): empleadores, agencias de gobierno y organizaciones sin fines de lucro necesitaban una sola puerta de entrada al mercado laboral de la región, hoy fragmentado en decenas de bolsas de trabajo y portales inconexos. En alianza con BuildWithin, lideré como Lead Product Designer el rediseño completo de la plataforma — originalmente enfocada en otro mercado — hacia un producto Workforce capaz de gestionar candidatos, aprendizaje, elegibilidad y oportunidades laborales mediante IA, con Celeste (el agente conversacional) como puerta de entrada, en vez de un buscador con filtros.",
-    strategy: [
-      "El punto de partida fue la persona que busca trabajo, no la oferta. Diseñé la experiencia agéntica de Celeste como primera interacción: contarle a alguien qué está buscando, no elegir categoría y ubicación. En paralelo, diseñé el sitio web y la plataforma de candidatos completa, donde empleo, formación, coaching y eventos conviven con el mismo peso — cada organización socia necesitaba que su programa se sintiera nativo de la plataforma, así que el sistema de componentes sostiene por igual una vacante que un programa de coaching ejecutivo.",
-      "Uno de los procesos más costosos era la validación de elegibilidad, tradicionalmente manual: los candidatos entregaban múltiples documentos y los administradores revisaban uno por uno categoría, vigencia, firmas, coincidencia con el perfil y calidad de imagen — repitiendo la revisión cuando un mismo documento servía para varias categorías. Rediseñé este flujo integrando IA que identifica el tipo de documento, lo clasifica, reutiliza un mismo archivo para múltiples requisitos, valida vencimientos y firmas, detecta baja calidad, y determina elegibilidad antes de avanzar — deteniendo el flujo antes de una revisión administrativa que nunca iba a aprobarse.",
-      "Como Lead Product Designer, construí también el Design System que sostiene toda la plataforma y apoyé al equipo en flujos complejos: investigación → arquitectura de información → user flows → wireframes → prototipos de alta fidelidad → pruebas en Maze → revisión con Product → feedback con cliente y CEO → iteración → handoff. El trabajo se validó de forma continua con Product, el cliente y la CEO de BuildWithin, no como una fase aislada al final.",
-    ],
-    headline: "un consejero, no un buscador",
-    gallery: introGallery("talent-capital", "Talent Capital", 1, 13, "mp4", { 1: "webp", 2: "webp" }),
-    en: {
-      tag: "product design · ux & ui",
-      subtitle: "Powered by BuildWithin",
-      result: "Unified DC · MD · VA ecosystem + AI-automated document validation",
-      services: "Agentic experience design · Candidate website & platform design · Design System",
-      skills: [
-        "Figma",
-        "Conversational UX",
-        "Design Systems",
-        "UX Research",
-        "Prototyping (Maze)",
-        "Responsive Design",
-        "Accessibility",
-        "Multi-stakeholder Collaboration",
-      ],
-      brief:
-        "Talent Capital was born from a regional coalition mandate (DC, Maryland, Virginia): employers, government agencies, and nonprofits needed a single front door to the region's job market, today fragmented across dozens of disconnected job boards and portals. In partnership with BuildWithin, I led as Lead Product Designer the full redesign of the platform — originally built for a different market — into a Workforce product capable of managing candidates, learning, eligibility, and job opportunities through AI, with Celeste (the conversational agent) as the front door, instead of a filter-based search.",
-      strategy: [
-        "The starting point was the person looking for work, not the listing. I designed Celeste's agentic experience as the first interaction: telling someone what they're looking for, rather than picking a category and location. In parallel, I designed the full website and candidate platform, where jobs, training, coaching, and events carry equal weight — every partner organization needed its program to feel native to the platform, so the component system supports a job posting and an executive coaching program equally.",
-        "One of the most costly processes was eligibility validation, traditionally manual: candidates submitted multiple documents and administrators reviewed each one — category, validity, signatures, profile match, and image quality — repeating the review whenever one document served multiple categories. I redesigned this flow by integrating AI that identifies the document type, classifies it, reuses a single file across multiple requirements, validates expiration dates and signatures, flags low quality, and determines eligibility before moving forward — stopping the flow before an administrative review that was never going to be approved.",
-        "As Lead Product Designer, I also built the Design System that underpins the whole platform and supported the team through complex flows: research → information architecture → user flows → wireframes → high-fidelity prototypes → Maze testing → Product review → client and CEO feedback → iteration → handoff. The work was validated continuously with Product, the client, and BuildWithin's CEO, not as an isolated phase at the end.",
-      ],
-      headline: "an advisor, not a search bar",
-    },
-  },
-  {
-    slug: "buildwithin-design-system",
-    title: "buildwithin — superadmin",
-    category: "Product Design",
-    tag: "product design · enterprise saas · ai-powered ops",
-    subtitle: "Plataforma Enterprise para gestionar programas Workforce con IA",
-    client: "BuildWithin",
-    role: "Lead Product Designer",
-    year: "2025",
-    result: "Ecosistema Enterprise configurable — programas, elegibilidad WIOA y matching automatizados por IA",
-    services: "Product Design · Design System · Estrategia de producto Enterprise",
-    skills: [
-      "Figma",
-      "Maze",
-      "Design Systems",
-      "Enterprise UX",
-      "AI-powered workflows",
-      "Prototipado",
-      "Stakeholder Management",
-    ],
-    cover: "BuildWithin — SuperAdmin",
-    coverMedia: img("buildwithin-design-system", "cover.png"),
-    brief:
-      "BuildWithin Admin Platform es el sistema Enterprise que administra el ciclo completo de programas Workforce — configuración, elegibilidad, aprendizaje y operación — para gobiernos, organizaciones y centros de capacitación. La plataforma original de BuildWithin estaba pensada para otro modelo de negocio; la evolucionamos hacia un producto Workforce que debía soportar seis perfiles de usuario distintos (Super Admin, Organization Admin, Talent Manager, Case Manager, Employer, Staff interno), cada uno con permisos, herramientas y flujos propios. Como Lead Product Designer lideré esta transformación completa durante 6 meses: definí la experiencia de producto de principio a fin, diseñé las funcionalidades principales, construí el Design System, y validé cada decisión junto con Product, la CEO y los stakeholders — sin perder de vista que cada organización cliente tiene reglas de negocio completamente distintas entre sí.",
-    strategy: [
-      "La estrategia se apoyó en tres principios. Configuración antes que desarrollo: siempre que fue posible, las organizaciones debían poder configurar el sistema —reglas WIOA, documentos requeridos, umbrales económicos, criterios de elegibilidad, programas, Pathways— sin depender del equipo técnico. Automatización mediante IA: en vez de trasladar procesos manuales al entorno digital, buscamos automatizarlos, para que la IA redujera trabajo operativo real y no se convirtiera en una funcionalidad más que aprender. Y plataforma escalable: cada módulo funciona de forma independiente pero comparte componentes, patrones y reglas — por eso diseñé un Design System desde cero.",
-      "El producto terminó siendo un ecosistema de módulos conectados: gestión de programas (módulos, unidades, competencias, documentos, horas de aprendizaje), un sistema de Learning Management para construir Pathways personalizados por organización, una vista unificada de administración de participantes con indicadores de progreso, estado, RTI y Journey Health para detectar casos en riesgo, y Candidate 360° — una sola pantalla con toda la información, documentos, aplicaciones, programas y elegibilidad de cada candidato, eliminando la navegación entre pantallas sueltas.",
-      "El mayor reto fue el motor de elegibilidad WIOA: transformar un proceso altamente regulado en una herramienta configurable, donde cada organización define sus propios documentos requeridos, límites económicos, tamaño familiar y criterios de revisión. La IA identifica y clasifica documentos automáticamente, reutiliza un mismo archivo para varios requisitos, valida vencimientos y firmas, detecta baja calidad, y determina elegibilidad antes de avanzar. Sumé además gestión de posiciones (creación manual, por URL, por documento o asistida por IA), un sistema de Matching que conecta candidato → programa → Pathway → posición → aplicación, y validé cada flujo nuevo con pruebas de usabilidad en Maze antes de pasar a desarrollo.",
-    ],
-    headline: "configurar, no codear",
-    gallery: introGallery("buildwithin-design-system", "BuildWithin — SuperAdmin", 1, 13),
-    en: {
-      tag: "product design · enterprise saas · ai-powered ops",
-      subtitle: "Enterprise platform for running Workforce programs with AI",
-      result: "Configurable Enterprise ecosystem — programs, WIOA eligibility, and matching automated by AI",
-      services: "Product Design · Design System · Enterprise product strategy",
-      skills: ["Figma", "Maze", "Design Systems", "Enterprise UX", "AI-powered workflows", "Prototyping", "Stakeholder Management"],
-      brief:
-        "BuildWithin Admin Platform is the Enterprise system that runs the full lifecycle of Workforce programs — configuration, eligibility, learning, and operations — for governments, organizations, and training centers. BuildWithin's original platform was built for a different business model; we evolved it into a Workforce product that had to support six distinct user profiles (Super Admin, Organization Admin, Talent Manager, Case Manager, Employer, internal Staff), each with its own permissions, tools, and flows. As Lead Product Designer I led this full transformation over 6 months: defined the end-to-end product experience, designed the core features, built the Design System, and validated every decision alongside Product, the CEO, and stakeholders — without losing sight of the fact that every client organization runs on completely different business rules.",
-      strategy: [
-        "The strategy rested on three principles. Configuration over development: wherever possible, organizations needed to configure the system — WIOA rules, required documents, income thresholds, eligibility criteria, programs, Pathways — without depending on the engineering team. AI-driven automation: rather than porting manual processes into a digital form, we set out to automate them, so AI reduced real operational work instead of becoming one more feature to learn. And a scalable platform: every module works independently but shares components, patterns, and rules — which is why I designed a Design System from scratch.",
-        "The product ended up as an ecosystem of connected modules: program management (modules, units, competencies, documents, learning hours), a Learning Management system for building organization-specific Pathways, a unified participant-management view with progress indicators, status, RTI, and Journey Health to flag at-risk cases, and Candidate 360° — a single screen with all of a candidate's information, documents, applications, programs, and eligibility, eliminating navigation across loose, separate screens.",
-        "The biggest challenge was the WIOA eligibility engine: turning a heavily regulated process into a configurable tool, where each organization defines its own required documents, income limits, household size, and review criteria. AI automatically identifies and classifies documents, reuses a single file across multiple requirements, validates expiration dates and signatures, flags low quality, and determines eligibility before moving forward. I also added position management (manual creation, by URL, by document, or AI-assisted), a Matching system that connects candidate → program → Pathway → position → application, and validated every new flow with Maze usability testing before it moved to development.",
-      ],
-      headline: "configure, don't code",
-    },
-  },
+  talentCapital,
+  buildwithinSuperAdmin,
   {
     slug: "buildwithin",
     title: "buildwithin — candidate portal",
@@ -494,61 +312,7 @@ export const projects: Project[] = [
       ...introGallery("amphora", "Amphora", 4, 13, "webp", { 6: "mp4", 11: "gif" }),
     ],
   },
-  {
-    slug: "altafid",
-    title: "altafid platform",
-    category: "Product Design",
-    tag: "product · fintech · b2b saas",
-    subtitle: "De una plataforma de asesoramiento financiero a un ecosistema B2B para entidades financieras",
-    client: "Altafid",
-    role: "UX/UI Design Lead",
-    year: "—",
-    result: "Plataforma modular conectando Relationship Management, Portfolio Management, Operations y Trading",
-    services: "Design system · UX research · UI · Liderazgo de equipo de diseño",
-    skills: [
-      "Figma",
-      "FigJam",
-      "Design Tokens",
-      "Investigación de usuarios",
-      "Design Systems",
-      "Facilitation",
-      "Stakeholder Management",
-    ],
-    cover: "Altafid Platform",
-    coverMedia: img("altafid", "01.jpg"),
-    brief:
-      "Altafid nació como una plataforma centrada en la relación directa entre asesores financieros y sus clientes. La evolución del negocio abrió una oportunidad distinta: ofrecer la tecnología como solución B2B para bancos, firmas de asesoramiento y otras entidades de wealth management — lo que exigía transformar el producto en un ecosistema completo capaz de conectar gestión de clientes, portafolios, operaciones, facturación y trading dentro de una misma experiencia. Como UX/UI Design Lead, combiné trabajo hands-on con liderazgo de equipo: diseñé interfaces y journeys complejos, lideré la construcción del Design System desde cero, y mantuve una visión de producto transversal para que decisiones tomadas por distintos diseñadores construyeran una experiencia coherente.",
-    strategy: [
-      "La decisión estratégica fundamental fue no tratar Altafid como una suma de herramientas independientes, sino como un ecosistema de journeys conectados entre cuatro áreas: Relationship Management (gestión de clientes, perfiles, onboarding), Portfolio Management (cuentas, portafolios, estrategias de inversión), Operations (instrumentos, facturación, comisiones) y Trading (órdenes, ejecución, rebalanceo). Los usuarios no piensan en módulos separados — piensan en objetivos como incorporar un cliente, construir un portafolio o ejecutar una operación, así que diseñamos journeys end-to-end antes de cerrar pantallas aisladas.",
-      "La investigación combinó sesiones continuas con el cliente, benchmark de plataformas de wealth management y CRM, y validaciones recurrentes de flujos y prototipos — no para copiar patrones de la competencia, sino para entender qué resultaba familiar a los usuarios y cómo organizar grandes volúmenes de información financiera. Un hallazgo clave: la personalización era una necesidad estructural, porque distintas entidades requerían configuraciones de permisos y procesos distintas, así que la plataforma debía ser consistente sin volverse rígida.",
-      "Lideré la creación del Design System desde cero — colores, tipografía, tablas, formularios, estados, navegación — no solo como librería visual sino como herramienta de decisión: definimos comportamientos y reglas que ayudaban a diseñadores y desarrolladores a resolver casos nuevos sin partir de cero. El sistema fue especialmente crítico en Portfolio Management, Operations y Trading, donde se repetían estructuras de datos, tablas y acciones, y permitió que el equipo escalara el producto manteniendo consistencia entre docenas de flujos.",
-    ],
-    headline: "un ecosistema de journeys conectados",
-    en: {
-      tag: "product · fintech · b2b saas",
-      subtitle: "From a financial advisory platform to a B2B ecosystem for financial institutions",
-      result: "A modular platform connecting Relationship Management, Portfolio Management, Operations, and Trading",
-      services: "Design system · UX research · UI · Design team leadership",
-      skills: ["Figma", "FigJam", "Design Tokens", "User Research", "Design Systems", "Facilitation", "Stakeholder Management"],
-      brief:
-        "Altafid started as a platform centered on the direct relationship between financial advisors and their clients. The business's evolution opened up a different opportunity: offering the technology as a B2B solution for banks, advisory firms, and other wealth-management entities — which required turning the product into a full ecosystem capable of connecting client management, portfolios, operations, billing, and trading within a single experience. As UX/UI Design Lead, I combined hands-on work with team leadership: designed complex interfaces and journeys, led the Design System build from scratch, and kept a cross-cutting product vision so decisions made by different designers built a coherent experience.",
-      strategy: [
-        "The core strategic decision was to treat Altafid not as a sum of independent tools, but as an ecosystem of connected journeys across four areas: Relationship Management (client management, profiles, onboarding), Portfolio Management (accounts, portfolios, investment strategies), Operations (instruments, billing, commissions), and Trading (orders, execution, rebalancing). Users don't think in separate modules — they think in goals like onboarding a client, building a portfolio, or executing a trade, so we designed end-to-end journeys before locking in isolated screens.",
-        "Research combined ongoing sessions with the client, benchmarking of wealth-management and CRM platforms, and recurring validation of flows and prototypes — not to copy competitor patterns, but to understand what felt familiar to users and how to organize large volumes of financial information. A key finding: personalization was a structural need, because different entities required different permission and process configurations, so the platform had to stay consistent without becoming rigid.",
-        "I led the Design System build from scratch — colors, typography, tables, forms, states, navigation — not just as a visual library but as a decision-making tool: we defined behaviors and rules that helped designers and developers solve new cases without starting from zero. The system was especially critical in Portfolio Management, Operations, and Trading, where data structures, tables, and actions repeated, and it let the team scale the product while keeping consistency across dozens of flows.",
-      ],
-      headline: "an ecosystem of connected journeys",
-    },
-    gallery: [
-      { label: "Altafid — dashboard", media: img("altafid", "02.jpg") },
-      { label: "Altafid — portafolios", media: img("altafid", "03.jpg") },
-      { label: "Altafid — trading", media: img("altafid", "04.jpg") },
-      { label: "Altafid — compliance", media: img("altafid", "05.jpg") },
-      { label: "Altafid — billing", media: img("altafid", "06.jpg") },
-      { label: "Altafid — CRM", media: img("altafid", "07.jpg") },
-      ...introGallery("altafid", "Altafid", 7, 13),
-    ],
-  },
+  altafidPlatform,
   {
     slug: "altafid-design-system",
     title: "altafid — design system",
