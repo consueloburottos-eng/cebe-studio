@@ -33,27 +33,6 @@ export const talentCapital: Project = {
   ],
   headline: "un consejero, no un buscador",
   gallery: introGallery("talent-capital", "Talent Capital", 1, 13, "mp4", { 1: "webp", 2: "webp" }),
-  features: [
-    {
-      id: "ai-eligibility",
-      label: "IA en elegibilidad",
-      title: "Elegibilidad documental con IA (WIOA)",
-      body: [
-        "Antes de este rediseño, la validación de elegibilidad era un proceso manual apoyado en conversaciones 1 a 1 entre el candidato y el case manager: se pedían documentos WIOA según reglas que cada organización socia definía por su cuenta, con límites y requisitos distintos entre sí, y el candidato dependía del chat o de una reunión presencial para saber qué le faltaba.",
-        "Rediseñé el flujo como una experiencia electrónica y autoguiada: el candidato recibe una lista específica de qué documentos subir según su situación, evitando cargas innecesarias, y la IA clasifica cada documento, reutiliza un mismo archivo cuando cubre varios requisitos, valida vencimientos y firmas, y avisa de inmediato si un documento no va a ser aceptado — en vez de dejarlo avanzar hasta una revisión administrativa que nunca iba a aprobarse.",
-        "Del lado del case manager, el sistema filtra la información que no es verdadera o no coincide con el perfil del candidato antes de que llegue a revisión, muestra el estado de cada participante y qué documento le falta, y aplica flags de vencimiento y reglas de documentos configurables por organización — todo dentro del marco legal de WIOA. El resultado: procesamiento más rápido que el proceso manual y una reducción real del tiempo operativo dedicado a revisar perfiles que no eran elegibles.",
-      ],
-      en: {
-        label: "AI eligibility",
-        title: "AI-driven document eligibility (WIOA)",
-        body: [
-          "Before this redesign, eligibility validation was a manual process built on one-on-one conversations between the candidate and the case manager: WIOA documents were requested according to rules each partner organization set on its own, with different limits and requirements from one another, and the candidate depended on chat or an in-person meeting to find out what was still missing.",
-          "I redesigned the flow as a self-guided electronic experience: the candidate gets a specific checklist of what to upload based on their situation, avoiding unnecessary uploads, and the AI classifies each document, reuses a single file when it covers multiple requirements, validates expiration dates and signatures, and flags immediately if a document won't be accepted — instead of letting it move forward to an administrative review that was never going to be approved.",
-          "On the case manager's side, the system filters out information that isn't accurate or doesn't match the candidate's profile before it reaches review, shows each participant's status and what document is still missing, and applies expiration flags and document rules configurable per organization — all within the WIOA legal framework. The result: faster processing than the manual process and a real reduction in operational time spent reviewing profiles that were never going to be eligible.",
-        ],
-      },
-    },
-  ],
   en: {
     tag: "product design · ux & ui",
     subtitle: "Powered by BuildWithin",
