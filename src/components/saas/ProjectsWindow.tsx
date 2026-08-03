@@ -40,6 +40,16 @@ export default function ProjectsWindow({ projects: rawProjects, onClose, initial
   }, [projects, query]);
 
   const selected = selectedSlug ? projects.find((p) => p.slug === selectedSlug) ?? null : null;
+  const [activeTab, setActiveTab] = useState<string>("brief");
+  const serviceSteps = selected?.services
+    ? selected.services.split("·").map((s) => s.trim()).filter(Boolean)
+    : [];
+  const activeFeature = selected?.features?.find((f) => f.id === activeTab);
+
+  function selectProject(slug: string | null) {
+    setSelectedSlug(slug);
+    setActiveTab("brief");
+  }
 
   return (
     <div
@@ -110,7 +120,7 @@ export default function ProjectsWindow({ projects: rawProjects, onClose, initial
               <button
                 key={p.slug}
                 type="button"
-                onClick={() => setSelectedSlug(p.slug)}
+                onClick={() => selectProject(p.slug)}
                 className="mb-0.5 flex w-full items-center gap-2.5 rounded-lg border-none px-2.5 py-2 text-left font-sans text-[13px]"
                 style={{
                   background: selectedSlug === p.slug ? "rgba(110,124,255,.16)" : "transparent",
@@ -136,11 +146,11 @@ export default function ProjectsWindow({ projects: rawProjects, onClose, initial
                     key={p.slug}
                     role="button"
                     tabIndex={0}
-                    onClick={() => setSelectedSlug(p.slug)}
+                    onClick={() => selectProject(p.slug)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();
-                        setSelectedSlug(p.slug);
+                        selectProject(p.slug);
                       }
                     }}
                     className="cursor-pointer overflow-hidden rounded-xl p-0 text-left font-sans"
@@ -177,7 +187,7 @@ export default function ProjectsWindow({ projects: rawProjects, onClose, initial
               <div className="px-6 py-4.5 pb-6.5">
                 <button
                   type="button"
-                  onClick={() => setSelectedSlug(null)}
+                  onClick={() => selectProject(null)}
                   className="border-none bg-transparent p-0 pb-3.5 font-sans text-[12.5px]"
                   style={{ color: "rgba(var(--os-txrgb),.6)" }}
                 >
@@ -241,72 +251,90 @@ export default function ProjectsWindow({ projects: rawProjects, onClose, initial
                   </div>
                 )}
 
-                {selected.brief && (
-                  <section className="mt-5 max-w-[70ch]">
-                    <div
-                      className="text-[10.5px] font-bold uppercase tracking-[0.14em]"
-                      style={{ color: "rgba(var(--os-txrgb),.4)" }}
-                    >
-                      {pd.brief}
-                    </div>
-                    <p className="mt-2 text-[13.5px] leading-[1.7]" style={{ color: "rgba(var(--os-txrgb),.72)" }}>
-                      {selected.brief}
-                    </p>
-                  </section>
-                )}
-
-                {selected.strategy.length > 0 && (
-                  <section className="mt-6 max-w-[70ch]">
-                    <div
-                      className="text-[10.5px] font-bold uppercase tracking-[0.14em]"
-                      style={{ color: "rgba(var(--os-txrgb),.4)" }}
+                <div className="mt-5 flex flex-wrap gap-5 font-sans">
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab("brief")}
+                    className="border-none bg-transparent p-0 text-[10.5px] font-bold uppercase tracking-[0.14em] underline underline-offset-4"
+                    style={{ color: "var(--os-tx)", opacity: activeTab === "brief" ? 1 : 0.45 }}
+                  >
+                    {pd.brief}
+                  </button>
+                  {selected.strategy.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab("strategy")}
+                      className="border-none bg-transparent p-0 text-[10.5px] font-bold uppercase tracking-[0.14em] underline underline-offset-4"
+                      style={{ color: "var(--os-tx)", opacity: activeTab === "strategy" ? 1 : 0.45 }}
                     >
                       {pd.strategy}
-                    </div>
-                    <div className="mt-2 flex flex-col gap-3">
+                    </button>
+                  )}
+                  {serviceSteps.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab("services")}
+                      className="border-none bg-transparent p-0 text-[10.5px] font-bold uppercase tracking-[0.14em] underline underline-offset-4"
+                      style={{ color: "var(--os-tx)", opacity: activeTab === "services" ? 1 : 0.45 }}
+                    >
+                      {pd.services}
+                    </button>
+                  )}
+                  {selected.skills.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab("skills")}
+                      className="border-none bg-transparent p-0 text-[10.5px] font-bold uppercase tracking-[0.14em] underline underline-offset-4"
+                      style={{ color: "var(--os-tx)", opacity: activeTab === "skills" ? 1 : 0.45 }}
+                    >
+                      {pd.skills}
+                    </button>
+                  )}
+                  {selected.features?.map((feature) => (
+                    <button
+                      key={feature.id}
+                      type="button"
+                      onClick={() => setActiveTab(feature.id)}
+                      className="border-none bg-transparent p-0 text-[10.5px] font-bold uppercase tracking-[0.14em] underline underline-offset-4"
+                      style={{ color: "var(--os-tx)", opacity: activeTab === feature.id ? 1 : 0.45 }}
+                    >
+                      {feature.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="mt-3 max-w-[70ch]">
+                  {activeTab === "brief" && (
+                    <p className="text-[13.5px] leading-[1.7]" style={{ color: "rgba(var(--os-txrgb),.72)" }}>
+                      {selected.brief}
+                    </p>
+                  )}
+
+                  {activeTab === "strategy" && (
+                    <div className="flex flex-col gap-3">
                       {selected.strategy.map((paragraph, i) => (
                         <p key={i} className="text-[13.5px] leading-[1.7]" style={{ color: "rgba(var(--os-txrgb),.72)" }}>
                           {paragraph}
                         </p>
                       ))}
                     </div>
-                  </section>
-                )}
+                  )}
 
-                {selected.services && (
-                  <section className="mt-6 max-w-[70ch]">
-                    <div
-                      className="text-[10.5px] font-bold uppercase tracking-[0.14em]"
-                      style={{ color: "rgba(var(--os-txrgb),.4)" }}
-                    >
-                      {pd.services}
-                    </div>
-                    <ol className="mt-2 flex flex-col gap-2 p-0">
-                      {selected.services
-                        .split("·")
-                        .map((s) => s.trim())
-                        .filter(Boolean)
-                        .map((step, i) => (
-                          <li key={step} className="flex items-baseline gap-3 text-[13.5px]" style={{ color: "rgba(var(--os-txrgb),.72)" }}>
-                            <span className="font-mono text-[11px] font-bold" style={{ color: "rgba(var(--os-txrgb),.4)" }}>
-                              {String(i + 1).padStart(2, "0")}
-                            </span>
-                            <span>{step}</span>
-                          </li>
-                        ))}
+                  {activeTab === "services" && (
+                    <ol className="flex flex-col gap-2 p-0">
+                      {serviceSteps.map((step, i) => (
+                        <li key={step} className="flex items-baseline gap-3 text-[13.5px]" style={{ color: "rgba(var(--os-txrgb),.72)" }}>
+                          <span className="font-mono text-[11px] font-bold" style={{ color: "rgba(var(--os-txrgb),.4)" }}>
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <span>{step}</span>
+                        </li>
+                      ))}
                     </ol>
-                  </section>
-                )}
+                  )}
 
-                {selected.skills.length > 0 && (
-                  <section className="mt-6 mb-2 max-w-[70ch]">
-                    <div
-                      className="text-[10.5px] font-bold uppercase tracking-[0.14em]"
-                      style={{ color: "rgba(var(--os-txrgb),.4)" }}
-                    >
-                      {pd.skills}
-                    </div>
-                    <div className="mt-2.5 flex flex-wrap gap-2">
+                  {activeTab === "skills" && (
+                    <div className="flex flex-wrap gap-2">
                       {selected.skills.map((skill) => (
                         <span
                           key={skill}
@@ -317,26 +345,18 @@ export default function ProjectsWindow({ projects: rawProjects, onClose, initial
                         </span>
                       ))}
                     </div>
-                  </section>
-                )}
+                  )}
 
-                {selected.features?.map((feature) => (
-                  <section key={feature.id} className="mt-6 mb-2 max-w-[70ch]">
-                    <div
-                      className="text-[10.5px] font-bold uppercase tracking-[0.14em]"
-                      style={{ color: "rgba(var(--os-txrgb),.4)" }}
-                    >
-                      {feature.label}
-                    </div>
-                    <div className="mt-2 flex flex-col gap-3">
-                      {feature.body.map((paragraph, i) => (
+                  {activeFeature && (
+                    <div className="flex flex-col gap-3">
+                      {activeFeature.body.map((paragraph, i) => (
                         <p key={i} className="text-[13.5px] leading-[1.7]" style={{ color: "rgba(var(--os-txrgb),.72)" }}>
                           {paragraph}
                         </p>
                       ))}
                     </div>
-                  </section>
-                ))}
+                  )}
+                </div>
               </div>
             )}
           </div>

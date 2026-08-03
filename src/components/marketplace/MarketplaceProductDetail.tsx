@@ -15,6 +15,21 @@ type MarketplaceProductDetailProps = {
   suggestions: Project[];
 };
 
+// same dense span pattern as the Corporate project detail's gallery grid,
+// so tile proportions (2-unit vs 1-unit tiles) stay consistent across modes.
+const INTRO_SPAN_PATTERN = [2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1];
+
+// mobile fallback — same fixed-pixel horizontal strip as the Corporate page,
+// since the dense 9-column grid isn't usable at narrow widths.
+const INTRO_GRID_GAP = 10;
+const INTRO_CONTENT_WIDTH = 1130 - 28 * 2;
+const INTRO_UNIT = (INTRO_CONTENT_WIDTH - INTRO_GRID_GAP * 8) / 9;
+const INTRO_ROW_HEIGHT = Math.round(INTRO_UNIT * 1.4);
+function mobileTileSize(span: number) {
+  const width = Math.round(INTRO_UNIT * span + INTRO_GRID_GAP * (span - 1));
+  return { width, height: INTRO_ROW_HEIGHT };
+}
+
 type Tab = "brief" | "strategy" | "services" | "skills" | (string & {});
 
 export default function MarketplaceProductDetail({ project: rawProject, suggestions: rawSuggestions }: MarketplaceProductDetailProps) {
@@ -82,23 +97,62 @@ export default function MarketplaceProductDetail({ project: rawProject, suggesti
         </div>
 
         {project.gallery.some((g) => g.media) && (
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="mt-6 flex gap-[10px] overflow-x-auto pb-1 sm:hidden">
             {project.gallery
               .filter((g) => g.media)
-              .map((g, i) => (
-                <div
-                  key={i}
-                  className="aspect-[4/3] overflow-hidden rounded-md"
-                  style={{ background: "var(--mk-surface)" }}
-                >
-                  <ProjectMedia
-                    media={g.media}
-                    label={g.label}
-                    sizes="(min-width:1100px) 25vw, 50vw"
-                    uploadPath={`/projects/${folder}/intro-${String(i + 1).padStart(2, "0")}`}
-                  />
-                </div>
-              ))}
+              .map((g, i) => {
+                const span = INTRO_SPAN_PATTERN[i % INTRO_SPAN_PATTERN.length];
+                const { width, height } = mobileTileSize(span);
+                return (
+                  <div
+                    key={i}
+                    className="flex-none overflow-hidden rounded-[10px]"
+                    style={{ width, height, background: "var(--mk-surface)" }}
+                  >
+                    <ProjectMedia
+                      media={g.media}
+                      label={g.label}
+                      sizes={`${width}px`}
+                      uploadPath={`/projects/${folder}/intro-${String(i + 1).padStart(2, "0")}`}
+                    />
+                  </div>
+                );
+              })}
+          </div>
+        )}
+
+        {project.gallery.some((g) => g.media) && (
+          <div className="mt-6 hidden sm:block" style={{ containerType: "inline-size" }}>
+            <div
+              className="grid gap-[10px]"
+              style={{
+                gridTemplateColumns: "repeat(9, 1fr)",
+                // row height follows the fluid column width, keeping the
+                // same 1:1.4 tile proportions as the Corporate grid, at any viewport
+                gridAutoRows: "calc((100cqw - 80px) / 9 * 1.4)",
+                gridAutoFlow: "row dense",
+              }}
+            >
+              {project.gallery
+                .filter((g) => g.media)
+                .map((g, i) => {
+                  const span = INTRO_SPAN_PATTERN[i % INTRO_SPAN_PATTERN.length];
+                  return (
+                    <div
+                      key={i}
+                      className="overflow-hidden rounded-[10px]"
+                      style={{ background: "var(--mk-surface)", gridColumn: `span ${span}` }}
+                    >
+                      <ProjectMedia
+                        media={g.media}
+                        label={g.label}
+                        sizes={span === 2 ? "(min-width:1200px) 246px, 24vw" : "(min-width:1200px) 118px, 11vw"}
+                        uploadPath={`/projects/${folder}/intro-${String(i + 1).padStart(2, "0")}`}
+                      />
+                    </div>
+                  );
+                })}
+            </div>
           </div>
         )}
 

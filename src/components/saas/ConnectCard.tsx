@@ -7,6 +7,7 @@ import CalendlyModal from "@/components/CalendlyModal";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/cburotto/";
+const WHATSAPP_URL = "https://wa.me/56984253021";
 
 export default function ConnectCard() {
   const [lang] = useSiteLanguage();
@@ -19,6 +20,23 @@ export default function ConnectCard() {
         {ui.connectTitle}
       </div>
       <div className="mt-2.5 flex gap-2">
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={ui.connectWhatsapp}
+          className="flex h-8 w-8 flex-none items-center justify-center rounded-full border-none"
+          style={{ background: "rgba(var(--os-sfrgb),.08)", color: "var(--os-tx)" }}
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z" />
+            <path
+              d="M8.5 8.7c.2-.5.4-.5.6-.5h.5c.2 0 .4 0 .6.4.2.5.7 1.6.7 1.8.1.1.1.3 0 .4-.1.2-.2.3-.3.4l-.4.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.7.8c.2.1.3.2.4.3.1.2.1.9-.2 1.4-.3.5-1.3 1-2.5.9-1-.1-3-.7-4.7-2.4-1.6-1.5-2.2-3-2.4-3.5-.1-.4-.1-.9.1-1.3Z"
+              fill="currentColor"
+              stroke="none"
+            />
+          </svg>
+        </a>
         <a
           href={`mailto:${CONTACT_EMAIL}`}
           title={ui.connectEmail}
