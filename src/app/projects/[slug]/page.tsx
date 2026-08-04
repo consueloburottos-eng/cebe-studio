@@ -33,5 +33,9 @@ export default async function ProjectPage({
 
   const others = projects.filter((p) => p.slug !== slug);
 
-  return <ProjectDetail project={project} others={others} />;
+  const currentIndex = projects.findIndex((p) => p.slug === slug);
+  const prevSlug = projects[(currentIndex - 1 + projects.length) % projects.length].slug;
+  const nextSlug = projects[(currentIndex + 1) % projects.length].slug;
+
+  return <ProjectDetail project={project} others={others} prevSlug={prevSlug} nextSlug={nextSlug} />;
 }

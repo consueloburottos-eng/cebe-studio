@@ -12,11 +12,13 @@ import { talentCapital } from "./projects/talent-capital";
 import { buildwithinSuperAdmin } from "./projects/buildwithin-design-system";
 import { buildwithinCandidatePortal } from "./projects/buildwithin";
 import { altafidPlatform } from "./projects/altafid";
+import { brava } from "./projects/brava";
 
 export const projects: Project[] = [
   talentCapital,
   buildwithinSuperAdmin,
   buildwithinCandidatePortal,
+  brava,
   {
     slug: "quartz",
     title: "el hilo de la novia",
@@ -842,7 +844,6 @@ const PENDING_STUBS: {
   // defaults to the title; set when the title isn't the client's name
   client?: string;
 }[] = [
-  { slug: "brava", title: "brava", displayTitle: "Brava", coverExt: "webp", introCount: 13 },
   { slug: "dior", title: "dior", displayTitle: "Dior", coverExt: "gif", introCount: 13 },
   {
     slug: "maquillaje-teatral",

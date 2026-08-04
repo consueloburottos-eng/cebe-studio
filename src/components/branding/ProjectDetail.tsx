@@ -37,11 +37,13 @@ function mobileTileSize(span: number) {
 type ProjectDetailProps = {
   project: Project;
   others: Project[];
+  prevSlug: string;
+  nextSlug: string;
 };
 
 type Tab = "brief" | "strategy" | "services" | "skills" | (string & {});
 
-export default function ProjectDetail({ project: rawProject, others: rawOthers }: ProjectDetailProps) {
+export default function ProjectDetail({ project: rawProject, others: rawOthers, prevSlug, nextSlug }: ProjectDetailProps) {
   const router = useRouter();
   const [dark, setDark] = useSiteTheme();
   const [lang, setLang] = useSiteLanguage();
