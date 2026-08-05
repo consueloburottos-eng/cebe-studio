@@ -100,8 +100,8 @@ export default function ProjectsGridOverlay({ projects, onClose }: ProjectsGridO
             type="button"
             onClick={onClose}
             title={lang === "en" ? "close" : "cerrar"}
-            className="flex h-10 w-10 items-center justify-center rounded-full border text-[15px]"
-            style={{ borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
+            className="flex h-10 w-10 items-center justify-center rounded-full border-none text-[15px]"
+            style={{ background: "var(--cb-pill)", color: "var(--cb-text)" }}
           >
             ✕
           </button>

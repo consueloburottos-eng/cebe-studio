@@ -268,10 +268,15 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
         </div>
       </div>
 
-      <div
-        className="relative z-0 min-h-dvh w-full rounded-none backdrop-blur-2xl"
-        style={{ background: "var(--cb-glass-pill)" }}
-      >
+      <div className="relative z-0 min-h-dvh w-full">
+        {/* backdrop-filter lives on this absolute layer, not the content
+            ancestor itself — an ancestor with backdrop-filter/filter/transform
+            becomes the containing block for fixed/sticky descendants, which
+            silently breaks the tab sidebar's position:sticky further down. */}
+        <div
+          className="absolute inset-0 -z-10 rounded-none backdrop-blur-2xl"
+          style={{ background: "var(--cb-glass-pill)" }}
+        />
         <div className="mx-auto max-w-[1130px] px-7 pt-[120px] pb-[90px]">
           <div
             className="relative mb-10 aspect-[1482/798] overflow-hidden rounded-[4px] sm:rounded-[20px]"
@@ -337,59 +342,13 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-[200px_1fr]">
-            <div className="flex flex-col gap-3 font-sans">
-              <button
-                type="button"
-                onClick={() => setActiveTab("brief")}
-                className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
-                style={{ opacity: activeTab === "brief" ? 1 : 0.45 }}
-              >
-                {ui.brief}
-              </button>
-              {project.strategy.length > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setActiveTab("strategy")}
-                  className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
-                  style={{ opacity: activeTab === "strategy" ? 1 : 0.45 }}
-                >
-                  {ui.strategy}
-                </button>
-              )}
-              {serviceSteps.length > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setActiveTab("services")}
-                  className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
-                  style={{ opacity: activeTab === "services" ? 1 : 0.45 }}
-                >
-                  {ui.services}
-                </button>
-              )}
-              {project.skills.length > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setActiveTab("skills")}
-                  className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
-                  style={{ opacity: activeTab === "skills" ? 1 : 0.45 }}
-                >
-                  {ui.skills}
-                </button>
-              )}
-              {project.features?.map((feature) => (
-                <button
-                  key={feature.id}
-                  type="button"
-                  onClick={() => setActiveTab(feature.id)}
-                  className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
-                  style={{ opacity: activeTab === feature.id ? 1 : 0.45 }}
-                >
-                  {feature.label}
-                </button>
-              ))}
-            </div>
-            <div>
+          {/* one grid for the whole section: tag/title/subtitle/meta and the
+              tabs+copy row all share the same 200px/1fr column tracks, so the
+              text-width blocks line up to an identical width, and the tab
+              sidebar (placed only in the last row) aligns to the top of the
+              text container instead of the tag/title above it. */}
+          <div className="grid grid-cols-1 gap-x-10 gap-y-7 md:grid-cols-[200px_1fr]">
+            <div className="md:col-start-2">
               <div className="font-sans text-[11px] uppercase tracking-[0.2em] text-[var(--cb-text)]">
                 {project.tag}
               </div>
@@ -399,8 +358,68 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
                 {project.title}
               </h1>
               <div className="mt-4 text-base font-bold">{project.subtitle}</div>
+            </div>
 
-              <div id="project-copy" className="mt-3.5 flex max-w-[60ch] flex-col gap-4 text-[15.5px] font-medium leading-[1.75]">
+            <div className="grid grid-cols-1 gap-3.5 border-t border-b py-4 sm:grid-cols-3 md:col-start-2"
+              style={{ borderColor: "var(--cb-hair)" }}
+            >
+              <Meta label={ui.client} value={project.client} />
+              <Meta label={ui.role} value={project.role} />
+              <Meta label={ui.result} value={project.result} accent />
+            </div>
+
+            <div className="flex flex-col gap-3 font-sans md:col-start-1 md:row-start-3 md:sticky md:top-[140px]">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("brief")}
+                  className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
+                  style={{ opacity: activeTab === "brief" ? 1 : 0.45 }}
+                >
+                  {ui.brief}
+                </button>
+                {project.strategy.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab("strategy")}
+                    className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
+                    style={{ opacity: activeTab === "strategy" ? 1 : 0.45 }}
+                  >
+                    {ui.strategy}
+                  </button>
+                )}
+                {serviceSteps.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab("services")}
+                    className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
+                    style={{ opacity: activeTab === "services" ? 1 : 0.45 }}
+                  >
+                    {ui.services}
+                  </button>
+                )}
+                {project.skills.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab("skills")}
+                    className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
+                    style={{ opacity: activeTab === "skills" ? 1 : 0.45 }}
+                  >
+                    {ui.skills}
+                  </button>
+                )}
+                {project.features?.map((feature) => (
+                  <button
+                    key={feature.id}
+                    type="button"
+                    onClick={() => setActiveTab(feature.id)}
+                    className="text-left text-xs font-bold tracking-[0.06em] underline underline-offset-4"
+                    style={{ opacity: activeTab === feature.id ? 1 : 0.45 }}
+                  >
+                    {feature.label}
+                  </button>
+                ))}
+              </div>
+              <div id="project-copy" className="flex flex-col gap-4 text-[15.5px] font-medium leading-[1.75] md:col-start-2 md:row-start-3">
                 {activeTab === "brief" && <p>{project.brief}</p>}
 
                 {activeTab === "strategy" &&
@@ -436,18 +455,21 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
                   </div>
                 )}
 
-                {activeFeature &&
-                  activeFeature.body.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+                {activeFeature && (
+                  <>
+                    {activeFeature.body.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+                    <div className="mt-1 overflow-hidden rounded-xl" style={{ background: "var(--cb-pill)" }}>
+                      <ProjectMedia
+                        media={activeFeature.media}
+                        label={activeFeature.label}
+                        fit="auto"
+                        sizes="(min-width:1130px) 834px, 100vw"
+                        uploadPath={`/projects/${folder}/feature-${activeFeature.id}`}
+                      />
+                    </div>
+                  </>
+                )}
               </div>
-
-              <div className="mt-7 grid grid-cols-1 gap-3.5 border-t border-b py-4 sm:grid-cols-3"
-                style={{ borderColor: "var(--cb-hair)" }}
-              >
-                <Meta label={ui.client} value={project.client} />
-                <Meta label={ui.role} value={project.role} />
-                <Meta label={ui.result} value={project.result} accent />
-              </div>
-            </div>
           </div>
 
           <div className="mt-16 border-t pt-[34px]" style={{ borderColor: "var(--cb-hair)" }}>

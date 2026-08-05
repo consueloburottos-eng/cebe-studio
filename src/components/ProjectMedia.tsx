@@ -41,7 +41,10 @@ type ProjectMediaProps = {
   // "cover" (default) fills the parent box, cropping the photo. "natural"
   // instead fixes the height and lets width follow the photo's own aspect
   // ratio, for strips where each photo's real proportions should show.
-  fit?: "cover" | "natural";
+  // "auto" fills the full available width and lets height follow the
+  // photo's own aspect ratio uncropped — falls back to a 16/10 placeholder
+  // box before a photo exists, since the placeholder has no intrinsic ratio.
+  fit?: "cover" | "natural" | "auto";
 };
 
 export default function ProjectMedia({
@@ -119,7 +122,13 @@ export default function ProjectMedia({
 
   if (!effectiveMedia) {
     return (
-      <div className={`relative h-full ${fit === "natural" ? "w-[340px] flex-none" : "w-full"} ${className}`}>
+      <div
+        className={`relative ${
+          fit === "auto"
+            ? "aspect-[16/10] w-full"
+            : `h-full ${fit === "natural" ? "w-[340px] flex-none" : "w-full"}`
+        } ${className}`}
+      >
         <MediaPlaceholder label={label} compact={compact} />
         {uploadOverlay}
       </div>
@@ -129,6 +138,15 @@ export default function ProjectMedia({
   const src = cached ? `${effectiveMedia.src}?v=${cached.version}` : effectiveMedia.src;
 
   if (effectiveMedia.type === "video") {
+    if (fit === "auto") {
+      return (
+        <div className={`relative w-full ${className}`}>
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+          <video className="block w-full" src={src} autoPlay muted loop playsInline aria-label={label} />
+          {uploadOverlay}
+        </div>
+      );
+    }
     return (
       <div className={`relative h-full ${fit === "natural" ? "w-auto flex-none" : "w-full"} ${className}`}>
         <video
@@ -150,6 +168,16 @@ export default function ProjectMedia({
       <div className={`relative h-full w-auto flex-none ${className}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img key={cached?.version ?? 0} src={src} alt={label} className="h-full w-auto object-contain" />
+        {uploadOverlay}
+      </div>
+    );
+  }
+
+  if (fit === "auto") {
+    return (
+      <div className={`relative w-full ${className}`}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img key={cached?.version ?? 0} src={src} alt={label} className="block w-full" />
         {uploadOverlay}
       </div>
     );

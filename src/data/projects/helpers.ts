@@ -32,6 +32,8 @@ export type FeatureDeepDive = {
   label: string;
   title: string;
   body: string[];
+  // optional screenshot/photo shown below the body copy for this tab.
+  media?: MediaAsset;
   // English override — same fallback convention as Project.en below.
   en?: {
     label?: string;
