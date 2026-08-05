@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Project, assetFolder } from "@/data/projects";
@@ -13,6 +13,7 @@ import TopRight from "./TopRight";
 import ModeSwitcher from "@/components/ModeSwitcher";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
 import { useSiteLanguage } from "@/hooks/useSiteLanguage";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { localizeProject, localizeProjects, t } from "@/lib/i18n";
 
 // span sequence lifted from the original prototype's projSel.intro grid (indices 0-12)
@@ -61,7 +62,56 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
   const [aboutOpen, setAboutOpen] = useState(false);
   const [bookOpen, setBookOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  const [hoveredOtherIndex, setHoveredOtherIndex] = useState<number | null>(null);
   const folder = assetFolder(project);
+
+  // Intro splash: reprises the hero's per-letter title stagger (.cb-letter,
+  // globals.css) on the project's own name before fading out to reveal
+  // the loaded project — reruns on every slug change (prev/next arrows),
+  // not just first mount.
+  const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const [introVisible, setIntroVisible] = useState(!reducedMotion);
+  const [introExiting, setIntroExiting] = useState(false);
+  // Group letters by word (each word its own non-wrapping unit) so the
+  // title can still wrap between words at normal breakable spaces, without
+  // splitting a word's own letters — or trailing punctuation — across lines.
+  const introWords = project.title.split(" ");
+  let introLetterIndex = 0;
+  const introNodes: ReactNode[] = [];
+  introWords.forEach((word, wi) => {
+    if (wi > 0) introNodes.push(" ");
+    introNodes.push(
+      <span key={`w${wi}`} className="inline-block whitespace-nowrap">
+        {word.split("").map((char) => {
+          const i = introLetterIndex++;
+          return (
+            <span key={i} className="cb-letter" style={{ "--i": i } as CSSProperties}>
+              {char}
+            </span>
+          );
+        })}
+      </span>
+    );
+  });
+
+  useEffect(() => {
+    if (reducedMotion) {
+      setIntroVisible(false);
+      return;
+    }
+    setIntroVisible(true);
+    setIntroExiting(false);
+    // hold until the slowest letter finishes its stagger + settle, then fade
+    const holdMs = introLetterIndex * 30 + 620 + 350;
+    const exitMs = 500;
+    const exitTimer = window.setTimeout(() => setIntroExiting(true), holdMs);
+    const hideTimer = window.setTimeout(() => setIntroVisible(false), holdMs + exitMs);
+    return () => {
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(hideTimer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [project.slug, reducedMotion]);
 
   // In production the grid is adaptive — only tiles that actually have media
   // render, so a project with 6 photos shows a clean full row instead of
@@ -78,6 +128,24 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
 
   return (
     <div className="min-h-dvh" style={{ color: "var(--cb-text)" }} data-cb-theme={dark ? "dark" : "light"}>
+      {introVisible && (
+        <div
+          key={project.slug}
+          aria-hidden="true"
+          className={`fixed inset-0 z-[300] flex items-center justify-center px-[6vw] ${
+            introExiting ? "cb-intro-exit" : ""
+          }`}
+          style={{ background: "var(--cb-bg)" }}
+        >
+          <h1
+            className="m-0 max-w-[16ch] text-center font-display font-extrabold lowercase leading-[.9] tracking-[-0.035em]"
+            style={{ fontSize: "clamp(28px,7vw,88px)", color: "var(--cb-text)" }}
+          >
+            {introNodes}
+          </h1>
+        </div>
+      )}
+
       {/* premium fullscreen frosted-glass backdrop — built from the project's
           own cover photo. Filter lives on this fixed leaf layer, not the
           root, so it never becomes a containing block for the fixed bottom
@@ -116,6 +184,27 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
           }}
         />
       </div>
+
+      <Link
+        href={`/projects/${prevSlug}`}
+        title={lang === "en" ? "previous project" : "proyecto anterior"}
+        className="fixed top-1/2 left-3 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border-none no-underline backdrop-blur-xl sm:left-6"
+        style={{ background: "var(--cb-glass-pill)", color: "var(--cb-text)" }}
+      >
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M15 5l-7 7 7 7" />
+        </svg>
+      </Link>
+      <Link
+        href={`/projects/${nextSlug}`}
+        title={lang === "en" ? "next project" : "siguiente proyecto"}
+        className="fixed top-1/2 right-3 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border-none no-underline backdrop-blur-xl sm:right-6"
+        style={{ background: "var(--cb-glass-pill)", color: "var(--cb-text)" }}
+      >
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M9 5l7 7-7 7" />
+        </svg>
+      </Link>
 
       <div className="fixed inset-x-0 top-0 z-10">
         <ModeSwitcher
@@ -171,8 +260,8 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
           <Link
             href="/"
             title={lang === "en" ? "back" : "volver"}
-            className="flex h-10 w-10 items-center justify-center rounded-full border text-[15px]"
-            style={{ borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
+            className="flex h-10 w-10 items-center justify-center rounded-full border-none text-[15px]"
+            style={{ background: "var(--cb-pill)", color: "var(--cb-text)" }}
           >
             ✕
           </Link>
@@ -301,7 +390,7 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
               ))}
             </div>
             <div>
-              <div className="font-sans text-[11px] uppercase tracking-[0.2em] text-[var(--cb-muted)]">
+              <div className="font-sans text-[11px] uppercase tracking-[0.2em] text-[var(--cb-text)]">
                 {project.tag}
               </div>
               <h1 className="mt-2.5 font-display font-extrabold lowercase leading-none tracking-[-0.02em]"
@@ -351,25 +440,18 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
                   activeFeature.body.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
               </div>
 
-              <div className="mt-7 grid grid-cols-2 gap-3.5 border-t border-b py-4 sm:grid-cols-4"
+              <div className="mt-7 grid grid-cols-1 gap-3.5 border-t border-b py-4 sm:grid-cols-3"
                 style={{ borderColor: "var(--cb-hair)" }}
               >
                 <Meta label={ui.client} value={project.client} />
                 <Meta label={ui.role} value={project.role} />
-                <Meta label={ui.year} value={project.year} />
                 <Meta label={ui.result} value={project.result} accent />
               </div>
             </div>
           </div>
 
-          <div className="my-[72px] text-center font-display font-extrabold uppercase leading-none tracking-[-0.01em]"
-            style={{ fontSize: "clamp(30px,5.5vw,68px)" }}
-          >
-            {project.headline}
-          </div>
-
           <div className="mt-16 border-t pt-[34px]" style={{ borderColor: "var(--cb-hair)" }}>
-            <div className="flex flex-wrap gap-6 text-[13px] text-[var(--cb-muted)]">
+            <div className="flex flex-wrap gap-6 text-[13px] text-[var(--cb-text)]">
               <Link href="/" className="text-inherit no-underline">
                 {ui.home}
               </Link>
@@ -380,33 +462,46 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
 
             {others.length > 0 && (
               <>
-                <div className="mt-7 font-sans text-[11px] uppercase tracking-[0.2em] text-[var(--cb-muted)]">
-                  {ui.moreProjects}
-                </div>
-                <div className="mt-4 flex gap-4 overflow-x-auto pb-3">
-                  {others.slice(0, 6).map((other) => (
-                    <Link
-                      key={other.slug}
-                      href={`/projects/${other.slug}`}
-                      className="block w-[260px] flex-none text-inherit no-underline"
-                    >
-                      <div
-                        className="h-[150px] w-[260px] overflow-hidden rounded-xl"
-                        style={{ background: "var(--cb-pill)" }}
+                <div className="mt-7 flex gap-4 overflow-x-auto pt-6 pb-3">
+                  {others.map((other, i) => {
+                    const distance =
+                      hoveredOtherIndex === null ? Infinity : Math.abs(i - hoveredOtherIndex);
+                    // scaled growth is symmetric around each card's own center, so
+                    // neighboring cards' growth eats into the shared 16px (gap-4)
+                    // gutter from both sides — keep (scale0-1)+(scale1-1) comfortably
+                    // under gap/130 so the gap never visually closes on hover.
+                    const scale = distance === 0 ? 1.08 : distance === 1 ? 1.02 : 1;
+                    return (
+                      <Link
+                        key={other.slug}
+                        href={`/projects/${other.slug}`}
+                        className="relative block w-[260px] flex-none text-inherit no-underline"
+                        onMouseEnter={() => setHoveredOtherIndex(i)}
+                        onMouseLeave={() => setHoveredOtherIndex(null)}
+                        onFocus={() => setHoveredOtherIndex(i)}
+                        onBlur={() => setHoveredOtherIndex(null)}
+                        style={{
+                          transform: `scale(${scale})`,
+                          transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1)",
+                          transformOrigin: "center bottom",
+                          zIndex: distance === 0 ? 2 : distance === 1 ? 1 : 0,
+                        }}
                       >
-                        <ProjectMedia
-                          media={other.coverMedia}
-                          label={other.cover}
-                          compact
-                          sizes="260px"
-                          uploadPath={`/projects/${assetFolder(other)}/cover`}
-                        />
-                      </div>
-                      <div className="mt-2.5 text-[15px] font-bold lowercase">
-                        {other.title}
-                      </div>
-                    </Link>
-                  ))}
+                        <div
+                          className="h-[150px] w-[260px] overflow-hidden rounded-xl"
+                          style={{ background: "var(--cb-pill)" }}
+                        >
+                          <ProjectMedia
+                            media={other.coverMedia}
+                            label={other.cover}
+                            compact
+                            sizes="260px"
+                            uploadPath={`/projects/${assetFolder(other)}/cover`}
+                          />
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
               </>
             )}
@@ -428,7 +523,7 @@ function Meta({
 }) {
   return (
     <div>
-      <div className="text-[10.5px] uppercase tracking-[0.1em] text-[var(--cb-muted)]">
+      <div className="text-[10.5px] uppercase tracking-[0.1em] text-[var(--cb-text)]">
         {label}
       </div>
       <div

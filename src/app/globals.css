@@ -195,6 +195,24 @@ body {
   animation-delay: 0.9s;
 }
 
+/* Project-detail intro splash: the project title plays the same per-letter
+   .cb-letter stagger as the hero, then this wash fades/blurs away to reveal
+   the loaded project underneath. */
+@keyframes cb-intro-out {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    filter: blur(16px);
+  }
+}
+
+.cb-intro-exit {
+  animation: cb-intro-out 0.5s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
 .cb-pillbtn {
   transition:
     transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),

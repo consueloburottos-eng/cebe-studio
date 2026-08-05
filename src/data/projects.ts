@@ -38,10 +38,10 @@ export const projects: Project[] = [
       "Storytelling visual",
       "Dirección de movimiento",
     ],
-    cover: "Quartz — El hilo de la Novia",
+    cover: "El hilo de la Novia",
     coverMedia: img("quartz", "cover.webp"),
     brief:
-      "Quartz es una reinterpretación visual de Bodas de Sangre de Federico García Lorca, construida como un afiche/serie fotográfica alrededor de un solo personaje: la Novia. En vez de narrar la obra, la serie traduce su transformación emocional al lenguaje corporal del flamenco, usando un hilo rojo como extensión física de aquello que la Novia intenta controlar y que, acto a acto, termina dominándola. El flamenco funciona aquí como símbolo — de la pasión, el deseo, la sangre y la fuerza interna — y el rojo del hilo como su materialización visual: nace contenido dentro del cuerpo y termina ocupando el espacio, igual que la pasión que la obra presenta como destino inevitable.",
+      "El hilo de la Novia es una reinterpretación visual de Bodas de Sangre de Federico García Lorca, construida como un afiche/serie fotográfica alrededor de un solo personaje: la Novia. En vez de narrar la obra, la serie traduce su transformación emocional al lenguaje corporal del flamenco, usando un hilo rojo como extensión física de aquello que la Novia intenta controlar y que, acto a acto, termina dominándola. El flamenco funciona aquí como símbolo — de la pasión, el deseo, la sangre y la fuerza interna — y el rojo del hilo como su materialización visual: nace contenido dentro del cuerpo y termina ocupando el espacio, igual que la pasión que la obra presenta como destino inevitable.",
     strategy: [
       "La pieza se estructura en tres actos que siguen la evolución psicológica del personaje, no la cronología literal de la obra.",
       "En el primer acto — la pasión contenida —, la Novia aparece rígida y silenciosa, con una postura cerrada que muestra el control que ejerce sobre sí misma. El hilo rojo nace desde su interior pero permanece dentro de los límites del cuerpo; el único lugar donde logra escapar es la cabeza, donde se transforma en flores tejidas — la Novia todavía racionaliza el sentimiento antes de permitirse sentirlo. La flor roja es una pasión viva, pero atrapada dentro de una estructura social y mental.",
@@ -49,7 +49,7 @@ export const projects: Project[] = [
       "En el tercer acto — el quiebro: liberación y destino —, aparece el Cambré Flamenco (el Quiebro): el cuerpo abandona la verticalidad y se deja llevar. El hilo sale del cuerpo, ocupa el espacio y genera tensión con el exterior. Las manos — narración emocional, no solo gesto — viajan desde el interior hacia el exterior, desde la contención hacia la liberación: el cuerpo dice lo que la palabra ya no puede contener. La serie completa traza el viaje de una mujer que pasa de estar contenida por la norma y la razón, a enfrentarse con su deseo y finalmente dejarse atravesar por él.",
     ],
     headline: "el hilo de la novia",
-    gallery: introGallery("quartz", "Quartz", 1, 13, "webp", { 8: "png" }),
+    gallery: introGallery("quartz", "El hilo de la Novia", 1, 13, "webp", { 8: "png" }),
     en: {
       category: "Art Direction",
       tag: "art direction · conceptual photography",
@@ -58,7 +58,7 @@ export const projects: Project[] = [
       services: "Art direction · Conceptual photography · Visual concept",
       skills: ["Art Direction", "Conceptual Photography", "Styling", "Conceptual Research", "Visual Storytelling", "Movement Direction"],
       brief:
-        "Quartz is a visual reinterpretation of Federico García Lorca's Blood Wedding, built as a poster/photo series around a single character: the Bride. Rather than narrating the play, the series translates her emotional transformation into the body language of flamenco, using a red thread as a physical extension of what the Bride tries to control and which, act by act, ends up controlling her. Flamenco works here as a symbol — of passion, desire, blood, and inner force — and the red of the thread as its visual materialization: it starts contained inside the body and ends up occupying the space, just like the passion the play presents as an inevitable fate.",
+        "The Bride's Thread is a visual reinterpretation of Federico García Lorca's Blood Wedding, built as a poster/photo series around a single character: the Bride. Rather than narrating the play, the series translates her emotional transformation into the body language of flamenco, using a red thread as a physical extension of what the Bride tries to control and which, act by act, ends up controlling her. Flamenco works here as a symbol — of passion, desire, blood, and inner force — and the red of the thread as its visual materialization: it starts contained inside the body and ends up occupying the space, just like the passion the play presents as an inevitable fate.",
       strategy: [
         "The piece is structured in three acts that follow the character's psychological evolution, not the play's literal chronology.",
         "In the first act — contained passion —, the Bride appears rigid and silent, her closed posture showing the control she exerts over herself. The red thread originates from within her but stays inside the body's limits; the only place it escapes is her head, where it turns into woven flowers — the Bride still rationalizes the feeling before allowing herself to feel it. The red flower is a passion that's alive, but trapped inside a social and mental structure.",

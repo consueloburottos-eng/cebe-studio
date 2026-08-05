@@ -170,12 +170,7 @@ export default function ProjectsWindow({ projects: rawProjects, onClose, initial
                       />
                     </div>
                     <div className="px-3.5 pt-3 pb-3.5">
-                      <div className="flex items-baseline justify-between gap-2">
-                        <span className="text-sm font-bold">{titleCase(p.title)}</span>
-                        <span className="font-mono text-[11px]" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
-                          {p.year}
-                        </span>
-                      </div>
+                      <div className="text-sm font-bold">{titleCase(p.title)}</div>
                       <div className="mt-1 text-[11.5px]" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
                         {p.category}
                       </div>
@@ -237,12 +232,11 @@ export default function ProjectsWindow({ projects: rawProjects, onClose, initial
                   </span>
                 </div>
                 <div
-                  className="mt-4.5 grid grid-cols-2 gap-3.5 border-t border-b py-4 sm:grid-cols-4"
+                  className="mt-4.5 grid grid-cols-1 gap-3.5 border-t border-b py-4 sm:grid-cols-3"
                   style={{ borderColor: "var(--os-hr)" }}
                 >
                   <Meta label={ui.client} value={selected.client} />
                   <Meta label={ui.role} value={selected.role} />
-                  <Meta label={ui.year} value={selected.year} />
                   <Meta label={ui.result} value={selected.result} accent />
                 </div>
                 {selected.subtitle && (

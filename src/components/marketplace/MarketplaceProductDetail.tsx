@@ -274,7 +274,6 @@ export default function MarketplaceProductDetail({ project: rawProject, suggesti
           <Meta label={mk.category} value={project.category} />
           <Meta label={ui.client} value={project.client} />
           <Meta label={ui.role} value={project.role} />
-          <Meta label={ui.year} value={project.year} />
           <Meta label={ui.result} value={project.result} accent />
         </div>
 
