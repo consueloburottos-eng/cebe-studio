@@ -50,6 +50,7 @@ export default function BrandingHome() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [bookOpen, setBookOpen] = useState(false);
   const [gridOpen, setGridOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
   const [front, setFront] = useState(0);
 
   const finePointer = useMediaQuery("(pointer: fine)");
@@ -77,8 +78,20 @@ export default function BrandingHome() {
     setFront((f) => (f + dir + heroProjects.length) % heroProjects.length);
   }
 
+  // Consuelo AI (BotpressWidget) broadcasts this instead of intercepting
+  // wheel/touch events globally — that approach also blocked genuine scroll
+  // gestures from reaching the widget's own internal message list. Listening
+  // here just pauses the shuffle while it's open, same as the other modals.
   useEffect(() => {
-    const blocked = bookOpen || aboutOpen || gridOpen;
+    function onChatOpenChange(e: Event) {
+      setChatOpen(Boolean((e as CustomEvent<{ open: boolean }>).detail?.open));
+    }
+    window.addEventListener("cebe:botpress-open-change", onChatOpenChange);
+    return () => window.removeEventListener("cebe:botpress-open-change", onChatOpenChange);
+  }, []);
+
+  useEffect(() => {
+    const blocked = bookOpen || aboutOpen || gridOpen || chatOpen;
 
     function onWheel(e: WheelEvent) {
       if (blocked) return;
@@ -106,7 +119,7 @@ export default function BrandingHome() {
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchend", onTouchEnd);
     };
-  }, [bookOpen, aboutOpen, gridOpen]);
+  }, [bookOpen, aboutOpen, gridOpen, chatOpen]);
 
   function closeNavAnd(fn: () => void) {
     setNavOpen(false);

@@ -72,13 +72,18 @@ export default function BotpressWidget() {
     };
     const getBotpress = () => (window as unknown as { botpress?: BotpressApi }).botpress;
 
-    // While the chat window is open it should own scrolling and take input
-    // priority over the page behind it: lock scroll on both <html> and
-    // <body> (browsers disagree on which one is the real scrolling element)
-    // AND cancel wheel/touch scroll gestures outside the widget directly —
-    // belt-and-suspenders, since overflow:hidden alone doesn't reliably stop
-    // touch-scroll on every mobile browser. Also close the widget on any
-    // click outside it instead of leaving it floating over the page.
+    // While the chat window is open it should take input priority over the
+    // page behind it: lock scroll on both <html> and <body> (browsers
+    // disagree on which one is the real scrolling element) and close on any
+    // click outside it. This intentionally does NOT intercept wheel/touch
+    // events globally — an earlier version did, using preventDefault +
+    // stopImmediatePropagation to stop the hero deck's own shuffle-on-wheel
+    // handler, but that also blocked genuine scroll gestures from ever
+    // reaching the widget's own internal (shadow-DOM) message list on real
+    // devices. Instead, broadcast open/closed as a plain window event so
+    // any page-level handler (see BrandingHome's wheel listener) can just
+    // check it and skip its own reaction, without anyone touching the
+    // event itself.
     const previousHtmlOverflow = document.documentElement.style.overflow;
     const previousBodyOverflow = document.body.style.overflow;
     let isOpen = false;
@@ -88,32 +93,27 @@ export default function BotpressWidget() {
       return Boolean(fabRoot && target instanceof Node && fabRoot.contains(target));
     }
 
+    function dispatchOpenChange(open: boolean) {
+      window.dispatchEvent(new CustomEvent("cebe:botpress-open-change", { detail: { open } }));
+    }
+
     function handleOpened() {
       isOpen = true;
       document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
+      dispatchOpenChange(true);
     }
     function handleClosed() {
       isOpen = false;
       document.documentElement.style.overflow = previousHtmlOverflow;
       document.body.style.overflow = previousBodyOverflow;
+      dispatchOpenChange(false);
     }
     function handleDocumentPointerDown(e: PointerEvent) {
       if (!isOpen || isInsideWidget(e.target)) return;
       getBotpress()?.close?.();
     }
-    function handleScrollGesture(e: Event) {
-      if (!isOpen || isInsideWidget(e.target)) return;
-      // preventDefault alone only blocks the native scroll — the hero deck's
-      // own window-level wheel listener (BrandingHome) still runs and shuffles
-      // cards regardless, since it doesn't check defaultPrevented. Stop the
-      // event outright so no other wheel/touch listener on the page sees it.
-      e.preventDefault();
-      e.stopImmediatePropagation();
-    }
     document.addEventListener("pointerdown", handleDocumentPointerDown, true);
-    document.addEventListener("wheel", handleScrollGesture, { passive: false, capture: true });
-    document.addEventListener("touchmove", handleScrollGesture, { passive: false, capture: true });
 
     let eventsBound = false;
     const eventPoll = window.setInterval(() => {
@@ -131,10 +131,9 @@ export default function BotpressWidget() {
       window.clearInterval(eventPoll);
       fabObserver?.disconnect();
       document.removeEventListener("pointerdown", handleDocumentPointerDown, true);
-      document.removeEventListener("wheel", handleScrollGesture, true);
-      document.removeEventListener("touchmove", handleScrollGesture, true);
       document.documentElement.style.overflow = previousHtmlOverflow;
       document.body.style.overflow = previousBodyOverflow;
+      if (isOpen) dispatchOpenChange(false);
       getBotpress()?.close?.();
       document.getElementById(INJECT_ID)?.remove();
       document.getElementById(CONFIG_ID)?.remove();
