@@ -360,12 +360,36 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
               <div className="mt-4 text-base font-bold">{project.subtitle}</div>
             </div>
 
-            <div className="grid grid-cols-1 gap-3.5 border-t border-b py-4 sm:grid-cols-3 md:col-start-2"
-              style={{ borderColor: "var(--cb-hair)" }}
-            >
-              <Meta label={ui.client} value={project.client} />
-              <Meta label={ui.role} value={project.role} />
-              <Meta label={ui.result} value={project.result} accent />
+            <div className="md:col-start-2">
+              <div className="grid grid-cols-1 gap-3.5 border-t border-b py-4 sm:grid-cols-3"
+                style={{ borderColor: "var(--cb-hair)" }}
+              >
+                <Meta label={ui.client} value={project.client} />
+                <Meta label={ui.role} value={project.role} />
+                <Meta label={ui.result} value={project.result} accent />
+              </div>
+
+              {project.metrics && project.metrics.length > 0 && (
+                <div className="grid grid-cols-1 gap-3.5 border-b py-4 sm:grid-cols-3"
+                  style={{ borderColor: "var(--cb-hair)" }}
+                >
+                  {project.metrics.map((m, i) => (
+                    <div key={i}>
+                      <div className="text-[22px] font-bold tracking-[-0.01em]" style={{ color: "#B8623F" }}>
+                        {lang === "en" ? (m.valueEn ?? m.value) : m.value}
+                      </div>
+                      <div className="mt-1 text-[10.5px] uppercase tracking-[0.12em] text-[var(--cb-muted)]">
+                        {lang === "en" ? (m.labelEn ?? m.label) : m.label}
+                      </div>
+                    </div>
+                  ))}
+                  {(project.metricsNote || project.metricsNoteEn) && (
+                    <div className="col-span-full mt-1 text-[10.5px] italic text-[var(--cb-muted)]">
+                      {lang === "en" ? (project.metricsNoteEn ?? project.metricsNote) : project.metricsNote}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="flex flex-col gap-3 font-sans md:col-start-1 md:row-start-3 md:sticky md:top-[140px]">
@@ -458,15 +482,56 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
                 {activeFeature && (
                   <>
                     {activeFeature.body.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
-                    <div className="mt-1 overflow-hidden rounded-xl" style={{ background: "var(--cb-pill)" }}>
-                      <ProjectMedia
-                        media={activeFeature.media}
-                        label={activeFeature.label}
-                        fit="auto"
-                        sizes="(min-width:1130px) 834px, 100vw"
-                        uploadPath={`/projects/${folder}/feature-${activeFeature.id}`}
-                      />
-                    </div>
+                    {activeFeature.metrics && activeFeature.metrics.length > 0 && (
+                      <div className="grid grid-cols-1 gap-3.5 border-t border-b py-4 sm:grid-cols-3" style={{ borderColor: "var(--cb-hair)" }}>
+                        {activeFeature.metrics.map((m, i) => (
+                          <div key={i}>
+                            <div className="text-[22px] font-bold tracking-[-0.01em]" style={{ color: "var(--cb-amber, #b8623f)" }}>
+                              {lang === "en" ? (m.valueEn ?? m.value) : m.value}
+                            </div>
+                            <div className="mt-1 text-[10.5px] uppercase tracking-[0.12em] text-[var(--cb-muted)]">
+                              {lang === "en" ? (m.labelEn ?? m.label) : m.label}
+                            </div>
+                          </div>
+                        ))}
+                        {(activeFeature.metricsNote || activeFeature.metricsNoteEn) && (
+                          <div className="col-span-full mt-1 text-[10.5px] italic text-[var(--cb-muted)]">
+                            {lang === "en" ? (activeFeature.metricsNoteEn ?? activeFeature.metricsNote) : activeFeature.metricsNote}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {activeFeature.media && (
+                      <div className="mt-1 overflow-hidden rounded-xl" style={{ background: "var(--cb-pill)" }}>
+                        <ProjectMedia
+                          media={activeFeature.media}
+                          label={activeFeature.label}
+                          fit="auto"
+                          sizes="(min-width:1130px) 834px, 100vw"
+                          uploadPath={`/projects/${folder}/feature-${activeFeature.id}`}
+                        />
+                      </div>
+                    )}
+                    {activeFeature.gallery && activeFeature.gallery.length > 0 && (
+                      <div className="mt-2 grid grid-cols-1 gap-5">
+                        {activeFeature.gallery.map((shot, i) => (
+                          <div key={i} className="flex flex-col gap-2">
+                            <div className="overflow-hidden rounded-xl" style={{ background: "var(--cb-pill)" }}>
+                              <ProjectMedia
+                                media={shot.media}
+                                label={shot.caption}
+                                fit="auto"
+                                sizes="(min-width:1130px) 834px, 100vw"
+                                uploadPath={`/projects/${folder}/feature-${activeFeature.id}-${i + 1}`}
+                              />
+                            </div>
+                            <p className="text-[12.5px] leading-snug" style={{ color: "var(--cb-muted)" }}>
+                              {shot.caption}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </>
                 )}
               </div>

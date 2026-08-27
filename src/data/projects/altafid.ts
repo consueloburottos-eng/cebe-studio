@@ -104,6 +104,28 @@ export const altafidPlatform: Project = {
           "On the client side, the assessment happens as a smooth digital experience: forms that work on any device, secure access from the client portal with real-time updates, and an instantly generated risk score the advisor can act on right away to adjust the investment strategy.",
         ],
       },
+      gallery: [
+        {
+          media: img("altafid", "feature-risk-assessment-01.png"),
+          caption: "Perfil de riesgo del cliente: puntaje de tolerancia y capacidad, y su ubicación en la curva de distribución de activos según ese perfil.",
+          captionEn: "Client risk profile: tolerance and capacity score, plotted against the asset-allocation curve for that profile.",
+        },
+        {
+          media: img("altafid", "feature-risk-assessment-02.png"),
+          caption: "Constructor de cuestionarios: agregar y reordenar preguntas, definir tipos de respuesta y organizar la lógica por sección (tolerancia, capacidad).",
+          captionEn: "Questionnaire builder: add and reorder questions, define answer types, and organize logic by section (tolerance, capacity).",
+        },
+        {
+          media: img("altafid", "feature-risk-assessment-03.png"),
+          caption: "Notificación automática al cliente cuando el asesor solicita actualizar su evaluación de riesgo, con enlace directo y vencimiento a los 10 días.",
+          captionEn: "Automatic client notification when the advisor requests an updated risk assessment, with a direct link that expires after 10 days.",
+        },
+        {
+          media: img("altafid", "feature-risk-assessment-04.png"),
+          caption: "La misma experiencia del cuestionario en escritorio y mobile, para que el cliente pueda completarlo desde cualquier dispositivo.",
+          captionEn: "The same questionnaire experience on desktop and mobile, so the client can complete it from any device.",
+        },
+      ],
     },
     {
       id: "portfolio-design",

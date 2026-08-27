@@ -218,13 +218,33 @@ body {
     transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
     box-shadow 0.3s,
     background 0.3s,
-    border-color 0.3s;
+    border-color 0.3s,
+    color 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .cb-pillbtn:hover {
   transform: translateY(-2px);
+  color: #fff;
 }
 .cb-pillbtn:active {
   transform: translateY(0);
+}
+/* hover fill grows from the button's own center, like a drop of ink/paint
+   spreading outward, instead of a flat color swap. */
+.cb-pillbtn-fill {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 240%;
+  height: 240%;
+  z-index: 0;
+  border-radius: 50%;
+  background: #111;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+.cb-pillbtn:hover .cb-pillbtn-fill {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .cb-card:hover .cb-card-hint {

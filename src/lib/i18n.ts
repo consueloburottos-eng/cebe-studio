@@ -4,12 +4,17 @@ import type { Lang } from "@/hooks/useSiteLanguage";
 // Same fallback convention as localizeProject below, but for a single
 // feature deep-dive tab: any field missing from `en` falls back to Spanish.
 function localizeFeature(feature: FeatureDeepDive, lang: Lang): FeatureDeepDive {
-  if (lang === "es" || !feature.en) return feature;
+  if (lang === "es") return feature;
+  const gallery = feature.gallery?.map((img) => ({ ...img, caption: img.captionEn ?? img.caption }));
+  if (!feature.en) {
+    return gallery ? { ...feature, gallery } : feature;
+  }
   return {
     ...feature,
     label: feature.en.label ?? feature.label,
     title: feature.en.title ?? feature.title,
     body: feature.en.body ?? feature.body,
+    gallery,
   };
 }
 

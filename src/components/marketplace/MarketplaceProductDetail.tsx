@@ -262,6 +262,57 @@ export default function MarketplaceProductDetail({ project: rawProject, suggesti
                 {activeFeature.body.map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
                 ))}
+                {activeFeature.metrics && activeFeature.metrics.length > 0 && (
+                  <div className="grid grid-cols-1 gap-3.5 border-t border-b py-4 sm:grid-cols-3" style={{ borderColor: "var(--mk-hr)" }}>
+                    {activeFeature.metrics.map((m, i) => (
+                      <div key={i}>
+                        <div className="text-[22px] font-bold tracking-[-0.01em]" style={{ color: "var(--mk-amber)" }}>
+                          {lang === "en" ? (m.valueEn ?? m.value) : m.value}
+                        </div>
+                        <div
+                          className="mt-1 text-[10.5px] uppercase"
+                          style={{ color: "var(--mk-mut)", letterSpacing: ".1em" }}
+                        >
+                          {lang === "en" ? (m.labelEn ?? m.label) : m.label}
+                        </div>
+                      </div>
+                    ))}
+                    {(activeFeature.metricsNote || activeFeature.metricsNoteEn) && (
+                      <div className="col-span-full mt-1 text-[10.5px] italic" style={{ color: "var(--mk-mut)" }}>
+                        {lang === "en" ? (activeFeature.metricsNoteEn ?? activeFeature.metricsNote) : activeFeature.metricsNote}
+                      </div>
+                    )}
+                  </div>
+                )}
+                {activeFeature.media && (
+                  <div className="overflow-hidden rounded-xl" style={{ background: "var(--mk-surface)" }}>
+                    <ProjectMedia
+                      media={activeFeature.media}
+                      label={activeFeature.label}
+                      sizes="(min-width:1100px) 1100px, 100vw"
+                      uploadPath={`/projects/${folder}/feature-${activeFeature.id}`}
+                    />
+                  </div>
+                )}
+                {activeFeature.gallery && activeFeature.gallery.length > 0 && (
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    {activeFeature.gallery.map((shot, i) => (
+                      <div key={i} className="flex flex-col gap-2">
+                        <div className="overflow-hidden rounded-xl" style={{ background: "var(--mk-surface)" }}>
+                          <ProjectMedia
+                            media={shot.media}
+                            label={shot.caption}
+                            sizes="(min-width:1100px) 400px, 100vw"
+                            uploadPath={`/projects/${folder}/feature-${activeFeature.id}-${i + 1}`}
+                          />
+                        </div>
+                        <p className="text-[12.5px] leading-snug" style={{ color: "var(--mk-mut)" }}>
+                          {shot.caption}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>

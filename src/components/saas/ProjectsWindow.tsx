@@ -245,6 +245,35 @@ export default function ProjectsWindow({ projects: rawProjects, onClose, initial
                   </div>
                 )}
 
+                {selected.metrics && selected.metrics.length > 0 && (
+                  <div
+                    className="mt-4.5 grid grid-cols-1 gap-3.5 border-b py-4 sm:grid-cols-3"
+                    style={{ borderColor: "var(--os-hr)" }}
+                  >
+                    {selected.metrics.map((m, i) => (
+                      <div key={i}>
+                        <div className="text-[22px] font-bold tracking-[-0.01em]" style={{ color: "var(--os-accent)" }}>
+                          {lang === "en" ? (m.valueEn ?? m.value) : m.value}
+                        </div>
+                        <div
+                          className="mt-1 text-[10.5px] tracking-[0.12em] uppercase"
+                          style={{ color: "rgba(var(--os-txrgb),.4)" }}
+                        >
+                          {lang === "en" ? (m.labelEn ?? m.label) : m.label}
+                        </div>
+                      </div>
+                    ))}
+                    {(selected.metricsNote || selected.metricsNoteEn) && (
+                      <div
+                        className="col-span-full mt-1 text-[10.5px] italic"
+                        style={{ color: "rgba(var(--os-txrgb),.4)" }}
+                      >
+                        {lang === "en" ? (selected.metricsNoteEn ?? selected.metricsNote) : selected.metricsNote}
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <div className="mt-5 flex flex-wrap gap-5 font-sans">
                   <button
                     type="button"
@@ -348,6 +377,63 @@ export default function ProjectsWindow({ projects: rawProjects, onClose, initial
                           {paragraph}
                         </p>
                       ))}
+                      {activeFeature.metrics && activeFeature.metrics.length > 0 && (
+                        <div
+                          className="grid grid-cols-1 gap-3.5 border-t border-b py-4 sm:grid-cols-3"
+                          style={{ borderColor: "var(--os-hr)" }}
+                        >
+                          {activeFeature.metrics.map((m, i) => (
+                            <div key={i}>
+                              <div className="text-[22px] font-bold tracking-[-0.01em]" style={{ color: "var(--os-accent)" }}>
+                                {lang === "en" ? (m.valueEn ?? m.value) : m.value}
+                              </div>
+                              <div
+                                className="mt-1 text-[10.5px] tracking-[0.12em] uppercase"
+                                style={{ color: "rgba(var(--os-txrgb),.4)" }}
+                              >
+                                {lang === "en" ? (m.labelEn ?? m.label) : m.label}
+                              </div>
+                            </div>
+                          ))}
+                          {(activeFeature.metricsNote || activeFeature.metricsNoteEn) && (
+                            <div
+                              className="col-span-full mt-1 text-[10.5px] italic"
+                              style={{ color: "rgba(var(--os-txrgb),.4)" }}
+                            >
+                              {lang === "en" ? (activeFeature.metricsNoteEn ?? activeFeature.metricsNote) : activeFeature.metricsNote}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      {activeFeature.media && selected && (
+                        <div className="overflow-hidden rounded-lg" style={{ background: "rgba(var(--os-sfrgb),.03)" }}>
+                          <ProjectMedia
+                            media={activeFeature.media}
+                            label={activeFeature.label}
+                            sizes="(min-width:900px) 700px, 100vw"
+                            uploadPath={`/projects/${assetFolder(selected)}/feature-${activeFeature.id}`}
+                          />
+                        </div>
+                      )}
+                      {activeFeature.gallery && activeFeature.gallery.length > 0 && selected && (
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                          {activeFeature.gallery.map((shot, i) => (
+                            <div key={i} className="flex flex-col gap-1.5">
+                              <div className="overflow-hidden rounded-lg" style={{ background: "rgba(var(--os-sfrgb),.03)" }}>
+                                <ProjectMedia
+                                  media={shot.media}
+                                  label={shot.caption}
+                                  sizes="(min-width:900px) 350px, 100vw"
+                                  uploadPath={`/projects/${assetFolder(selected)}/feature-${activeFeature.id}-${i + 1}`}
+                                />
+                              </div>
+                              <p className="text-[11.5px] leading-snug" style={{ color: "rgba(var(--os-txrgb),.5)" }}>
+                                {shot.caption}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
