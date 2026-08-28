@@ -30,11 +30,36 @@ const HERO_PRIORITY_SLUGS = [
   "talent-capital",
 ];
 
+// Hero deck shows UX/UI and e-commerce work only — the more purely
+// branding/art-direction/editorial pieces (identity, set design, photo
+// direction) stay out of the hero but remain visible in the full projects
+// grid and everywhere else. Matched against the base (Spanish) category
+// values, since this list is built before per-language localization runs.
+const HERO_EXCLUDED_CATEGORIES = [
+  "Dirección de Arte",
+  "Dirección Editorial",
+  "Escenografía",
+  "Identidad",
+  "Próximamente",
+];
+
+// Individually excluded on top of the category filter — these are tagged
+// "Product Design" but are physical/industrial pieces (longboard, balance
+// bike, backpack, air-quality hardware), not digital UX/UI work, so they
+// don't belong on the hero even though their category alone would pass.
+const HERO_EXCLUDED_SLUGS = ["longboard", "cnc", "polucio", "brava"];
+
+const heroEligibleProjects = projects.filter(
+  (p) => !HERO_EXCLUDED_CATEGORIES.includes(p.category) && !HERO_EXCLUDED_SLUGS.includes(p.slug)
+);
+
 const heroProjects: Project[] = [
-  ...HERO_PRIORITY_SLUGS.map((slug) => getProject(slug)).filter(
-    (p): p is Project => Boolean(p)
-  ),
-  ...projects.filter((p) => !HERO_PRIORITY_SLUGS.includes(p.slug)),
+  ...HERO_PRIORITY_SLUGS.map((slug) => getProject(slug))
+    .filter((p): p is Project => Boolean(p))
+    .filter(
+      (p) => !HERO_EXCLUDED_CATEGORIES.includes(p.category) && !HERO_EXCLUDED_SLUGS.includes(p.slug)
+    ),
+  ...heroEligibleProjects.filter((p) => !HERO_PRIORITY_SLUGS.includes(p.slug)),
 ];
 
 // Hero intro: "product designer" split into per-letter spans so the .cb-letter
