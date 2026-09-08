@@ -26,21 +26,24 @@ const HERO_PRIORITY_SLUGS = [
   "buildwithin-design-system",
   "altafid-design-system",
   "altafid",
-  "rocket-mkt",
   "talent-capital",
 ];
 
-// Hero deck shows UX/UI and e-commerce work only — the more purely
-// branding/art-direction/editorial pieces (identity, set design, photo
-// direction) stay out of the hero but remain visible in the full projects
-// grid and everywhere else. Matched against the base (Spanish) category
-// values, since this list is built before per-language localization runs.
+// Hero deck shows UX/UI product design work only — branding, e-commerce,
+// service design, web design and editorial/art-direction pieces stay out
+// of the hero but remain visible in the full projects grid and everywhere
+// else. Matched against the base (Spanish) category values, since this
+// list is built before per-language localization runs.
 const HERO_EXCLUDED_CATEGORIES = [
   "Dirección de Arte",
   "Dirección Editorial",
   "Escenografía",
   "Identidad",
   "Próximamente",
+  "E-commerce",
+  "Diseño de Servicios",
+  "Web Design",
+  "Brand + Web",
 ];
 
 // Individually excluded on top of the category filter — these are tagged
