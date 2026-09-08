@@ -74,39 +74,47 @@ export default function ModeSwitcher({
           </button>
         </div>
       )}
-      <select
-        value={mode}
-        onChange={(e) => {
-          const next = MODES.find((m) => m.key === e.target.value);
-          if (next) router.push(next.href);
-        }}
-        aria-label={effectiveLang === "en" ? "Mode" : "Modo"}
-        className="rounded-full border-none px-3 py-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.06em] sm:hidden"
-        style={{ background: segBg, color: textColor }}
-      >
-        {MODES.map((m) => (
-          <option key={m.key} value={m.key}>
-            {m.label}
-          </option>
-        ))}
-      </select>
-      <div className="hidden gap-0.5 rounded-full p-[3px] sm:flex" style={{ background: segBg }}>
-        {MODES.map((m) => {
-          const active = m.key === mode;
-          return (
-            <Link
-              key={m.key}
-              href={m.href}
-              className={segBase}
-              style={{
-                background: active ? textColor : "transparent",
-                color: active ? (isDarkVariant ? "#141419" : "#fff") : mutedColor,
-              }}
-            >
+      <div className="flex items-center gap-1.5 sm:gap-2">
+        <span
+          className="hidden font-sans text-[10px] font-bold tracking-[0.1em] uppercase sm:inline"
+          style={{ color: mutedColor }}
+        >
+          {effectiveLang === "en" ? "View as" : "Ver como"}
+        </span>
+        <select
+          value={mode}
+          onChange={(e) => {
+            const next = MODES.find((m) => m.key === e.target.value);
+            if (next) router.push(next.href);
+          }}
+          aria-label={effectiveLang === "en" ? "Mode" : "Modo"}
+          className="rounded-full border-none px-3 py-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.06em] sm:hidden"
+          style={{ background: segBg, color: textColor }}
+        >
+          {MODES.map((m) => (
+            <option key={m.key} value={m.key}>
               {m.label}
-            </Link>
-          );
-        })}
+            </option>
+          ))}
+        </select>
+        <div className="hidden gap-0.5 rounded-full p-[3px] sm:flex" style={{ background: segBg }}>
+          {MODES.map((m) => {
+            const active = m.key === mode;
+            return (
+              <Link
+                key={m.key}
+                href={m.href}
+                className={segBase}
+                style={{
+                  background: active ? textColor : "transparent",
+                  color: active ? (isDarkVariant ? "#141419" : "#fff") : mutedColor,
+                }}
+              >
+                {m.label}
+              </Link>
+            );
+          })}
+        </div>
       </div>
       {onSetLight && onSetDark && (
         <div className="flex gap-0.5 rounded-full p-[3px]" style={{ background: segBg }}>

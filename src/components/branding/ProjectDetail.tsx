@@ -61,7 +61,6 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
   const activeFeature = project.features?.find((f) => f.id === activeTab);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [bookOpen, setBookOpen] = useState(false);
-  const [navOpen, setNavOpen] = useState(false);
   const [hoveredOtherIndex, setHoveredOtherIndex] = useState<number | null>(null);
   const folder = assetFolder(project);
 
@@ -219,20 +218,9 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
         <ProgressiveBlur side="top" height={110} />
         <div className="relative z-[1] flex h-[60px] items-center justify-between px-4 sm:px-[26px]">
           <NavPill
-            open={navOpen}
-            onToggle={() => setNavOpen((o) => !o)}
-            onOpenAbout={() => {
-              setNavOpen(false);
-              setAboutOpen(true);
-            }}
-            onOpenGrid={() => {
-              setNavOpen(false);
-              router.push("/");
-            }}
-            onOpenBook={() => {
-              setNavOpen(false);
-              setBookOpen(true);
-            }}
+            onOpenAbout={() => setAboutOpen(true)}
+            onOpenGrid={() => router.push("/")}
+            onOpenBook={() => setBookOpen(true)}
           />
 
           <TopRight

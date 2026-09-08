@@ -40,8 +40,6 @@ const HERO_EXCLUDED_CATEGORIES = [
   "Escenografía",
   "Identidad",
   "Próximamente",
-  "E-commerce",
-  "Diseño de Servicios",
   "Web Design",
   "Brand + Web",
 ];
@@ -50,7 +48,9 @@ const HERO_EXCLUDED_CATEGORIES = [
 // "Product Design" but are physical/industrial pieces (longboard, balance
 // bike, backpack, air-quality hardware), not digital UX/UI work, so they
 // don't belong on the hero even though their category alone would pass.
-const HERO_EXCLUDED_SLUGS = ["longboard", "cnc", "polucio", "brava"];
+// "llay-llay" is excluded by slug rather than category since its sibling
+// service-design project (bululu) should stay in the hero.
+const HERO_EXCLUDED_SLUGS = ["longboard", "cnc", "polucio", "brava", "llay-llay"];
 
 const heroEligibleProjects = projects.filter(
   (p) => !HERO_EXCLUDED_CATEGORIES.includes(p.category) && !HERO_EXCLUDED_SLUGS.includes(p.slug)
@@ -74,7 +74,6 @@ const HERO_TITLE_LETTERS = "product designer"
 export default function BrandingHome() {
   const [dark, setDark] = useSiteTheme();
   const [lang, setLang] = useSiteLanguage();
-  const [navOpen, setNavOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [bookOpen, setBookOpen] = useState(false);
   const [gridOpen, setGridOpen] = useState(false);
@@ -149,11 +148,6 @@ export default function BrandingHome() {
     };
   }, [bookOpen, aboutOpen, gridOpen, chatOpen]);
 
-  function closeNavAnd(fn: () => void) {
-    setNavOpen(false);
-    fn();
-  }
-
   const counter = `${String(front + 1).padStart(2, "0")} / ${String(
     heroProjects.length
   ).padStart(2, "0")}`;
@@ -216,11 +210,9 @@ export default function BrandingHome() {
 
         <div className="absolute inset-x-0 top-0 z-[130] flex h-[60px] items-center justify-between px-4 sm:px-[26px]">
           <NavPill
-            open={navOpen}
-            onToggle={() => setNavOpen((o) => !o)}
-            onOpenAbout={() => closeNavAnd(() => setAboutOpen(true))}
-            onOpenGrid={() => closeNavAnd(() => setGridOpen(true))}
-            onOpenBook={() => closeNavAnd(() => setBookOpen(true))}
+            onOpenAbout={() => setAboutOpen(true)}
+            onOpenGrid={() => setGridOpen(true)}
+            onOpenBook={() => setBookOpen(true)}
           />
 
           <TopRight
