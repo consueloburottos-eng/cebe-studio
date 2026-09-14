@@ -11,16 +11,16 @@ export type ExperienceEntry = {
 
 export const EXPERIENCE: ExperienceEntry[] = [
   {
-    role: "Senior Product Designer",
+    role: "Senior Product Designer (Contractor)",
     company: "BuildWithin",
-    period: "2025–Hoy",
+    period: "Oct 2025–Ago 2026",
     place: "Remote",
-    note: "Diseño de experiencias enterprise AI-native para desarrollo laboral gubernamental — flujos multi-rol, IA conversacional y un sistema de diseño robusto para programas, postulantes y case managers.",
+    note: "Diseño de dos productos SaaS conversacionales con IA sobre la plataforma de BuildWithin: CADRE (evaluación de aptitud cyber para el Departamento de Guerra de EE.UU.) y Celeste (agente de carrera para Talent Capital/MWCOG). Rediseño del sitio institucional buildwithin.com.",
   },
   {
     role: "Lead Senior Product Designer",
     company: "Altafid",
-    period: "Jun 2022–Sep 2024",
+    period: "Jun 2022–Sep 2025",
     place: "Hybrid",
     note: "Diseño end-to-end de una plataforma SaaS para asesores financieros e inversionistas. Sistema de diseño propio de la empresa, con design tokens y component libraries, integrando UX con marketing, ventas y customer success para aumentar la retención de clientes.",
   },
@@ -49,16 +49,16 @@ export const EXPERIENCE: ExperienceEntry[] = [
 
 export const EXPERIENCE_EN: ExperienceEntry[] = [
   {
-    role: "Senior Product Designer",
+    role: "Senior Product Designer (Contractor)",
     company: "BuildWithin",
-    period: "2025–Present",
+    period: "Oct 2025–Aug 2026",
     place: "Remote",
-    note: "Designing AI-native enterprise experiences for government workforce development — multi-role flows, conversational AI, and a robust design system for programs, applicants, and case managers.",
+    note: "Designed two AI-conversational SaaS products on BuildWithin's platform: CADRE (cyber aptitude assessment for the U.S. Department of War) and Celeste (career agent for Talent Capital/MWCOG). Redesigned the institutional website, buildwithin.com.",
   },
   {
     role: "Lead Senior Product Designer",
     company: "Altafid",
-    period: "Jun 2022–Sep 2024",
+    period: "Jun 2022–Sep 2025",
     place: "Hybrid",
     note: "End-to-end design of a SaaS platform for financial advisors and investors. Built the company's own design system — with design tokens and component libraries — and increased client retention by integrating UX with marketing, sales, and customer success.",
   },

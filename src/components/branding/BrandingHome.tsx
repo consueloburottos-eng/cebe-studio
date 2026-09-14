@@ -235,6 +235,10 @@ export default function BrandingHome() {
           </span>
         </div>
 
+        <div className="pointer-events-none absolute bottom-[10px] left-1/2 z-[15] -translate-x-1/2 text-center font-sans text-[9.5px] leading-none text-[var(--cb-muted)] opacity-70">
+          {t("projectDetail", lang).siteCredit}
+        </div>
+
         {gridOpen && (
           <ProjectsGridOverlay projects={projects} onClose={() => setGridOpen(false)} />
         )}
