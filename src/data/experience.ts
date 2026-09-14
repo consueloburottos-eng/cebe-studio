@@ -15,7 +15,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
     company: "BuildWithin",
     period: "Oct 2025–Ago 2026",
     place: "Remote",
-    note: "Diseño de dos productos SaaS conversacionales con IA sobre la plataforma de BuildWithin: CADRE (evaluación de aptitud cyber para el Departamento de Guerra de EE.UU.) y Celeste (agente de carrera para Talent Capital/MWCOG). Rediseño del sitio institucional buildwithin.com.",
+    note: "Diseño de la plataforma SaaS completa de BuildWithin, cubriendo todos los roles del ecosistema (Candidato, Talent Manager, Case Manager, Administrador, Super Administrador), incluyendo CADRE (evaluación de aptitud cyber para el Departamento de Guerra de EE.UU.) y Celeste (agente de carrera para Talent Capital/MWCOG).",
   },
   {
     role: "Lead Senior Product Designer",
@@ -53,7 +53,7 @@ export const EXPERIENCE_EN: ExperienceEntry[] = [
     company: "BuildWithin",
     period: "Oct 2025–Aug 2026",
     place: "Remote",
-    note: "Designed two AI-conversational SaaS products on BuildWithin's platform: CADRE (cyber aptitude assessment for the U.S. Department of War) and Celeste (career agent for Talent Capital/MWCOG). Redesigned the institutional website, buildwithin.com.",
+    note: "Designed BuildWithin's full SaaS platform, covering every role in the ecosystem (Candidate, Talent Manager, Case Manager, Administrator, Super Administrator), including CADRE (cyber aptitude assessment for the U.S. Department of War) and Celeste (career agent for Talent Capital/MWCOG).",
   },
   {
     role: "Lead Senior Product Designer",
