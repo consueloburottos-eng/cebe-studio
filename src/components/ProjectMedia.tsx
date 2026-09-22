@@ -45,6 +45,16 @@ type ProjectMediaProps = {
   // photo's own aspect ratio uncropped — falls back to a 16/10 placeholder
   // box before a photo exists, since the placeholder has no intrinsic ratio.
   fit?: "cover" | "natural" | "auto";
+  // Anchor for the "cover" crop — defaults to centered. Useful for wide
+  // screenshots (e.g. dashboards with a left sidebar) cropped into a
+  // narrower/taller box, where centering would cut off the meaningful edge.
+  objectPosition?: "center" | "left" | "right" | "top" | "bottom";
+  // How the "cover"-fit box handles a photo whose own ratio doesn't match
+  // the box: "cover" (default) crops to fill it edge to edge. "contain"
+  // instead letterboxes so the full photo stays visible at its real width,
+  // for boxes with a fixed shape (e.g. a square banner) showing wide
+  // screenshots that shouldn't have their sides cropped off.
+  objectFit?: "cover" | "contain";
 };
 
 export default function ProjectMedia({
@@ -55,6 +65,8 @@ export default function ProjectMedia({
   sizes = "100vw",
   uploadPath,
   fit = "cover",
+  objectPosition = "center",
+  objectFit = "cover",
 }: ProjectMediaProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const identityPath = media?.src ?? uploadPath;
@@ -147,10 +159,12 @@ export default function ProjectMedia({
         </div>
       );
     }
+    const videoObjectFit = fit === "natural" || objectFit === "contain" ? "object-contain" : "object-cover";
     return (
       <div className={`relative h-full ${fit === "natural" ? "w-auto flex-none" : "w-full"} ${className}`}>
         <video
-          className={`h-full ${fit === "natural" ? "w-auto" : "w-full"} object-cover`}
+          className={`h-full ${fit === "natural" ? "w-auto" : "w-full"} ${videoObjectFit}`}
+          style={{ objectPosition }}
           src={src}
           autoPlay
           muted
@@ -191,7 +205,8 @@ export default function ProjectMedia({
         alt={label}
         fill
         sizes={sizes}
-        className="object-cover"
+        className={objectFit === "contain" ? "object-contain" : "object-cover"}
+        style={{ objectPosition }}
         unoptimized={DEV_UPLOAD_ENABLED || effectiveMedia.src.endsWith(".gif")}
       />
       {uploadOverlay}

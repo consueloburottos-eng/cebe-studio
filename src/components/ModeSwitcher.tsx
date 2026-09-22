@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Lang } from "@/hooks/useSiteLanguage";
 
-export type SiteMode = "branding" | "saas" | "marketplace";
+export type SiteMode = "branding" | "saas" | "marketplace" | "portfolio";
 
 type ModeSwitcherProps = {
   mode: SiteMode;
@@ -17,6 +17,7 @@ type ModeSwitcherProps = {
 };
 
 const MODES: { key: SiteMode; label: string; href: string }[] = [
+  { key: "portfolio", label: "Portfolio", href: "/portfolio" },
   { key: "branding", label: "Corporate", href: "/" },
   { key: "saas", label: "SaaS", href: "/saas" },
   { key: "marketplace", label: "E-commerce", href: "/marketplace" },
@@ -35,7 +36,7 @@ export default function ModeSwitcher({
   const isDarkVariant = variant === "dark";
   const stripBg = isDarkVariant ? "rgba(30,30,30,.45)" : "var(--cb-glass-pill, rgba(255,255,255,.55))";
   const stripHr = isDarkVariant ? "rgba(255,255,255,.1)" : "var(--cb-hair, rgba(17,17,17,.12))";
-  const segBg = isDarkVariant ? "rgba(0,0,0,.35)" : "var(--cb-bg, #fff)";
+  const segBg = isDarkVariant ? "rgba(0,0,0,.35)" : "var(--cb-pill, #f1f0ee)";
   const mutedColor = isDarkVariant ? "rgba(245,245,247,.5)" : "var(--cb-muted, #8a8a8a)";
   const textColor = isDarkVariant ? "#F5F5F7" : "#111111";
 

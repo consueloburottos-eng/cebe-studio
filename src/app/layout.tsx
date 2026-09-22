@@ -5,6 +5,7 @@ import {
   Instrument_Serif,
   Space_Grotesk,
   Space_Mono,
+  Merriweather,
 } from "next/font/google";
 import { siteUrl, siteName, siteDescription } from "@/lib/site";
 import BotpressWidget from "@/components/BotpressWidget";
@@ -46,6 +47,13 @@ const spaceMono = Space_Mono({
   display: "swap",
 });
 
+const merriweather = Merriweather({
+  variable: "--font-merriweather",
+  subsets: ["latin"],
+  weight: ["300", "400", "700", "900"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -80,7 +88,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${raleway.variable} ${montserrat.variable} ${instrumentSerif.variable} ${spaceGrotesk.variable} ${spaceMono.variable} h-full antialiased`}
+      className={`${raleway.variable} ${montserrat.variable} ${instrumentSerif.variable} ${spaceGrotesk.variable} ${spaceMono.variable} ${merriweather.variable} h-full antialiased`}
     >
       <body className="h-full">
         {children}

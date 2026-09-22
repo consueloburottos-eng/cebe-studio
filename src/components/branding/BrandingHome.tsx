@@ -18,52 +18,21 @@ import AboutModal from "./AboutModal";
 import BookModal from "./BookModal";
 import BrandingCursor from "./BrandingCursor";
 
-// Curated hero order per Consu — these six lead the deck (best work first),
-// the rest of the catalogue follows behind in its normal order. Doesn't
-// affect the projects grid overlay or any other listing, only the hero.
-const HERO_PRIORITY_SLUGS = [
+// Hero deck mirrors the Portfolio side's "Selected work" list exactly (same
+// slugs, same order) — per Consu, the Corporate hero should show only this
+// curated SaaS/product set, nothing else from the catalogue.
+const HERO_SLUGS = [
+  "talent-capital",
   "buildwithin",
   "buildwithin-design-system",
-  "altafid-design-system",
   "altafid",
-  "talent-capital",
+  "altafid-risk-assessment",
+  "altafid-calendar",
 ];
 
-// Hero deck shows UX/UI product design work only — branding, e-commerce,
-// service design, web design and editorial/art-direction pieces stay out
-// of the hero but remain visible in the full projects grid and everywhere
-// else. Matched against the base (Spanish) category values, since this
-// list is built before per-language localization runs.
-const HERO_EXCLUDED_CATEGORIES = [
-  "Dirección de Arte",
-  "Dirección Editorial",
-  "Escenografía",
-  "Identidad",
-  "Próximamente",
-  "Web Design",
-  "Brand + Web",
-];
-
-// Individually excluded on top of the category filter — these are tagged
-// "Product Design" but are physical/industrial pieces (longboard, balance
-// bike, backpack, air-quality hardware), not digital UX/UI work, so they
-// don't belong on the hero even though their category alone would pass.
-// "llay-llay" is excluded by slug rather than category since its sibling
-// service-design project (bululu) should stay in the hero.
-const HERO_EXCLUDED_SLUGS = ["longboard", "cnc", "polucio", "brava", "llay-llay"];
-
-const heroEligibleProjects = projects.filter(
-  (p) => !HERO_EXCLUDED_CATEGORIES.includes(p.category) && !HERO_EXCLUDED_SLUGS.includes(p.slug)
+const heroProjects: Project[] = HERO_SLUGS.map((slug) => getProject(slug)).filter(
+  (p): p is Project => Boolean(p)
 );
-
-const heroProjects: Project[] = [
-  ...HERO_PRIORITY_SLUGS.map((slug) => getProject(slug))
-    .filter((p): p is Project => Boolean(p))
-    .filter(
-      (p) => !HERO_EXCLUDED_CATEGORIES.includes(p.category) && !HERO_EXCLUDED_SLUGS.includes(p.slug)
-    ),
-  ...heroEligibleProjects.filter((p) => !HERO_PRIORITY_SLUGS.includes(p.slug)),
-];
 
 // Hero intro: "product designer" split into per-letter spans so the .cb-letter
 // CSS animation (globals.css) can stagger each one in on first mount.

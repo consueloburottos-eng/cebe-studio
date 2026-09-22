@@ -150,6 +150,7 @@ export const UI = {
       mailSubject: "Contacto desde CEBE:STUDIO",
       mailBody: "Hola Consuelo, quiero contarte sobre mi proyecto...",
       bio: "UX/UI Lead con 8 años de experiencia diseñando plataformas SaaS complejas y sistemas de diseño escalables. He liderado el diseño de punta a punta de plataformas de desarrollo laboral y fintech, traduciendo research de usuarios en experiencias intuitivas — con research, journey mapping y prototipado en Figma que se entrega listo para desarrollo.",
+      aiAvatarNotice: "Este video usa un avatar generado con IA — soy una persona real. Lo incluyo para mostrar cómo aplico avatares de IA en mi trabajo.",
       services: [
         { name: "Desarrollo UX/UI", desc: "Diseño y desarrollo de producto end-to-end, con estándares internacionales y un proceso claro de principio a fin." },
         { name: "Websites y Landing Pages", desc: "Sitios modernos y rápidos, orientados a conversión, que potencian la presencia online de tu marca." },
@@ -205,6 +206,7 @@ export const UI = {
       mailSubject: "Contact from CEBE:STUDIO",
       mailBody: "Hi Consuelo, I wanted to tell you about my project...",
       bio: "UX/UI Lead with 8 years of experience designing complex SaaS platforms and scalable design systems. I've led end-to-end design for workforce-development and fintech platforms, translating user research into intuitive experiences — with research, journey mapping, and Figma prototyping delivered dev-ready.",
+      aiAvatarNotice: "This video uses an AI-generated avatar — I'm a real person. Included to show how I apply AI avatars in my work.",
       services: [
         { name: "UX/UI Development", desc: "End-to-end product design and development, built to international standards with a clear process from start to finish." },
         { name: "Websites & Landing Pages", desc: "Modern, fast sites built for conversion — elevating your brand's online presence." },

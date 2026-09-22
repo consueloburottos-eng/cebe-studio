@@ -251,6 +251,37 @@ body {
   opacity: 1;
 }
 
+/* Portfolio hero banner: each slide fades in at its own natural height
+   (no fixed aspect box) instead of crossfading two absolutely-stacked
+   layers, since sizing to the real image keeps its full length visible
+   with no letterboxing. */
+@keyframes cb-banner-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.cb-banner-fade-in {
+  animation: cb-banner-fade-in 0.5s ease-out both;
+}
+
+/* Portfolio hero banner's pause button: ring drains around the icon over
+   one auto-advance cycle, then the button itself moves to the next
+   project once the ring completes — pausing just freezes the fill. */
+@keyframes cb-ring-fill {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.cb-ring-fill {
+  animation: cb-ring-fill 4.5s linear forwards;
+}
+
 @keyframes mk-blur-in {
   from {
     opacity: 0;
@@ -390,6 +421,50 @@ body {
 .cb-svc-pulse-ring {
   animation: cb-svc-pulse-ring 2.2s ease-out infinite;
   transform-origin: center;
+}
+
+/* Slow, continuous horizontal scroll for the Work page's per-project photo
+   strips. The strip's own contents are duplicated once in the markup, so
+   translating exactly -50% lands back on a visually identical frame —
+   the loop point is invisible. */
+@keyframes cb-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.cb-marquee {
+  animation: cb-marquee 50s linear infinite;
+}
+.cb-marquee-mask:hover .cb-marquee {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cb-marquee {
+    animation: none;
+  }
+}
+
+/* Slow, continuous rotation for the circular "available for work" text
+   badge on the Portfolio home hero — the ring of text spins in place while
+   the center icon (a plain sibling, not part of this element) stays put. */
+@keyframes cb-spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.cb-spin-slow {
+  animation: cb-spin-slow 16s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cb-spin-slow {
+    animation: none;
+  }
 }
 
 @keyframes cb-svc-bar {

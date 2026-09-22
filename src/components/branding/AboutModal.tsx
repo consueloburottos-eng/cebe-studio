@@ -250,6 +250,11 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
               />
             </div>
 
+            <p className="mt-2.5 flex items-start gap-1.5 text-[11.5px] leading-snug text-[var(--cb-muted)]">
+              <span aria-hidden="true">ⓘ</span>
+              {ui.aiAvatarNotice}
+            </p>
+
             <p className="mt-[22px] max-w-[52ch] text-[14.5px] leading-[1.65] text-[var(--cb-muted)]">
               {ui.bio}
             </p>

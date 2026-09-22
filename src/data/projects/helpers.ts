@@ -93,6 +93,9 @@ export type Project = {
   headline: string;
   gallery: GalleryItem[];
   pending?: boolean;
+  // Excluded from `projects` (and therefore every listing/grid/sitemap) but
+  // kept in source — for modules parked without being deleted outright.
+  hidden?: boolean;
   features?: FeatureDeepDive[];
   // Optional strip of 2-3 big-number stats shown near the top of the project
   // (before the brief). `metricsNote` is a small disclosure line rendered
