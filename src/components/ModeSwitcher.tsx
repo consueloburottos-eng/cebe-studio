@@ -17,8 +17,8 @@ type ModeSwitcherProps = {
 };
 
 const MODES: { key: SiteMode; label: string; href: string }[] = [
-  { key: "portfolio", label: "Portfolio", href: "/portfolio" },
-  { key: "branding", label: "Corporate", href: "/" },
+  { key: "portfolio", label: "Portfolio", href: "/" },
+  { key: "branding", label: "Corporate", href: "/corporate" },
   { key: "saas", label: "SaaS", href: "/saas" },
   { key: "marketplace", label: "E-commerce", href: "/marketplace" },
 ];

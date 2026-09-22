@@ -46,7 +46,7 @@ export default function NavPill({
       style={{ background: "var(--cb-glass-pill)" }}
     >
       <Link
-        href="/"
+        href="/corporate"
         className="font-sans text-[11px] font-extrabold uppercase tracking-[0.04em] text-[var(--cb-text)] no-underline sm:text-sm"
       >
         CEBE:STUDIO

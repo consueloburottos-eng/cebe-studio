@@ -126,7 +126,7 @@ export default function PortfolioWork() {
         style={{ borderColor: "var(--cb-hair)", background: "var(--cb-glass-pill)" }}
       >
         <div className="flex items-baseline gap-3">
-          <Link href="/portfolio" className="font-sans text-sm font-extrabold uppercase tracking-[0.04em] no-underline" style={{ color: "var(--cb-text)" }}>
+          <Link href="/" className="font-sans text-sm font-extrabold uppercase tracking-[0.04em] no-underline" style={{ color: "var(--cb-text)" }}>
             Consuelo Burotto
           </Link>
           <span className="hidden font-sans text-xs text-[var(--cb-muted)] sm:inline">Product Designer</span>
@@ -142,7 +142,7 @@ export default function PortfolioWork() {
               Work
             </Link>
             <Link
-              href="/portfolio#about"
+              href="/#about"
               className="border-b-2 border-transparent pb-1 text-[var(--cb-text)] no-underline opacity-70 transition-opacity hover:opacity-100"
             >
               About
@@ -161,7 +161,7 @@ export default function PortfolioWork() {
 
       <div className="w-full flex-1 overflow-hidden px-4 py-14 sm:px-8 sm:py-20">
         <Link
-          href="/portfolio"
+          href="/"
           className="mb-6 inline-flex items-center gap-1.5 font-sans text-[13px] font-semibold text-[var(--cb-muted)] no-underline transition-opacity hover:opacity-70"
         >
           <span aria-hidden="true">←</span> {lang === "en" ? "Back to home" : "Volver al home"}

@@ -115,7 +115,7 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
         style={{ borderColor: "var(--cb-hair)", background: "var(--cb-glass-pill)" }}
       >
         <div className="flex items-baseline gap-3">
-          <Link href="/portfolio" className="font-sans text-sm font-extrabold uppercase tracking-[0.04em] no-underline" style={{ color: "var(--cb-text)" }}>
+          <Link href="/" className="font-sans text-sm font-extrabold uppercase tracking-[0.04em] no-underline" style={{ color: "var(--cb-text)" }}>
             Consuelo Burotto
           </Link>
           <span className="hidden font-sans text-xs text-[var(--cb-muted)] sm:inline">Product Designer</span>
@@ -126,7 +126,7 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
             <Link href="/portfolio/work" className="text-[var(--cb-text)] no-underline opacity-70 transition-opacity hover:opacity-100">
               Work
             </Link>
-            <Link href="/portfolio#about" className="text-[var(--cb-text)] no-underline opacity-70 transition-opacity hover:opacity-100">
+            <Link href="/#about" className="text-[var(--cb-text)] no-underline opacity-70 transition-opacity hover:opacity-100">
               About
             </Link>
           </nav>
@@ -143,7 +143,7 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
 
       <div className="w-full flex-1 px-4 py-14 sm:px-8 sm:py-20">
         <Link
-          href="/portfolio"
+          href="/"
           className="mb-6 inline-flex items-center gap-1.5 font-sans text-[13px] font-semibold text-[var(--cb-muted)] no-underline transition-opacity hover:opacity-70"
         >
           <span aria-hidden="true">←</span> {lang === "en" ? "Back to home" : "Volver al home"}
@@ -172,48 +172,56 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
           />
         </div>
 
-        <section className="mt-16 max-w-[68ch] sm:mt-24">
-          <h2 className="m-0 mb-4 text-[clamp(18px,2.2vw,22px)]" style={serif}>
-            {lang === "en" ? "Overview" : "Resumen"}
-          </h2>
-          <p className="m-0 font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">{project.brief}</p>
+        <section className="mt-16 sm:mt-24">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-[160px_1fr] sm:gap-12">
+            <h2 className="m-0 text-[clamp(18px,2.2vw,22px)]" style={serif}>
+              {lang === "en" ? "Overview" : "Resumen"}
+            </h2>
+            <p className="m-0 max-w-[60ch] font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">{project.brief}</p>
+          </div>
         </section>
 
         {galleryChunks[0] && <GalleryRow items={galleryChunks[0]} featured />}
 
         {challenge && (
-          <section className="mt-16 max-w-[68ch] sm:mt-24">
-            <h2 className="m-0 mb-4 text-[clamp(18px,2.2vw,22px)]" style={serif}>
-              {lang === "en" ? "Challenge" : "Desafío"}
-            </h2>
-            <p className="m-0 font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">{challenge}</p>
+          <section className="mt-16 sm:mt-24">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-[160px_1fr] sm:gap-12">
+              <h2 className="m-0 text-[clamp(18px,2.2vw,22px)]" style={serif}>
+                {lang === "en" ? "Challenge" : "Desafío"}
+              </h2>
+              <p className="m-0 max-w-[60ch] font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">{challenge}</p>
+            </div>
           </section>
         )}
 
         {galleryChunks[1] && <GalleryRow items={galleryChunks[1]} featured />}
 
         {approach.length > 0 && (
-          <section className="mt-16 max-w-[68ch] sm:mt-24">
-            <h2 className="m-0 mb-4 text-[clamp(18px,2.2vw,22px)]" style={serif}>
-              {lang === "en" ? "Approach" : "Enfoque"}
-            </h2>
-            <div className="flex flex-col gap-4">
-              {approach.map((paragraph, i) => (
-                <p key={i} className="m-0 font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">
-                  {paragraph}
-                </p>
-              ))}
+          <section className="mt-16 sm:mt-24">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-[160px_1fr] sm:gap-12">
+              <h2 className="m-0 text-[clamp(18px,2.2vw,22px)]" style={serif}>
+                {lang === "en" ? "Approach" : "Enfoque"}
+              </h2>
+              <div className="flex max-w-[60ch] flex-col gap-4">
+                {approach.map((paragraph, i) => (
+                  <p key={i} className="m-0 font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             </div>
           </section>
         )}
 
         {galleryChunks[2] && <GalleryRow items={galleryChunks[2]} featured featuredPosition="end" />}
 
-        <section className="mt-16 max-w-[68ch] sm:mt-24">
-          <h2 className="m-0 mb-4 text-[clamp(18px,2.2vw,22px)]" style={serif}>
-            {lang === "en" ? "Outcome" : "Resultado"}
-          </h2>
-          <p className="m-0 font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">{project.result}</p>
+        <section className="mt-16 sm:mt-24">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-[160px_1fr] sm:gap-12">
+            <h2 className="m-0 text-[clamp(18px,2.2vw,22px)]" style={serif}>
+              {lang === "en" ? "Outcome" : "Resultado"}
+            </h2>
+            <p className="m-0 max-w-[60ch] font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">{project.result}</p>
+          </div>
         </section>
 
         {galleryChunks.slice(3).map((chunk, i) => (

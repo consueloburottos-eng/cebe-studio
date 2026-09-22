@@ -238,7 +238,7 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
         <div className="relative z-[1] flex h-[60px] items-center justify-end gap-2.5 px-7">
           <button
             type="button"
-            onClick={() => router.push("/?grid=1")}
+            onClick={() => router.push("/corporate?grid=1")}
             title={lang === "en" ? "view all projects" : "ver todos los proyectos"}
             className="flex h-10 w-10 items-center justify-center rounded-full border-none text-base leading-none"
             style={{ background: "var(--cb-pill)", color: "var(--cb-text)" }}
@@ -246,7 +246,7 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
             ⊞
           </button>
           <Link
-            href="/"
+            href="/corporate"
             title={lang === "en" ? "back" : "volver"}
             className="flex h-10 w-10 items-center justify-center rounded-full border-none text-[15px]"
             style={{ background: "var(--cb-pill)", color: "var(--cb-text)" }}
@@ -527,7 +527,7 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
 
           <div className="mt-16 border-t pt-[34px]" style={{ borderColor: "var(--cb-hair)" }}>
             <div className="flex flex-wrap gap-6 text-[13px] text-[var(--cb-text)]">
-              <Link href="/" className="text-inherit no-underline">
+              <Link href="/corporate" className="text-inherit no-underline">
                 {ui.home}
               </Link>
               <a href={`mailto:consuelo.burotto.s@gmail.com`} className="text-inherit no-underline">

@@ -5,6 +5,7 @@ import { projects } from "@/data/projects";
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: siteUrl, changeFrequency: "monthly", priority: 1 },
+    { url: `${siteUrl}/corporate`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/saas`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/marketplace`, changeFrequency: "monthly", priority: 0.8 },
   ];
