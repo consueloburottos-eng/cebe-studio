@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProject, projects } from "@/data/projects";
 import PortfolioProjectDetail from "@/components/portfolio/PortfolioProjectDetail";
+import { categoryBucket } from "@/lib/projectBucket";
 
 export async function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -31,10 +32,11 @@ export default async function PortfolioProjectPage({
   const project = getProject(slug);
   if (!project) notFound();
 
-  const currentIndex = projects.findIndex((p) => p.slug === slug);
-  const others = Array.from({ length: 3 }, (_, i) => projects[(currentIndex + 1 + i) % projects.length]).filter(
-    (p) => p.slug !== slug
-  );
+  // Same filter bucket as the current project (Work page's SaaS/Ecommerce/
+  // Service/Branding split), not just the next few in array order — so
+  // "More projects" always reads as genuinely related work.
+  const bucket = categoryBucket(project);
+  const others = projects.filter((p) => p.slug !== slug && categoryBucket(p) === bucket);
 
   return <PortfolioProjectDetail project={project} others={others} />;
 }

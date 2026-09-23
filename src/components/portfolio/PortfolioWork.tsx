@@ -8,36 +8,12 @@ import ModeSwitcher from "@/components/ModeSwitcher";
 import { useSiteLanguage, type Lang } from "@/hooks/useSiteLanguage";
 import { localizeProjects, titleCase } from "@/lib/i18n";
 import ProjectMedia from "@/components/ProjectMedia";
+import AboutModal from "@/components/branding/AboutModal";
+import { FILTER_BUCKETS, categoryBucket, type FilterBucket } from "@/lib/projectBucket";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/cburotto/";
 const UPWORK_URL = "https://www.upwork.com/freelancers/consueloburotto?";
-
-// Four broad filter buckets instead of one pill per raw project category.
-// No "All" — every project resolves to exactly one bucket, Branding being
-// the catch-all for anything that isn't SaaS/Ecommerce/Service (industrial
-// design pieces like cnc/longboard/brava, the "polucio" case study, and any
-// pending "coming soon" stub all land there).
-const FILTER_BUCKETS = ["SaaS", "Ecommerce", "Service", "Branding"] as const;
-type FilterBucket = (typeof FILTER_BUCKETS)[number];
-
-function categoryBucket(project: Pick<Project, "slug" | "category">): FilterBucket {
-  // SaaS is the three real software families, by slug — not by category —
-  // since "Product Design" alone would also catch physical/industrial
-  // pieces (cnc, longboard, brava) that aren't software at all.
-  const { slug, category } = project;
-  if (slug === "talent-capital" || slug.startsWith("altafid") || slug.startsWith("buildwithin")) {
-    return "SaaS";
-  }
-  const c = category.toLowerCase();
-  if (c.includes("e-commerce") || c.includes("ecommerce") || c.includes("web design") || c.includes("brand + web")) {
-    return "Ecommerce";
-  }
-  if (c.includes("servicio") || c.includes("service")) {
-    return "Service";
-  }
-  return "Branding";
-}
 
 // One project per section: title + "view case study" sit above a single
 // horizontal strip of that project's gallery photos. Every photo in the
@@ -106,6 +82,7 @@ function WorkProjectRow({ project, lang }: { project: Project; lang: Lang }) {
 export default function PortfolioWork() {
   const [dark, setDark] = useSiteTheme();
   const [lang, setLang] = useSiteLanguage();
+  const [aboutOpen, setAboutOpen] = useState(false);
 
   const allWorks = localizeProjects(projects, lang);
   const [workFilter, setWorkFilter] = useState<FilterBucket>("SaaS");
@@ -122,7 +99,7 @@ export default function PortfolioWork() {
       <ModeSwitcher mode="portfolio" dark={dark} onSetLight={() => setDark(false)} onSetDark={() => setDark(true)} lang={lang} onSetLang={setLang} />
 
       <div
-        className="sticky top-0 z-[110] flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b px-4 py-4 backdrop-blur-xl sm:px-8"
+        className="sticky top-0 z-[110] flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b px-8 py-4 backdrop-blur-xl sm:px-20"
         style={{ borderColor: "var(--cb-hair)", background: "var(--cb-glass-pill)" }}
       >
         <div className="flex items-baseline gap-3">
@@ -134,19 +111,23 @@ export default function PortfolioWork() {
 
         <div className="flex items-center gap-6">
           <nav className="flex items-center gap-5 font-sans text-[13px] font-semibold">
-            <Link
-              href="/portfolio/work"
-              className="border-b-2 pb-1 text-[var(--cb-text)] no-underline opacity-100"
-              style={{ borderColor: "var(--cb-text)" }}
-            >
+            <Link href="/portfolio/work" className="text-[var(--cb-text)] no-underline opacity-70 transition-opacity hover:opacity-100">
               Work
             </Link>
-            <Link
-              href="/#about"
-              className="border-b-2 border-transparent pb-1 text-[var(--cb-text)] no-underline opacity-70 transition-opacity hover:opacity-100"
+            <button
+              type="button"
+              onClick={() => setAboutOpen(true)}
+              className="cursor-pointer border-none bg-transparent p-0 font-sans text-[13px] font-semibold text-[var(--cb-text)] opacity-70 transition-opacity hover:opacity-100"
             >
               About
-            </Link>
+            </button>
+            <a
+              href="/profile/cv.pdf"
+              download
+              className="text-[var(--cb-text)] no-underline opacity-70 transition-opacity hover:opacity-100"
+            >
+              CV
+            </a>
           </nav>
 
           <a
@@ -159,7 +140,7 @@ export default function PortfolioWork() {
         </div>
       </div>
 
-      <div className="w-full flex-1 overflow-hidden px-4 py-14 sm:px-8 sm:py-20">
+      <div className="w-full flex-1 overflow-hidden px-8 py-14 sm:px-20 sm:py-20">
         <Link
           href="/"
           className="mb-6 inline-flex items-center gap-1.5 font-sans text-[13px] font-semibold text-[var(--cb-muted)] no-underline transition-opacity hover:opacity-70"
@@ -202,18 +183,11 @@ export default function PortfolioWork() {
       </div>
 
       <footer
-        className="mt-20 border-t px-4 py-10 sm:px-8 sm:py-14"
+        className="mt-20 border-t px-8 py-10 sm:px-20 sm:py-14"
         style={{ borderColor: "var(--cb-hair)" }}
       >
         <div className="w-full">
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
-            className="block text-[clamp(24px,5vw,48px)] leading-none tracking-[-0.01em] no-underline"
-            style={{ ...serif, color: "#015fca" }}
-          >
-            {CONTACT_EMAIL}
-          </a>
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 font-sans text-xs text-[var(--cb-muted)] sm:mt-10">
+          <div className="flex flex-wrap items-center justify-between gap-4 font-sans text-xs text-[var(--cb-muted)]">
             <span>
               © {new Date().getFullYear()} Consuelo Burotto —{" "}
               {lang === "en" ? "built with Claude Code" : "construido con Claude Code"}
@@ -253,6 +227,12 @@ export default function PortfolioWork() {
           </div>
         </div>
       </footer>
+
+      {aboutOpen && (
+        <div data-cb-theme={dark ? "dark" : "light"}>
+          <AboutModal onClose={() => setAboutOpen(false)} />
+        </div>
+      )}
     </div>
   );
 }
