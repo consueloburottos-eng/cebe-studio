@@ -27,6 +27,7 @@ const HERO_SLUGS = [
   "buildwithin-design-system",
   "altafid",
   "altafid-risk-assessment",
+  "altafid-custom-portals",
   "altafid-calendar",
   "altafid-marketplace",
 ];
