@@ -137,7 +137,7 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
           style={{ background: "var(--cb-bg)" }}
         >
           <h1
-            className="m-0 max-w-[16ch] text-center font-display font-extrabold lowercase leading-[.9] tracking-[-0.035em]"
+            className="m-0 max-w-[16ch] text-center font-display font-extrabold leading-[.9] tracking-[-0.035em]"
             style={{ fontSize: "clamp(28px,7vw,88px)", color: "var(--cb-text)" }}
           >
             {introNodes}
@@ -340,7 +340,7 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
               <div className="font-sans text-[11px] uppercase tracking-[0.2em] text-[var(--cb-text)]">
                 {project.tag}
               </div>
-              <h1 className="mt-2.5 font-display font-extrabold lowercase leading-none tracking-[-0.02em]"
+              <h1 className="mt-2.5 font-display font-extrabold leading-none tracking-[-0.02em]"
                 style={{ fontSize: "clamp(34px,4.6vw,54px)" }}
               >
                 {project.title}

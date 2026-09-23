@@ -28,6 +28,7 @@ const SELECTED_WORK_SLUGS = [
   "altafid",
   "altafid-risk-assessment",
   "altafid-calendar",
+  "altafid-marketplace",
 ];
 
 const WHAT_I_DO = [

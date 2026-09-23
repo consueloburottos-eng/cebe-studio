@@ -2,7 +2,7 @@ import { Project, img, introGallery } from "./helpers";
 
 export const altafidPlatform: Project = {
   slug: "altafid",
-  title: "altafid platform",
+  title: "Altafid Platform",
   category: "Product Design",
   tag: "product · fintech · b2b saas",
   subtitle: "De una plataforma de asesoramiento financiero a un ecosistema B2B para entidades financieras",
