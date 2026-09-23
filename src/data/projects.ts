@@ -415,7 +415,7 @@ const baseProjects: Project[] = [
       "Diseño responsive",
     ],
     cover: "Altafid — custom portals",
-    coverMedia: img("altafid", "08.jpg"),
+    coverMedia: img("altafid", "feature-custom-portals-06.webp"),
     brief:
       "Cada entidad que usa Altafid necesitaba ofrecer a sus clientes finales una experiencia propia, no una plantilla genérica compartida entre distintos bancos o firmas. El Client Portal (validado a través de las personas de cliente final documentadas en investigación, como Michael Sterling y Emily Thompson) da acceso en tiempo real al desempeño del portafolio, el balance por cuenta y household, posiciones, y almacenamiento seguro de documentos, disponible como app en desktop, tablet y mobile, y adaptado a la marca de cada entidad.",
     strategy: [
