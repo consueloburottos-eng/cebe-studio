@@ -102,13 +102,13 @@ export default function PortfolioHome() {
   const meta =
     lang === "en"
       ? [
-          { label: "Based in", value: "Barcelona, Spain" },
+          { label: "Working hours", value: "Spain/Europe · US · Chile" },
           { label: "Focus", value: "SaaS · Fintech · AI-conversational" },
           { label: "Languages", value: languages.join(" · ") },
           { label: "Availability", value: "Open to new roles" },
         ]
       : [
-          { label: "Ubicación", value: "Barcelona, España" },
+          { label: "Horario", value: "España/Europa · EE. UU. · Chile" },
           { label: "Foco", value: "SaaS · Fintech · IA conversacional" },
           { label: "Idiomas", value: languages.join(" · ") },
           { label: "Disponibilidad", value: "Abierta a nuevos roles" },
