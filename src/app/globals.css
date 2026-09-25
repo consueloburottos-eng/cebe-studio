@@ -43,6 +43,15 @@
   --cb-glass-hdr-0: rgba(0, 0, 0, 0);
 }
 
+/* Portfolio mode only (light) — softened near-black to a dark gray so body
+   text and headings read less harsh than pure #111. Scoped to
+   data-cb-mode="portfolio" so Corporate/SaaS/Marketplace keep their own
+   --cb-text untouched. */
+[data-cb-mode="portfolio"][data-cb-theme="light"] {
+  --cb-text: #333333;
+  --cb-cta-bg: #333333;
+}
+
 /* SaaS mode — simulated macOS desktop (dark default) */
 :root,
 [data-os-theme="dark"] {

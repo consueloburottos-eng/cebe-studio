@@ -116,19 +116,19 @@ function MoreProjectsRow({ others, lang }: { others: Project[]; lang: Lang }) {
         <Link
           key={`${other.slug}-${i}`}
           href={`/portfolio/projects/${other.slug}`}
-          className="group flex w-[260px] flex-none flex-col gap-3 no-underline sm:w-[320px]"
+          className="group flex flex-none flex-col gap-3 no-underline"
         >
-          <div className="relative aspect-[4/3] w-full overflow-hidden" style={{ background: "var(--cb-pill)" }}>
+          <div className="relative h-[220px] overflow-hidden sm:h-[260px]" style={{ background: "var(--cb-pill)" }}>
             <ProjectMedia
               media={other.coverMedia}
               label={other.cover}
-              sizes="320px"
+              sizes="400px"
               uploadPath={`/projects/${assetFolder(other)}/cover`}
-              objectPosition="left"
+              fit="natural"
             />
           </div>
-          <h3 className="m-0 font-sans text-base font-bold">{titleCase(other.title)}</h3>
-          <span className="font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--cb-muted)]">
+          <h3 className="m-0 max-w-[360px] font-sans text-base font-bold">{titleCase(other.title)}</h3>
+          <span className="max-w-[360px] font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--cb-muted)]">
             {other.category} · {other.year}
           </span>
         </Link>
@@ -171,6 +171,7 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
   return (
     <div
       data-cb-theme={dark ? "dark" : "light"}
+      data-cb-mode="portfolio"
       className="flex min-h-dvh w-full flex-col"
       style={{ background: "var(--cb-bg)", color: "var(--cb-text)" }}
     >
@@ -371,7 +372,7 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
       </footer>
 
       {aboutOpen && (
-        <div data-cb-theme={dark ? "dark" : "light"}>
+        <div data-cb-theme={dark ? "dark" : "light"} data-cb-mode="portfolio">
           <AboutModal onClose={() => setAboutOpen(false)} />
         </div>
       )}

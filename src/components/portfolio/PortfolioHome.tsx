@@ -12,6 +12,7 @@ import { localizeProjects, titleCase } from "@/lib/i18n";
 import { LANGUAGES, LANGUAGES_EN } from "@/data/profile";
 import ProjectMedia from "@/components/ProjectMedia";
 import AboutModal from "@/components/branding/AboutModal";
+import WorkProjectRow from "./WorkProjectRow";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/cburotto/";
@@ -163,6 +164,7 @@ export default function PortfolioHome() {
   return (
     <div
       data-cb-theme={dark ? "dark" : "light"}
+      data-cb-mode="portfolio"
       className="flex min-h-dvh w-full flex-col"
       style={{ background: "var(--cb-bg)", color: "var(--cb-text)" }}
     >
@@ -382,34 +384,9 @@ export default function PortfolioHome() {
             {lang === "en" ? "Selected work" : "Trabajos seleccionados"}
           </h2>
 
-          <div className="grid grid-cols-1 items-start gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16">
-            {selectedWorks.map((project, i) => (
-              <Link
-                key={project.slug}
-                href={`/portfolio/projects/${project.slug}`}
-                className={`group flex flex-col gap-[20px] no-underline ${i % 2 === 1 ? "sm:mt-24" : ""}`}
-              >
-                <div className="relative aspect-[675.5/928.81] w-full overflow-hidden" style={{ background: "var(--cb-pill)" }}>
-                  <ProjectMedia
-                    media={project.coverMedia}
-                    label={project.cover}
-                    sizes="(min-width:1100px) 520px, 100vw"
-                    uploadPath={`/projects/${assetFolder(project)}/cover`}
-                    objectPosition={project.slug === "altafid-risk-assessment" ? "center" : "left"}
-                  />
-                </div>
-                <div className="flex flex-col gap-[5px]">
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <h3 className="m-0 font-sans text-lg font-bold">{titleCase(project.title)}</h3>
-                    <span className="font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--cb-muted)]">
-                      {project.client} · {project.year}
-                    </span>
-                  </div>
-                  <p className="m-0 max-w-[52ch] font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">
-                    {project.subtitle}
-                  </p>
-                </div>
-              </Link>
+          <div className="flex flex-col gap-y-20 sm:gap-y-24">
+            {selectedWorks.map((project) => (
+              <WorkProjectRow key={project.slug} project={project} lang={lang} />
             ))}
           </div>
         </section>
@@ -497,7 +474,7 @@ export default function PortfolioHome() {
       </footer>
 
       {aboutOpen && (
-        <div data-cb-theme={dark ? "dark" : "light"}>
+        <div data-cb-theme={dark ? "dark" : "light"} data-cb-mode="portfolio">
           <AboutModal onClose={() => setAboutOpen(false)} />
         </div>
       )}
