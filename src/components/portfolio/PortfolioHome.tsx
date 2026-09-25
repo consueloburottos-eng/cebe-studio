@@ -30,6 +30,7 @@ const SELECTED_WORK_SLUGS = [
   "altafid-custom-portals",
   "altafid-calendar",
   "altafid-marketplace",
+  "altafid-design-system",
 ];
 
 const WHAT_I_DO = [
@@ -152,7 +153,7 @@ export default function PortfolioHome() {
   // next project itself once full, rather than a separate JS interval.
   const [bannerIndex, setBannerIndex] = useState(0);
   const [bannerPaused, setBannerPaused] = useState(false);
-  const bannerWorks = selectedWorks.slice(0, 4);
+  const bannerWorks = selectedWorks;
   const reducedMotionBanner = useMediaQuery("(prefers-reduced-motion: reduce)");
 
   function goToNextBannerWork() {

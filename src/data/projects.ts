@@ -1077,7 +1077,6 @@ const baseProjects: Project[] = [
   },
   {
     slug: "altafid-design-system",
-    hidden: true,
     title: "Design System - Altafid Platform",
     category: "Design System",
     tag: "design system",

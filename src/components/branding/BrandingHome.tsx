@@ -30,6 +30,7 @@ const HERO_SLUGS = [
   "altafid-custom-portals",
   "altafid-calendar",
   "altafid-marketplace",
+  "altafid-design-system",
 ];
 
 const heroProjects: Project[] = HERO_SLUGS.map((slug) => getProject(slug)).filter(
