@@ -285,7 +285,7 @@ export default function PortfolioHome() {
                 >
                   Senior Product Designer
                 </em>{" "}
-                for UX, CX and agentic experiences
+                turning complex products into simple, scalable experiences.
               </span>
             ) : (
               <span className="block font-light" style={{ fontSize: "clamp(38px,8.5vw,95px)" }}>
@@ -295,21 +295,15 @@ export default function PortfolioHome() {
                 >
                   Senior Product Designer
                 </em>{" "}
-                para UX, CX y experiencias agénticas
+                que convierte productos complejos en experiencias simples y escalables.
               </span>
             )}
           </h1>
 
           <p className="relative z-[1] mb-0 mt-8 max-w-[62ch] font-sans text-base leading-relaxed text-[var(--cb-muted)] sm:mt-10 sm:text-lg">
             {lang === "en"
-              ? "I help teams turn complex products and customer journeys into clear, scalable experiences, from research and strategy to production-ready UI and design systems. SaaS, fintech, ecommerce, AI."
-              : "Ayudo a equipos a convertir productos y recorridos de cliente complejos en experiencias claras y escalables, desde la investigación y la estrategia hasta UI lista para producción y design systems. SaaS, fintech, ecommerce, IA."}
-          </p>
-
-          <p className="relative z-[1] mb-0 mt-6 max-w-[62ch] font-sans text-base font-bold leading-snug sm:mt-7 sm:text-lg">
-            {lang === "en"
-              ? "I help companies ship complex products their users actually understand, design systems their developers can build from without rework, and AI experiences people can trust."
-              : "Ayudo a las empresas a lanzar productos complejos que sus usuarios entienden, design systems desde los que sus developers construyen sin retrabajo, y experiencias de IA en las que la gente puede confiar."}
+              ? "I design end-to-end SaaS and AI products — from research and product thinking to production-ready UI and design systems."
+              : "Diseño productos SaaS y de IA de principio a fin, desde la investigación y el pensamiento de producto hasta UI lista para producción y design systems."}
           </p>
 
           <div className="relative z-[1] mt-6 flex flex-wrap items-center gap-3 sm:mt-8">
