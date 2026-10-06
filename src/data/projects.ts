@@ -1106,6 +1106,12 @@ const baseProjects: Project[] = [
       "Aprendizajes — La lección más grande no fue sobre tokens ni componentes, sino darme cuenta de que muchos problemas aparentes de UI no eran problemas de componente: a veces la solución correcta era un componente nuevo, otras veces era un componente existente usado de otra forma, un patrón más claro, mejor UX writing, o un cambio al flujo mismo. La governance resultó tan importante como la librería. Construir el sistema junto al producto también me enseñó a no optimizar por completitud — intentar anticipar cada caso de uso posible habría creado complejidad antes de saber si la necesitábamos. Y trabajar directamente con ingeniería reforzó algo que definió todo el proyecto: un design system solo genera valor cuando diseño y desarrollo lo tratan como infraestructura compartida.",
     ],
     headline: "un sistema que escala a 23+ features",
+    outcomeTitle: "Reduje un 90% las incidencias de QA de diseño con un design system white-label",
+    decision: {
+      decision: "Usar Ant Design como base y construir encima un sistema propio de tokens y componentes.",
+      why: "No había un equipo dedicado al design system y había que entregar el MVP al mismo tiempo.",
+      result: "90% menos de incidencias de QA de diseño y un solo sistema para 23+ features.",
+    },
     en: {
       tag: "design system · white label",
       subtitle: "One design system for 23+ features, multiple roles, and every client brand",
@@ -1128,6 +1134,12 @@ const baseProjects: Project[] = [
         "Learnings — The biggest lesson wasn't about tokens or components. It was realizing that many apparent UI problems aren't component problems at all — sometimes the right solution was a new component, other times it was an existing component used differently, a clearer pattern, better UX writing, or a change to the flow itself. Governance became just as important as the library. Building the system alongside the product also taught me not to optimize for completeness — trying to anticipate every possible use case would have created complexity before we knew whether we needed it. And working directly with engineering reinforced something that shaped the whole project: a Design System only creates value when design and development treat it as shared infrastructure.",
       ],
       headline: "a system that scales to 23+ features",
+      outcomeTitle: "Cut design-related QA issues by 90% with a white-label design system",
+      decision: {
+        decision: "Use Ant Design as the base and build our own token and component system on top.",
+        why: "There was no team dedicated to the design system and the MVP had to ship at the same time.",
+        result: "90% fewer design-related QA issues and a single system for 23+ features.",
+      },
     },
     // mixed video/image set uploaded via the dev tool; mediaFor() picks the
     // right element per file extension (.mp4 → video, .webp → image)

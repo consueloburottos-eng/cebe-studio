@@ -1,5 +1,6 @@
 "use client";
 
+import ProjectDecisionBlock from "@/components/ProjectDecisionBlock";
 import { useMemo, useState } from "react";
 import { Project, assetFolder } from "@/data/projects";
 import ProjectMedia from "../ProjectMedia";
@@ -328,9 +329,12 @@ export default function ProjectsWindow({ projects: rawProjects, onClose, initial
 
                 <div className="mt-3 max-w-[70ch]">
                   {activeTab === "brief" && (
-                    <p className="text-[13.5px] leading-[1.7]" style={{ color: "rgba(var(--os-txrgb),.72)" }}>
-                      {selected.brief}
-                    </p>
+                    <>
+                      <ProjectDecisionBlock decision={selected.decision} lang={lang} />
+                      <p className="text-[13.5px] leading-[1.7]" style={{ color: "rgba(var(--os-txrgb),.72)" }}>
+                        {selected.brief}
+                      </p>
+                    </>
                   )}
 
                   {activeTab === "strategy" && (

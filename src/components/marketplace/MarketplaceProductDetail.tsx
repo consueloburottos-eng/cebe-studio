@@ -1,5 +1,6 @@
 "use client";
 
+import ProjectDecisionBlock from "@/components/ProjectDecisionBlock";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -220,7 +221,12 @@ export default function MarketplaceProductDetail({ project: rawProject, suggesti
           </div>
 
           <div className="mt-4 text-[16px] leading-[1.6]" style={{ color: "rgba(var(--mk-txrgb),.82)" }}>
-            {activeTab === "brief" && <p>{project.brief}</p>}
+            {activeTab === "brief" && (
+              <>
+                <ProjectDecisionBlock decision={project.decision} lang={lang} />
+                <p>{project.brief}</p>
+              </>
+            )}
 
             {activeTab === "strategy" && (
               <div className="flex flex-col gap-4">

@@ -33,6 +33,12 @@ export const talentCapital: Project = {
     "Como Senior Product Designer, apoyé al equipo en flujos complejos: investigación → arquitectura de información → user flows → wireframes → prototipos de alta fidelidad → pruebas en Maze → revisión con Product → feedback con cliente y CEO → iteración → handoff. El trabajo se validó de forma continua con Product, el cliente y la CEO de BuildWithin, no como una fase aislada al final.",
   ],
   headline: "un consejero, no un buscador",
+  outcomeTitle: "Lancé un agente de carrera con IA usado por más de 83.000 personas",
+  decision: {
+    decision: "Diseñar la conversación con Celeste como primera interacción, en vez de un buscador con categoría y ubicación.",
+    why: "El punto de partida es la persona que busca trabajo, no la oferta.",
+    result: "Lanzado como TalentCapital.AI: 83.000+ usuarios activos y Product of the Year (Technical.ly).",
+  },
   gallery: introGallery("talent-capital", "Talent Capital", 1, 13, "mp4", { 1: "webp", 2: "webp" }),
   en: {
     tag: "product design · ux & ui",
@@ -58,5 +64,11 @@ export const talentCapital: Project = {
       "As Senior Product Designer, I supported the team through complex flows: research → information architecture → user flows → wireframes → high-fidelity prototypes → Maze testing → Product review → client and CEO feedback → iteration → handoff. The work was validated continuously with Product, the client, and BuildWithin's CEO, not as an isolated phase at the end.",
     ],
     headline: "an advisor, not a search bar",
+    outcomeTitle: "Launched an AI career agent now used by 83,000+ people",
+    decision: {
+      decision: "Design the conversation with Celeste as the first interaction, instead of a search bar with category and location.",
+      why: "The starting point is the person looking for work, not the listing.",
+      result: "Launched as TalentCapital.AI: 83,000+ active users and Product of the Year (Technical.ly).",
+    },
   },
 };

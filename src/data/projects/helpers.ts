@@ -8,6 +8,15 @@ export type GalleryItem = {
   media?: MediaAsset;
 };
 
+// Short "decision → why → result" summary shown above a case study's
+// brief, so a reader gets the one choice that mattered and its outcome
+// before the long-form text. Only use facts already stated in the case.
+export type ProjectDecision = {
+  decision: string;
+  why: string;
+  result: string;
+};
+
 export type ProjectTranslation = {
   category?: string;
   tag?: string;
@@ -19,6 +28,8 @@ export type ProjectTranslation = {
   brief?: string;
   strategy?: string[];
   headline?: string;
+  decision?: ProjectDecision;
+  outcomeTitle?: string;
 };
 
 // A single captioned screenshot inside a feature's photo grid (see
@@ -91,6 +102,10 @@ export type Project = {
   brief: string;
   strategy: string[];
   headline: string;
+  // Optional outcome-led title used on the home's selected-work rows
+  // instead of the plain project name.
+  outcomeTitle?: string;
+  decision?: ProjectDecision;
   gallery: GalleryItem[];
   pending?: boolean;
   // Excluded from `projects` (and therefore every listing/grid/sitemap) but

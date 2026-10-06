@@ -12,6 +12,7 @@ import { localizeProjects, titleCase } from "@/lib/i18n";
 import { LANGUAGES, LANGUAGES_EN } from "@/data/profile";
 import ProjectMedia from "@/components/ProjectMedia";
 import AboutModal from "@/components/branding/AboutModal";
+import CalendlyModal from "@/components/CalendlyModal";
 import WorkProjectRow from "./WorkProjectRow";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
@@ -22,17 +23,7 @@ const UPWORK_URL = "https://www.upwork.com/freelancers/consueloburotto?";
 // hardware product design) and everything outside "Product Design" that
 // isn't a software product (art direction, branding, editorial, etc.),
 // same reasoning BrandingHome's hero curation already applies.
-const SELECTED_WORK_SLUGS = [
-  "talent-capital",
-  "buildwithin",
-  "buildwithin-design-system",
-  "altafid",
-  "altafid-risk-assessment",
-  "altafid-custom-portals",
-  "altafid-calendar",
-  "altafid-marketplace",
-  "altafid-design-system",
-];
+const SELECTED_WORK_SLUGS = ["talent-capital", "altafid", "altafid-design-system"];
 
 const WHAT_I_DO = [
   {
@@ -85,6 +76,67 @@ const WHAT_I_DO = [
   },
 ];
 
+const SERVICES = [
+  {
+    n: "01",
+    title: { es: "Auditoría UX y de producto", en: "UX & product audit" },
+    body: {
+      es: "Una revisión estructurada de los flujos principales de tu producto, con recomendaciones priorizadas.",
+      en: "A structured review of your product's core flows, with prioritized recommendations.",
+    },
+  },
+  {
+    n: "02",
+    title: { es: "Design sprint", en: "Design sprint" },
+    body: {
+      es: "De un problema ambiguo a diseños validados y listos para desarrollo.",
+      en: "From an ambiguous problem to validated, developer-ready designs.",
+    },
+  },
+  {
+    n: "03",
+    title: { es: "Diseño de producto fractional", en: "Fractional product design" },
+    body: {
+      es: "Apoyo de diseño senior sin el compromiso de otra contratación a tiempo completo.",
+      en: "Senior design support without the commitment of another full-time hire.",
+    },
+  },
+];
+
+type ThreeUpItem = {
+  n: string;
+  title: { es: string; en: string };
+  body: { es: string; en: string };
+};
+
+function ThreeUpGrid({ items, lang }: { items: ThreeUpItem[]; lang: "es" | "en" }) {
+  return (
+    <div className="grid grid-cols-1 gap-0 sm:grid-cols-3">
+      {items.map((item, i) => {
+        // Hairline dividers: top divider on every row after the first,
+        // left divider between columns at sm+ (never on mobile).
+        const isFirstRowDesktop = i < 3;
+        const isFirstColDesktop = i % 3 === 0;
+        const dividerClass = [
+          "p-[34px]",
+          i === 0 ? "" : "border-t",
+          isFirstRowDesktop ? "sm:border-t-0" : "sm:border-t",
+          isFirstColDesktop ? "" : "sm:border-l",
+        ].join(" ");
+        return (
+          <div key={item.n} className={dividerClass} style={{ borderColor: "var(--cb-hair)" }}>
+            <div className="m-0 font-sans text-[11px] font-bold tracking-[0.08em] text-[var(--cb-muted)]">{item.n}</div>
+            <h3 className="m-0 mt-3 font-sans text-base font-bold">{lang === "en" ? item.title.en : item.title.es}</h3>
+            <p className="m-0 mt-2 max-w-[38ch] font-sans text-sm leading-relaxed text-[var(--cb-muted)]">
+              {lang === "en" ? item.body.en : item.body.es}
+            </p>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 // A deliberately editorial portfolio view — inspired by ulrychkristian.cz:
 // name/role header with nav + CTA, hero statement, a curated "selected
 // works" list (SaaS/product only), a numbered "what I do" section, and a
@@ -94,6 +146,7 @@ export default function PortfolioHome() {
   const [dark, setDark] = useSiteTheme();
   const [lang, setLang] = useSiteLanguage();
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [calendlyOpen, setCalendlyOpen] = useState(false);
   const languages = lang === "en" ? LANGUAGES_EN : LANGUAGES;
 
   const selectedWorks = localizeProjects(
@@ -105,15 +158,15 @@ export default function PortfolioHome() {
     lang === "en"
       ? [
           { label: "Working hours", value: "Spain/Europe · US · Chile" },
-          { label: "Focus", value: "SaaS · Fintech · AI-conversational" },
+          { label: "Focus", value: "UX · CX · AX" },
           { label: "Languages", value: languages.join(" · ") },
-          { label: "Availability", value: "Open to new roles" },
+          { label: "Availability", value: "Currently available" },
         ]
       : [
           { label: "Horario", value: "España/Europa · EE. UU. · Chile" },
-          { label: "Foco", value: "SaaS · Fintech · IA conversacional" },
+          { label: "Foco", value: "UX · CX · AX" },
           { label: "Idiomas", value: languages.join(" · ") },
-          { label: "Disponibilidad", value: "Abierta a nuevos roles" },
+          { label: "Disponibilidad", value: "Disponible actualmente" },
         ];
 
   const serif = { fontFamily: "var(--font-merriweather)" };
@@ -230,9 +283,9 @@ export default function PortfolioHome() {
                   className="not-italic italic underline decoration-1 underline-offset-4"
                   style={{ color: "#015fca", textDecorationColor: "var(--cb-hair)" }}
                 >
-                  Product Designer
+                  Senior Product Designer
                 </em>{" "}
-                shaping SaaS platforms, design systems and AI-driven experiences with research at the core.
+                for UX, CX and agentic experiences
               </span>
             ) : (
               <span className="block font-light" style={{ fontSize: "clamp(38px,8.5vw,95px)" }}>
@@ -240,12 +293,42 @@ export default function PortfolioHome() {
                   className="not-italic italic underline decoration-1 underline-offset-4"
                   style={{ color: "#015fca", textDecorationColor: "var(--cb-hair)" }}
                 >
-                  Product Designer
+                  Senior Product Designer
                 </em>{" "}
-                dando forma a plataformas SaaS, sistemas de diseño y experiencias impulsadas por IA, con la investigación en el centro.
+                para UX, CX y experiencias agénticas
               </span>
             )}
           </h1>
+
+          <p className="relative z-[1] mb-0 mt-8 max-w-[62ch] font-sans text-base leading-relaxed text-[var(--cb-muted)] sm:mt-10 sm:text-lg">
+            {lang === "en"
+              ? "I help teams turn complex products and customer journeys into clear, scalable experiences, from research and strategy to production-ready UI and design systems. SaaS, fintech, ecommerce, AI."
+              : "Ayudo a equipos a convertir productos y recorridos de cliente complejos en experiencias claras y escalables, desde la investigación y la estrategia hasta UI lista para producción y design systems. SaaS, fintech, ecommerce, IA."}
+          </p>
+
+          <p className="relative z-[1] mb-0 mt-6 max-w-[62ch] font-sans text-base font-bold leading-snug sm:mt-7 sm:text-lg">
+            {lang === "en"
+              ? "I help companies ship complex products their users actually understand, design systems their developers can build from without rework, and AI experiences people can trust."
+              : "Ayudo a las empresas a lanzar productos complejos que sus usuarios entienden, design systems desde los que sus developers construyen sin retrabajo, y experiencias de IA en las que la gente puede confiar."}
+          </p>
+
+          <div className="relative z-[1] mt-6 flex flex-wrap items-center gap-3 sm:mt-8">
+            <button
+              type="button"
+              onClick={() => setCalendlyOpen(true)}
+              className="cursor-pointer whitespace-nowrap rounded-full border-none px-5 py-3 font-sans text-[12px] font-extrabold uppercase tracking-[0.05em]"
+              style={{ background: "var(--cb-text)", color: "var(--cb-bg)" }}
+            >
+              {lang === "en" ? "Work with me" : "Trabaja conmigo"}
+            </button>
+            <a
+              href="#work"
+              className="whitespace-nowrap rounded-full border px-5 py-3 font-sans text-[12px] font-extrabold uppercase tracking-[0.05em] no-underline"
+              style={{ borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
+            >
+              {lang === "en" ? "View selected work" : "Ver trabajos seleccionados"}
+            </a>
+          </div>
 
           {/* Circular "available for work" badge — floats over whatever
               sits below the headline instead of pushing it down: this
@@ -262,8 +345,8 @@ export default function PortfolioHome() {
                 <text className="font-sans" fontSize="8" fontWeight={700} letterSpacing="0.5" fill="var(--cb-text)">
                   <textPath href="#cb-badge-circle" startOffset="0%">
                     {lang === "en"
-                      ? "AVAILABLE FOR WORK ✦ AVAILABLE FOR WORK ✦ "
-                      : "DISPONIBLE PARA TRABAJAR ✦ DISPONIBLE PARA TRABAJAR ✦ "}
+                      ? "CURRENTLY AVAILABLE ✦ CURRENTLY AVAILABLE ✦ "
+                      : "DISPONIBLE ACTUALMENTE ✦ DISPONIBLE ACTUALMENTE ✦ "}
                   </textPath>
                 </text>
               </svg>
@@ -389,6 +472,13 @@ export default function PortfolioHome() {
               <WorkProjectRow key={project.slug} project={project} lang={lang} />
             ))}
           </div>
+
+          <Link
+            href="/portfolio/work"
+            className="mt-16 inline-block font-sans text-sm font-bold text-[var(--cb-text)] no-underline underline-offset-4 hover:underline"
+          >
+            {lang === "en" ? "View all projects →" : "Ver todos los proyectos →"}
+          </Link>
         </section>
 
         {/* What I do — clean 3-up grid, no numbers, closing with a CTA
@@ -397,32 +487,28 @@ export default function PortfolioHome() {
           <h2 className="m-0 mb-12 text-[clamp(22px,3vw,28px)] sm:mb-16" style={serif}>
             {lang === "en" ? "What I do" : "Qué hago"}
           </h2>
-          <div className="grid grid-cols-1 gap-0 sm:grid-cols-3">
-            {WHAT_I_DO.map((item, i) => {
-              // Gray hairline dividers, same token used everywhere else on
-              // the site — a top divider above every row after the first
-              // (all items but the first on mobile's single column; only
-              // the second row at sm+'s 3-col grid), plus a left divider
-              // between columns at sm+ (never on mobile, single column).
-              const isFirstRowDesktop = i < 3;
-              const isFirstColDesktop = i % 3 === 0;
-              const dividerClass = [
-                "p-[34px]",
-                i === 0 ? "" : "border-t",
-                isFirstRowDesktop ? "sm:border-t-0" : "sm:border-t",
-                isFirstColDesktop ? "" : "sm:border-l",
-              ].join(" ");
-              return (
-                <div key={item.n} className={dividerClass} style={{ borderColor: "var(--cb-hair)" }}>
-                  <div className="m-0 font-sans text-[11px] font-bold tracking-[0.08em] text-[var(--cb-muted)]">{item.n}</div>
-                  <h3 className="m-0 mt-3 font-sans text-base font-bold">{lang === "en" ? item.title.en : item.title.es}</h3>
-                  <p className="m-0 mt-2 max-w-[38ch] font-sans text-sm leading-relaxed text-[var(--cb-muted)]">
-                    {lang === "en" ? item.body.en : item.body.es}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
+          <ThreeUpGrid items={WHAT_I_DO} lang={lang} />
+        </section>
+
+        {/* Services — what can be hired, without sector limits. */}
+        <section id="services" className="mt-28 scroll-mt-24 border-t pt-16 sm:mt-36 sm:pt-20" style={{ borderColor: "var(--cb-hair)" }}>
+          <h2 className="m-0 mb-12 text-[clamp(22px,3vw,28px)] sm:mb-16" style={serif}>
+            {lang === "en" ? "How we can work together" : "Cómo podemos trabajar juntos"}
+          </h2>
+          <ThreeUpGrid items={SERVICES} lang={lang} />
+        </section>
+
+        {/* Closing CTA */}
+        <section className="mt-28 border-t pt-16 sm:mt-36 sm:pt-20" style={{ borderColor: "var(--cb-hair)" }}>
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="block font-light leading-[1.15] tracking-[-0.01em] text-[var(--cb-text)] no-underline transition-opacity hover:opacity-70"
+            style={{ ...serif, fontSize: "clamp(30px,5.5vw,64px)" }}
+          >
+            {lang === "en"
+              ? "Building something complex? Tell me about your project →"
+              : "¿Construyendo algo complejo? Cuéntame sobre tu proyecto →"}
+          </a>
         </section>
       </div>
 
@@ -472,6 +558,10 @@ export default function PortfolioHome() {
           </div>
         </div>
       </footer>
+
+      {calendlyOpen && (
+        <CalendlyModal onClose={() => setCalendlyOpen(false)} closeLabel={lang === "en" ? "Close" : "Cerrar"} />
+      )}
 
       {aboutOpen && (
         <div data-cb-theme={dark ? "dark" : "light"} data-cb-mode="portfolio">

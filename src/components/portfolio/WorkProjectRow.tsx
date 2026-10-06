@@ -22,7 +22,7 @@ export default function WorkProjectRow({ project, lang }: { project: Project; la
       <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
         <div>
           <h3 className="m-0 flex items-baseline gap-2 font-sans text-xl font-bold sm:text-2xl">
-            {titleCase(project.title)}
+            {project.outcomeTitle ?? titleCase(project.title)}
             {project.pending && (
               <span className="font-sans text-[11px] font-bold uppercase tracking-[0.05em]" style={{ color: "#015fca" }}>
                 {lang === "en" ? "Soon" : "Pronto"}
@@ -30,7 +30,8 @@ export default function WorkProjectRow({ project, lang }: { project: Project; la
             )}
           </h3>
           <span className="mt-1.5 block font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--cb-muted)]">
-            {project.category} · {project.year}
+            {project.outcomeTitle ? `${titleCase(project.title)} · ` : ""}
+            {project.category}{project.year && project.year !== "—" ? ` · ${project.year}` : ""}
           </span>
           <p className="m-0 mt-2 max-w-[60ch] font-sans text-[14px] leading-relaxed text-[var(--cb-muted)]">
             {project.subtitle}

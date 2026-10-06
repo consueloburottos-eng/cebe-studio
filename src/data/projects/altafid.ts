@@ -35,6 +35,12 @@ export const altafidPlatform: Project = {
     "Lideré la creación del Design System desde cero (colores, tipografía, tablas, formularios, estados, navegación), no solo como librería visual sino como herramienta de decisión que ayudaba a diseñadores y desarrolladores a resolver casos nuevos sin partir de cero, especialmente crítico en Portfolio Management, Operations y Trading, donde se repetían estructuras de datos y acciones. Cada flujo se validó con el cliente mediante prototipos y sesiones de testeo, revisando no solo si la experiencia era comprensible sino si representaba correctamente la operativa financiera real, lo que llevó a simplificar formularios, reorganizar información y mejorar la continuidad entre módulos.",
   ],
   headline: "un ecosistema de journeys conectados",
+  outcomeTitle: "Convertí una herramienta de asesoría en una plataforma B2B de 23 features en 3 plataformas",
+  decision: {
+    decision: "Tratar Altafid como un ecosistema de journeys conectados, no como una suma de herramientas independientes.",
+    why: "La plataforma pasó de centrarse en asesor y cliente a ser una solución B2B para entidades financieras, con cuatro áreas que se cruzan: Relationship Management, Portfolio Management, Operations y Trading.",
+    result: "Una plataforma modular que conecta esas cuatro áreas a lo largo de 23 features en 3 plataformas.",
+  },
   gallery: [
     { label: "Altafid — dashboard", media: img("altafid", "02.jpg") },
     { label: "Altafid — portafolios", media: img("altafid", "03.jpg") },
@@ -58,5 +64,11 @@ export const altafidPlatform: Project = {
       "I led the Design System build from scratch (colors, typography, tables, forms, states, navigation), not just as a visual library but as a decision-making tool that helped designers and developers solve new cases without starting from zero, especially critical in Portfolio Management, Operations, and Trading, where data structures and actions repeated. Every flow was validated with the client through prototypes and testing sessions, checking not just whether the experience was understandable but whether it correctly represented real financial operations, which led to simplifying forms, reorganizing information, and improving continuity between modules.",
     ],
     headline: "an ecosystem of connected journeys",
+    outcomeTitle: "Turned an advisory tool into a B2B platform across 23 features and 3 platforms",
+    decision: {
+      decision: "Treat Altafid as an ecosystem of connected journeys, not a sum of independent tools.",
+      why: "The platform grew from an advisor–client focus into a B2B solution for financial institutions, with four areas that overlap: Relationship Management, Portfolio Management, Operations, and Trading.",
+      result: "A modular platform connecting those four areas across 23 features on 3 platforms.",
+    },
   },
 };

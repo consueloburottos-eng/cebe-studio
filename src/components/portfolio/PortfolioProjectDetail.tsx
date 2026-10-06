@@ -1,5 +1,6 @@
 "use client";
 
+import ProjectDecisionBlock from "@/components/ProjectDecisionBlock";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { assetFolder, type Project, type GalleryItem } from "@/data/projects";
@@ -255,7 +256,10 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
             <h2 className="m-0 text-[clamp(18px,2.2vw,22px)]" style={serif}>
               {lang === "en" ? "Overview" : "Resumen"}
             </h2>
-            <p className="m-0 max-w-[60ch] font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">{project.brief}</p>
+            <div className="max-w-[60ch]">
+              <ProjectDecisionBlock decision={project.decision} lang={lang} />
+              <p className="m-0 font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">{project.brief}</p>
+            </div>
           </div>
         </section>
 

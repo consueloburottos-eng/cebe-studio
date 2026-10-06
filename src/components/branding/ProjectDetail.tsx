@@ -1,5 +1,6 @@
 "use client";
 
+import ProjectDecisionBlock from "@/components/ProjectDecisionBlock";
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -432,7 +433,12 @@ export default function ProjectDetail({ project: rawProject, others: rawOthers, 
                 ))}
               </div>
               <div id="project-copy" className="flex flex-col gap-4 text-[15.5px] font-medium leading-[1.75] md:col-start-2 md:row-start-3">
-                {activeTab === "brief" && <p>{project.brief}</p>}
+                {activeTab === "brief" && (
+                  <>
+                    <ProjectDecisionBlock decision={project.decision} lang={lang} />
+                    <p>{project.brief}</p>
+                  </>
+                )}
 
                 {activeTab === "strategy" &&
                   project.strategy.map((paragraph, i) => <p key={i}>{paragraph}</p>)}

@@ -41,6 +41,8 @@ export function localizeProject(project: Project, lang: Lang): Project {
     brief: en.brief ?? project.brief,
     strategy: en.strategy ?? project.strategy,
     headline: en.headline ?? project.headline,
+    decision: en.decision ?? project.decision,
+    outcomeTitle: en.outcomeTitle ?? project.outcomeTitle,
     features,
   };
 }
@@ -149,7 +151,7 @@ export const UI = {
       copyEmail: "Copiar email",
       mailSubject: "Contacto desde CEBE:STUDIO",
       mailBody: "Hola Consuelo, quiero contarte sobre mi proyecto...",
-      bio: "UX/UI Lead con 8 años de experiencia diseñando plataformas SaaS complejas y sistemas de diseño escalables. He liderado el diseño de punta a punta de plataformas de desarrollo laboral y fintech, traduciendo research de usuarios en experiencias intuitivas — con research, journey mapping y prototipado en Figma que se entrega listo para desarrollo.",
+      bio: "Ayudo a las empresas a convertir productos complejos en experiencias que sus usuarios entienden y en las que confían. Me hago cargo de todo el trabajo: research, flujos, UI y un design system desde el cual los developers pueden construir, incluyendo experiencias de IA donde las personas mantienen el control. 8 años en SaaS, fintech y ecommerce. Disponible actualmente.",
       aiAvatarNotice: "Este video usa un avatar generado con IA — soy una persona real. Lo incluyo para mostrar cómo aplico avatares de IA en mi trabajo.",
       services: [
         { name: "Desarrollo UX/UI", desc: "Diseño y desarrollo de producto end-to-end, con estándares internacionales y un proceso claro de principio a fin." },
@@ -205,7 +207,7 @@ export const UI = {
       copyEmail: "Copy email",
       mailSubject: "Contact from CEBE:STUDIO",
       mailBody: "Hi Consuelo, I wanted to tell you about my project...",
-      bio: "UX/UI Lead with 8 years of experience designing complex SaaS platforms and scalable design systems. I've led end-to-end design for workforce-development and fintech platforms, translating user research into intuitive experiences — with research, journey mapping, and Figma prototyping delivered dev-ready.",
+      bio: "I help companies turn complex products into experiences their users understand and trust. I take the whole job: research, flows, UI, and a design system developers can build from, including AI experiences where people stay in control. 8 years across SaaS, fintech and ecommerce. Currently available.",
       aiAvatarNotice: "This video uses an AI-generated avatar — I'm a real person. Included to show how I apply AI avatars in my work.",
       services: [
         { name: "UX/UI Development", desc: "End-to-end product design and development, built to international standards with a clear process from start to finish." },
