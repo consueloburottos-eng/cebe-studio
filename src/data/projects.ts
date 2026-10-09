@@ -1349,9 +1349,7 @@ const baseProjects: Project[] = [
       ],
       headline: "a grid that breathes",
     },
-    gallery: [
-      { label: "Londra — portada", media: img("londra", "02.jpg") },
-    ],
+    gallery: introGallery("londra", "Londra", 2, 13),
   },
   {
     slug: "nicopoly",
