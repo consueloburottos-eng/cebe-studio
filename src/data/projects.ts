@@ -245,6 +245,7 @@ const baseProjects: Project[] = [
     strategy: [
       "Diseñé la arquitectura de la tienda alrededor de la narrativa del producto: presentación visual, jerarquía de información y un recorrido de compra con ritmo fluido para que cada pantalla se sintiera cuidada y coherente.",
       "El resultado fue una interfaz elegante y funcional, con componentes reutilizables que permitieron expandir el catálogo sin perder la identidad de marca.",
+      "Soluciones globales de e-commerce. Este sitio incluye las soluciones que definí para las marcas e-commerce de Tekpro: checkout simplificado con compra como invitado, checkout sin distracciones, carrito reversible, reseñas curadas y pruebas A/B para validar los cambios.",
     ],
     headline: "una tienda con personalidad",
     en: {
@@ -256,6 +257,7 @@ const baseProjects: Project[] = [
       strategy: [
         "I designed the store's architecture around the product's narrative: visual presentation, information hierarchy, and a purchase journey with a fluid rhythm so every screen felt considered and coherent.",
         "The result was an elegant, functional interface, with reusable components that let the catalog expand without losing brand identity.",
+        "Global e-commerce solutions. This site includes the solutions I defined across Tekpro's e-commerce brands: simplified checkout with guest purchase, a distraction-free checkout, a reversible cart, curated reviews, and A/B testing to validate the changes.",
       ],
       headline: "a store with personality",
     },
@@ -1335,6 +1337,7 @@ const baseProjects: Project[] = [
     strategy: [
       "Diseñé un sistema de grilla y bloques de contenido que permitiera destacar promociones, colecciones y novedades sin necesidad de reestructurar la página cada temporada.",
       "El resultado fue una portada y una estructura de categorías claras, con un tono visual que reforzaba la propuesta de decoración del hogar.",
+      "Soluciones globales de e-commerce. Este sitio incluye las soluciones que definí para las marcas e-commerce de Tekpro: checkout simplificado con compra como invitado, checkout sin distracciones, carrito reversible, reseñas curadas y pruebas A/B para validar los cambios.",
     ],
     headline: "una grilla que respira",
     en: {
@@ -1346,6 +1349,7 @@ const baseProjects: Project[] = [
       strategy: [
         "I designed a grid and content-block system that let promotions, collections, and new arrivals stand out without needing to restructure the page every season.",
         "The result was a homepage and category structure with clear visual tone that reinforced the home-decor proposition.",
+        "Global e-commerce solutions. This site includes the solutions I defined across Tekpro's e-commerce brands: simplified checkout with guest purchase, a distraction-free checkout, a reversible cart, curated reviews, and A/B testing to validate the changes.",
       ],
       headline: "a grid that breathes",
     },
@@ -1370,6 +1374,7 @@ const baseProjects: Project[] = [
     strategy: [
       "Mapeé el flujo de compra para diseñar una interfaz más fluida y comprensible, con filtrado claro, tarjetas de producto consistentes y un recorrido orientado a la conversión.",
       "La propuesta buscó reducir fricción y hacer del proceso de compra una experiencia ordenada, elegante y fácil de seguir.",
+      "Soluciones globales de e-commerce. Este sitio incluye las soluciones que definí para las marcas e-commerce de Tekpro: checkout simplificado con compra como invitado, checkout sin distracciones, carrito reversible, reseñas curadas y pruebas A/B para validar los cambios.",
     ],
     headline: "comprar, simplificado",
     en: {
@@ -1381,6 +1386,7 @@ const baseProjects: Project[] = [
       strategy: [
         "I mapped the purchase flow to design a more fluid, understandable interface, with clear filtering, consistent product cards, and a path oriented toward conversion.",
         "The proposal aimed to reduce friction and turn the purchase process into an ordered, elegant, easy-to-follow experience.",
+        "Global e-commerce solutions. This site includes the solutions I defined across Tekpro's e-commerce brands: simplified checkout with guest purchase, a distraction-free checkout, a reversible cart, curated reviews, and A/B testing to validate the changes.",
       ],
       headline: "shopping, simplified",
     },
@@ -1640,6 +1646,7 @@ const baseProjects: Project[] = [
     strategy: [
       "La estrategia priorizó una estructura de navegación ampliamente reconocida por usuarios de ecommerce, dejando que el branding — no la novedad estructural — diferenciara la experiencia: fotografías de alta calidad, productos como protagonistas, navegación simple, componentes consistentes y CTAs visibles.",
       "Diseñé Home, PLP, PDP, carrito, header, footer, páginas institucionales y componentes reutilizables, organizando la arquitectura de información para reducir el número de pasos hacia el producto. El sistema visual usó la paleta corporativa (negro, blanco, rojo, verde, amarillo) manteniendo coherencia con la identidad de marca existente.",
+      "Soluciones globales de e-commerce. Este sitio incluye las soluciones que definí para las marcas e-commerce de Tekpro: checkout simplificado con compra como invitado, checkout sin distracciones, carrito reversible, reseñas curadas y pruebas A/B para validar los cambios.",
     ],
     headline: "café, sin fricción",
     gallery: introGallery("marley-coffee", "Marley Coffee", 1, 13),
@@ -1652,8 +1659,50 @@ const baseProjects: Project[] = [
       strategy: [
         "The strategy prioritized a navigation structure widely recognized by e-commerce users, letting the branding — not structural novelty — differentiate the experience: high-quality photography, products as the protagonist, simple navigation, consistent components, and visible CTAs.",
         "I designed Home, PLP, PDP, cart, header, footer, institutional pages, and reusable components, organizing the information architecture to reduce the number of steps to the product. The visual system used the corporate palette (black, white, red, green, yellow), staying consistent with the existing brand identity.",
+        "Global e-commerce solutions. This site includes the solutions I defined across Tekpro's e-commerce brands: simplified checkout with guest purchase, a distraction-free checkout, a reversible cart, curated reviews, and A/B testing to validate the changes.",
       ],
       headline: "coffee, without friction",
+    },
+  },
+  {
+    slug: "tekpro-checkout",
+    title: "checkout y carrito",
+    category: "E-commerce",
+    tag: "ux/ui · e-commerce · cro",
+    subtitle: "Checkout y carrito en todas las marcas Magento de Tekpro",
+    client: "Tekpro",
+    role: "UX/UI Senior Designer",
+    year: "2019–2022",
+    result: "Soluciones de checkout y carrito aplicadas en todas las marcas Magento que diseñé",
+    services: "E-commerce UX · CRO",
+    skills: ["Figma", "Adobe XD", "A/B Testing", "Google Analytics", "Magento"],
+    cover: "Tekpro — checkout y carrito",
+    hidden: true,
+    brief:
+      "En Tekpro diseñé e-commerce completos para varias marcas, todas sobre Magento. Con el tiempo, el trabajo con cada marca me dejó descubrimientos repetidos sobre dónde se perdía la compra. En lugar de resolverlos marca por marca, los convertí en soluciones globales y las incluí en todos los diseños.",
+    strategy: [
+      "Checkout con menos fricción: autocompletado, menos campos y compra como invitado, con la opción de crear cuenta usando el correo ya ingresado. Investigué qué información necesitaban después de comprar los compradores invitados y los registrados, y adapté el checkout a los objetivos y costos operativos de cada cliente.",
+      "Checkout sin distracciones: sin header, footer ni navegación principal, solo el resumen del pedido y los pasos de pago. Un campo de código de descuento fácil de encontrar y de usar.",
+      "Carrito reversible: los productos eliminados siguen visibles y se pueden restaurar, y el total se actualiza.",
+      "Confianza y comunicación: reseñas reales destacadas en la página de producto, curando mensajes variados en lugar de repetidos, y campañas de email con GIFs y video, que convirtieron más que los emails estáticos.",
+      "Validación: usé A/B testing para comparar el impacto de los nuevos diseños (checkouts, tarjetas de precio, ubicación de los CTA y emails) y seguí el impacto de negocio con Google Analytics. Apliqué estas soluciones a todas las marcas Magento que diseñé, adaptando la interfaz a la identidad de cada una.",
+    ],
+    headline: "una compra sin tropiezos",
+    gallery: [],
+    en: {
+      tag: "ux/ui · e-commerce · cro",
+      subtitle: "Checkout and cart across Tekpro's Magento brands",
+      result: "Checkout and cart solutions applied across every Magento brand I designed",
+      brief:
+        "At Tekpro I designed complete e-commerce sites for several brands, all on Magento. Over time, working with each brand showed me the same recurring points where purchases were lost. Instead of solving them brand by brand, I turned them into global solutions and included them in every design.",
+      strategy: [
+        "A lower-friction checkout: autofill, fewer fields, and guest checkout with the option to create an account using the email already entered. I researched what guest and registered buyers needed after purchase and adapted the checkout to each client's business goals and operational costs.",
+        "A distraction-free checkout: no header, footer or main navigation, just the order summary and payment steps. A discount code field that is easy to find and use.",
+        "A reversible cart: removed products stay visible and can be restored, and the total updates.",
+        "Trust and communication: genuine customer reviews highlighted on product pages, curating varied messages instead of repetitive ones, and email campaigns with GIFs and video, which converted better than static emails.",
+        "Validation: I used A/B testing to compare the impact of the new designs (checkouts, price cards, CTA placement and emails) and tracked business impact with Google Analytics. I applied these solutions across every Magento brand I designed, adapting the interface to each identity.",
+      ],
+      headline: "a purchase without stumbles",
     },
   },
 ];

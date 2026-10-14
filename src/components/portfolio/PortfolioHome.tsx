@@ -315,13 +315,13 @@ export default function PortfolioHome() {
             >
               {lang === "en" ? "Work with me" : "Trabaja conmigo"}
             </button>
-            <a
-              href="#work"
+            <Link
+              href="/portfolio/work"
               className="whitespace-nowrap rounded-full border px-5 py-3 font-sans text-[12px] font-extrabold uppercase tracking-[0.05em] no-underline"
               style={{ borderColor: "var(--cb-hair)", color: "var(--cb-text)" }}
             >
-              {lang === "en" ? "View selected work" : "Ver trabajos seleccionados"}
-            </a>
+              {lang === "en" ? "View all work" : "Ver todo el trabajo"}
+            </Link>
           </div>
 
           {/* Circular "available for work" badge — floats over whatever

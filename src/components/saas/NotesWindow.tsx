@@ -345,12 +345,23 @@ export default function NotesWindow({
                         {job.role} — {job.company}
                       </span>
                       <span className="font-mono text-xs" style={{ color: "rgba(var(--os-txrgb),.45)" }}>
-                        {job.period} · {job.place}
+                        {job.place ? `${job.period} · ${job.place}` : job.period}
                       </span>
                     </div>
-                    <p className="mt-1.5 text-[12.5px] leading-[1.6]" style={{ color: "rgba(var(--os-txrgb),.55)" }}>
-                      {job.note}
-                    </p>
+                    {job.bullets ? (
+                      <ul
+                        className="mt-1.5 flex list-disc flex-col gap-1 pl-5 text-[12.5px] leading-[1.6]"
+                        style={{ color: "rgba(var(--os-txrgb),.55)" }}
+                      >
+                        {job.bullets.map((b, i) => (
+                          <li key={i}>{b}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="mt-1.5 text-[12.5px] leading-[1.6]" style={{ color: "rgba(var(--os-txrgb),.55)" }}>
+                        {job.note}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>

@@ -4,7 +4,7 @@ export const EDUCATION_EN = {
   period: "2012–2018",
 };
 
-export const LANGUAGES_EN = ["Spanish — Native", "English — Advanced (ETAPP, IGCSE, PET)"];
+export const LANGUAGES_EN = ["Spanish — Native", "English — Fluent"];
 
 export const CERTIFICATIONS_EN = [
   {
@@ -20,7 +20,7 @@ export const EDUCATION = {
   period: "2012–2018",
 };
 
-export const LANGUAGES = ["Español — Nativo", "Inglés — Avanzado (ETAPP, IGCSE, PET)"];
+export const LANGUAGES = ["Español — Nativo", "Inglés — Fluido"];
 
 export const CERTIFICATIONS = [
   {

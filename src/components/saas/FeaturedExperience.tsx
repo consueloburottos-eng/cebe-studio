@@ -44,7 +44,7 @@ export default function FeaturedExperience() {
                     {entry.role}
                   </div>
                   <div className="mt-0.5 font-mono text-[10.5px]" style={{ color: "var(--os-mut)" }}>
-                    {entry.period} · {entry.place}
+                    {entry.place ? `${entry.period} · ${entry.place}` : entry.period}
                   </div>
                 </div>
               </div>

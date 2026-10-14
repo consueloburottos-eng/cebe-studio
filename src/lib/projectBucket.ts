@@ -18,6 +18,11 @@ export function categoryBucket(project: Pick<Project, "slug" | "category">): Fil
   if (slug === "talent-capital" || slug.startsWith("altafid") || slug.startsWith("buildwithin")) {
     return "SaaS";
   }
+  // Pending Tekpro e-commerce work that has no written category yet, so it
+  // shows under Ecommerce instead of falling into the Branding catch-all.
+  if (slug === "dior") {
+    return "Ecommerce";
+  }
   const c = category.toLowerCase();
   if (c.includes("e-commerce") || c.includes("ecommerce") || c.includes("web design") || c.includes("brand + web")) {
     return "Ecommerce";

@@ -44,35 +44,29 @@ function topSkills(lang: "es" | "en", limit = 8): [string, number][] {
     .slice(0, limit);
 }
 
-// full toolkit from her CV's "Skills & Tools" section — broader than what
-// shows up in per-project tags above, so it's listed separately rather than
-// faked into the chart with an invented count
-const TOOLKIT = [
-  "Confluence",
-  "SharePoint",
-  "Power BI",
-  "HTML",
-  "Shopify",
-  "Magento",
-  "Agile / Scrum",
-  "Accesibilidad (WCAG)",
-  "User Personas",
-  "Journey Maps",
-  "A/B Testing",
+// skill groups from her CV's "Skills" section — broader than what shows up in
+// per-project tags above, so they're listed separately rather than faked into
+// the chart with an invented count
+type SkillGroup = { label: string; items: string[] };
+
+const SKILL_GROUPS: SkillGroup[] = [
+  { label: "Liderazgo de producto", items: ["Dirección de diseño", "Colaboración en estrategia de producto", "Mentoría", "Design critique", "Gestión de stakeholders", "Alineación entre equipos"] },
+  { label: "Investigación", items: ["Planificación de research", "Entrevistas con usuarios", "Tests de usabilidad", "Tests A/B y de preferencia", "Benchmarking de competidores", "Síntesis de research", "Journey mapping"] },
+  { label: "Diseño de producto", items: ["Diseño de producto end-to-end", "Arquitectura de información", "User flows", "Diseño de interacción", "Prototipado", "UI de alta fidelidad", "Mobile-first y responsive", "Accesibilidad (WCAG)"] },
+  { label: "Métricas y crecimiento", items: ["Métricas de éxito por flujo", "Análisis de funnels", "Onboarding y activación", "Engagement", "CRO", "Diseño basado en datos"] },
+  { label: "Dominios", items: ["Productos con IA", "UX conversacional y agéntico", "IA explicable", "SaaS B2B multi-rol", "Fintech", "eCommerce", "Marketplaces", "Plataformas white-label"] },
+  { label: "Sistemas de diseño", items: ["Arquitectura de tokens", "Sistemas multimarca", "Librerías de componentes", "Design QA", "Handoff a desarrollo", "Colaboración con React y Storybook"] },
+  { label: "Herramientas", items: ["Figma", "Figma Make", "Maze", "PostHog", "Google Analytics", "Hotjar", "Miro", "Jira", "Claude", "Claude Code", "UX Pilot"] },
 ];
 
-const TOOLKIT_EN = [
-  "Confluence",
-  "SharePoint",
-  "Power BI",
-  "HTML",
-  "Shopify",
-  "Magento",
-  "Agile / Scrum",
-  "Accessibility (WCAG)",
-  "User Personas",
-  "Journey Maps",
-  "A/B Testing",
+const SKILL_GROUPS_EN: SkillGroup[] = [
+  { label: "Product leadership", items: ["Design direction", "Product strategy collaboration", "Mentoring", "Design critique", "Stakeholder management", "Cross-functional alignment"] },
+  { label: "Research", items: ["Research planning", "User interviews", "Usability testing", "A/B and preference testing", "Competitive benchmarking", "Research synthesis", "Journey mapping"] },
+  { label: "Product design", items: ["End-to-end product design", "Information architecture", "User flows", "Interaction design", "Prototyping", "High-fidelity UI", "Mobile-first and responsive", "Accessibility (WCAG)"] },
+  { label: "Metrics and growth", items: ["Success metrics per flow", "Funnel analysis", "Onboarding and activation", "Engagement", "CRO", "Data-driven design"] },
+  { label: "Domains", items: ["AI-powered products", "Conversational and agentic UX", "Explainable AI", "Multi-role B2B SaaS", "Fintech", "eCommerce", "Marketplaces", "White-label platforms"] },
+  { label: "Design systems", items: ["Token architecture", "Multi-brand systems", "Component libraries", "Design QA", "Developer handoff", "React and Storybook collaboration"] },
+  { label: "Tools", items: ["Figma", "Figma Make", "Maze", "PostHog", "Google Analytics", "Hotjar", "Miro", "Jira", "Claude", "Claude Code", "UX Pilot"] },
 ];
 
 const SectionLabel = ({ children }: { children: React.ReactNode }) => (
@@ -98,7 +92,7 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
   const certifications = lang === "en" ? CERTIFICATIONS_EN : CERTIFICATIONS;
   const snapshotBestFitReasons = lang === "en" ? SNAPSHOT_BEST_FIT_REASONS_EN : SNAPSHOT_BEST_FIT_REASONS;
   const languages = lang === "en" ? LANGUAGES_EN : LANGUAGES;
-  const toolkit = lang === "en" ? TOOLKIT_EN : TOOLKIT;
+  const skillGroups = lang === "en" ? SKILL_GROUPS_EN : SKILL_GROUPS;
   const [tab, setTab] = useState<Tab>("perfil");
   const [calendlyOpen, setCalendlyOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -435,12 +429,20 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
                       {job.role} — {job.company}
                     </span>
                     <span className="font-mono text-[12px] text-[var(--cb-muted)]">
-                      {job.period} · {job.place}
+                      {job.place ? `${job.period} · ${job.place}` : job.period}
                     </span>
                   </div>
-                  <p className="mt-1.5 text-[13.5px] leading-[1.6] text-[var(--cb-muted)]">
-                    {job.note}
-                  </p>
+                  {job.bullets ? (
+                    <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-5 text-[13.5px] leading-[1.6] text-[var(--cb-muted)] marker:text-[var(--cb-muted)]">
+                      {job.bullets.map((b, i) => (
+                        <li key={i}>{b}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="mt-1.5 text-[13.5px] leading-[1.6] text-[var(--cb-muted)]">
+                      {job.note}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>
@@ -490,19 +492,23 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
               ))}
             </div>
 
-            <div className="mt-[26px]">
-              <SectionLabel>{ui.fullToolkit}</SectionLabel>
-              <div className="mt-2.5 flex flex-wrap gap-2">
-                {toolkit.map((tool) => (
-                  <span
-                    key={tool}
-                    className="rounded-full border px-3.5 py-2 text-[12.5px] text-[var(--cb-muted)]"
-                    style={{ borderColor: "var(--cb-hair)" }}
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
+            <div className="mt-[26px] flex flex-col gap-5">
+              {skillGroups.map((group) => (
+                <div key={group.label}>
+                  <SectionLabel>{group.label}</SectionLabel>
+                  <div className="mt-2.5 flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full border px-3.5 py-2 text-[12.5px] text-[var(--cb-muted)]"
+                        style={{ borderColor: "var(--cb-hair)" }}
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}

@@ -10,68 +10,72 @@ import { useSiteLanguage, type Lang } from "@/hooks/useSiteLanguage";
 import { localizeProject, localizeProjects, titleCase } from "@/lib/i18n";
 import ProjectMedia from "@/components/ProjectMedia";
 import AboutModal from "@/components/branding/AboutModal";
+import { INTRO_SPAN_PATTERN, mobileTileSize } from "@/lib/introGrid";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/cburotto/";
 const UPWORK_URL = "https://www.upwork.com/freelancers/consueloburotto?";
 
-// A row of at least 2-3 gallery photos side by side, each boxed to a fixed
-// aspect ratio and cropped (object-cover) — never a single photo stretched
-// to the full page width, since some uploads are small/portrait-format
-// source images that look oversized and blurry when forced that wide. Only
-// the project's own hero/cover banner is allowed to run full width.
-const ROW_COLUMNS: Record<number, string> = {
-  1: "sm:grid-cols-1",
-  2: "sm:grid-cols-2",
-  3: "sm:grid-cols-3",
-};
+// Same intro grid Corporate's project page uses, right under the hero: a
+// 9-column grid with a fixed span pattern (wide/narrow tiles at one shared row
+// height), and a horizontally scrolling strip of the same tiles on mobile.
+// Dev pads to the full 13 slots so empty slots stay click-to-upload targets;
+// production only renders tiles that have media, repeating the span pattern
+// if a project has more photos than the 13 base slots.
+function IntroGrid({ gallery, folder }: { gallery: GalleryItem[]; folder: string }) {
+  const isDev = process.env.NODE_ENV === "development";
+  const slotCount = isDev ? Math.max(gallery.length, INTRO_SPAN_PATTERN.length) : gallery.length;
+  const items = Array.from({ length: slotCount }, (_, i) => gallery[i] ?? { label: "Imagen próximamente" });
+  const spanFor = (i: number) => INTRO_SPAN_PATTERN[i % INTRO_SPAN_PATTERN.length];
+  const uploadFor = (i: number) => `/projects/${folder}/intro-${String(i + 1).padStart(2, "0")}`;
+  if (items.length === 0) return null;
 
-function GalleryRow({
-  items,
-  featured = false,
-  featuredPosition = "start",
-}: {
-  items: GalleryItem[];
-  featured?: boolean;
-  featuredPosition?: "start" | "middle" | "end";
-}) {
-  // A 2x/1x/1x split — one wide lead photo next to two narrower ones —
-  // instead of three equal columns, for visual rhythm. Only applies with
-  // exactly 3 items; anything else falls back to the even split. All three
-  // share one fixed height (not an aspect-ratio, which sizes each box
-  // independently of its siblings) so the wide 2fr column reads as a
-  // horizontal rectangle and the two 1fr columns read as vertical ones
-  // purely from their own column width. `featuredPosition` picks where the
-  // wide photo sits in the row.
-  const useFeaturedLayout = featured && items.length === 3;
-  const featuredColumns =
-    featuredPosition === "start"
-      ? "sm:grid-cols-[2fr_1fr_1fr]"
-      : featuredPosition === "middle"
-        ? "sm:grid-cols-[1fr_2fr_1fr]"
-        : "sm:grid-cols-[1fr_1fr_2fr]";
-  // A lone leftover photo (last chunk not divisible by 3) keeps its
-  // portrait aspect ratio instead of stretching that ratio across the full
-  // row width, which is what made single-item rows look oversized.
-  const columns = useFeaturedLayout
-    ? featuredColumns
-    : items.length === 1
-      ? "sm:grid-cols-[1fr_3fr]"
-      : ROW_COLUMNS[Math.min(items.length, 3)];
   return (
-    <div className={`mt-16 grid grid-cols-1 gap-4 sm:mt-20 ${columns}`}>
-      {items.map((item, i) => (
+    <>
+      <div className="mt-10 flex gap-[10px] overflow-x-auto pb-1 sm:hidden">
+        {items.map((g, i) => {
+          const { width, height } = mobileTileSize(spanFor(i));
+          return (
+            <div
+              key={i}
+              className="flex-none overflow-hidden rounded-[4px]"
+              style={{ width, height, background: "var(--cb-pill)" }}
+            >
+              <ProjectMedia media={g.media} label={g.label} sizes={`${width}px`} uploadPath={uploadFor(i)} />
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-10 hidden sm:block" style={{ containerType: "inline-size" }}>
         <div
-          key={i}
-          className={`relative w-full overflow-hidden ${
-            useFeaturedLayout ? "aspect-[3/4] sm:aspect-auto sm:h-[26vw] sm:max-h-[420px] sm:min-h-[240px]" : "aspect-[3/4]"
-          }`}
-          style={{ background: "var(--cb-pill)" }}
+          className="grid gap-[10px]"
+          style={{
+            gridTemplateColumns: "repeat(9, 1fr)",
+            gridAutoRows: "calc((100cqw - 80px) / 9 * 1.4)",
+            gridAutoFlow: "row dense",
+          }}
         >
-          <ProjectMedia media={item.media} label={item.label} sizes="(min-width:1100px) 360px, 33vw" />
+          {items.map((g, i) => {
+            const span = spanFor(i);
+            return (
+              <div
+                key={i}
+                className="overflow-hidden rounded-[10px]"
+                style={{ background: "var(--cb-pill)", gridColumn: `span ${span}` }}
+              >
+                <ProjectMedia
+                  media={g.media}
+                  label={g.label}
+                  sizes={span === 2 ? "(min-width:1200px) 246px, 24vw" : "(min-width:1200px) 118px, 11vw"}
+                  uploadPath={uploadFor(i)}
+                />
+              </div>
+            );
+          })}
         </div>
-      ))}
-    </div>
+      </div>
+    </>
   );
 }
 
@@ -153,11 +157,7 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
   const project = localizeProject(rawProject, lang);
   const others = localizeProjects(rawOthers, lang);
   const folder = assetFolder(project);
-  const gallery = project.gallery.filter((g) => g.media);
-  const galleryChunks: GalleryItem[][] = [];
-  for (let i = 0; i < gallery.length; i += 3) {
-    galleryChunks.push(gallery.slice(i, i + 3));
-  }
+  const gallery = process.env.NODE_ENV === "development" ? project.gallery : project.gallery.filter((g) => g.media);
 
   const serif = { fontFamily: "var(--font-merriweather)" };
   const [challenge, ...approach] = project.strategy;
@@ -251,6 +251,8 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
           />
         </div>
 
+        <IntroGrid gallery={gallery} folder={folder} />
+
         <section className="mt-16 sm:mt-24">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-[160px_1fr] sm:gap-12">
             <h2 className="m-0 text-[clamp(18px,2.2vw,22px)]" style={serif}>
@@ -263,8 +265,6 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
           </div>
         </section>
 
-        {galleryChunks[0] && <GalleryRow items={galleryChunks[0]} featured />}
-
         {challenge && (
           <section className="mt-16 sm:mt-24">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-[160px_1fr] sm:gap-12">
@@ -275,8 +275,6 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
             </div>
           </section>
         )}
-
-        {galleryChunks[1] && <GalleryRow items={galleryChunks[1]} featured />}
 
         {approach.length > 0 && (
           <section className="mt-16 sm:mt-24">
@@ -295,8 +293,6 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
           </section>
         )}
 
-        {galleryChunks[2] && <GalleryRow items={galleryChunks[2]} featured featuredPosition="end" />}
-
         <section className="mt-16 sm:mt-24">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-[160px_1fr] sm:gap-12">
             <h2 className="m-0 text-[clamp(18px,2.2vw,22px)]" style={serif}>
@@ -305,10 +301,6 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
             <p className="m-0 max-w-[60ch] font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">{project.result}</p>
           </div>
         </section>
-
-        {galleryChunks.slice(3).map((chunk, i) => (
-          <GalleryRow key={i} items={chunk} featured={i === 0} featuredPosition="middle" />
-        ))}
 
         {others.length > 0 && (
           <section className="mt-24 border-t pt-16 sm:mt-32 sm:pt-20" style={{ borderColor: "var(--cb-hair)" }}>
