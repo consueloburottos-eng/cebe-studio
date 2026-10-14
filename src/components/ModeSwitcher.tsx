@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Lang } from "@/hooks/useSiteLanguage";
+import { isModeEnabled, type SiteMode } from "@/lib/modes";
 
-export type SiteMode = "branding" | "saas" | "marketplace" | "portfolio";
+export type { SiteMode };
 
 type ModeSwitcherProps = {
   mode: SiteMode;
@@ -16,12 +17,14 @@ type ModeSwitcherProps = {
   variant?: "light" | "dark";
 };
 
-const MODES: { key: SiteMode; label: string; href: string }[] = [
+const ALL_MODES: { key: SiteMode; label: string; href: string }[] = [
   { key: "portfolio", label: "Portfolio", href: "/" },
   { key: "branding", label: "Corporate", href: "/corporate" },
   { key: "saas", label: "SaaS", href: "/saas" },
   { key: "marketplace", label: "E-commerce", href: "/marketplace" },
 ];
+
+const MODES = ALL_MODES.filter((m) => isModeEnabled(m.key));
 
 export default function ModeSwitcher({
   mode,
@@ -75,6 +78,7 @@ export default function ModeSwitcher({
           </button>
         </div>
       )}
+      {MODES.length > 1 && (
       <div className="flex items-center gap-1.5 sm:gap-2">
         <span
           className="hidden font-sans text-[10px] font-bold tracking-[0.1em] uppercase sm:inline"
@@ -117,6 +121,7 @@ export default function ModeSwitcher({
           })}
         </div>
       </div>
+      )}
       {onSetLight && onSetDark && (
         <div className="flex gap-0.5 rounded-full p-[3px]" style={{ background: segBg }}>
           <button

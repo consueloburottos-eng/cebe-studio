@@ -1,4 +1,5 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { isModeEnabled } from "@/lib/modes";
 import type { Metadata } from "next";
 import { getProject, projects } from "@/data/projects";
 import ProjectDetail from "@/components/branding/ProjectDetail";
@@ -27,6 +28,7 @@ export default async function ProjectPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  if (!isModeEnabled("branding")) redirect("/");
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) notFound();

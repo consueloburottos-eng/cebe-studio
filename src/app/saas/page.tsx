@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { isModeEnabled } from "@/lib/modes";
 import SaasDesktop from "@/components/saas/SaasDesktop";
 
 export const metadata: Metadata = {
@@ -8,5 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default function SaasPage() {
+  if (!isModeEnabled("saas")) redirect("/");
   return <SaasDesktop />;
 }

@@ -1,4 +1,5 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { isModeEnabled } from "@/lib/modes";
 import type { Metadata } from "next";
 import { getProject, projects } from "@/data/projects";
 import MarketplaceProductDetail from "@/components/marketplace/MarketplaceProductDetail";
@@ -27,6 +28,7 @@ export default async function MarketplaceProductPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  if (!isModeEnabled("marketplace")) redirect("/");
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) notFound();

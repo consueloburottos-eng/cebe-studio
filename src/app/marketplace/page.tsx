@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { isModeEnabled } from "@/lib/modes";
 import MarketplaceHome from "@/components/marketplace/MarketplaceHome";
 
 export const metadata: Metadata = {
@@ -8,5 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default function MarketplacePage() {
+  if (!isModeEnabled("marketplace")) redirect("/");
   return <MarketplaceHome />;
 }
