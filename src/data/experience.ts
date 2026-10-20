@@ -40,7 +40,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
       "Diseñé journeys de cliente complejos, desde onboarding, KYC, documentos y firmas electrónicas hasta la construcción de portafolios, trading y facturación.",
       "Diseñé dashboards, tablas con búsqueda, filtros y paneles laterales que hacen fáciles de leer los balances, el rendimiento y la asignación de activos.",
       "Diseñé una PWA mobile-first para asesores y una app nativa para sus clientes sobre un mismo sistema de diseño, además de herramientas de administración para configurar el portal de cliente de cada institución.",
-      "Construí un sistema de diseño multimarca con cuatro niveles de tokens, alineado con React y Storybook, que redujo un 90% las incidencias de QA de diseño en 23 features y tres plataformas.",
+      "Construí un sistema de diseño multimarca con cuatro niveles de tokens, alineado con React y Storybook, que redujo un 90% las incidencias relacionadas con el design system (medido en Jira) en 23 features y tres plataformas.",
     ],
   },
   {
@@ -100,7 +100,7 @@ export const EXPERIENCE_EN: ExperienceEntry[] = [
       "Designed complex customer journeys, from onboarding, KYC, documents and e-signatures to portfolio building, trading and billing.",
       "Designed dashboards, searchable tables, filters and side panels that make portfolio balances, performance and asset allocation easy to read.",
       "Designed a mobile-first PWA for advisors and a native app for their clients on one design system, plus admin tools to configure each institution's client portal.",
-      "Built a multi-brand design system with four token levels, aligned with React and Storybook, that cut design-related QA issues by 90% across 23 features and three platforms.",
+      "Built a multi-brand design system with four token levels, aligned with React and Storybook, that cut design-system-related issues by 90% (measured in Jira) across 23 features and three platforms.",
     ],
   },
   {
