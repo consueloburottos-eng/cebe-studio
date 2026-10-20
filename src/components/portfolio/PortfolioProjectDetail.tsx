@@ -232,14 +232,14 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
           {titleCase(project.headline)}
         </h1>
 
-        <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 sm:mt-14 sm:grid-cols-4">
+        <dl className="m-0 mt-10 grid grid-cols-2 gap-x-8 gap-y-6 sm:mt-14 sm:grid-cols-4">
           {meta.map((item) => (
             <div key={item.label}>
               <dt className="m-0 font-sans text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--cb-muted)]">{item.label}</dt>
               <dd className="m-0 mt-1.5 font-sans text-[13px] leading-snug">{item.value}</dd>
             </div>
           ))}
-        </div>
+        </dl>
 
         <div className="relative mt-10 w-full overflow-hidden sm:mt-14" style={{ background: "var(--cb-pill)" }}>
           <ProjectMedia
@@ -264,6 +264,40 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
             </div>
           </div>
         </section>
+
+        {project.digitalPresence && (
+          <section className="mt-16 sm:mt-24">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-[160px_1fr] sm:gap-12">
+              <h2 className="m-0 text-[clamp(18px,2.2vw,22px)]" style={serif}>
+                {lang === "en" ? "Digital presence" : "Presencia digital"}
+              </h2>
+              <div>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {project.digitalPresence.stats.map((stat) => (
+                    <div
+                      key={stat.title}
+                      className="rounded-2xl border p-5 font-sans"
+                      style={{ borderColor: "var(--cb-hair)" }}
+                    >
+                      <div className="text-[13px] text-[var(--cb-muted)]">
+                        {lang === "en" ? (stat.titleEn ?? stat.title) : stat.title}
+                      </div>
+                      <div className="mt-2 text-[34px] font-extrabold leading-none tracking-[-0.01em]">{stat.value}</div>
+                      <div className="mt-2 text-[13px] leading-snug text-[var(--cb-muted)]">
+                        {lang === "en" ? (stat.detailEn ?? stat.detail) : stat.detail}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="m-0 mt-4 max-w-[60ch] font-sans text-[12px] leading-relaxed text-[var(--cb-muted)]">
+                  {lang === "en"
+                    ? (project.digitalPresence.noteEn ?? project.digitalPresence.note)
+                    : project.digitalPresence.note}
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
 
         {challenge && (
           <section className="mt-16 sm:mt-24">

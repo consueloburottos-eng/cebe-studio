@@ -153,7 +153,7 @@ export default function AboutModal({ onClose }: { onClose: () => void }) {
           ))}
         </div>
 
-        <div className="flex-1 overflow-auto px-5 py-6 sm:px-10 sm:pt-11 sm:pb-9">
+        <div tabIndex={0} className="flex-1 overflow-auto px-5 py-6 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-current sm:px-10 sm:pt-11 sm:pb-9">
         {tab === "perfil" && (
           <div>
             <div className="flex items-center gap-5">

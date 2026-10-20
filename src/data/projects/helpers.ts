@@ -85,6 +85,23 @@ export type MetricStat = {
   labelEn?: string;
 };
 
+// A card in the Portfolio project page's "Digital presence" section: small
+// title, big value, one-line detail. Used for external context figures
+// (e.g. SE Ranking estimates), never for results claimed from the design.
+export type PresenceStat = {
+  title: string;
+  value: string;
+  detail: string;
+  titleEn?: string;
+  detailEn?: string;
+};
+
+export type DigitalPresence = {
+  stats: PresenceStat[];
+  note: string;
+  noteEn?: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -112,6 +129,9 @@ export type Project = {
   // kept in source — for modules parked without being deleted outright.
   hidden?: boolean;
   features?: FeatureDeepDive[];
+  // Context cards shown only on the Portfolio project page (see
+  // PortfolioProjectDetail.tsx), with a disclosure note.
+  digitalPresence?: DigitalPresence;
   // Optional strip of 2-3 big-number stats shown near the top of the project
   // (before the brief). `metricsNote` is a small disclosure line rendered
   // below the numbers — required whenever a value is an estimate rather than

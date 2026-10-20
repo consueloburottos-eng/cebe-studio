@@ -398,19 +398,23 @@ export default function PortfolioHome() {
                 </div>
 
                 {bannerWorks.length > 1 && (
-                  <div className="flex gap-2">
+                  <div className="flex items-center">
                     {bannerWorks.map((project, i) => (
                       <button
                         key={project.slug}
                         type="button"
                         onClick={() => setBannerIndex(i)}
                         aria-label={project.title}
-                        className="h-1.5 rounded-full border-none p-0 transition-all"
-                        style={{
-                          width: i === bannerIndex ? "24px" : "8px",
-                          background: i === bannerIndex ? "#fff" : "rgba(255,255,255,0.5)",
-                        }}
-                      />
+                        className="flex h-6 cursor-pointer items-center justify-center border-none bg-transparent px-2"
+                      >
+                        <span
+                          className="block h-1.5 rounded-full transition-all"
+                          style={{
+                            width: i === bannerIndex ? "24px" : "8px",
+                            background: i === bannerIndex ? "#fff" : "rgba(255,255,255,0.5)",
+                          }}
+                        />
+                      </button>
                     ))}
                   </div>
                 )}

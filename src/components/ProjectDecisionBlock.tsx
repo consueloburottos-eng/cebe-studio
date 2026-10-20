@@ -26,7 +26,7 @@ export default function ProjectDecisionBlock({
     >
       {rows.map((row) => (
         <div key={row.label}>
-          <dt className="m-0 text-[10px] font-bold uppercase tracking-[0.12em] opacity-55">{row.label}</dt>
+          <dt className="m-0 text-[10px] font-bold uppercase tracking-[0.12em] opacity-70">{row.label}</dt>
           <dd className="m-0 mt-1 text-[14px] font-semibold leading-snug">{row.text}</dd>
         </div>
       ))}
