@@ -2,7 +2,7 @@
 
 import ProjectDecisionBlock from "@/components/ProjectDecisionBlock";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { assetFolder, type Project, type GalleryItem } from "@/data/projects";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
 import ModeSwitcher from "@/components/ModeSwitcher";
@@ -153,6 +153,7 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
   const [dark, setDark] = useSiteTheme();
   const [lang, setLang] = useSiteLanguage();
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("overview");
 
   const project = localizeProject(rawProject, lang);
   const others = localizeProjects(rawOthers, lang);
@@ -168,6 +169,112 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
     { label: lang === "en" ? "Client" : "Cliente", value: project.client },
     { label: lang === "en" ? "Year" : "Año", value: project.year },
   ];
+
+  // Case-study copy as a list of titled sections: the titles drive the sticky
+  // sidebar (scrollspy), the bodies stack in the right column.
+  const bodyText = "m-0 font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]";
+  const sections: { id: string; label: string; content: ReactNode }[] = [
+    {
+      id: "overview",
+      label: lang === "en" ? "Overview" : "Resumen",
+      content: (
+        <div className="max-w-[60ch]">
+          <ProjectDecisionBlock decision={project.decision} lang={lang} />
+          <p className={bodyText}>{project.brief}</p>
+        </div>
+      ),
+    },
+  ];
+  if (project.digitalPresence) {
+    const presence = project.digitalPresence;
+    sections.push({
+      id: "digital-presence",
+      label:
+        lang === "en"
+          ? (presence.headingEn ?? presence.heading ?? "Digital presence")
+          : (presence.heading ?? "Presencia digital"),
+      content: (
+        <div>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {presence.stats.map((stat) => (
+              <div key={stat.title} className="rounded-2xl border p-5 font-sans" style={{ borderColor: "var(--cb-hair)" }}>
+                <div className="text-[13px] text-[var(--cb-muted)]">{lang === "en" ? (stat.titleEn ?? stat.title) : stat.title}</div>
+                <div className="mt-2 text-[34px] font-extrabold leading-none tracking-[-0.01em]">{lang === "en" ? (stat.valueEn ?? stat.value) : stat.value}</div>
+                <div className="mt-2 text-[13px] leading-snug text-[var(--cb-muted)]">{lang === "en" ? (stat.detailEn ?? stat.detail) : stat.detail}</div>
+              </div>
+            ))}
+          </div>
+          <p className="m-0 mt-4 max-w-[60ch] font-sans text-[12px] leading-relaxed text-[var(--cb-muted)]">
+            {lang === "en" ? (presence.noteEn ?? presence.note) : presence.note}
+          </p>
+        </div>
+      ),
+    });
+  }
+  if (challenge) {
+    sections.push({
+      id: "challenge",
+      label: lang === "en" ? "Challenge" : "Desafío",
+      content: <p className={`${bodyText} max-w-[60ch]`}>{challenge}</p>,
+    });
+  }
+  if (approach.length > 0) {
+    sections.push({
+      id: "approach",
+      label: lang === "en" ? "Approach" : "Enfoque",
+      content: (
+        <div className="flex max-w-[60ch] flex-col gap-4">
+          {approach.map((paragraph, i) => (
+            <p key={i} className={bodyText}>
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      ),
+    });
+  }
+  sections.push({
+    id: "outcome",
+    label: lang === "en" ? "Outcome" : "Resultado",
+    content: <p className={`${bodyText} max-w-[60ch]`}>{project.result}</p>,
+  });
+
+  const sectionIds = sections.map((sec) => sec.id).join("|");
+  useEffect(() => {
+    const ids = sectionIds.split("|");
+    let raf = 0;
+    function update() {
+      raf = 0;
+      let current = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 180) current = id;
+      }
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+        current = ids[ids.length - 1];
+      }
+      setActiveSection(current);
+    }
+    function onScroll() {
+      if (!raf) raf = requestAnimationFrame(update);
+    }
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [sectionIds]);
+
+  function goToSection(id: string) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    setActiveSection(id);
+  }
 
   return (
     <div
@@ -253,88 +360,44 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
 
         <IntroGrid gallery={gallery} folder={folder} />
 
-        <section className="mt-16 sm:mt-24">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-[160px_1fr] sm:gap-12">
-            <h2 className="m-0 text-[clamp(18px,2.2vw,22px)]" style={serif}>
-              {lang === "en" ? "Overview" : "Resumen"}
-            </h2>
-            <div className="max-w-[60ch]">
-              <ProjectDecisionBlock decision={project.decision} lang={lang} />
-              <p className="m-0 font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">{project.brief}</p>
-            </div>
-          </div>
-        </section>
-
-        {project.digitalPresence && (
-          <section className="mt-16 sm:mt-24">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-[160px_1fr] sm:gap-12">
-              <h2 className="m-0 text-[clamp(18px,2.2vw,22px)]" style={serif}>
-                {lang === "en" ? "Digital presence" : "Presencia digital"}
-              </h2>
-              <div>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  {project.digitalPresence.stats.map((stat) => (
-                    <div
-                      key={stat.title}
-                      className="rounded-2xl border p-5 font-sans"
-                      style={{ borderColor: "var(--cb-hair)" }}
+        <div className="mt-16 grid grid-cols-1 gap-x-12 sm:mt-24 sm:grid-cols-[200px_1fr]">
+          <nav aria-label={lang === "en" ? "Case study sections" : "Secciones del case study"} className="hidden sm:block">
+            <ul className="sticky top-32 m-0 flex list-none flex-col gap-3 p-0 font-sans">
+              {sections.map((sec) => {
+                const active = activeSection === sec.id;
+                return (
+                  <li key={sec.id}>
+                    <a
+                      href={`#${sec.id}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        goToSection(sec.id);
+                      }}
+                      aria-current={active ? "location" : undefined}
+                      className={`text-left text-xs font-bold tracking-[0.06em] underline-offset-4 transition-opacity ${
+                        active ? "underline opacity-100" : "no-underline opacity-70 hover:opacity-100"
+                      }`}
+                      style={{ color: "var(--cb-text)" }}
                     >
-                      <div className="text-[13px] text-[var(--cb-muted)]">
-                        {lang === "en" ? (stat.titleEn ?? stat.title) : stat.title}
-                      </div>
-                      <div className="mt-2 text-[34px] font-extrabold leading-none tracking-[-0.01em]">{stat.value}</div>
-                      <div className="mt-2 text-[13px] leading-snug text-[var(--cb-muted)]">
-                        {lang === "en" ? (stat.detailEn ?? stat.detail) : stat.detail}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <p className="m-0 mt-4 max-w-[60ch] font-sans text-[12px] leading-relaxed text-[var(--cb-muted)]">
-                  {lang === "en"
-                    ? (project.digitalPresence.noteEn ?? project.digitalPresence.note)
-                    : project.digitalPresence.note}
-                </p>
-              </div>
-            </div>
-          </section>
-        )}
+                      {sec.label}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
 
-        {challenge && (
-          <section className="mt-16 sm:mt-24">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-[160px_1fr] sm:gap-12">
-              <h2 className="m-0 text-[clamp(18px,2.2vw,22px)]" style={serif}>
-                {lang === "en" ? "Challenge" : "Desafío"}
-              </h2>
-              <p className="m-0 max-w-[60ch] font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">{challenge}</p>
-            </div>
-          </section>
-        )}
-
-        {approach.length > 0 && (
-          <section className="mt-16 sm:mt-24">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-[160px_1fr] sm:gap-12">
-              <h2 className="m-0 text-[clamp(18px,2.2vw,22px)]" style={serif}>
-                {lang === "en" ? "Approach" : "Enfoque"}
-              </h2>
-              <div className="flex max-w-[60ch] flex-col gap-4">
-                {approach.map((paragraph, i) => (
-                  <p key={i} className="m-0 font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        <section className="mt-16 sm:mt-24">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-[160px_1fr] sm:gap-12">
-            <h2 className="m-0 text-[clamp(18px,2.2vw,22px)]" style={serif}>
-              {lang === "en" ? "Outcome" : "Resultado"}
-            </h2>
-            <p className="m-0 max-w-[60ch] font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]">{project.result}</p>
+          <div className="flex flex-col gap-16 sm:gap-24">
+            {sections.map((sec) => (
+              <section key={sec.id} id={sec.id} className="scroll-mt-32">
+                <h2 className="m-0 mb-4 text-[clamp(18px,2.2vw,22px)] sm:sr-only" style={serif}>
+                  {sec.label}
+                </h2>
+                {sec.content}
+              </section>
+            ))}
           </div>
-        </section>
+        </div>
 
         {others.length > 0 && (
           <section className="mt-24 border-t pt-16 sm:mt-32 sm:pt-20" style={{ borderColor: "var(--cb-hair)" }}>

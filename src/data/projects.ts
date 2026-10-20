@@ -37,7 +37,7 @@ const baseProjects: Project[] = [
   {
     slug: "quartz",
     title: "el hilo de la novia",
-    category: "Dirección de Arte",
+    category: "Editorial fotográfico conceptual",
     tag: "dirección de arte · fotografía conceptual",
     subtitle: "El hilo de la Novia — interpretación de Bodas de Sangre",
     client: "Editorial",
@@ -66,7 +66,7 @@ const baseProjects: Project[] = [
     headline: "el hilo de la novia",
     gallery: introGallery("quartz", "El hilo de la Novia", 1, 13, "webp", { 8: "png" }),
     en: {
-      category: "Art Direction",
+      category: "Conceptual Photo Editorial",
       tag: "art direction · conceptual photography",
       subtitle: "The Bride's Thread — an interpretation of Blood Wedding",
       result: "A 3-act photo series",
@@ -86,7 +86,7 @@ const baseProjects: Project[] = [
   {
     slug: "bodas-de-sangre",
     title: "violencia normalizada",
-    category: "Dirección Editorial",
+    category: "Publicación editorial",
     tag: "dirección editorial",
     subtitle: "Bitácora basada en Bodas de Sangre, Federico García Lorca",
     client: "Proyecto académico",
@@ -112,7 +112,7 @@ const baseProjects: Project[] = [
     ],
     headline: "reconocerse en dos roles",
     en: {
-      category: "Editorial Direction",
+      category: "Editorial Publication",
       tag: "editorial direction",
       subtitle: "A logbook based on Blood Wedding, Federico García Lorca",
       result: "Printed editorial logbook",
@@ -139,7 +139,7 @@ const baseProjects: Project[] = [
   {
     slug: "bodas-de-sangre-teatral",
     title: "bodas de sangre — escenografía",
-    category: "Escenografía",
+    category: "Escenografía teatral",
     tag: "set & diseño teatral · diseño de iluminación",
     subtitle: "Puesta en escena interdisciplinaria para Federico García Lorca",
     client: "Teatro UC (proyecto académico)",
@@ -166,7 +166,7 @@ const baseProjects: Project[] = [
     ],
     headline: "el espacio como tensión",
     en: {
-      category: "Set Design",
+      category: "Theatre Set Design",
       tag: "set & theatrical design · lighting design",
       subtitle: "An interdisciplinary staging for Federico García Lorca",
       result: "A production integrated from proposals by 4+ teams, selected over biweekly cycles",
@@ -191,7 +191,7 @@ const baseProjects: Project[] = [
   {
     slug: "polucio",
     title: "polucio",
-    category: "Product Design",
+    category: "Producto electrónico de monitoreo ambiental",
     tag: "product design · ux strategy",
     subtitle: "Sistema de información ambiental para aulas",
     client: "Proyecto académico",
@@ -218,6 +218,7 @@ const baseProjects: Project[] = [
     ],
     headline: "hacer visible lo invisible",
     en: {
+      category: "Environmental Monitoring Product",
       tag: "product design · ux strategy",
       subtitle: "An environmental information system for classrooms",
       result: "Working prototype for classroom environmental monitoring",
@@ -244,7 +245,7 @@ const baseProjects: Project[] = [
   {
     slug: "amphora",
     title: "amphora",
-    category: "E-commerce",
+    category: "E-commerce de moda y accesorios",
     tag: "ux/ui · e-commerce · mobile-first",
     subtitle: "Una nueva mirada para su e-commerce",
     client: "Amphora",
@@ -288,6 +289,7 @@ const baseProjects: Project[] = [
       noteEn: "Current data from Amphora's public site. They size up the brand today, not the 2021 catalog nor results attributable to the redesign.",
     },
     en: {
+      category: "Fashion & Accessories E-commerce",
       tag: "ux/ui · e-commerce · mobile-first",
       subtitle: "A fresh look for their e-commerce",
       role: "Senior UX/UI Designer",
@@ -328,7 +330,7 @@ const baseProjects: Project[] = [
   {
     slug: "altafid-risk-assessment",
     title: "Risk Assessment - Altafid Platform",
-    category: "Product Design",
+    category: "Evaluación de riesgo y cumplimiento",
     tag: "product · fintech · compliance",
     subtitle: "Del cálculo manual de riesgo a un sistema automatizado con trazabilidad regulatoria",
     client: "Altafid",
@@ -372,6 +374,7 @@ const baseProjects: Project[] = [
       { label: "Altafid Risk Assessment — imagen 15", media: img("altafid", "feature-risk-assessment-15.webp") },
     ],
     en: {
+      category: "Risk Assessment & Compliance",
       tag: "product · fintech · compliance",
       subtitle: "From manual risk calculation to an automated system with regulatory traceability",
       result:
@@ -398,12 +401,12 @@ const baseProjects: Project[] = [
     slug: "altafid-model-builder",
     hidden: true,
     title: "Model Builder - Altafid Platform",
-    category: "Product Design",
+    category: "Constructor de modelos de inversión",
     tag: "product · fintech · portfolio management",
     subtitle: "De estrategias reconstruidas manualmente a modelos de inversión centralizados y reutilizables",
     client: "Altafid",
     role: "UX/UI Design Lead",
-    year: "—",
+    year: "2022",
     result:
       "Model Builder con construcción guiada por ponderaciones, control de versiones y flujo de aprobación integrado a compliance",
     services: "UX Research · UI · Diseño de flujos complejos",
@@ -431,6 +434,7 @@ const baseProjects: Project[] = [
       { label: "Altafid Model Builder — flujo de aprobación y compliance", media: img("altafid", "feature-model-builder-04.png") },
     ],
     en: {
+      category: "Investment Model Builder",
       tag: "product · fintech · portfolio management",
       subtitle: "From manually rebuilt strategies to centralized, reusable investment models",
       result:
@@ -456,12 +460,12 @@ const baseProjects: Project[] = [
   {
     slug: "altafid-custom-portals",
     title: "Custom Client Portal - Altafid Platform",
-    category: "Product Design",
+    category: "Portales de cliente white-label",
     tag: "product · fintech · client portals",
     subtitle: "De una plantilla genérica compartida a un portal de cliente propio por entidad",
     client: "Altafid",
     role: "UX/UI Design Lead",
-    year: "—",
+    year: "2022",
     result: "Client Portal personalizable por marca y entidad, con desempeño de portafolio, historial y mensajería segura",
     services: "UX Research · UI · Design Systems",
     skills: [
@@ -502,6 +506,7 @@ const baseProjects: Project[] = [
       { label: "Menú de perfil, con información personal, seguridad, documentos y configuración", media: img("altafid", "feature-custom-portals-26.webp") },
     ],
     en: {
+      category: "White-label Client Portals",
       tag: "product · fintech · client portals",
       subtitle: "From a generic shared template to a client portal owned by each entity",
       result: "Client Portal customizable by brand and entity, with portfolio performance, history, and secure messaging",
@@ -529,12 +534,12 @@ const baseProjects: Project[] = [
     slug: "altafid-relationship-management",
     hidden: true,
     title: "Relationship Management - Altafid Platform",
-    category: "Product Design",
+    category: "Gestión de relaciones con clientes (CRM)",
     tag: "product · fintech · crm",
     subtitle: "De herramientas sueltas por rol a una sola fuente de verdad sobre cada cliente",
     client: "Altafid",
     role: "UX/UI Design Lead",
-    year: "—",
+    year: "2022",
     result: "CRM conectado con perfil de cliente, tareas, calendario y evaluación de riesgo en una sola fuente de verdad",
     services: "UX Research · UI · Design Systems",
     skills: [
@@ -566,6 +571,7 @@ const baseProjects: Project[] = [
     headline: "de herramientas sueltas a una sola fuente de verdad",
     gallery: [],
     en: {
+      category: "Client Relationship Management (CRM)",
       tag: "product · fintech · crm",
       subtitle: "From scattered, role-specific tools to a single source of truth on every client",
       result: "A connected CRM with client profile, tasks, calendar, and risk assessment as one source of truth",
@@ -592,12 +598,12 @@ const baseProjects: Project[] = [
     slug: "altafid-onboarding",
     hidden: true,
     title: "Onboarding - Altafid Platform",
-    category: "Product Design",
+    category: "Onboarding digital y KYC",
     tag: "product · fintech · onboarding",
     subtitle: "De formularios en papel a una cuenta operativa en minutos",
     client: "Altafid",
     role: "UX/UI Design Lead",
-    year: "—",
+    year: "2022",
     result: "Onboarding digital con firma electrónica y validación en el momento, conectado al perfil de cliente",
     services: "UX Research · UI · Design Systems",
     skills: [
@@ -618,6 +624,7 @@ const baseProjects: Project[] = [
     headline: "de papel y correo a una cuenta operativa en minutos",
     gallery: [],
     en: {
+      category: "Digital Onboarding & KYC",
       tag: "product · fintech · onboarding",
       subtitle: "From paper forms to an operating account in minutes",
       result: "Digital onboarding with electronic signature and in-the-moment validation, connected to the client profile",
@@ -642,12 +649,12 @@ const baseProjects: Project[] = [
     slug: "altafid-portfolio-design",
     hidden: true,
     title: "Portfolio Design - Altafid Platform",
-    category: "Product Design",
+    category: "Gestión de portafolios",
     tag: "product · fintech · portfolio management",
     subtitle: "De estructuras de inversión dispersas a una vista de 360° con marketplace y aprobación",
     client: "Altafid",
     role: "UX/UI Design Lead",
-    year: "—",
+    year: "2022",
     result: "Vista de 360° de la estructura de inversión con Model Builder, versionado y marketplace de fondos",
     services: "UX Research · UI · Diseño de flujos complejos",
     skills: [
@@ -668,6 +675,7 @@ const baseProjects: Project[] = [
     headline: "de estructuras dispersas a una vista de 360°",
     gallery: [],
     en: {
+      category: "Portfolio Management",
       tag: "product · fintech · portfolio management",
       subtitle: "From scattered investment structures to a 360° view with marketplace and approval",
       result: "A 360° view of the investment structure with Model Builder, versioning, and a fund marketplace",
@@ -692,12 +700,12 @@ const baseProjects: Project[] = [
     slug: "altafid-regulatory-compliance",
     hidden: true,
     title: "Regulatory Compliance - Altafid Platform",
-    category: "Product Design",
+    category: "Cumplimiento regulatorio",
     tag: "product · fintech · compliance",
     subtitle: "De compliance reactivo a monitoreo continuo entre jurisdicciones",
     client: "Altafid",
     role: "UX/UI Design Lead",
-    year: "—",
+    year: "2022",
     result: "Monitoreo continuo de cumplimiento entre Estados Unidos y Chile, con reporting conectado a otros módulos",
     services: "UX Research · UI · Compliance Design",
     skills: [
@@ -718,6 +726,7 @@ const baseProjects: Project[] = [
     headline: "de compliance reactivo a monitoreo continuo",
     gallery: [],
     en: {
+      category: "Regulatory Compliance",
       tag: "product · fintech · compliance",
       subtitle: "From reactive compliance to continuous monitoring across jurisdictions",
       result: "Continuous compliance monitoring across the US and Chile, with reporting connected to other modules",
@@ -742,12 +751,12 @@ const baseProjects: Project[] = [
     slug: "altafid-analytics",
     hidden: true,
     title: "Analytics - Altafid Platform",
-    category: "Product Design",
+    category: "Analítica y dashboards",
     tag: "product · fintech · analytics",
     subtitle: "De exportar datos a mano a dashboards en tiempo real por rol",
     client: "Altafid",
     role: "UX/UI Design Lead",
-    year: "—",
+    year: "2022",
     result: "Dashboards en tiempo real y reportes personalizables por rol, sobre la misma base de datos compartida",
     services: "UX Research · UI · Data Visualization",
     skills: [
@@ -768,6 +777,7 @@ const baseProjects: Project[] = [
     headline: "de exportar datos a mano a dashboards en tiempo real",
     gallery: [],
     en: {
+      category: "Analytics & Dashboards",
       tag: "product · fintech · analytics",
       subtitle: "From manual data exports to real-time dashboards by role",
       result: "Real-time dashboards and customizable reports by role, drawing on the same shared database",
@@ -792,12 +802,12 @@ const baseProjects: Project[] = [
     slug: "altafid-document-management",
     hidden: true,
     title: "Document Management - Altafid Platform",
-    category: "Product Design",
+    category: "Gestión documental",
     tag: "product · fintech · document management",
     subtitle: "De carpetas sueltas por rol a documentos conectados al cliente",
     client: "Altafid",
     role: "UX/UI Design Lead",
-    year: "—",
+    year: "2022",
     result: "Almacenamiento centralizado y control de versiones, conectado al cliente, cuenta u operación correspondiente",
     services: "UX Research · UI · Design Systems",
     skills: [
@@ -818,6 +828,7 @@ const baseProjects: Project[] = [
     headline: "de carpetas sueltas a documentos conectados al cliente",
     gallery: [],
     en: {
+      category: "Document Management",
       tag: "product · fintech · document management",
       subtitle: "From loose, role-specific folders to documents connected to the client",
       result: "Centralized storage and version control, connected to the relevant client, account, or transaction",
@@ -842,12 +853,12 @@ const baseProjects: Project[] = [
     slug: "altafid-business-alerts",
     hidden: true,
     title: "Business Alerts - Altafid Platform",
-    category: "Product Design",
+    category: "Alertas de negocio",
     tag: "product · fintech · alerts",
     subtitle: "De señales dispersas entre módulos a un sistema con niveles de severidad",
     client: "Altafid",
     role: "UX/UI Design Lead",
-    year: "—",
+    year: "2022",
     result: "Sistema de alertas con niveles de severidad, alimentado por eventos de otros módulos",
     services: "UX Research · UI · Design Systems",
     skills: [
@@ -868,6 +879,7 @@ const baseProjects: Project[] = [
     headline: "de señales dispersas a un sistema de severidad",
     gallery: [],
     en: {
+      category: "Business Alerts",
       tag: "product · fintech · alerts",
       subtitle: "From scattered signals across modules to a system with severity levels",
       result: "An alerts system with severity levels, fed by events from other modules",
@@ -892,12 +904,12 @@ const baseProjects: Project[] = [
     slug: "altafid-trading",
     hidden: true,
     title: "Trading - Altafid Platform",
-    category: "Product Design",
+    category: "Trading de inversiones",
     tag: "product · fintech · trading",
     subtitle: "De la propuesta a la operación conciliada, en un mismo flujo",
     client: "Altafid",
     role: "UX/UI Design Lead",
-    year: "—",
+    year: "2022",
     result: "Propuestas de negociación, rebalanceo automatizado y blotter de ejecución, con conciliación en tiempo real",
     services: "UX Research · UI · Diseño de flujos complejos",
     skills: [
@@ -918,6 +930,7 @@ const baseProjects: Project[] = [
     headline: "de la propuesta a la operación conciliada",
     gallery: [],
     en: {
+      category: "Investment Trading",
       tag: "product · fintech · trading",
       subtitle: "From proposal to reconciled trade, in one flow",
       result: "Trade proposals, automated rebalancing, and an execution blotter, with real-time reconciliation",
@@ -942,12 +955,12 @@ const baseProjects: Project[] = [
     slug: "altafid-operations",
     hidden: true,
     title: "Operations - Altafid Platform",
-    category: "Product Design",
+    category: "Operaciones y facturación",
     tag: "product · fintech · billing & operations",
     subtitle: "De conciliación manual a facturación conectada al cliente",
     client: "Altafid",
     role: "UX/UI Design Lead",
-    year: "—",
+    year: "2022",
     result: "Centro de facturación y custodia con tarifas flexibles por entidad y conciliación automática",
     services: "UX Research · UI · Design Systems",
     skills: [
@@ -968,6 +981,7 @@ const baseProjects: Project[] = [
     headline: "de conciliación manual a facturación conectada",
     gallery: [],
     en: {
+      category: "Operations & Billing",
       tag: "product · fintech · billing & operations",
       subtitle: "From manual reconciliation to billing connected to the client",
       result: "A billing and custody center with flexible per-entity fees and automatic reconciliation",
@@ -991,12 +1005,12 @@ const baseProjects: Project[] = [
   {
     slug: "altafid-marketplace",
     title: "Investment Marketplace - Altafid Platform",
-    category: "Product Design",
+    category: "Marketplace de modelos de inversión",
     tag: "product · fintech · marketplace",
     subtitle: "De un catálogo cerrado de modelos propios a un marketplace conectado de modelos, contenido y apps",
     client: "Altafid",
     role: "UX/UI Design Lead",
-    year: "—",
+    year: "2022",
     result: "Marketplace con tres piezas conectadas: modelos de inversión de terceros, contenido curado, y aplicaciones externas",
     services: "UX Research · UI · Design Systems",
     skills: [
@@ -1037,6 +1051,7 @@ const baseProjects: Project[] = [
       { label: "Vista expandida de un modelo: holdings, performance y documentos de contenido asociados", media: img("altafid", "feature-marketplace-14.webp") },
     ],
     en: {
+      category: "Investment Model Marketplace",
       tag: "product · fintech · marketplace",
       subtitle: "From a closed catalogue of in-house models to a connected marketplace of models, content, and apps",
       result: "A marketplace with three connected pieces: third-party investment models, curated content, and external apps",
@@ -1065,12 +1080,12 @@ const baseProjects: Project[] = [
   {
     slug: "altafid-calendar",
     title: "Calendar - Altafid Platform",
-    category: "Product Design",
+    category: "Calendario y agenda",
     tag: "product · fintech · scheduling",
     subtitle: "De agendar por correo a un calendario integrado con disponibilidad en tiempo real",
     client: "Altafid",
     role: "UX/UI Design Lead",
-    year: "—",
+    year: "2022",
     result: "Calendario integrado con disponibilidad configurable, vistas por día, semana, mes y año, recordatorios configurables y sincronización con Google Calendar, Outlook y otros",
     services: "UX Research · UI · Design Systems",
     skills: [
@@ -1093,6 +1108,7 @@ const baseProjects: Project[] = [
     ],
     headline: "de la duda de construirlo a un calendario que conecta toda la plataforma",
     en: {
+      category: "Scheduling & Calendar",
       tag: "product · fintech · scheduling",
       subtitle: "From scheduling over email to an integrated calendar with real-time availability",
       result: "An integrated calendar with configurable availability, day/week/month/year views, configurable reminders, and Google Calendar, Outlook, and other sync",
@@ -1136,7 +1152,7 @@ const baseProjects: Project[] = [
   {
     slug: "altafid-design-system",
     title: "Design System - Altafid Platform",
-    category: "Design System",
+    category: "Design System white-label",
     tag: "design system · white label",
     subtitle: "Un sistema para 23+ features, múltiples roles y cada marca de cliente",
     client: "Altafid",
@@ -1165,6 +1181,7 @@ const baseProjects: Project[] = [
       result: "90% menos incidencias relacionadas con el design system y un solo sistema para 23+ features.",
     },
     en: {
+      category: "White-label Design System",
       tag: "design system · white label",
       subtitle: "One design system for 23+ features, multiple roles, and every client brand",
       result: "90% fewer design-system-related issues · 23+ features on one shared system",
@@ -1201,7 +1218,7 @@ const baseProjects: Project[] = [
   {
     slug: "bululu",
     title: "bululu",
-    category: "Diseño de Servicios",
+    category: "Servicio de educación socioemocional",
     tag: "diseño de servicios · experiencia educativa",
     subtitle: "Teatro itinerante para el desarrollo socioemocional en la primera infancia",
     client: "Proyecto de título (académico)",
@@ -1232,7 +1249,7 @@ const baseProjects: Project[] = [
     ],
     headline: "un teatrino con identidad propia",
     en: {
-      category: "Service Design",
+      category: "Socio-emotional Education Service",
       tag: "service design · educational experience",
       subtitle: "Traveling theater for socioemotional development in early childhood",
       result: "Methodology validated with children at a partner school",
@@ -1259,7 +1276,7 @@ const baseProjects: Project[] = [
   {
     slug: "la-chanchada",
     title: "la chanchada",
-    category: "Identidad",
+    category: "Identidad de marca",
     tag: "identidad · brand design",
     subtitle: "Propuesta de identidad para una marca local",
     client: "La Chanchada",
@@ -1279,7 +1296,7 @@ const baseProjects: Project[] = [
     headline: "una identidad con sabor y presencia",
     gallery: introGallery("la-chanchada", "La Chanchada", 1, 13),
     en: {
-      category: "Identity",
+      category: "Brand Identity",
       tag: "identity · brand design",
       subtitle: "Identity proposal for a local brand",
       result: "A visual identity with its own personality",
@@ -1297,7 +1314,7 @@ const baseProjects: Project[] = [
   {
     slug: "como-y-voto",
     title: "como & voto",
-    category: "Identidad",
+    category: "Packaging de producto",
     tag: "identidad · packaging · diseño contextual",
     subtitle: "Un envase que resuelve una restricción de contexto real",
     client: "Como & Voto",
@@ -1316,7 +1333,7 @@ const baseProjects: Project[] = [
     ],
     headline: "un sello con carácter",
     en: {
-      category: "Identity",
+      category: "Product Packaging",
       tag: "identity · packaging · contextual design",
       subtitle: "A package that solves a real contextual constraint",
       result: "A coherent system across logo, packaging, and extraction mechanism",
@@ -1342,7 +1359,7 @@ const baseProjects: Project[] = [
   {
     slug: "hbt",
     title: "hbt",
-    category: "E-commerce",
+    category: "E-commerce de mejoramiento del hogar y servicios",
     tag: "ux/ui · e-commerce · design system",
     subtitle: "Una plataforma que conecta productos, proyectos y servicios",
     client: "HBT Chile",
@@ -1391,6 +1408,7 @@ const baseProjects: Project[] = [
     metricsNoteEn: "Context figures: the catalog is today's public one, not the 2019 catalog. They are not results attributable to the design.",
     gallery: introGallery("hbt", "HBT", 1, 13, "webp", { 4: "png", 5: "png", 11: "png" }),
     en: {
+      category: "Home Improvement E-commerce & Services",
       tag: "ux/ui · e-commerce · design system",
       subtitle: "A platform that connects products, projects and services",
       result:
@@ -1420,7 +1438,7 @@ const baseProjects: Project[] = [
   {
     slug: "londra",
     title: "londra",
-    category: "Web Design",
+    category: "E-commerce de decoración del hogar",
     tag: "ux/ui · web design",
     subtitle: "Tienda de decoración para el hogar",
     client: "Londra",
@@ -1441,6 +1459,7 @@ const baseProjects: Project[] = [
     ],
     headline: "una grilla que respira",
     en: {
+      category: "Home Decor E-commerce",
       tag: "ux/ui · web design",
       subtitle: "A home-decor store",
       result: "A homepage that's easy to keep updated with new content",
@@ -1459,7 +1478,7 @@ const baseProjects: Project[] = [
   {
     slug: "nicopoly",
     title: "nicopoly",
-    category: "E-commerce",
+    category: "E-commerce de moda femenina",
     tag: "ux/ui · e-commerce · fashion",
     subtitle: "Marca, tendencias de moda y experiencia de compra en una sola plataforma",
     client: "Nicopoly Chile",
@@ -1501,6 +1520,7 @@ const baseProjects: Project[] = [
       noteEn: "Source: SE Ranking, October 2026. These are SEO visibility estimates from an external tool, from today and not from launch; they are context, not results attributable to the UX/UI design.",
     },
     en: {
+      category: "Women's Fashion E-commerce",
       tag: "ux/ui · e-commerce · fashion",
       subtitle: "Brand, fashion trends and shopping experience on one platform",
       role: "UX/UI Designer",
@@ -1537,7 +1557,7 @@ const baseProjects: Project[] = [
   {
     slug: "rocket-mkt",
     title: "rocket mkt",
-    category: "Brand + Web",
+    category: "Marca y sitio de agencia de marketing digital",
     tag: "brand identity · ux/ui · marketing website",
     subtitle: "De una nueva unidad de negocio a una marca con identidad propia y un sitio que genera oportunidades comerciales",
     client: "Tekpro / Rocket MKT",
@@ -1576,6 +1596,7 @@ const baseProjects: Project[] = [
       result: "Una identidad completa y un sitio corporativo que comunica servicios y experiencia y facilita el contacto, con un lenguaje visual compartido.",
     },
     en: {
+      category: "Digital Marketing Agency Brand & Website",
       tag: "brand identity · ux/ui · marketing website",
       subtitle: "From a new business unit to a brand with its own identity and a site that generates business opportunities",
       role: "Lead Brand & Product Designer",
@@ -1613,7 +1634,7 @@ const baseProjects: Project[] = [
   {
     slug: "soya-adicto",
     title: "soyadicto",
-    category: "Identidad",
+    category: "Identidad de marca de alimentos",
     tag: "identidad · food brand",
     subtitle: "Hamburguesas a base de soya",
     client: "SoyAdicto",
@@ -1632,7 +1653,7 @@ const baseProjects: Project[] = [
     ],
     headline: "identidad con carácter",
     en: {
-      category: "Identity",
+      category: "Food Brand Identity",
       tag: "identity · food brand",
       subtitle: "Soy-based burgers",
       result: "An identity with character of its own",
@@ -1656,7 +1677,7 @@ const baseProjects: Project[] = [
   {
     slug: "cnc",
     title: "cnc — bicicleta de equilibrio",
-    category: "Product Design",
+    category: "Bicicleta infantil de equilibrio (prototipo CNC)",
     tag: "diseño industrial · fabricación digital · cad",
     subtitle: "De modelo 3D a prototipo CNC: bicicleta infantil de equilibrio",
     client: "Proyecto académico — curso de Modelo y Prototipado",
@@ -1685,6 +1706,7 @@ const baseProjects: Project[] = [
     headline: "del cad al objeto",
     gallery: introGallery("cnc", "CNC", 1, 13),
     en: {
+      category: "Kids' Balance Bike (CNC Prototype)",
       tag: "industrial design · digital fabrication · cad",
       subtitle: "From 3D model to CNC prototype: a kids' balance bike",
       result: "An assembled prototype built from CNC-machined parts",
@@ -1702,7 +1724,7 @@ const baseProjects: Project[] = [
   {
     slug: "llay-llay",
     title: "peque olimpiadas llay-llay",
-    category: "Diseño de Servicios",
+    category: "Experiencia educativa lúdica comunitaria",
     tag: "experience design · service design · identidad",
     subtitle: "Una experiencia lúdica para conectar a cinco comunidades educativas",
     client: "Puentes UC + Municipalidad de Llay-Llay",
@@ -1731,7 +1753,7 @@ const baseProjects: Project[] = [
     headline: "una identidad que se puede jugar",
     gallery: introGallery("llay-llay", "Llay Llay", 1, 13),
     en: {
-      category: "Service Design",
+      category: "Community Educational Play Experience",
       tag: "experience design · service design · identity",
       subtitle: "A playful experience connecting five school communities",
       result: "An event that brought 5 preschools together under one shared identity and narrative",
@@ -1750,7 +1772,7 @@ const baseProjects: Project[] = [
   {
     slug: "longboard",
     title: "longboard pintail",
-    category: "Product Design",
+    category: "Longboard: diseño y fabricación",
     tag: "diseño industrial · fabricación digital · manufactura",
     subtitle: "Diseño, modelado digital y fabricación mediante CNC y prensado al vacío",
     client: "Proyecto universitario — curso de Prototipado y Modelado",
@@ -1778,6 +1800,7 @@ const baseProjects: Project[] = [
     headline: "una idea que se puede tocar",
     gallery: introGallery("longboard", "Longboard", 1, 13, "webp", { 4: "png" }),
     en: {
+      category: "Longboard Design & Fabrication",
       tag: "industrial design · digital fabrication · manufacturing",
       subtitle: "Design, digital modeling, and fabrication via CNC and vacuum pressing",
       result: "A functional longboard, built and documented with product photography",
@@ -1795,7 +1818,7 @@ const baseProjects: Project[] = [
   {
     slug: "marley-coffee",
     title: "marley coffee",
-    category: "E-commerce",
+    category: "E-commerce de café premium",
     tag: "ux/ui · web design · consumo masivo",
     subtitle: "Ecommerce de café premium",
     client: "Marley Coffee",
@@ -1817,6 +1840,7 @@ const baseProjects: Project[] = [
     headline: "café, sin fricción",
     gallery: introGallery("marley-coffee", "Marley Coffee", 1, 13),
     en: {
+      category: "Premium Coffee E-commerce",
       tag: "ux/ui · web design · mass consumer",
       subtitle: "Premium coffee e-commerce",
       result: "E-commerce aligned with brand identity, organized catalog",
@@ -1834,7 +1858,7 @@ const baseProjects: Project[] = [
   {
     slug: "tekpro-checkout",
     title: "checkout y carrito",
-    category: "E-commerce",
+    category: "Checkout y carrito para e-commerce",
     tag: "ux/ui · e-commerce · cro",
     subtitle: "Checkout y carrito en todas las marcas Magento de Tekpro",
     client: "Tekpro",
@@ -1857,6 +1881,7 @@ const baseProjects: Project[] = [
     headline: "una compra sin tropiezos",
     gallery: [],
     en: {
+      category: "E-commerce Checkout & Cart",
       tag: "ux/ui · e-commerce · cro",
       subtitle: "Checkout and cart across Tekpro's Magento brands",
       result: "Checkout and cart solutions applied across every Magento brand I designed",

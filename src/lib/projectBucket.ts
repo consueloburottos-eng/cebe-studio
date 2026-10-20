@@ -10,6 +10,18 @@ import type { Project } from "@/data/projects";
 export const FILTER_BUCKETS = ["SaaS", "Ecommerce", "Service", "Branding"] as const;
 export type FilterBucket = (typeof FILTER_BUCKETS)[number];
 
+const ECOMMERCE_SLUGS = new Set([
+  "amphora",
+  "hbt",
+  "nicopoly",
+  "londra",
+  "marley-coffee",
+  "tekpro-checkout",
+  "rocket-mkt",
+  "dior",
+]);
+const SERVICE_SLUGS = new Set(["bululu", "llay-llay"]);
+
 export function categoryBucket(project: Pick<Project, "slug" | "category">): FilterBucket {
   // SaaS is the three real software families, by slug — not by category —
   // since "Product Design" alone would also catch physical/industrial
@@ -18,11 +30,12 @@ export function categoryBucket(project: Pick<Project, "slug" | "category">): Fil
   if (slug === "talent-capital" || slug.startsWith("altafid") || slug.startsWith("buildwithin")) {
     return "SaaS";
   }
-  // Pending Tekpro e-commerce work that has no written category yet, so it
-  // shows under Ecommerce instead of falling into the Branding catch-all.
-  if (slug === "dior") {
-    return "Ecommerce";
-  }
+  // Ecommerce and Service are decided per project, not from the category
+  // text: categories describe the product (e.g. "Women's Fashion
+  // E-commerce"), so wording changes must never move a project between
+  // filters. "dior" is pending Tekpro e-commerce work with no category yet.
+  if (ECOMMERCE_SLUGS.has(slug)) return "Ecommerce";
+  if (SERVICE_SLUGS.has(slug)) return "Service";
   const c = category.toLowerCase();
   if (c.includes("e-commerce") || c.includes("ecommerce") || c.includes("web design") || c.includes("brand + web")) {
     return "Ecommerce";

@@ -3,7 +3,7 @@ import { Project, img, introGallery } from "./helpers";
 export const brava: Project = {
   slug: "brava",
   title: "brava",
-  category: "Product Design",
+  category: "Mochila convertible",
   tag: "product design · industrial design · brand design · e-commerce",
   subtitle: "Mochila convertible para la vida urbana moderna",
   client: "Proyecto personal",
@@ -33,6 +33,7 @@ export const brava: Project = {
   headline: "una mochila, muchas formas de llevar tu día",
   gallery: introGallery("brava", "Brava", 1, 13),
   en: {
+    category: "Convertible Backpack",
     tag: "product design · industrial design · brand design · e-commerce",
     subtitle: "A convertible backpack for modern urban life",
     result: "Complete product concept: convertible backpack + brand identity + e-commerce experience",

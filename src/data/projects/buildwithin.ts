@@ -3,7 +3,7 @@ import { Project, img, introGallery } from "./helpers";
 export const buildwithinCandidatePortal: Project = {
   slug: "buildwithin",
   title: "buildwithin — candidate portal",
-  category: "Product Design",
+  category: "Portal de candidatos Workforce con IA",
   tag: "product design · candidate experience (individual end-user) · enterprise saas · ia",
   subtitle: "Portal de candidatos de una plataforma Workforce impulsada por IA",
   client: "BuildWithin",
@@ -58,6 +58,7 @@ export const buildwithinCandidatePortal: Project = {
     },
   ],
   en: {
+    category: "AI-powered Workforce Candidate Portal",
     tag: "product design · enterprise saas · candidate experience · ai",
     subtitle: "Candidate portal for an AI-powered Workforce platform",
     result:

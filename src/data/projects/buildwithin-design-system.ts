@@ -3,7 +3,7 @@ import { Project, img, introGallery } from "./helpers";
 export const buildwithinSuperAdmin: Project = {
   slug: "buildwithin-design-system",
   title: "buildwithin — superadmin",
-  category: "Product Design",
+  category: "Plataforma enterprise para programas Workforce",
   tag: "product design · enterprise saas · ai-powered ops",
   subtitle: "Plataforma Enterprise para gestionar programas Workforce con IA",
   client: "BuildWithin",
@@ -155,6 +155,7 @@ export const buildwithinSuperAdmin: Project = {
     },
   ],
   en: {
+    category: "Enterprise Workforce Program Platform",
     tag: "product design · enterprise saas · ai-powered ops",
     subtitle: "Enterprise platform for running Workforce programs with AI",
     result:

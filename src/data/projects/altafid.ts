@@ -3,12 +3,12 @@ import { Project, img, introGallery } from "./helpers";
 export const altafidPlatform: Project = {
   slug: "altafid",
   title: "Altafid Platform",
-  category: "Product Design",
+  category: "Plataforma white-label de gestión patrimonial (TAMP)",
   tag: "product · fintech · b2b saas",
   subtitle: "De una plataforma de asesoramiento financiero a un ecosistema B2B para entidades financieras",
   client: "Altafid",
   role: "UX/UI Design Lead",
-  year: "—",
+  year: "2022",
   result: "Plataforma modular conectando Relationship Management, Portfolio Management, Operations y Trading",
   services: "Design system · UX research · UI · Liderazgo de equipo de diseño",
   skills: [
@@ -51,6 +51,7 @@ export const altafidPlatform: Project = {
     ...introGallery("altafid", "Altafid", 7, 13),
   ],
   en: {
+    category: "White-label Wealth Management Platform (TAMP)",
     tag: "product · fintech · b2b saas",
     subtitle: "From a financial advisory platform to a B2B ecosystem for financial institutions",
     result: "A modular platform connecting Relationship Management, Portfolio Management, Operations, and Trading",

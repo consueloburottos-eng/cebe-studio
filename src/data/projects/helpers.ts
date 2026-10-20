@@ -93,10 +93,14 @@ export type PresenceStat = {
   value: string;
   detail: string;
   titleEn?: string;
+  valueEn?: string;
   detailEn?: string;
 };
 
 export type DigitalPresence = {
+  // section heading; defaults to "Digital presence" when omitted
+  heading?: string;
+  headingEn?: string;
   stats: PresenceStat[];
   note: string;
   noteEn?: string;
