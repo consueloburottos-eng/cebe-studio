@@ -1,7 +1,8 @@
 import type { ProjectDecision } from "@/data/projects/helpers";
 import type { Lang } from "@/hooks/useSiteLanguage";
 
-// Compact "decision → why → result" summary shown above a case study's
+// Compact "decision → why → result" (or "problem → solution → what I did →
+// result") summary shown above a case study's
 // brief. Uses currentColor + opacity (no mode-specific CSS variables) so it
 // renders correctly in every site mode (portfolio, corporate, SaaS, store).
 export default function ProjectDecisionBlock({
@@ -13,11 +14,20 @@ export default function ProjectDecisionBlock({
 }) {
   if (!decision) return null;
 
-  const rows = [
-    { label: lang === "en" ? "Decision" : "Decisión", text: decision.decision },
-    { label: lang === "en" ? "Why" : "Porque", text: decision.why },
-    { label: lang === "en" ? "Result" : "Resultado", text: decision.result },
-  ];
+  const en = lang === "en";
+  const rows =
+    "problem" in decision
+      ? [
+          { label: en ? "Problem" : "Problema", text: decision.problem },
+          { label: en ? "Solution" : "Solución", text: decision.solution },
+          { label: en ? "What I did" : "Qué hice", text: decision.did },
+          { label: en ? "Result" : "Resultado", text: decision.result },
+        ]
+      : [
+          { label: en ? "Decision" : "Decisión", text: decision.decision },
+          { label: en ? "Why" : "Porque", text: decision.why },
+          { label: en ? "Result" : "Resultado", text: decision.result },
+        ];
 
   return (
     <dl

@@ -11,11 +11,23 @@ export type GalleryItem = {
 // Short "decision → why → result" summary shown above a case study's
 // brief, so a reader gets the one choice that mattered and its outcome
 // before the long-form text. Only use facts already stated in the case.
-export type ProjectDecision = {
+export type ProjectDecisionSummary = {
   decision: string;
   why: string;
   result: string;
 };
+
+// Alternative summary for projects better told as problem → solution →
+// what the designer did → result. Same slot as the decision block; the
+// renderer picks the layout by checking for `problem`.
+export type ProjectOverviewSummary = {
+  problem: string;
+  solution: string;
+  did: string;
+  result: string;
+};
+
+export type ProjectDecision = ProjectDecisionSummary | ProjectOverviewSummary;
 
 export type ProjectTranslation = {
   category?: string;

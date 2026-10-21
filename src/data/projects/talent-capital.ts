@@ -45,9 +45,10 @@ export const talentCapital: Project = {
   headline: "un consejero, no un buscador",
   outcomeTitle: "Diseñé Celeste, el agente conversacional que ayuda a encontrar trabajo en TalentCapital.AI: MVP en tres semanas y lanzamiento público el 22 de abril de 2026",
   decision: {
-    decision: "Diseñar la conversación con Celeste como primera interacción, en vez de un buscador con categoría y ubicación.",
-    why: "El punto de partida es la persona que busca trabajo, no la oferta.",
-    result: "Lanzado como TalentCapital.AI (abril de 2026): la plataforma tiene 83.000+ usuarios activos y fue Product of the Year (Technical.ly).",
+    problem: "Los despidos masivos de empleados federales en Washington DC, Virginia y Maryland dejaron a muchas personas sin trabajo, con el riesgo de que se fueran a otros estados.",
+    solution: "Una plataforma para personas que buscan empleo, con una experiencia agéntica, impulsada por la tecnología agéntica de BuildWithin.",
+    did: "Diseñé el proyecto de punta a punta y definí los componentes de UI.",
+    result: "Una plataforma con 83.000+ usuarios activos, reconocida como Product of the Year por Technical.ly.",
   },
   digitalPresence: {
     heading: "Impacto",
@@ -99,9 +100,10 @@ export const talentCapital: Project = {
     headline: "an advisor, not a search bar",
     outcomeTitle: "Designed Celeste, the conversational agent that helps people find jobs on TalentCapital.AI: MVP in three weeks, public launch on 22 April 2026",
     decision: {
-      decision: "Design the conversation with Celeste as the first interaction, instead of a search bar with category and location.",
-      why: "The starting point is the person looking for work, not the listing.",
-      result: "Launched as TalentCapital.AI (April 2026): the platform has 83,000+ active users and was named Product of the Year (Technical.ly).",
+      problem: "Mass layoffs of federal employees in Washington DC, Virginia and Maryland left many people without work, at risk of moving to other states.",
+      solution: "A platform for job seekers with an agentic experience, powered by BuildWithin's agentic technology.",
+      did: "I designed the project end to end and defined the UI components.",
+      result: "A platform with 83,000+ active users, named Product of the Year by Technical.ly.",
     },
   },
 };
