@@ -20,31 +20,31 @@ export default function WorkProjectRow({ project, lang }: { project: Project; la
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
-        <div className="min-w-0 flex-1 basis-[260px]">
-          <h3 className="m-0 flex items-baseline gap-2 font-sans text-xl font-bold sm:text-2xl">
-            {displayTitle(project)}
-            {project.pending && (
-              <span className="font-sans text-[11px] font-bold uppercase tracking-[0.05em]" style={{ color: "#015fca" }}>
-                {lang === "en" ? "Soon" : "Pronto"}
-              </span>
-            )}
-          </h3>
-          <span className="mt-1.5 block font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--cb-muted)]">
-            {project.outcomeTitle ? `${titleCase(project.title)} · ` : ""}
-            {project.category}{project.year && project.year !== "—" ? ` · ${project.year}` : ""}
-          </span>
-          <p className="m-0 mt-2 font-sans text-[14px] leading-relaxed text-[var(--cb-muted)]">
-            {project.subtitle}
-          </p>
+      <div>
+        <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
+          <div className="min-w-0 flex-1 basis-[260px]">
+            <h3 className="m-0 flex items-baseline gap-2 font-sans text-xl font-bold sm:text-2xl">
+              {displayTitle(project)}
+              {project.pending && (
+                <span className="font-sans text-[11px] font-bold uppercase tracking-[0.05em]" style={{ color: "#015fca" }}>
+                  {lang === "en" ? "Soon" : "Pronto"}
+                </span>
+              )}
+            </h3>
+            <span className="mt-1.5 block font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--cb-muted)]">
+              {project.outcomeTitle ? `${titleCase(project.title)} · ` : ""}
+              {project.category}{project.year && project.year !== "—" ? ` · ${project.year}` : ""}
+            </span>
+          </div>
+          <Link
+            href={`/portfolio/projects/${project.slug}`}
+            className="inline-flex flex-none items-center gap-1.5 whitespace-nowrap rounded-full border-none px-4 py-2 font-sans text-[11px] font-extrabold uppercase tracking-[0.05em] no-underline"
+            style={{ background: "var(--cb-text)", color: "var(--cb-bg)" }}
+          >
+            {lang === "en" ? "View case study" : "Ver caso"} <span aria-hidden="true">→</span>
+          </Link>
         </div>
-        <Link
-          href={`/portfolio/projects/${project.slug}`}
-          className="inline-flex flex-none items-center gap-1.5 whitespace-nowrap rounded-full border-none px-4 py-2 font-sans text-[11px] font-extrabold uppercase tracking-[0.05em] no-underline"
-          style={{ background: "var(--cb-text)", color: "var(--cb-bg)" }}
-        >
-          {lang === "en" ? "View case study" : "Ver caso"} <span aria-hidden="true">→</span>
-        </Link>
+        <p className="m-0 mt-3 font-sans text-[14px] leading-relaxed text-[var(--cb-muted)]">{project.subtitle}</p>
       </div>
 
       {items.length > 0 && (
