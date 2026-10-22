@@ -42,6 +42,7 @@ export function localizeProject(project: Project, lang: Lang): Project {
     strategy: en.strategy ?? project.strategy,
     headline: en.headline ?? project.headline,
     decision: en.decision ?? project.decision,
+    sections: en.sections ?? project.sections,
     outcomeTitle: en.outcomeTitle ?? project.outcomeTitle,
     features,
   };

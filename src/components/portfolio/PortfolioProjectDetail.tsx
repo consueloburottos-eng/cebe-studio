@@ -2,8 +2,9 @@
 
 import ProjectDecisionBlock from "@/components/ProjectDecisionBlock";
 import Link from "next/link";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { assetFolder, type Project, type GalleryItem } from "@/data/projects";
+import type { CaseSection, SectionBlock } from "@/data/projects/helpers";
 import { useSiteTheme } from "@/hooks/useSiteTheme";
 import ModeSwitcher from "@/components/ModeSwitcher";
 import { useSiteLanguage, type Lang } from "@/hooks/useSiteLanguage";
@@ -142,6 +143,77 @@ function MoreProjectsRow({ others, lang }: { others: Project[]; lang: Lang }) {
   );
 }
 
+// Renders one structured case-study section (see CaseSection in
+// data/projects/helpers.ts): paragraphs, small labels, subtitles, pull-quotes,
+// the project result, and optional sub-sections (one per design decision).
+function CaseBlocks({
+  blocks,
+  result,
+  bodyText,
+  serif,
+}: {
+  blocks: SectionBlock[];
+  result: string;
+  bodyText: string;
+  serif: CSSProperties;
+}) {
+  return (
+    <div className="flex max-w-[60ch] flex-col gap-4">
+      {blocks.map((b, i) => {
+        if (b.type === "p") return <p key={i} className={bodyText}>{b.text}</p>;
+        if (b.type === "result") return <p key={i} className={bodyText}>{result}</p>;
+        if (b.type === "subtitle")
+          return (
+            <h3 key={i} className="m-0 mt-2 text-[clamp(20px,2.4vw,28px)] leading-[1.2]" style={serif}>
+              {b.text}
+            </h3>
+          );
+        if (b.type === "label")
+          return (
+            <h4 key={i} className="m-0 mt-4 font-sans text-[11px] font-bold uppercase tracking-[0.1em] text-[var(--cb-muted)]">
+              {b.text}
+            </h4>
+          );
+        return (
+          <blockquote
+            key={i}
+            className="m-0 my-2 border-l-[3px] pl-6 text-[clamp(20px,2.3vw,26px)] leading-snug"
+            style={{ ...serif, borderColor: "var(--cb-text)" }}
+          >
+            {b.text}
+          </blockquote>
+        );
+      })}
+    </div>
+  );
+}
+
+function CaseSectionBody({
+  section,
+  result,
+  bodyText,
+  serif,
+}: {
+  section: CaseSection;
+  result: string;
+  bodyText: string;
+  serif: CSSProperties;
+}) {
+  return (
+    <div className="flex flex-col gap-14">
+      {section.blocks.length > 0 && <CaseBlocks blocks={section.blocks} result={result} bodyText={bodyText} serif={serif} />}
+      {section.children?.map((child) => (
+        <div key={child.id} id={child.id} className="scroll-mt-32">
+          <h3 className="m-0 mb-5 max-w-[26ch] text-[clamp(22px,2.8vw,32px)] leading-[1.15]" style={serif}>
+            {child.title}
+          </h3>
+          <CaseBlocks blocks={child.blocks} result={result} bodyText={bodyText} serif={serif} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // Case-study project template for the portfolio flow — matches
 // ulrychkristian.cz's project pages: big headline, a meta row, then
 // Overview/Challenge/Approach/Outcome sections interleaved with gallery
@@ -173,7 +245,7 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
   // Case-study copy as a list of titled sections: the titles drive the sticky
   // sidebar (scrollspy), the bodies stack in the right column.
   const bodyText = "m-0 font-sans text-[15px] leading-relaxed text-[var(--cb-muted)]";
-  const sections: { id: string; label: string; content: ReactNode }[] = [
+  const sections: { id: string; label: string; content: ReactNode; children?: { id: string; label: string }[] }[] = [
     {
       id: "overview",
       label: lang === "en" ? "Overview" : "Resumen",
@@ -211,14 +283,24 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
       ),
     });
   }
-  if (challenge) {
+  if (project.sections) {
+    for (const cs of project.sections) {
+      sections.push({
+        id: cs.id,
+        label: cs.label,
+        children: cs.children?.map((c) => ({ id: c.id, label: c.label })),
+        content: <CaseSectionBody section={cs} result={project.result} bodyText={bodyText} serif={serif} />,
+      });
+    }
+  }
+  if (!project.sections && challenge) {
     sections.push({
       id: "challenge",
       label: lang === "en" ? "Challenge" : "Desafío",
       content: <p className={`${bodyText} max-w-[60ch]`}>{challenge}</p>,
     });
   }
-  if (approach.length > 0) {
+  if (!project.sections && approach.length > 0) {
     sections.push({
       id: "approach",
       label: lang === "en" ? "Approach" : "Enfoque",
@@ -233,13 +315,13 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
       ),
     });
   }
-  sections.push({
+  if (!project.sections) sections.push({
     id: "outcome",
     label: lang === "en" ? "Outcome" : "Resultado",
     content: <p className={`${bodyText} max-w-[60ch]`}>{project.result}</p>,
   });
 
-  const sectionIds = sections.map((sec) => sec.id).join("|");
+  const sectionIds = sections.flatMap((sec) => [sec.id, ...(sec.children?.map((c) => c.id) ?? [])]).join("|");
   useEffect(() => {
     const ids = sectionIds.split("|");
     let raf = 0;
@@ -364,23 +446,34 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
           <nav aria-label={lang === "en" ? "Case study sections" : "Secciones del case study"} className="hidden sm:block">
             <ul className="sticky top-32 m-0 flex list-none flex-col gap-3 p-0 font-sans">
               {sections.map((sec) => {
+                const childActive = sec.children?.some((c) => c.id === activeSection) ?? false;
                 const active = activeSection === sec.id;
+                const link = (id: string, label: string, isActive: boolean, dim: boolean, small: boolean) => (
+                  <a
+                    href={`#${id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goToSection(id);
+                    }}
+                    aria-current={isActive ? "location" : undefined}
+                    className={`text-left ${small ? "text-[11px] font-semibold" : "text-xs font-bold"} tracking-[0.06em] underline-offset-4 transition-opacity ${
+                      isActive ? "underline opacity-100" : dim ? "no-underline opacity-100" : "no-underline opacity-70 hover:opacity-100"
+                    }`}
+                    style={{ color: "var(--cb-text)" }}
+                  >
+                    {label}
+                  </a>
+                );
                 return (
                   <li key={sec.id}>
-                    <a
-                      href={`#${sec.id}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        goToSection(sec.id);
-                      }}
-                      aria-current={active ? "location" : undefined}
-                      className={`text-left text-xs font-bold tracking-[0.06em] underline-offset-4 transition-opacity ${
-                        active ? "underline opacity-100" : "no-underline opacity-70 hover:opacity-100"
-                      }`}
-                      style={{ color: "var(--cb-text)" }}
-                    >
-                      {sec.label}
-                    </a>
+                    {link(sec.id, sec.label, active, childActive, false)}
+                    {sec.children && (
+                      <ul className="m-0 mt-2 flex list-none flex-col gap-2 border-l p-0 pl-3" style={{ borderColor: "var(--cb-hair)" }}>
+                        {sec.children.map((c) => (
+                          <li key={c.id}>{link(c.id, c.label, activeSection === c.id, false, true)}</li>
+                        ))}
+                      </ul>
+                    )}
                   </li>
                 );
               })}
@@ -390,8 +483,15 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
           <div className="flex flex-col gap-16 sm:gap-24">
             {sections.map((sec) => (
               <section key={sec.id} id={sec.id} className="scroll-mt-32">
-                <h2 className="m-0 mb-4 text-[clamp(18px,2.2vw,22px)] sm:sr-only" style={serif}>
-                  {sec.label}
+                <h2
+                  className={
+                    project.sections
+                      ? "m-0 mb-8 text-[clamp(30px,3.8vw,48px)] leading-[1.08]"
+                      : "m-0 mb-4 text-[clamp(18px,2.2vw,22px)] sm:sr-only"
+                  }
+                  style={serif}
+                >
+                  {project.sections ? (project.sections.find((x) => x.id === sec.id)?.title ?? sec.label) : sec.label}
                 </h2>
                 {sec.content}
               </section>
