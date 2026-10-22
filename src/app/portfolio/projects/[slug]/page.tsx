@@ -38,5 +38,10 @@ export default async function PortfolioProjectPage({
   const bucket = categoryBucket(project);
   const others = projects.filter((p) => p.slug !== slug && categoryBucket(p) === bucket);
 
-  return <PortfolioProjectDetail project={project} others={others} />;
+  // Previous / next across the whole catalogue in its own order, wrapping.
+  const index = projects.findIndex((p) => p.slug === slug);
+  const prev = projects[(index - 1 + projects.length) % projects.length];
+  const next = projects[(index + 1) % projects.length];
+
+  return <PortfolioProjectDetail project={project} others={others} prev={prev} next={next} />;
 }

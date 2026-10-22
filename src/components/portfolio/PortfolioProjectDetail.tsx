@@ -12,6 +12,7 @@ import { localizeProject, localizeProjects, titleCase } from "@/lib/i18n";
 import ProjectMedia from "@/components/ProjectMedia";
 import AboutModal from "@/components/branding/AboutModal";
 import { INTRO_SPAN_PATTERN, mobileTileSize } from "@/lib/introGrid";
+import { toolIconSrc } from "@/lib/tools";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/cburotto/";
@@ -77,6 +78,39 @@ function IntroGrid({ gallery, folder }: { gallery: GalleryItem[]; folder: string
         </div>
       </div>
     </>
+  );
+}
+
+// App-icon tile for a tool: its logo on a rounded square, or a neutral tile
+// with initials when the tool has no logo.
+function ToolIcon({ name }: { name: string }) {
+  const src = toolIconSrc(name);
+  if (src) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={src}
+        alt=""
+        width={48}
+        height={48}
+        className="block h-12 w-12 flex-none rounded-[11px] shadow-sm ring-1 ring-[var(--cb-hair)]"
+      />
+    );
+  }
+  const initials = name
+    .split(/\s+/)
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+  return (
+    <span
+      aria-hidden="true"
+      className="flex h-12 w-12 flex-none items-center justify-center rounded-[11px] font-sans text-[15px] font-bold ring-1 ring-[var(--cb-hair)]"
+      style={{ background: "var(--cb-pill)", color: "var(--cb-text)" }}
+    >
+      {initials}
+    </span>
   );
 }
 
@@ -221,7 +255,17 @@ function CaseSectionBody({
 // the same Project data every other mode's project page already uses —
 // brief → Overview, strategy → Challenge/Approach, result → Outcome —
 // nothing new to write, just a different arrangement of what's there.
-export default function PortfolioProjectDetail({ project: rawProject, others: rawOthers }: { project: Project; others: Project[] }) {
+export default function PortfolioProjectDetail({
+  project: rawProject,
+  others: rawOthers,
+  prev,
+  next,
+}: {
+  project: Project;
+  others: Project[];
+  prev: Project;
+  next: Project;
+}) {
   const [dark, setDark] = useSiteTheme();
   const [lang, setLang] = useSiteLanguage();
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -252,7 +296,7 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
       content: (
         <div className="max-w-[60ch]">
           <ProjectDecisionBlock decision={project.decision} lang={lang} />
-          <p className={bodyText}>{project.brief}</p>
+          {!project.sections && <p className={bodyText}>{project.brief}</p>}
           {project.badges && project.badges.length > 0 && (
             <div className="mt-8">
               <div className="mb-3 font-sans text-[11px] font-bold uppercase tracking-[0.1em] text-[var(--cb-muted)]">
@@ -303,22 +347,6 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
   }
   if (project.sections) {
     for (const cs of project.sections) {
-      if (cs.id === "outcome" && project.tools && project.tools.length > 0) {
-        sections.push({
-          id: "tools",
-          label: lang === "en" ? "Tools" : "Herramientas",
-          content: (
-            <ul className="m-0 grid max-w-[60ch] list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2">
-              {project.tools.map((tool) => (
-                <li key={tool.name} className="rounded-2xl border p-5 font-sans" style={{ borderColor: "var(--cb-hair)" }}>
-                  <div className="text-[15px] font-bold">{tool.name}</div>
-                  {tool.use && <div className="mt-1.5 text-[13px] leading-snug text-[var(--cb-muted)]">{tool.use}</div>}
-                </li>
-              ))}
-            </ul>
-          ),
-        });
-      }
       sections.push({
         id: cs.id,
         label: cs.label,
@@ -354,6 +382,30 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
     label: lang === "en" ? "Outcome" : "Resultado",
     content: <p className={`${bodyText} max-w-[60ch]`}>{project.result}</p>,
   });
+
+  if (project.tools && project.tools.length > 0) {
+    sections.push({
+      id: "tools",
+      label: lang === "en" ? "Tools" : "Herramientas",
+      content: (
+        <ul className="m-0 grid max-w-[60ch] list-none grid-cols-1 gap-3 p-0 lg:grid-cols-2">
+          {project.tools.map((tool) => (
+            <li
+              key={tool.name}
+              className="flex items-start gap-4 rounded-2xl border p-4 font-sans"
+              style={{ borderColor: "var(--cb-hair)" }}
+            >
+              <ToolIcon name={tool.name} />
+              <div className="min-w-0">
+                <div className="text-[15px] font-bold">{tool.name}</div>
+                {tool.use && <div className="mt-1 text-[13px] leading-snug text-[var(--cb-muted)]">{tool.use}</div>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      ),
+    });
+  }
 
   const sectionIds = sections.flatMap((sec) => [sec.id, ...(sec.children?.map((c) => c.id) ?? [])]).join("|");
   useEffect(() => {
@@ -444,12 +496,30 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
       </div>
 
       <div className="w-full flex-1 px-8 py-14 sm:px-20 sm:py-20">
-        <Link
-          href="/portfolio/work"
-          className="mb-6 inline-flex items-center gap-1.5 font-sans text-[13px] font-semibold text-[var(--cb-muted)] no-underline transition-opacity hover:opacity-70"
-        >
-          <span aria-hidden="true">←</span> {lang === "en" ? "See more work" : "Ver más trabajo"}
-        </Link>
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+          <Link
+            href="/portfolio/work"
+            className="inline-flex items-center gap-1.5 font-sans text-[13px] font-semibold text-[var(--cb-muted)] no-underline transition-opacity hover:opacity-70"
+          >
+            <span aria-hidden="true">←</span> {lang === "en" ? "See more work" : "Ver más trabajo"}
+          </Link>
+          <div className="flex items-center gap-5 font-sans text-[13px] font-semibold">
+            <Link
+              href={`/portfolio/projects/${prev.slug}`}
+              aria-label={`${lang === "en" ? "Previous project" : "Proyecto anterior"}: ${titleCase(prev.title)}`}
+              className="inline-flex items-center gap-1.5 text-[var(--cb-text)] no-underline opacity-70 transition-opacity hover:opacity-100"
+            >
+              <span aria-hidden="true">←</span> {lang === "en" ? "Previous" : "Anterior"}
+            </Link>
+            <Link
+              href={`/portfolio/projects/${next.slug}`}
+              aria-label={`${lang === "en" ? "Next project" : "Proyecto siguiente"}: ${titleCase(next.title)}`}
+              className="inline-flex items-center gap-1.5 text-[var(--cb-text)] no-underline opacity-70 transition-opacity hover:opacity-100"
+            >
+              {lang === "en" ? "Next" : "Siguiente"} <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
 
         <h1 className="m-0 max-w-[24ch]" style={{ ...serif, fontSize: "clamp(28px,4.5vw,52px)", lineHeight: 1.1 }}>
           {titleCase(project.headline)}
@@ -532,6 +602,29 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
             ))}
           </div>
         </div>
+
+        <nav
+          aria-label={lang === "en" ? "Project navigation" : "Navegación entre proyectos"}
+          className="mt-24 grid grid-cols-1 gap-4 border-t pt-10 sm:mt-32 sm:grid-cols-2 sm:gap-8"
+          style={{ borderColor: "var(--cb-hair)" }}
+        >
+          <Link href={`/portfolio/projects/${prev.slug}`} className="group flex flex-col gap-1.5 no-underline">
+            <span className="font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--cb-muted)]">
+              <span aria-hidden="true">←</span> {lang === "en" ? "Previous project" : "Proyecto anterior"}
+            </span>
+            <span className="text-[clamp(18px,2.2vw,24px)] leading-snug underline-offset-4 group-hover:underline" style={{ ...serif, color: "var(--cb-text)" }}>
+              {titleCase(prev.title)}
+            </span>
+          </Link>
+          <Link href={`/portfolio/projects/${next.slug}`} className="group flex flex-col gap-1.5 no-underline sm:items-end sm:text-right">
+            <span className="font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--cb-muted)]">
+              {lang === "en" ? "Next project" : "Proyecto siguiente"} <span aria-hidden="true">→</span>
+            </span>
+            <span className="text-[clamp(18px,2.2vw,24px)] leading-snug underline-offset-4 group-hover:underline" style={{ ...serif, color: "var(--cb-text)" }}>
+              {titleCase(next.title)}
+            </span>
+          </Link>
+        </nav>
 
         {others.length > 0 && (
           <section className="mt-24 border-t pt-16 sm:mt-32 sm:pt-20" style={{ borderColor: "var(--cb-hair)" }}>

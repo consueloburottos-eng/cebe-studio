@@ -581,7 +581,7 @@ const sectionsEn: CaseSection[] = [
 
 export const talentCapital: Project = {
   slug: "talent-capital",
-  title: "Celeste: a conversational AI agent to find jobs",
+  title: "A conversational AI agent to find jobs",
   category: "Agente de IA para empleo y capacitación",
   tag: "product design · ux & ui",
   subtitle: "Diseñé de punta a punta una plataforma de carrera con IA para personas que buscan empleo en Washington D.C., Maryland y Virginia, centrada en Celeste, un coach de carrera conversacional, sobre la tecnología agéntica de BuildWithin. MVP en tres semanas y lanzamiento público en abril de 2026.",
@@ -632,7 +632,7 @@ export const talentCapital: Project = {
     { name: "Claude Code" },
     { name: "Usuarios sintéticos", use: "Pruebas con usuarios sintéticos" },
   ],
-  headline: "un consejero, no un buscador",
+  headline: "A conversational AI agent to find jobs",
   decision: {
     problem: "Los despidos masivos de empleados federales en Washington DC, Virginia y Maryland dejaron a muchas personas sin trabajo, con el riesgo de que se fueran a otros estados.",
     solution: "Una plataforma para personas que buscan empleo, con una experiencia agéntica, impulsada por la tecnología agéntica de BuildWithin.",
@@ -697,7 +697,7 @@ export const talentCapital: Project = {
       { name: "Claude Code" },
       { name: "Synthetic users", use: "Testing with synthetic users" },
     ],
-    headline: "an advisor, not a search bar",
+    headline: "A conversational AI agent to find jobs",
     decision: {
       problem: "Mass layoffs of federal employees in Washington DC, Virginia and Maryland left many people without work, at risk of moving to other states.",
       solution: "A platform for job seekers with an agentic experience, powered by BuildWithin's agentic technology.",
