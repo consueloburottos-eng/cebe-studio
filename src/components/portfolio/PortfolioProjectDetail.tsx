@@ -13,6 +13,7 @@ import ProjectMedia from "@/components/ProjectMedia";
 import AboutModal from "@/components/branding/AboutModal";
 import { INTRO_SPAN_PATTERN, mobileTileSize } from "@/lib/introGrid";
 import { toolIconSrc } from "@/lib/tools";
+import { displayTitle } from "@/lib/projectTitle";
 
 const CONTACT_EMAIL = "consuelo.burotto.s@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/cburotto/";
@@ -274,6 +275,7 @@ export default function PortfolioProjectDetail({
   const project = localizeProject(rawProject, lang);
   const others = localizeProjects(rawOthers, lang);
   const folder = assetFolder(project);
+  const pageTitle = displayTitle(project);
   const gallery = process.env.NODE_ENV === "development" ? project.gallery : project.gallery.filter((g) => g.media);
 
   const serif = { fontFamily: "var(--font-merriweather)" };
@@ -521,8 +523,15 @@ export default function PortfolioProjectDetail({
           </div>
         </div>
 
-        <h1 className="m-0 max-w-[24ch]" style={{ ...serif, fontSize: "clamp(28px,4.5vw,52px)", lineHeight: 1.1 }}>
-          {titleCase(project.headline)}
+        <h1
+          className={`m-0 ${pageTitle.length > 50 ? "max-w-[34ch]" : "max-w-[24ch]"}`}
+          style={{
+            ...serif,
+            fontSize: pageTitle.length > 50 ? "clamp(24px,3.4vw,40px)" : "clamp(28px,4.5vw,52px)",
+            lineHeight: 1.15,
+          }}
+        >
+          {pageTitle}
         </h1>
 
         <dl className="m-0 mt-10 grid grid-cols-2 gap-x-8 gap-y-6 sm:mt-14 sm:grid-cols-4">

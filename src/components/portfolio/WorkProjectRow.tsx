@@ -2,6 +2,7 @@ import Link from "next/link";
 import { type Project } from "@/data/projects";
 import { type Lang } from "@/hooks/useSiteLanguage";
 import { titleCase } from "@/lib/i18n";
+import { displayTitle } from "@/lib/projectTitle";
 import ProjectMedia from "@/components/ProjectMedia";
 
 // One project per section: title + "view case study" sit above a single
@@ -19,10 +20,10 @@ export default function WorkProjectRow({ project, lang }: { project: Project; la
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
-        <div>
+      <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
+        <div className="min-w-0 flex-1 basis-[260px]">
           <h3 className="m-0 flex items-baseline gap-2 font-sans text-xl font-bold sm:text-2xl">
-            {project.outcomeTitle ?? titleCase(project.title)}
+            {displayTitle(project)}
             {project.pending && (
               <span className="font-sans text-[11px] font-bold uppercase tracking-[0.05em]" style={{ color: "#015fca" }}>
                 {lang === "en" ? "Soon" : "Pronto"}
@@ -33,7 +34,7 @@ export default function WorkProjectRow({ project, lang }: { project: Project; la
             {project.outcomeTitle ? `${titleCase(project.title)} · ` : ""}
             {project.category}{project.year && project.year !== "—" ? ` · ${project.year}` : ""}
           </span>
-          <p className="m-0 mt-2 max-w-[60ch] font-sans text-[14px] leading-relaxed text-[var(--cb-muted)]">
+          <p className="m-0 mt-2 font-sans text-[14px] leading-relaxed text-[var(--cb-muted)]">
             {project.subtitle}
           </p>
         </div>
