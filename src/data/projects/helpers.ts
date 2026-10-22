@@ -40,6 +40,9 @@ export type SectionBlock =
   | { type: "callout"; text: string }
   | { type: "result" };
 
+// One tool used on the project and what it was used for (portfolio page).
+export type ProjectTool = { name: string; use?: string };
+
 export type CaseSubsection = {
   id: string;
   label: string;
@@ -95,6 +98,8 @@ export type ProjectTranslation = {
   headline?: string;
   decision?: ProjectDecision;
   sections?: CaseSection[];
+  badges?: string[];
+  tools?: ProjectTool[];
   outcomeTitle?: string;
 };
 
@@ -194,6 +199,8 @@ export type Project = {
   outcomeTitle?: string;
   decision?: ProjectDecision;
   sections?: CaseSection[];
+  badges?: string[];
+  tools?: ProjectTool[];
   gallery: GalleryItem[];
   pending?: boolean;
   // Excluded from `projects` (and therefore every listing/grid/sitemap) but

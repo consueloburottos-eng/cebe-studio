@@ -253,6 +253,24 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
         <div className="max-w-[60ch]">
           <ProjectDecisionBlock decision={project.decision} lang={lang} />
           <p className={bodyText}>{project.brief}</p>
+          {project.badges && project.badges.length > 0 && (
+            <div className="mt-8">
+              <div className="mb-3 font-sans text-[11px] font-bold uppercase tracking-[0.1em] text-[var(--cb-muted)]">
+                {lang === "en" ? "What was done" : "Qué se hizo"}
+              </div>
+              <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
+                {project.badges.map((badge) => (
+                  <li
+                    key={badge}
+                    className="rounded-full border px-3 py-1.5 font-sans text-[12px] font-semibold"
+                    style={{ borderColor: "var(--cb-hair)" }}
+                  >
+                    {badge}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       ),
     },
@@ -285,6 +303,22 @@ export default function PortfolioProjectDetail({ project: rawProject, others: ra
   }
   if (project.sections) {
     for (const cs of project.sections) {
+      if (cs.id === "outcome" && project.tools && project.tools.length > 0) {
+        sections.push({
+          id: "tools",
+          label: lang === "en" ? "Tools" : "Herramientas",
+          content: (
+            <ul className="m-0 grid max-w-[60ch] list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2">
+              {project.tools.map((tool) => (
+                <li key={tool.name} className="rounded-2xl border p-5 font-sans" style={{ borderColor: "var(--cb-hair)" }}>
+                  <div className="text-[15px] font-bold">{tool.name}</div>
+                  {tool.use && <div className="mt-1.5 text-[13px] leading-snug text-[var(--cb-muted)]">{tool.use}</div>}
+                </li>
+              ))}
+            </ul>
+          ),
+        });
+      }
       sections.push({
         id: cs.id,
         label: cs.label,

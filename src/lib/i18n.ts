@@ -43,6 +43,8 @@ export function localizeProject(project: Project, lang: Lang): Project {
     headline: en.headline ?? project.headline,
     decision: en.decision ?? project.decision,
     sections: en.sections ?? project.sections,
+    badges: en.badges ?? project.badges,
+    tools: en.tools ?? project.tools,
     outcomeTitle: en.outcomeTitle ?? project.outcomeTitle,
     features,
   };
