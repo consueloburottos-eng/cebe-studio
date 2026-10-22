@@ -38,6 +38,7 @@ export type SectionBlock =
   | { type: "subtitle"; text: string }
   | { type: "label"; text: string }
   | { type: "callout"; text: string }
+  | { type: "list"; items: string[] }
   | { type: "result" };
 
 // One tool used on the project and what it was used for (portfolio page).
@@ -68,6 +69,11 @@ export function sectionsToStrategy(sections: CaseSection[]): string[] {
     let prefix = "";
     for (const b of blocks) {
       if (b.type === "result") continue;
+      if (b.type === "list") {
+        parts.push(prefix + b.items.join("; "));
+        prefix = "";
+        continue;
+      }
       if (b.type === "label") prefix = `${b.text}: `;
       else if (b.type === "subtitle") prefix = `${b.text}. `;
       else {
@@ -210,6 +216,9 @@ export type Project = {
   // Context cards shown only on the Portfolio project page (see
   // PortfolioProjectDetail.tsx), with a disclosure note.
   digitalPresence?: DigitalPresence;
+  // Portfolio page only: ids of `features` shown as a secondary "more
+  // features" section at the end of a structured (sections) case study.
+  secondaryFeatureIds?: string[];
   // Optional strip of 2-3 big-number stats shown near the top of the project
   // (before the brief). `metricsNote` is a small disclosure line rendered
   // below the numbers — required whenever a value is an estimate rather than

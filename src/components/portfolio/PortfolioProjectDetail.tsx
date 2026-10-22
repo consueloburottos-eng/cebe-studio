@@ -197,6 +197,14 @@ function CaseBlocks({
       {blocks.map((b, i) => {
         if (b.type === "p") return <p key={i} className={bodyText}>{b.text}</p>;
         if (b.type === "result") return <p key={i} className={bodyText}>{result}</p>;
+        if (b.type === "list")
+          return (
+            <ul key={i} className={`${bodyText} m-0 flex list-disc flex-col gap-2 pl-5`}>
+              {b.items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          );
         if (b.type === "subtitle")
           return (
             <h3 key={i} className="m-0 mt-2 text-[clamp(20px,2.4vw,28px)] leading-[1.2]" style={serif}>
@@ -354,6 +362,27 @@ export default function PortfolioProjectDetail({
         label: cs.label,
         children: cs.children?.map((c) => ({ id: c.id, label: c.label })),
         content: <CaseSectionBody section={cs} result={project.result} bodyText={bodyText} serif={serif} />,
+      });
+    }
+  }
+  if (project.sections && project.features && project.secondaryFeatureIds?.length) {
+    const extra = project.features.filter((f) => project.secondaryFeatureIds?.includes(f.id));
+    if (extra.length > 0) {
+      sections.push({
+        id: "more-features",
+        label: lang === "en" ? "More features" : "Más funcionalidades",
+        content: (
+          <div className="flex max-w-[60ch] flex-col gap-10">
+            {extra.map((f) => (
+              <div key={f.id}>
+                <h3 className="m-0 mb-3 text-[clamp(18px,2vw,22px)] leading-[1.25]" style={serif}>
+                  {f.title}
+                </h3>
+                <p className={bodyText}>{f.body[0]}</p>
+              </div>
+            ))}
+          </div>
+        ),
       });
     }
   }

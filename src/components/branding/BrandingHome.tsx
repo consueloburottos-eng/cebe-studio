@@ -24,7 +24,7 @@ import BrandingCursor from "./BrandingCursor";
 const HERO_SLUGS = [
   "talent-capital",
   "buildwithin",
-  "buildwithin-design-system",
+  "buildwithin-superadmin",
   "altafid",
   "altafid-risk-assessment",
   "altafid-custom-portals",

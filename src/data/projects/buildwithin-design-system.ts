@@ -1,8 +1,989 @@
-import { Project, img, introGallery } from "./helpers";
+import { Project, CaseSection, img, introGallery, sectionsToStrategy } from "./helpers";
+
+const sectionsEs: CaseSection[] = [
+  {
+    "id": "context",
+    "label": "Contexto",
+    "title": "Contexto",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "BuildWithin necesitaba evolucionar su plataforma de gestión de fuerza laboral para apoyar a organizaciones que administran programas de formación, oportunidades de empleo, elegibilidad de candidatos y avance de participantes."
+      },
+      {
+        "type": "p",
+        "text": "La plataforma atendía a organizaciones con requisitos operativos distintos, incluidos programas de desarrollo de fuerza laboral regidos por los criterios de elegibilidad de WIOA."
+      },
+      {
+        "type": "p",
+        "text": "También debía acomodar seis roles de usuario distintos (Super Admin, Organization Admin, Talent Manager, Case Manager, Employer y Staff interno), cada uno con responsabilidades y acceso a la información diferentes."
+      },
+      {
+        "type": "p",
+        "text": "Cada rol tenía su propia experiencia de plataforma separada, y los Super Admins pasaban de una a otra mediante un selector en el sidebar. Quienes administraban varias organizaciones también debían moverse entre contextos organizacionales."
+      },
+      {
+        "type": "p",
+        "text": "A medida que la plataforma crecía, este enfoque sumaba complejidad de navegación innecesaria y hacía cada vez más difícil escalar la experiencia."
+      }
+    ]
+  },
+  {
+    "id": "solution",
+    "label": "Solución",
+    "title": "Solución",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Diseñé una experiencia enterprise unificada, construida en torno a flujos compartidos, permisos por rol y configuraciones organizacionales configurables."
+      },
+      {
+        "type": "p",
+        "text": "En vez de crear experiencias de plataforma separadas para cada rol, la solución estableció una interfaz común donde el acceso a la información y a las funciones lo determinan los permisos."
+      },
+      {
+        "type": "p",
+        "text": "Consolidé en una sola plataforma lo que antes eran seis experiencias separadas, cambié cómo se visualizan los permisos e hice los roles configurables, de modo que se puedan crear nuevos roles según las necesidades."
+      },
+      {
+        "type": "p",
+        "text": "Los Super Admins podían acceder a la información de todos los roles sin cambiar repetidamente de interfaz, mientras que el resto de las personas veía solo la información y las acciones relevantes para sus responsabilidades."
+      },
+      {
+        "type": "p",
+        "text": "La plataforma también incorporó flujos de elegibilidad configurables, verificación documental asistida por IA y componentes reutilizables que sostuvieron experiencias consistentes entre los módulos administrativos."
+      }
+    ]
+  },
+  {
+    "id": "contribution",
+    "label": "Mi aporte",
+    "title": "Mi aporte",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Como Senior Product Designer, lideré el diseño end-to-end de la experiencia administrativa durante seis meses."
+      },
+      {
+        "type": "p",
+        "text": "Mis responsabilidades incluyeron la arquitectura del producto, los user flows, las interacciones empresariales complejas, las interfaces de alta fidelidad, los componentes reutilizables, el prototipado y la validación de usabilidad."
+      },
+      {
+        "type": "p",
+        "text": "Colaboré con la CEO de BuildWithin, Product Managers, Ingeniería, Customer Success y clientes para entender los requisitos operativos y traducirlos en experiencias de producto escalables."
+      },
+      {
+        "type": "p",
+        "text": "Más allá de diseñar interfaces, cuestioné el enfoque multiplataforma propuesto y defendí una arquitectura unificada basada en permisos por rol."
+      }
+    ]
+  },
+  {
+    "id": "challenge",
+    "label": "Desafío",
+    "title": "Desafío",
+    "blocks": [
+      {
+        "type": "subtitle",
+        "text": "Sostener la complejidad sin multiplicar las interfaces"
+      },
+      {
+        "type": "p",
+        "text": "BuildWithin necesitaba acomodar distintas organizaciones, responsabilidades administrativas y requisitos regulatorios dentro del mismo producto."
+      },
+      {
+        "type": "p",
+        "text": "La dirección inicial consideraba experiencias de plataforma separadas para los distintos roles."
+      },
+      {
+        "type": "p",
+        "text": "Sin embargo, las personas administradoras a menudo necesitaban información que cruzaba esos límites. Un Super Admin, por ejemplo, necesitaba ver la misma información operativa disponible para los Case Managers y otros roles administrativos."
+      },
+      {
+        "type": "p",
+        "text": "Al mismo tiempo, las organizaciones necesitaban configurar sus propios requisitos de elegibilidad, documentos y flujos sin depender de desarrollo a medida para cada variación."
+      },
+      {
+        "type": "callout",
+        "text": "El desafío era crear una experiencia lo bastante flexible para sostener estas diferencias y, a la vez, comprensible, consistente y escalable."
+      }
+    ]
+  },
+  {
+    "id": "process",
+    "label": "Proceso de diseño",
+    "title": "Proceso de diseño",
+    "blocks": [
+      {
+        "type": "subtitle",
+        "text": "Entender la plataforma existente y a sus usuarios"
+      },
+      {
+        "type": "p",
+        "text": "Empecé con un análisis en profundidad del producto existente junto a la CEO y los Product Managers."
+      },
+      {
+        "type": "p",
+        "text": "Examinamos la navegación de la plataforma, los flujos administrativos y los problemas que introducía su modelo de cambio de rol."
+      },
+      {
+        "type": "p",
+        "text": "Junto a Customer Success identificamos clientes para entrevistar y entender mejor cómo las organizaciones usaban la plataforma en su operación diaria."
+      },
+      {
+        "type": "p",
+        "text": "Esas conversaciones se centraron en las tareas recurrentes, las necesidades de información, las responsabilidades y las dificultades que encontraban las personas administradoras al gestionar candidatos y programas."
+      },
+      {
+        "type": "subtitle",
+        "text": "De la investigación a la arquitectura del producto"
+      },
+      {
+        "type": "p",
+        "text": "Los hallazgos orientaron la exploración de una experiencia unificada, construida en torno a navegación compartida, permisos y flujos configurables."
+      },
+      {
+        "type": "p",
+        "text": "Mapeé los recorridos administrativos, definí las jerarquías de información y exploré patrones de interacción para tareas complejas como la configuración de elegibilidad y la verificación de candidatos."
+      },
+      {
+        "type": "p",
+        "text": "Con Figma desarrollé prototipos e interfaces de alta fidelidad, trabajando de forma iterativa con Producto e Ingeniería para resolver los requisitos técnicos y operativos."
+      }
+    ]
+  },
+  {
+    "id": "decisions",
+    "label": "Decisiones clave",
+    "title": "Decisiones clave de diseño",
+    "blocks": [],
+    "children": [
+      {
+        "id": "decision-1",
+        "label": "01 · Una plataforma",
+        "title": "01 — Una plataforma en vez de múltiples experiencias por rol",
+        "blocks": [
+          {
+            "type": "label",
+            "text": "El desafío"
+          },
+          {
+            "type": "p",
+            "text": "La plataforma existente estaba dividida en experiencias separadas por rol, y los Super Admins pasaban de una a otra con un selector de avatar en el sidebar."
+          },
+          {
+            "type": "p",
+            "text": "Esto generaba una complejidad de navegación innecesaria, sobre todo cuando las personas administradoras necesitaban información de varios roles u organizaciones."
+          },
+          {
+            "type": "p",
+            "text": "La dirección inicial del producto consideraba mantener experiencias separadas para cada rol."
+          },
+          {
+            "type": "label",
+            "text": "La decisión"
+          },
+          {
+            "type": "p",
+            "text": "Cuestioné este enfoque y propuse una plataforma unificada basada en acceso y permisos por rol."
+          },
+          {
+            "type": "p",
+            "text": "En lugar de duplicar interfaces, la plataforma compartiría la misma estructura y los mismos flujos."
+          },
+          {
+            "type": "p",
+            "text": "Los Super Admins tendrían visibilidad completa de las funciones administrativas, mientras que los demás roles tendrían acceso restringido a información y acciones específicas según sus responsabilidades."
+          },
+          {
+            "type": "p",
+            "text": "También rediseñé cómo se visualizan los permisos e hice los roles configurables, de modo que se puedan crear nuevos roles según las necesidades."
+          },
+          {
+            "type": "p",
+            "text": "Esto eliminó la necesidad de que los Super Admins cambiaran repetidamente de interfaz por rol para acceder a distintas partes de la plataforma."
+          },
+          {
+            "type": "label",
+            "text": "Por qué importó"
+          },
+          {
+            "type": "p",
+            "text": "La decisión simplificó la experiencia administrativa y estableció una arquitectura de producto más escalable."
+          },
+          {
+            "type": "p",
+            "text": "En vez de mantener múltiples interfaces con funcionalidad superpuesta, BuildWithin podía sostener distintas responsabilidades con un sistema compartido."
+          },
+          {
+            "type": "callout",
+            "text": "La complejidad de los permisos quedó dentro de la plataforma y no se convirtió en una carga de navegación para las personas usuarias."
+          }
+        ]
+      },
+      {
+        "id": "decision-2",
+        "label": "02 · Elegibilidad",
+        "title": "02 — Hacer configurables los requisitos de elegibilidad",
+        "blocks": [
+          {
+            "type": "label",
+            "text": "El desafío"
+          },
+          {
+            "type": "p",
+            "text": "Las organizaciones necesitaban definir requisitos de elegibilidad distintos según sus programas y obligaciones regulatorias."
+          },
+          {
+            "type": "p",
+            "text": "En los flujos ligados a WIOA, esos requisitos podían incluir información personal, documentos de respaldo, condiciones de empleo y umbrales de ingreso del hogar."
+          },
+          {
+            "type": "p",
+            "text": "No todos los documentos seguían las mismas reglas de validación. Algunos exigían revisar el vencimiento, y otros necesitaban períodos de vigencia configurables según cuándo se emitió el documento o cuándo ocurrió un evento determinado."
+          },
+          {
+            "type": "p",
+            "text": "La primera versión del flujo asumió que una lista fija de documentos por categoría alcanzaba para todas las organizaciones. La UX research mostró que no: cada organización cliente aceptaba distintos documentos válidos por categoría y aplicaba sus propias reglas."
+          },
+          {
+            "type": "callout",
+            "text": "Un formulario fijo no habría podido acomodar estas diferencias."
+          },
+          {
+            "type": "label",
+            "text": "La decisión"
+          },
+          {
+            "type": "p",
+            "text": "Diseñé una experiencia de elegibilidad configurable, organizada en tres áreas:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Application Fields: permitía a las personas administradoras definir la información que debían entregar los candidatos.",
+              "Required Documents: permitía a las organizaciones elegir la documentación aceptable por categoría y configurar requisitos por documento, incluidos períodos de vigencia como 30, 60 o 90 días.",
+              "Income Eligibility Rules: admitía límites de ingreso del hogar configurables según el tamaño de la familia."
+            ]
+          },
+          {
+            "type": "p",
+            "text": "Para manejar las excepciones por documento, introduje controles de configuración contextuales que muestran ajustes adicionales solo cuando son relevantes."
+          },
+          {
+            "type": "p",
+            "text": "Así, quienes administran podían gestionar distintas condiciones de elegibilidad sin recorrer un formulario innecesariamente complejo."
+          },
+          {
+            "type": "label",
+            "text": "Por qué importó"
+          },
+          {
+            "type": "p",
+            "text": "Las organizaciones podían configurar sus requisitos de elegibilidad con una experiencia administrativa consistente, en vez de depender de interfaces distintas para cada tipo de documento."
+          },
+          {
+            "type": "p",
+            "text": "El patrón de configuración se validó con pruebas de usabilidad, y la estructura de fondo siguió siendo lo bastante flexible para acomodar requisitos adicionales."
+          }
+        ]
+      },
+      {
+        "id": "decision-3",
+        "label": "03 · Verificación",
+        "title": "03 — Convertir la verificación de elegibilidad en un flujo accionable",
+        "blocks": [
+          {
+            "type": "label",
+            "text": "El desafío"
+          },
+          {
+            "type": "p",
+            "text": "Los Case Managers necesitaban monitorear a los candidatos durante todo el proceso de elegibilidad, identificar solicitudes incompletas, revisar la documentación y determinar cuándo era necesario intervenir."
+          },
+          {
+            "type": "p",
+            "text": "La elegibilidad no era simplemente un estado binario. Un candidato podía estar preparando su solicitud, esperando entregar documentos, preaprobado o requerir revisión adicional. El vencimiento de documentos y la información incompleta agregaban más complejidad."
+          },
+          {
+            "type": "callout",
+            "text": "Un único indicador de elegibilidad no daba contexto suficiente para manejar estas situaciones."
+          },
+          {
+            "type": "label",
+            "text": "La decisión"
+          },
+          {
+            "type": "p",
+            "text": "Diseñé una experiencia de revisión progresiva que conecta las tablas de gestión de candidatos, los estados de elegibilidad y la verificación a nivel de documento."
+          },
+          {
+            "type": "p",
+            "text": "La tabla principal de candidatos mostraba badges de elegibilidad, para que los Case Managers entendieran el avance de cada solicitud sin abrir cada ficha."
+          },
+          {
+            "type": "p",
+            "text": "Cada estado comunicaba una situación y una posible acción distintas:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Not Started: identificar candidatos que no habían comenzado el proceso de elegibilidad.",
+              "In Progress: monitorear solicitudes incompletas e identificar candidatos que podrían necesitar ayuda.",
+              "Pre-approved: identificar solicitudes listas para revisión y aprobación humana.",
+              "Needs Review: destacar información o documentos que requieren verificación adicional.",
+              "Ineligible / Expired: identificar casos en que documentación antes válida había vencido y requería renovación."
+            ]
+          },
+          {
+            "type": "p",
+            "text": "Al seleccionar un candidato se abría una vista previa detallada con información resumida y una sección de Elegibilidad."
+          },
+          {
+            "type": "p",
+            "text": "En esa sección, categorías de elegibilidad desplegables mostraban cada requisito de verificación, indicadores de avance y los documentos de respaldo."
+          },
+          {
+            "type": "p",
+            "text": "Los Case Managers podían inspeccionar los archivos subidos y revisar la información usada para evaluar cada requisito."
+          },
+          {
+            "type": "p",
+            "text": "La experiencia también incorporó procesamiento de documentos asistido por IA para extraer información relevante y completar los registros de los candidatos."
+          },
+          {
+            "type": "label",
+            "text": "Por qué importó"
+          },
+          {
+            "type": "p",
+            "text": "El diseño conectó la verificación automatizada con la decisión humana."
+          },
+          {
+            "type": "p",
+            "text": "En lugar de presentar la elegibilidad como un resultado aislado, la interfaz ayudó a los Case Managers a entender el avance de cada solicitud, identificar excepciones y tomar la acción adecuada."
+          },
+          {
+            "type": "callout",
+            "text": "El objetivo era hacer más transparentes y manejables los flujos de verificación complejos, sin quitar la supervisión humana."
+          }
+        ]
+      },
+      {
+        "id": "decision-4",
+        "label": "04 · Design system",
+        "title": "04 — Construir consistencia con patrones de diseño reutilizables",
+        "blocks": [
+          {
+            "type": "label",
+            "text": "El desafío"
+          },
+          {
+            "type": "p",
+            "text": "La plataforma debía sostener distintos flujos administrativos manteniendo la consistencia entre módulos y roles."
+          },
+          {
+            "type": "p",
+            "text": "Algunas interacciones, como tablas de datos, navegación, formularios y tarjetas de resumen, podían reutilizarse en todo el producto. Otras, en particular la verificación de documentos y la configuración de elegibilidad, requerían componentes especializados."
+          },
+          {
+            "type": "label",
+            "text": "La decisión"
+          },
+          {
+            "type": "p",
+            "text": "Usé shadcn/ui como base de un sistema de componentes compartido y lo extendí con patrones a la medida de los requisitos enterprise de BuildWithin."
+          },
+          {
+            "type": "p",
+            "text": "Los componentes reutilizables sostenían interacciones comunes como gestión de datos, navegación, comunicación de estados y resúmenes de información."
+          },
+          {
+            "type": "p",
+            "text": "Para los flujos de elegibilidad diseñé componentes especializados para vistas previas de documentos, estados de verificación, requisitos configurables y resúmenes de elegibilidad de candidatos."
+          },
+          {
+            "type": "p",
+            "text": "Estos componentes seguían principios de interacción y visuales compartidos, y a la vez acomodaban la complejidad específica de los flujos regulados."
+          },
+          {
+            "type": "label",
+            "text": "Por qué importó"
+          },
+          {
+            "type": "p",
+            "text": "El design system dio consistencia a las experiencias administrativas sin obligar a que cada flujo usara componentes genéricos."
+          },
+          {
+            "type": "callout",
+            "text": "Sostuvo una plataforma más coherente y permitió que la funcionalidad especializada evolucionara dentro de un lenguaje de diseño compartido."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "validation",
+    "label": "Validación e iteración",
+    "title": "Validación e iteración",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Combiné pruebas de usabilidad, entrevistas con clientes, revisiones con stakeholders y prototipado iterativo para evaluar la experiencia administrativa."
+      },
+      {
+        "type": "p",
+        "text": "Las pruebas en Maze ayudaron a validar la interfaz de configuración de elegibilidad y confirmaron que el patrón de interacción inicial se entendía sin requerir cambios importantes por usabilidad."
+      },
+      {
+        "type": "p",
+        "text": "Una iteración importante surgió después del primer diseño del MVP, cuando el Product Manager y la organización involucrada identificaron requisitos adicionales para la elegibilidad por ingreso del hogar."
+      },
+      {
+        "type": "p",
+        "text": "La interfaz debía acomodar límites de ingreso configurables según el tamaño de la familia y darle más protagonismo a esta información dentro de la revisión de elegibilidad."
+      },
+      {
+        "type": "p",
+        "text": "Ajusté la jerarquía de la información y reorganicé cómo se presentaban los requisitos de ingreso, los documentos de respaldo y los estados de verificación."
+      },
+      {
+        "type": "callout",
+        "text": "Esto dejó clara una distinción importante: no toda iteración de diseño nace de un problema de usabilidad. Algunas surgen porque el producto debe acomodar nuevos requisitos operativos sin perder la coherencia de la experiencia."
+      }
+    ]
+  },
+  {
+    "id": "outcome",
+    "label": "Resultado y aprendizajes",
+    "title": "Resultado y aprendizajes",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "El proyecto estableció una base de diseño unificada para la plataforma de administración enterprise de BuildWithin, que sostiene múltiples contextos organizacionales, seis roles de usuario y flujos complejos de gestión de fuerza laboral."
+      },
+      {
+        "type": "p",
+        "text": "La experiencia reunió permisos por rol, requisitos de elegibilidad configurables, verificación documental asistida por IA y patrones de diseño reutilizables."
+      },
+      {
+        "type": "subtitle",
+        "text": "Aprendizajes"
+      },
+      {
+        "type": "p",
+        "text": "El aporte más importante fue cuestionar el supuesto de que distintos roles de usuario requerían distintas experiencias de plataforma."
+      },
+      {
+        "type": "p",
+        "text": "Al diseñar en torno a flujos compartidos y acceso controlado a la información, ayudé a establecer un enfoque más escalable para la arquitectura de producto enterprise."
+      },
+      {
+        "type": "p",
+        "text": "El proyecto también reforzó la importancia de hacer comprensibles los sistemas operativos complejos sin simplificar de más sus requisitos de fondo."
+      },
+      {
+        "type": "callout",
+        "text": "El gran diseño enterprise no consiste en quitar la complejidad, sino en organizarla para que las personas se concentren en sus responsabilidades en vez de navegar el sistema."
+      }
+    ]
+  }
+];
+
+const sectionsEn: CaseSection[] = [
+  {
+    "id": "context",
+    "label": "Context",
+    "title": "Context",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "BuildWithin needed to evolve its workforce management platform to support organizations managing training programs, employment opportunities, candidate eligibility, and participant progress."
+      },
+      {
+        "type": "p",
+        "text": "The platform served organizations with different operational requirements, including workforce development programs governed by WIOA eligibility criteria."
+      },
+      {
+        "type": "p",
+        "text": "It also needed to accommodate six distinct user roles (Super Admin, Organization Admin, Talent Manager, Case Manager, Employer, and internal Staff), each with different responsibilities and information access."
+      },
+      {
+        "type": "p",
+        "text": "Each role had its own separate platform experience, and Super Admins switched between them through a selector in the sidebar. Administrators working across multiple organizations also had to navigate between organizational contexts."
+      },
+      {
+        "type": "p",
+        "text": "As the platform expanded, this approach introduced unnecessary navigation complexity and made the experience increasingly difficult to scale."
+      }
+    ]
+  },
+  {
+    "id": "solution",
+    "label": "Solution",
+    "title": "Solution",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "I designed a unified enterprise experience built around shared workflows, role-based permissions, and configurable organizational settings."
+      },
+      {
+        "type": "p",
+        "text": "Instead of creating separate platform experiences for each role, the solution established a common interface where access to information and functionality was determined by permissions."
+      },
+      {
+        "type": "p",
+        "text": "I consolidated what used to be six separate platform experiences into one platform, changed how permissions are visualized, and made roles configurable so new roles can be created as needs require."
+      },
+      {
+        "type": "p",
+        "text": "Super Admins could access information across roles without repeatedly switching between different interfaces, while other users saw only the information and actions relevant to their responsibilities."
+      },
+      {
+        "type": "p",
+        "text": "The platform also introduced configurable eligibility workflows, AI-assisted document verification, and reusable components that supported consistent experiences across administrative modules."
+      }
+    ]
+  },
+  {
+    "id": "contribution",
+    "label": "My contribution",
+    "title": "My contribution",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "As Senior Product Designer, I led the end-to-end design of the administrative experience over six months."
+      },
+      {
+        "type": "p",
+        "text": "My responsibilities included product architecture, user flows, complex enterprise interactions, high-fidelity interfaces, reusable components, prototyping, and usability validation."
+      },
+      {
+        "type": "p",
+        "text": "I collaborated with BuildWithin's CEO, Product Managers, Engineering, Customer Success, and clients to understand operational requirements and translate them into scalable product experiences."
+      },
+      {
+        "type": "p",
+        "text": "Beyond designing interfaces, I challenged the proposed multi-platform approach and advocated for a unified architecture based on role-specific permissions."
+      }
+    ]
+  },
+  {
+    "id": "challenge",
+    "label": "Challenge",
+    "title": "Challenge",
+    "blocks": [
+      {
+        "type": "subtitle",
+        "text": "Supporting complexity without multiplying interfaces"
+      },
+      {
+        "type": "p",
+        "text": "BuildWithin needed to accommodate different organizations, administrative responsibilities, and regulatory requirements within the same product."
+      },
+      {
+        "type": "p",
+        "text": "The initial direction considered separate platform experiences for different roles."
+      },
+      {
+        "type": "p",
+        "text": "However, administrators often needed information that crossed those boundaries. A Super Admin, for example, needed visibility into the same operational information available to Case Managers and other administrative roles."
+      },
+      {
+        "type": "p",
+        "text": "At the same time, organizations needed to configure their own eligibility requirements, documents, and workflows without depending on custom development for every variation."
+      },
+      {
+        "type": "callout",
+        "text": "The challenge was to create an experience flexible enough to support these differences while remaining understandable, consistent, and scalable."
+      }
+    ]
+  },
+  {
+    "id": "process",
+    "label": "Design process",
+    "title": "Design process",
+    "blocks": [
+      {
+        "type": "subtitle",
+        "text": "Understanding the existing platform and its users"
+      },
+      {
+        "type": "p",
+        "text": "I began by conducting an in-depth analysis of the existing product alongside the CEO and Product Managers."
+      },
+      {
+        "type": "p",
+        "text": "We examined the platform's navigation, administrative workflows, and the challenges introduced by its role-switching model."
+      },
+      {
+        "type": "p",
+        "text": "Working with Customer Success, we also identified clients for interviews to better understand how organizations used the platform in their daily operations."
+      },
+      {
+        "type": "p",
+        "text": "These conversations focused on recurring tasks, information needs, responsibilities, and the difficulties administrators encountered when managing candidates and programs."
+      },
+      {
+        "type": "subtitle",
+        "text": "From research to product architecture"
+      },
+      {
+        "type": "p",
+        "text": "The findings informed the exploration of a unified experience built around shared navigation, permissions, and configurable workflows."
+      },
+      {
+        "type": "p",
+        "text": "I mapped administrative journeys, defined information hierarchies, and explored interaction patterns for complex tasks such as eligibility configuration and candidate verification."
+      },
+      {
+        "type": "p",
+        "text": "Using Figma, I developed prototypes and high-fidelity interfaces, working iteratively with Product and Engineering to address technical and operational requirements."
+      }
+    ]
+  },
+  {
+    "id": "decisions",
+    "label": "Key decisions",
+    "title": "Key design decisions",
+    "blocks": [],
+    "children": [
+      {
+        "id": "decision-1",
+        "label": "01 · One platform",
+        "title": "01 — One platform instead of multiple role-based experiences",
+        "blocks": [
+          {
+            "type": "label",
+            "text": "The challenge"
+          },
+          {
+            "type": "p",
+            "text": "The existing platform was split into separate role-specific experiences, and Super Admins switched between them using an avatar selector in the sidebar."
+          },
+          {
+            "type": "p",
+            "text": "This created unnecessary navigation complexity, especially when administrators needed information across multiple roles or organizations."
+          },
+          {
+            "type": "p",
+            "text": "The initial product direction considered maintaining separate experiences for each role."
+          },
+          {
+            "type": "label",
+            "text": "The decision"
+          },
+          {
+            "type": "p",
+            "text": "I challenged this approach and proposed a unified platform based on role-based access and permissions."
+          },
+          {
+            "type": "p",
+            "text": "Rather than duplicating interfaces, the platform would share the same underlying structure and workflows."
+          },
+          {
+            "type": "p",
+            "text": "Super Admins would have comprehensive visibility across administrative functions, while other roles would have restricted access to specific information and actions according to their responsibilities."
+          },
+          {
+            "type": "p",
+            "text": "I also redesigned how permissions are visualized and made roles configurable, so new roles can be created as needs require."
+          },
+          {
+            "type": "p",
+            "text": "This removed the need for Super Admins to repeatedly switch between role-specific interfaces to access different parts of the platform."
+          },
+          {
+            "type": "label",
+            "text": "Why it mattered"
+          },
+          {
+            "type": "p",
+            "text": "The decision simplified the administrative experience while establishing a more scalable product architecture."
+          },
+          {
+            "type": "p",
+            "text": "Instead of maintaining multiple interfaces with overlapping functionality, BuildWithin could support different responsibilities through a shared system."
+          },
+          {
+            "type": "callout",
+            "text": "The complexity of permissions remained within the platform rather than becoming a navigation burden for users."
+          }
+        ]
+      },
+      {
+        "id": "decision-2",
+        "label": "02 · Eligibility",
+        "title": "02 — Making eligibility requirements configurable",
+        "blocks": [
+          {
+            "type": "label",
+            "text": "The challenge"
+          },
+          {
+            "type": "p",
+            "text": "Organizations needed to define different eligibility requirements depending on their programs and regulatory obligations."
+          },
+          {
+            "type": "p",
+            "text": "For WIOA-related workflows, these requirements could include personal information, supporting documents, employment conditions, and household income thresholds."
+          },
+          {
+            "type": "p",
+            "text": "Not every document followed the same validation rules. Some required expiration checks, while others needed configurable validity periods based on when the document was issued or when a particular event occurred."
+          },
+          {
+            "type": "p",
+            "text": "The first version of the flow assumed a fixed document list per category would work for every organization. UX research showed it didn't: each client organization accepted different valid documents per category and applied its own rules."
+          },
+          {
+            "type": "callout",
+            "text": "Designing a fixed form would not accommodate these differences."
+          },
+          {
+            "type": "label",
+            "text": "The decision"
+          },
+          {
+            "type": "p",
+            "text": "I designed a configurable eligibility experience organized around three areas:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Application Fields allowed administrators to define the information candidates needed to provide.",
+              "Required Documents enabled organizations to select acceptable documentation by category and configure document-specific requirements, including validity periods such as 30, 60, or 90 days.",
+              "Income Eligibility Rules supported configurable household income limits based on family size."
+            ]
+          },
+          {
+            "type": "p",
+            "text": "To manage document-specific exceptions, I introduced contextual configuration controls that exposed additional settings only when relevant."
+          },
+          {
+            "type": "p",
+            "text": "This allowed administrators to manage different eligibility conditions without navigating an unnecessarily complex form."
+          },
+          {
+            "type": "label",
+            "text": "Why it mattered"
+          },
+          {
+            "type": "p",
+            "text": "Organizations could configure eligibility requirements through a consistent administrative experience rather than relying on separate interfaces for different document types."
+          },
+          {
+            "type": "p",
+            "text": "The configuration pattern was validated through usability testing, while the underlying structure remained flexible enough to accommodate additional requirements."
+          }
+        ]
+      },
+      {
+        "id": "decision-3",
+        "label": "03 · Verification",
+        "title": "03 — Turning eligibility verification into an actionable workflow",
+        "blocks": [
+          {
+            "type": "label",
+            "text": "The challenge"
+          },
+          {
+            "type": "p",
+            "text": "Case Managers needed to monitor candidates throughout the eligibility process, identify incomplete applications, review documentation, and determine when intervention was necessary."
+          },
+          {
+            "type": "p",
+            "text": "Eligibility was not simply a binary status. Candidates could be preparing their applications, waiting to provide documents, pre-approved, or require additional review. Document expiration and incomplete information introduced further complexity."
+          },
+          {
+            "type": "callout",
+            "text": "A single eligibility indicator would not provide enough context to manage these situations effectively."
+          },
+          {
+            "type": "label",
+            "text": "The decision"
+          },
+          {
+            "type": "p",
+            "text": "I designed a progressive review experience connecting candidate management tables, eligibility statuses, and document-level verification."
+          },
+          {
+            "type": "p",
+            "text": "The main candidate table displayed eligibility badges, allowing Case Managers to understand application progress without opening every candidate record."
+          },
+          {
+            "type": "p",
+            "text": "Each status communicated a different situation and potential action:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Not Started: Identify candidates who had not begun the eligibility process.",
+              "In Progress: Monitor incomplete applications and identify candidates who might need assistance.",
+              "Pre-approved: Identify applications ready for human review and approval.",
+              "Needs Review: Highlight information or documents requiring additional verification.",
+              "Ineligible / Expired: Identify cases where previously valid documentation had expired and required renewal."
+            ]
+          },
+          {
+            "type": "p",
+            "text": "Selecting a candidate opened a detailed preview containing summary information and an Eligibility section."
+          },
+          {
+            "type": "p",
+            "text": "Within this section, expandable eligibility categories displayed individual verification requirements, completion indicators, and supporting documents."
+          },
+          {
+            "type": "p",
+            "text": "Case Managers could inspect uploaded files and review the information used to evaluate each requirement."
+          },
+          {
+            "type": "p",
+            "text": "The experience also incorporated AI-assisted document processing to extract relevant information and populate candidate records."
+          },
+          {
+            "type": "label",
+            "text": "Why it mattered"
+          },
+          {
+            "type": "p",
+            "text": "The design connected automated verification with human decision-making."
+          },
+          {
+            "type": "p",
+            "text": "Rather than presenting eligibility as an isolated result, the interface helped Case Managers understand application progress, identify exceptions, and take appropriate action."
+          },
+          {
+            "type": "callout",
+            "text": "The goal was to make complex verification workflows more transparent and manageable without removing human oversight."
+          }
+        ]
+      },
+      {
+        "id": "decision-4",
+        "label": "04 · Design system",
+        "title": "04 — Building consistency through reusable design patterns",
+        "blocks": [
+          {
+            "type": "label",
+            "text": "The challenge"
+          },
+          {
+            "type": "p",
+            "text": "The platform needed to support different administrative workflows while maintaining consistency across modules and roles."
+          },
+          {
+            "type": "p",
+            "text": "Some interactions, such as data tables, navigation, forms, and summary cards, could be reused throughout the product. Others, particularly document verification and eligibility configuration, required specialized components."
+          },
+          {
+            "type": "label",
+            "text": "The decision"
+          },
+          {
+            "type": "p",
+            "text": "I used shadcn/ui as a foundation for a shared component system, extending it with patterns tailored to BuildWithin's enterprise requirements."
+          },
+          {
+            "type": "p",
+            "text": "Reusable components supported common interactions such as data management, navigation, status communication, and information summaries."
+          },
+          {
+            "type": "p",
+            "text": "For eligibility workflows, I designed specialized components for document previews, verification states, configurable requirements, and candidate eligibility summaries."
+          },
+          {
+            "type": "p",
+            "text": "These components followed shared interaction and visual principles while accommodating the specific complexity of regulated workflows."
+          },
+          {
+            "type": "label",
+            "text": "Why it mattered"
+          },
+          {
+            "type": "p",
+            "text": "The design system provided consistency across administrative experiences without forcing every workflow into generic components."
+          },
+          {
+            "type": "callout",
+            "text": "It supported a more coherent platform while allowing specialized functionality to evolve within a shared design language."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "validation",
+    "label": "Validation & iteration",
+    "title": "Validation & iteration",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "I combined usability testing, client interviews, stakeholder reviews, and iterative prototyping to evaluate the administrative experience."
+      },
+      {
+        "type": "p",
+        "text": "Maze testing helped validate the eligibility configuration interface, confirming that the initial interaction pattern was understandable without requiring significant usability-driven changes."
+      },
+      {
+        "type": "p",
+        "text": "One important iteration emerged after the first MVP design, when the Product Manager and the organization involved identified additional requirements for household income eligibility."
+      },
+      {
+        "type": "p",
+        "text": "The interface needed to accommodate configurable income limits based on family size and give this information greater prominence within the eligibility review experience."
+      },
+      {
+        "type": "p",
+        "text": "I adjusted the information hierarchy, reorganizing how income requirements, supporting documents, and verification statuses were presented."
+      },
+      {
+        "type": "callout",
+        "text": "This highlighted an important distinction: not every design iteration comes from a usability problem. Some emerge because the product must accommodate new operational requirements while preserving a coherent experience."
+      }
+    ]
+  },
+  {
+    "id": "outcome",
+    "label": "Outcome & learnings",
+    "title": "Outcome & learnings",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "The project established a unified design foundation for BuildWithin's enterprise administration platform, supporting multiple organizational contexts, six user roles, and complex workforce management workflows."
+      },
+      {
+        "type": "p",
+        "text": "The experience brought together role-based permissions, configurable eligibility requirements, AI-assisted document verification, and reusable design patterns."
+      },
+      {
+        "type": "subtitle",
+        "text": "Learnings"
+      },
+      {
+        "type": "p",
+        "text": "The most important contribution was challenging the assumption that different user roles required different platform experiences."
+      },
+      {
+        "type": "p",
+        "text": "By designing around shared workflows and controlled access to information, I helped establish a more scalable approach to enterprise product architecture."
+      },
+      {
+        "type": "p",
+        "text": "The project also reinforced the importance of making complex operational systems understandable without oversimplifying their underlying requirements."
+      },
+      {
+        "type": "callout",
+        "text": "Great enterprise design isn't about removing complexity. It's about organizing it so people can focus on their responsibilities instead of navigating the system."
+      }
+    ]
+  }
+];
+
 
 export const buildwithinSuperAdmin: Project = {
-  slug: "buildwithin-design-system",
-  title: "buildwithin — superadmin",
+  slug: "buildwithin-superadmin",
+  title: "Superadmin: configurable, AI-assisted eligibility for Workforce programs",
   category: "Plataforma enterprise para programas Workforce",
   tag: "product design · enterprise saas · ai-powered ops",
   subtitle: "Plataforma Enterprise para gestionar programas Workforce con IA",
@@ -10,7 +991,7 @@ export const buildwithinSuperAdmin: Project = {
   role: "Senior Product Designer (Contractor)",
   year: "2025",
   result:
-    "Ecosistema Enterprise configurable que evolucionó una plataforma de un solo perfil hacia seis roles de usuario distintos, con un motor de elegibilidad WIOA automatizado por IA",
+    "Una plataforma unificada que consolidó seis experiencias separadas por rol en un solo ecosistema Enterprise configurable, con permisos por rol, flujos de elegibilidad configurables y verificación documental asistida por IA",
   metrics: [
     { value: "6", label: "Perfiles de usuario distintos soportados", labelEn: "Distinct user roles supported" },
     { value: "6 meses", valueEn: "6 months", label: "Duración de la transformación completa", labelEn: "Full transformation timeline" },
@@ -35,11 +1016,43 @@ export const buildwithinSuperAdmin: Project = {
   coverMedia: img("buildwithin-design-system", "cover.png"),
   brief:
     "BuildWithin Admin Platform es el sistema Enterprise que administra el ciclo completo de programas Workforce — configuración, elegibilidad, aprendizaje y operación — para gobiernos, organizaciones y centros de capacitación. La plataforma original de BuildWithin estaba pensada para otro modelo de negocio; la evolucionamos hacia un producto Workforce que debía soportar seis perfiles de usuario distintos (Super Admin, Organization Admin, Talent Manager, Case Manager, Employer, Staff interno), cada uno con permisos, herramientas y flujos propios. Como Senior Product Designer (Contractor) lideré esta transformación completa durante 6 meses: definí la experiencia de producto de principio a fin, diseñé las funcionalidades principales, construí el Design System, y validé cada decisión junto con Product, la CEO y los stakeholders — sin perder de vista que cada organización cliente tiene reglas de negocio completamente distintas entre sí.",
-  strategy: [
-    "La estrategia se apoyó en tres principios. Configuración antes que desarrollo: siempre que fue posible, las organizaciones debían poder configurar el sistema —reglas WIOA, documentos requeridos, umbrales económicos, criterios de elegibilidad, programas, Pathways— sin depender del equipo técnico. Automatización mediante IA: en vez de trasladar procesos manuales al entorno digital, buscamos automatizarlos, para que la IA redujera trabajo operativo real y no se convirtiera en una funcionalidad más que aprender. Y plataforma escalable: cada módulo funciona de forma independiente pero comparte componentes, patrones y reglas — por eso adopté shadcn/ui como base y lo extendí con los componentes principales de la plataforma.",
-    "El producto terminó siendo un ecosistema de módulos conectados: gestión de programas (módulos, unidades, competencias, documentos, horas de aprendizaje), un sistema de Learning Management para construir Pathways personalizados por organización, una vista unificada de administración de participantes con indicadores de progreso, estado, RTI y Journey Health para detectar casos en riesgo, y Candidate 360° — una sola pantalla con toda la información, documentos, aplicaciones, programas y elegibilidad de cada candidato, eliminando la navegación entre pantallas sueltas.",
-    "El mayor reto fue el motor de elegibilidad WIOA: transformar un proceso altamente regulado en una herramienta configurable, donde cada organización define sus propios documentos requeridos, límites económicos, tamaño familiar y criterios de revisión. La IA identifica y clasifica documentos automáticamente, reutiliza un mismo archivo para varios requisitos, valida vencimientos y firmas, detecta baja calidad, y determina elegibilidad antes de avanzar. Sumé además gestión de posiciones (creación manual, por URL, por documento o asistida por IA), un sistema de Matching que conecta candidato → programa → Pathway → posición → aplicación, y validé cada flujo nuevo con pruebas de usabilidad en Maze antes de pasar a desarrollo.",
+  strategy: sectionsToStrategy(sectionsEs),
+  sections: sectionsEs,
+  decision: {
+    "problem": "La plataforma de BuildWithin estaba dividida en experiencias separadas para cada uno de sus seis roles, lo que sumaba complejidad de navegación y dificultaba escalar entre organizaciones.",
+    "solution": "Una plataforma enterprise unificada y configurable, con permisos por rol y flujos de elegibilidad configurables.",
+    "did": "Lideré el diseño end-to-end de la experiencia administrativa durante seis meses, desde la arquitectura de producto hasta los componentes reutilizables y la validación de usabilidad.",
+    "result": "Una base de diseño unificada que sostiene múltiples organizaciones, seis roles de usuario y verificación de elegibilidad asistida por IA."
+  },
+  badges: [
+    "SaaS Enterprise",
+    "Workforce",
+    "Permisos por rol",
+    "Roles configurables",
+    "Flujos configurables",
+    "Verificación asistida por IA",
+    "Design system",
+    "Arquitectura UX",
   ],
+  tools: [
+    { name: "Figma", use: "Prototipos e interfaces de alta fidelidad" },
+    { name: "Maze", use: "Pruebas de usabilidad de la configuración de elegibilidad" },
+    { name: "shadcn/ui", use: "Base del sistema de componentes compartido" },
+  ],
+  digitalPresence: {
+    heading: "Impacto",
+    headingEn: "Impact",
+    stats: [
+      { title: "Roles de usuario soportados", titleEn: "User roles supported", value: "6", valueEn: "6", detail: "Dentro de una experiencia de plataforma unificada.", detailEn: "Within a unified platform experience." },
+      { title: "Arquitectura unificada por rol", titleEn: "Unified role-based architecture", value: "1 plataforma", valueEn: "1 platform", detail: "Diseñada para eliminar la navegación innecesaria entre interfaces separadas por rol.", detailEn: "Designed to eliminate unnecessary navigation between separate role-specific interfaces." },
+      { title: "Flujos de elegibilidad configurables", titleEn: "Configurable eligibility workflows", value: "Configurable", valueEn: "Configurable", detail: "Con documentación, umbrales de ingreso y requisitos de elegibilidad propios de cada organización.", detailEn: "Supporting organization-specific documentation, income thresholds, and eligibility requirements." },
+      { title: "Verificación documental asistida por IA", titleEn: "AI-assisted document verification", value: "IA + humano", valueEn: "AI + human", detail: "Combina extracción automática de información con revisión humana.", detailEn: "Combining automated information extraction with human review." },
+      { title: "Design system compartido", titleEn: "Shared design system", value: "shadcn/ui", valueEn: "shadcn/ui", detail: "Patrones reutilizables en los flujos enterprise.", detailEn: "Providing reusable patterns across enterprise workflows." },
+    ],
+    note: "Alcance y capacidades del producto.",
+    noteEn: "Scope and capabilities of the product.",
+  },
+  secondaryFeatureIds: ["pathways-learning-management", "candidate-360"],
   headline: "configurar, no codear",
   gallery: introGallery("buildwithin-design-system", "BuildWithin — SuperAdmin", 1, 13, "webp", { 1: "png" }),
   features: [
@@ -159,15 +1172,33 @@ export const buildwithinSuperAdmin: Project = {
     tag: "product design · enterprise saas · ai-powered ops",
     subtitle: "Enterprise platform for running Workforce programs with AI",
     result:
-      "Configurable Enterprise ecosystem that evolved a single-profile platform into six distinct user roles, with an AI-automated WIOA eligibility engine",
+      "A unified platform that consolidated six separate role-based experiences into one configurable Enterprise ecosystem, with role-based permissions, configurable eligibility workflows, and AI-assisted document verification",
     services: "Product Design · Design System · Enterprise product strategy",
     skills: ["Figma", "Maze", "Design Systems", "Enterprise UX", "AI-powered workflows", "Prototyping", "Stakeholder Management"],
     brief:
       "BuildWithin Admin Platform is the Enterprise system that runs the full lifecycle of Workforce programs — configuration, eligibility, learning, and operations — for governments, organizations, and training centers. BuildWithin's original platform was built for a different business model; we evolved it into a Workforce product that had to support six distinct user profiles (Super Admin, Organization Admin, Talent Manager, Case Manager, Employer, internal Staff), each with its own permissions, tools, and flows. As Senior Product Designer (Contractor) I led this full transformation over 6 months: defined the end-to-end product experience, designed the core features, built the Design System, and validated every decision alongside Product, the CEO, and stakeholders — without losing sight of the fact that every client organization runs on completely different business rules.",
-    strategy: [
-      "The strategy rested on three principles. Configuration over development: wherever possible, organizations needed to configure the system — WIOA rules, required documents, income thresholds, eligibility criteria, programs, Pathways — without depending on the engineering team. AI-driven automation: rather than porting manual processes into a digital form, we set out to automate them, so AI reduced real operational work instead of becoming one more feature to learn. And a scalable platform: every module works independently but shares components, patterns, and rules — which is why I adopted shadcn/ui as the base and extended it with the platform's core components.",
-      "The product ended up as an ecosystem of connected modules: program management (modules, units, competencies, documents, learning hours), a Learning Management system for building organization-specific Pathways, a unified participant-management view with progress indicators, status, RTI, and Journey Health to flag at-risk cases, and Candidate 360° — a single screen with all of a candidate's information, documents, applications, programs, and eligibility, eliminating navigation across loose, separate screens.",
-      "The biggest challenge was the WIOA eligibility engine: turning a heavily regulated process into a configurable tool, where each organization defines its own required documents, income limits, household size, and review criteria. AI automatically identifies and classifies documents, reuses a single file across multiple requirements, validates expiration dates and signatures, flags low quality, and determines eligibility before moving forward. I also added position management (manual creation, by URL, by document, or AI-assisted), a Matching system that connects candidate → program → Pathway → position → application, and validated every new flow with Maze usability testing before it moved to development.",
+    strategy: sectionsToStrategy(sectionsEn),
+    sections: sectionsEn,
+    decision: {
+      "problem": "BuildWithin's platform was split into separate experiences for each of its six roles, adding navigation complexity and making it hard to scale across organizations.",
+      "solution": "One unified, configurable enterprise platform with role-based permissions and configurable eligibility workflows.",
+      "did": "I led the end-to-end design of the administrative experience over six months, from product architecture to reusable components and usability validation.",
+      "result": "A unified design foundation supporting multiple organizations, six user roles, and AI-assisted eligibility verification."
+    },
+    badges: [
+      "Enterprise SaaS",
+      "Workforce",
+      "Role-based permissions",
+      "Configurable roles",
+      "Configurable workflows",
+      "AI-assisted verification",
+      "Design system",
+      "UX architecture",
+    ],
+    tools: [
+      { name: "Figma", use: "Prototypes and high-fidelity interfaces" },
+      { name: "Maze", use: "Usability testing of the eligibility configuration" },
+      { name: "shadcn/ui", use: "Foundation of the shared component system" },
     ],
     headline: "configure, don't code",
   },
